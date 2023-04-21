@@ -55,24 +55,31 @@ const Navbar = () => {
             <li>
               <a
                 href="/"
-                className="block  pr-2 py-2 pr-1 pl-3 navBarText"
+                className="block py-2   navBarText navBold"
                 aria-current="page"
               >
-                wavGame |
+                wavGame
               </a>
             </li>
+
             <li>
-              <a href="/auth" className="block pr-2 py-2 pr-1 pl-3 navBarText">
+              <a href="/auth" className="block  py-2    navBarText">
                 Artists
               </a>
             </li>
             <li>
-              <a
-                href="/balances"
-                className="block  pr-2 py-2 pr-1 pl-3 navBarText"
-              >
+              <a href="/balances" className="block   py-2  navBarText">
                 Log In
               </a>
+            </li>
+
+            <li>
+              <button
+                type="button"
+                class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full  px-4 py-2 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 navBarText, navBarStartBtn"
+              >
+                Start
+              </button>
             </li>
           </ul>
         </div>

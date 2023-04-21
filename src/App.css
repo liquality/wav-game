@@ -1,14 +1,14 @@
 /* Global Styles */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
 
+root {
+  font-family: "Montserrat";
+}
 :root {
   --ifm-font-family-base: "Montserrat";
 }
 .navBarText {
-  width: 57px;
-  height: 22px;
-
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 400;
@@ -20,4 +20,34 @@
   letter-spacing: -0.08px;
 
   color: #000000;
+}
+
+.navBold {
+  font-family: "Montserrat";
+  font-weight: 700;
+}
+
+.navBarText:hover {
+  text-decoration: none;
+  color: #9d4dfa;
+}
+
+.navBarStartBtn {
+  font-family: "Montserrat";
+  font-size: 18px;
+  background-color: #9d4dfa;
+}
+
+.fontFamily {
+  font-family: "Montserrat";
+}
+
+.belowHeaderText {
+  font-size: 18px;
+  font-family: "Montserrat";
+  line-height: 22px;
+}
+
+.headerBox {
+  width: 40%;
 }
