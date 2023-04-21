@@ -1,6 +1,10 @@
-# Wav Game app
+# wavGAME app
 
-A demo app for Liquality SDK. It demonstrates the usage of all modules of the SDK.
+## wavGAME is here
+
+### Collect, unlock tracks, chase early releases and swag, or step-up the game to win it all from your favorite artist.
+
+A fun burn-to-win NFT experience in 6 levels.
 
 # Run the app
 
