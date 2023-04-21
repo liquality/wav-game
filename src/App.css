@@ -38,6 +38,13 @@ root {
   background-color: #9d4dfa;
 }
 
+.headerBtn {
+  font-family: "Montserrat";
+  font-size: 15px;
+  background-color: #9d4dfa;
+  padding: 6px;
+}
+
 .fontFamily {
   font-family: "Montserrat";
 }
