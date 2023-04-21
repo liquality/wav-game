@@ -1,4 +1,5 @@
 import React from "react";
+import { Modal } from "react-bootstrap";
 
 const Navbar = () => {
   const [address, setAddress] = React.useState("Sign in");
@@ -37,12 +38,12 @@ const Navbar = () => {
 
   console.log(nftMenuClass, "NFT MENU CLASS", showNftMenu);
   return (
-    <nav className="px-2 bg-white sticky top-0  mt-1 z-10">
-      <div className="container flex flex-wrap justify-between items-center mx-auto">
+    <nav className="bg-white sticky top-0  mt-1 z-10">
+      <div className="container flex flex-wrap justify-between ">
         <a href="/" className="flex items-center">
           <img
             src="https://docs.liquality.io/img/logo_light.svg"
-            className="mr-3 h-6 sm:h-10"
+            className="h-6 sm:h-10"
             alt="Liquality Logo"
           />
         </a>

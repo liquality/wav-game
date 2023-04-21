@@ -58,3 +58,63 @@ root {
 .headerBox {
   width: 40%;
 }
+
+.modalButtonSignIn {
+  border: 2px solid #d9d9d9;
+  border-radius: 30px;
+  background-color: white;
+  color: grey;
+  width: 70%;
+  height: 45px;
+}
+
+.modalButtonSignIn:hover {
+  border: 2px solid #d9d9d9 !important;
+  background-color: white !important;
+  color: grey !important;
+}
+
+.modalButtonSignIn:active {
+  border: 2px solid #d9d9d9 !important;
+  background-color: white !important;
+  color: grey !important;
+}
+
+.modalButtonSignIn:focus {
+  border: 2px solid #d9d9d9 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+.modalTitle {
+  margin-top: 30px;
+  color: #000d35;
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
+  font-size: 18px;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+.modalRow {
+  flex: 1;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+.modalTerms {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: center;
+  text-decoration: underline;
+  color: #878787;
+}
+
+.modalTerms:hover {
+  color: #878787;
+}
