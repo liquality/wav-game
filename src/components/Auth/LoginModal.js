@@ -14,9 +14,9 @@ export const LoginModal = (props) => {
   return (
     <>
       <Modal show={show} onHide={handleClose}>
-        <div className="w-full  text-center bg-white border ">
+        <div className="w-full  text-center bg-white">
           <p className="modalTitle">Register or Log-in</p>
-          <div className=" mt-4">
+          <div className=" mt-4 mb-5">
             <button className="modalButtonSignIn mb-3" onClick={handleClose}>
               Google
             </button>
@@ -74,6 +74,7 @@ export const LoginModal = (props) => {
             Terms & Conditions
           </a>
         </div>
+        <br />
       </Modal>
     </>
   );
