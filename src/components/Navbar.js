@@ -1,25 +1,7 @@
 import React from "react";
-import { Modal } from "react-bootstrap";
 
 const Navbar = () => {
   const [address, setAddress] = React.useState("Sign in");
-
-  const [showNftMenu, setShowNftMenu] = React.useState(false);
-  const [nftMenuClass, setNftMenuClass] = React.useState(
-    "absolute z-10 hidden py-2 mt-1 bg-white rounded-md shadow-lg"
-  );
-
-  const setShowDropdown = () => {
-    if (!showNftMenu) {
-      setShowNftMenu(true);
-      setNftMenuClass("absolute z-10 py-2 mt-1 bg-white rounded-md shadow-lg");
-    } else {
-      setShowNftMenu(false);
-      setNftMenuClass(
-        "absolute z-10 hidden py-2 mt-1 bg-white rounded-md shadow-lg"
-      );
-    }
-  };
 
   React.useEffect(() => {
     if (localStorage.getItem("loginResponse")) {
@@ -36,7 +18,6 @@ const Navbar = () => {
     }
   }, [address]);
 
-  console.log(nftMenuClass, "NFT MENU CLASS", showNftMenu);
   return (
     <nav className="bg-white sticky top-0  mt-1 z-10">
       <div className="container flex flex-wrap justify-between ">
