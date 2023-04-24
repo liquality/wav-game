@@ -1,6 +1,7 @@
 /* Global Styles */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
 
 root {
   font-family: "Montserrat";
@@ -93,7 +94,6 @@ root {
   -webkit-font-smoothing: antialiased;
   font-size: 18px;
 
-  text-align: center;
   text-transform: uppercase;
 
   margin-left: auto;
@@ -117,4 +117,48 @@ root {
 
 .modalTerms:hover {
   color: #878787;
+}
+
+.custom-modal {
+  max-width: 80%;
+}
+
+.flexDirectionRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.leftModalContainer {
+  width: 140rem;
+  border-right: 2px solid black;
+  text-align: center;
+}
+
+.rightModalContainer {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.rightSubHeadingText {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+}
+.rightSubHeadingTextSmall {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+}
+
+.headingBold {
+  font-weight: 700;
+}
+.headingThin {
+  font-weight: 400;
 }
