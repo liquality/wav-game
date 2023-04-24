@@ -62,13 +62,22 @@ export const LoginModal = (props) => {
               >
                 Google
               </button>
-              <button className="modalButtonSignIn  mb-3" onClick={handleClose}>
+              <button
+                className="modalButtonSignIn  mb-3"
+                onClick={() => createNewWallet()}
+              >
                 Discord
               </button>
-              <button className="modalButtonSignIn  mb-3" onClick={handleClose}>
+              <button
+                className="modalButtonSignIn  mb-3"
+                onClick={() => createNewWallet()}
+              >
                 Facebook
               </button>
-              <button className="modalButtonSignIn  mb-3" onClick={handleClose}>
+              <button
+                className="modalButtonSignIn  mb-3"
+                onClick={() => createNewWallet()}
+              >
                 Twitch
               </button>
             </div>
