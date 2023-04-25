@@ -4,6 +4,9 @@ import { Modal } from "react-bootstrap";
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import { AuthService, tryRegisterSW } from "@liquality/wallet-sdk";
 import { DataContext } from "../../DataContext";
+import { LoginOrRegister } from "./LogInOrRegister";
+import { PickAvatar } from "./PickAvatar";
+import { Welcome } from "./Welcome";
 
 const verifierMap = {
   google: {
@@ -26,6 +29,8 @@ const directParams = {
 export const LoginModal = (props) => {
   const { show, setShow } = props;
   const [tKey, setTKey] = useState({});
+  const [content, setContent] = useState("loginOrRegister");
+
   //const [show, setShow] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
   //const { loginResponse, setLoginResponse } = React.useContext(DataContext);
@@ -35,94 +40,37 @@ export const LoginModal = (props) => {
 
   useEffect(() => {
     const init = async () => {
-      const registration = tryRegisterSW("/serviceworker/sw.js");
+      await tryRegisterSW("/serviceworker/sw.js");
       const tKeyResponse = await AuthService.init(directParams);
       setTKey(tKeyResponse);
     };
 
     init();
-  }, [loginResponse]);
+  }, [loginResponse, content]);
   console.log(loginResponse, "LOGINRESPONSE");
 
   const createNewWallet = async () => {
     const response = await AuthService.createWallet(tKey, verifierMap);
     setLoginResponse(response);
+    setContent("pickAvatar");
+  };
+
+  console.log(content, "WHICH CONTENT?");
+
+  const whichContentToRender = () => {
+    if (content === "loginOrRegister") {
+      return <LoginOrRegister createNewWallet={createNewWallet} />;
+    } else if (content === "pickAvatar") {
+      return <PickAvatar setContent={setContent} />;
+    } else if (content === "welcome") {
+      return <Welcome setContent={setContent} />;
+    } else return null;
   };
 
   return (
     <>
       <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
-        <div className="flexDirectionRow">
-          <div className="leftModalContainer">
-            <p className="modalTitle">Log-in or register</p>
-            <div className="mt-4 mb-5 ">
-              <button
-                className="modalButtonSignIn mb-3"
-                onClick={() => createNewWallet()}
-              >
-                Google
-              </button>
-              <button
-                className="modalButtonSignIn  mb-3"
-                onClick={() => createNewWallet()}
-              >
-                Discord
-              </button>
-              <button
-                className="modalButtonSignIn  mb-3"
-                onClick={() => createNewWallet()}
-              >
-                Facebook
-              </button>
-              <button
-                className="modalButtonSignIn  mb-3"
-                onClick={() => createNewWallet()}
-              >
-                Twitch
-              </button>
-            </div>
-            <br />
-            <br />
-            <div className="flex justify-center items-center">
-              powered by <LiqualityLogo />
-              Liquality
-            </div>
-            <a
-              rel="noreferrer"
-              target="_blank"
-              href="https://docs.liquality.io/"
-              className="modalTerms flex justify-center items-center"
-            >
-              Terms & Conditions
-            </a>
-          </div>
-          <div className="rightModalContainer ">
-            {" "}
-            <div className="mt-4 mb-5">
-              <p className="rightSubHeadingText">First time here?</p>
-              <p className="rightSubHeadingTextSmall mt-3">
-                👋 Welcome to wavGAME
-              </p>
-              <p className="rightSubHeadingTextSmall mt-3">
-                💰 With your registration we will also create a wallet
-              </p>
-              <p className="rightSubHeadingText mt-5">What is a wallet?</p>
-              <p className="rightSubHeadingTextSmall mt-3">
-                A place for all your digital assets. It allows you to view and
-                use your NFTs across wavGAME.
-              </p>
-
-              <p
-                style={{ color: "#646F85" }}
-                className="rightSubHeadingTextSmall mt-3"
-              >
-                wavGAME uses tKey to securely set-up and access your in-game
-                wallet with authentication factors. One key will be set to this
-                particular device, and its web-based only.
-              </p>
-            </div>
-          </div>
-        </div>
+        {whichContentToRender()}
       </Modal>
     </>
   );

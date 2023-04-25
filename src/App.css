@@ -162,3 +162,34 @@ root {
 .headingThin {
   font-weight: 400;
 }
+
+.passwordInputBox {
+  background-color: transparent;
+  color: #000000;
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  outline: none !important;
+  outline-style: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid #000000 1px;
+  padding: 3px;
+  margin: 15;
+  width: 80%;
+  padding-bottom: 10px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.passwordInputBox:focus {
+  outline: none !important;
+  border: none;
+  text-decoration: none;
+}
