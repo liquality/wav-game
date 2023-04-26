@@ -9,6 +9,7 @@ import { PickAvatar } from "./PickAvatar";
 import { Welcome } from "./Welcome";
 import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
+import { CompletedPayment } from "./CompletedPayment";
 
 const verifierMap = {
   google: {
@@ -70,6 +71,8 @@ export const LoginModal = (props) => {
       return <PickArtist setContent={setContent} />;
     } else if (content === "creditcardPayment") {
       return <CreditcardPayment setContent={setContent} />;
+    } else if (content === "completedPayment") {
+      return <CompletedPayment handleClose={handleClose} />;
     } else return null;
   };
 

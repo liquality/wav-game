@@ -44,7 +44,7 @@ export const CreditcardPayment = (props) => {
 
         <p
           style={{ color: "#646F85", width: "30%" }}
-          className="rightSubHeadingTextSmall "
+          className="rightSubHeadingTextSmall mt-5"
         >
           Game math it takes at least 20 to get to level 3
         </p>
@@ -81,7 +81,14 @@ export const CreditcardPayment = (props) => {
             payment method (from credit card to cross chain crypto), from
             anywhere in the world.
           </p>
-          <div className="flex justify-center items-center mt-5">
+          <button
+            style={{ width: "105%" }}
+            className="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full  px-4 py-2 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 navBarStartBtn mt-4 mb-1 px-4"
+            onClick={() => setContent("completedPayment")}
+          >
+            Continue
+          </button>
+          <div className="flex justify-center items-center mt-3">
             powered by{" "}
             <img
               width="20"

@@ -1,5 +1,5 @@
 import React from "react";
-import { LoginModal } from "../components/Auth/LoginModal";
+import { LoginModal } from "../components/Onboarding/LoginModal";
 
 export default function Home() {
   const [show, setShow] = React.useState(false);
