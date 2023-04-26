@@ -37,7 +37,7 @@ export const Welcome = (props) => {
       <button
         style={{ width: "105%" }}
         className="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full  px-4 py-2 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 navBarStartBtn mt-5 mb-3 px-4"
-        onClick={() => setContent("welcome")}
+        onClick={() => setContent("pickArtist")}
       >
         Continue
       </button>

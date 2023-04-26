@@ -35,7 +35,7 @@ export const PickAvatar = (props) => {
       <button
         style={{ width: "85%" }}
         className="modalButtonSignIn  mt-5 mb-3 px-4"
-        onClick={() => setContent("pickArtist")}
+        onClick={() => setContent("welcome")}
       >
         Continue
       </button>

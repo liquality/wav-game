@@ -7,6 +7,8 @@ import { DataContext } from "../../DataContext";
 import { LoginOrRegister } from "./LogInOrRegister";
 import { PickAvatar } from "./PickAvatar";
 import { Welcome } from "./Welcome";
+import { PickArtist } from "./PickArtist";
+import { CreditcardPayment } from "./CreditcardPayment";
 
 const verifierMap = {
   google: {
@@ -64,6 +66,10 @@ export const LoginModal = (props) => {
       return <PickAvatar setContent={setContent} />;
     } else if (content === "welcome") {
       return <Welcome setContent={setContent} />;
+    } else if (content === "pickArtist") {
+      return <PickArtist setContent={setContent} />;
+    } else if (content === "creditcardPayment") {
+      return <CreditcardPayment setContent={setContent} />;
     } else return null;
   };
 
