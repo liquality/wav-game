@@ -32,7 +32,7 @@ const directParams = {
 export const LoginModal = (props) => {
   const { show, setShow } = props;
   const [tKey, setTKey] = useState({});
-  const [content, setContent] = useState("loginOrRegister");
+  const [content, setContent] = useState("pickArtist");
 
   //const [show, setShow] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
@@ -79,6 +79,9 @@ export const LoginModal = (props) => {
   return (
     <>
       <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
+        {" "}
+        {/* Add a close button */}
+        <button className="" onClick={handleClose}></button>
         {whichContentToRender()}
       </Modal>
     </>

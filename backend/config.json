@@ -1,0 +1,12 @@
+{
+  "database_connection": {
+    "host": "localhost",
+    "user": "root",
+    "database": "wav_game",
+    "password": "YOUR_DB_PASSWORD"
+  },
+  "rpc_urls": {
+    "mainnet_eth": "https://mainnet.infura.io/v3/a2ad6f8c0e57453ca4918331f16de87d",
+    "mainnet_bsc": "https://bsc-dataseed2.binance.org/"
+  }
+}
