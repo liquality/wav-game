@@ -53,24 +53,15 @@ export const LoginOrRegister = (props) => {
       <div className="rightModalContainer ">
         {" "}
         <div className="mt-4 mb-5">
-          <p className="rightSubHeadingText">First time here?</p>
-          <p className="rightSubHeadingTextSmall mt-3">👋 Welcome to wavGAME</p>
-          <p className="rightSubHeadingTextSmall mt-3">
-            💰 With your registration we will also create a wallet
+          <p className="rightSubHeadingTextSmall mt-5">
+            <b>👋 Welcome to wavGAME</b>
           </p>
-          <p className="rightSubHeadingText mt-5">What is a wallet?</p>
           <p className="rightSubHeadingTextSmall mt-3">
-            A place for all your digital assets. It allows you to view and use
-            your NFTs across wavGAME.
+            💰 Your registration creates a wallet to securely hold your NFTs.
           </p>
-
-          <p
-            style={{ color: "#646F85" }}
-            className="rightSubHeadingTextSmall mt-3"
-          >
-            wavGAME uses tKey to securely set-up and access your in-game wallet
-            with authentication factors. One key will be set to this particular
-            device, and its web-based only.
+          <p className="rightSubHeadingTextSmall mt-5">
+            To find your games in progress you must log-in with the same
+            credentials you registered with.
           </p>
         </div>
       </div>

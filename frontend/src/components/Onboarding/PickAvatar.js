@@ -32,10 +32,12 @@ export const PickAvatar = (props) => {
         onChange={handleUsernameChange}
       />
 
+      {/* TODO: make button inactive if no username is put in */}
       <button
         style={{ width: "85%" }}
         className="modalButtonSignIn  mt-5 mb-3 px-4"
         onClick={() => setContent("welcome")}
+        disabled={username}
       >
         Continue
       </button>

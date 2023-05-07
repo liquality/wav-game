@@ -6,7 +6,7 @@ import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 
 export const CreditcardPayment = (props) => {
   const { setContent } = props;
-  const [inputValue, setInputValue] = useState(0);
+  const [inputValue, setInputValue] = useState(1);
 
   const handleIncrement = () => {
     setInputValue(inputValue + 1);
@@ -24,22 +24,24 @@ export const CreditcardPayment = (props) => {
         <div className="flexDirectionRow">
           <p className="rightSubHeadingTextSmall ">How many?</p>
 
-          <input
-            type="number"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="inputNumberIncrement"
-          />
-          <div>
-            <button onClick={handleDecrement} className="mr-4 ml-3">
+          <div className="d-grid input-group">
+            <button onClick={handleDecrement} className="ml-4">
               -
             </button>
-            <button onClick={handleIncrement}>+</button>
+            <input
+              type="number"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              className="form-control inputNumberIncrement"
+            />
+            <button onClick={handleIncrement} className="ml-4">
+              +
+            </button>
           </div>
         </div>
         <div className="flexDirectionRow mt-4">
           <p className="rightSubHeadingTextSmall ">Total Price</p>
-          <p className="rightSubHeadingTextSmall ml-8">$1000</p>
+          <p className="rightSubHeadingTextSmall ml-8">$10</p>
         </div>
 
         <p
@@ -52,9 +54,9 @@ export const CreditcardPayment = (props) => {
         <br />
         <br />
       </div>
-      <div className="rightModalContainer ">
+      <div className="rightModalContainer -mb-2">
         {" "}
-        <div className="mt-4 mb-5">
+        <div className="mt-4 mb-2">
           <p className="modalTitle">
             Get ARTISTNAME NFTs & Pay with credit card
           </p>
@@ -81,14 +83,8 @@ export const CreditcardPayment = (props) => {
             payment method (from credit card to cross chain crypto), from
             anywhere in the world.
           </p>
-          <button
-            style={{ width: "105%" }}
-            className="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full  px-4 py-2 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 navBarStartBtn mt-4 mb-1 px-4"
-            onClick={() => setContent("completedPayment")}
-          >
-            Continue
-          </button>
-          <div className="flex justify-center items-center mt-3">
+
+          <div className="flex justify-center items-center mt-5">
             powered by{" "}
             <img
               width="20"
