@@ -23,9 +23,13 @@ CREATE TABLE `user` (
 
 CREATE TABLE `game` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` varchar(200) NOT NULL,
   `user_id` int(11) NOT NULL,
   `level` int(11) NOT NULL,
-  `game_name` varchar(200) NOT NULL,
+  `artist_name` varchar(200) NOT NULL,
+  `level_4_claimed_prizes`int(11) NOT NULL, 
+  `level_5_claimed_prizes`int(11) NOT NULL,
+  `level_6_claimed_main_prize` TINYINT(1) NOT NULL DEFAULT 0;
   `claimable_prize_count` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_game_user`
