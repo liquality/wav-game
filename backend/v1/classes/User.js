@@ -1,3 +1,6 @@
+const MySQL = require("../../MySQL");
+const ApiError = require("./ApiError");
+
 class User {
   constructor(user) {
     this.set(user);
@@ -10,8 +13,6 @@ class User {
       this.username = user.username;
       this.avatar = user.avatar;
       this.public_address = user.public_address;
-      this.level = user.level;
-      this.claimable_prize_count = user.claimable_prize_count;
     }
   }
 
@@ -23,15 +24,8 @@ class User {
     const promise = new Promise((resolve, reject) => {
       this.MySQL.pool.getConnection((err, db) => {
         db.query(
-          "insert into `user` (google_email,username,avatar,public_address,level, claimable_prize_count) values (?,?,?,?,?,?,10,?);",
-          [
-            user.google_email,
-            user.username,
-            user.avatar,
-            user.public_address,
-            user.level,
-            user.claimable_prize_count,
-          ],
+          "insert into `user` (google_email,username,avatar,public_address) values (?,?,?,?);",
+          [user.google_email, user.username, user.avatar, user.public_address],
           (err, results, fields) => {
             if (err) {
               reject(new this.ApiError(500, err));
@@ -51,9 +45,12 @@ class User {
 
   read = async (id) => {
     const user = this;
+    console.log(user, "USER??");
     const promise = new Promise((resolve, reject) => {
       if (id) {
-        this.MySQL.pool.getConnection((err, db) => {
+        console.log(id, "inside here");
+        MySQL.pool.getConnection((err, db) => {
+          console.log("Getting db connection", db, err);
           db.execute(
             "select * from `user` where id = ?",
             [id],
@@ -64,6 +61,7 @@ class User {
                 reject(new this.ApiError(404, "User not found"));
               } else {
                 user.set(results[0]);
+                console.log(results, "results??");
                 resolve(user);
               }
               db.release();
@@ -83,14 +81,12 @@ class User {
       const promise = new Promise((resolve, reject) => {
         this.MySQL.pool.getConnection((err, db) => {
           db.query(
-            "update `user` set google_email=?, username=?, avatar=?, public_address=?, level=?, claimable_prize_count=? where id=?;",
+            "update `user` set google_email=?, username=?, avatar=?, public_address=? where id=?;",
             [
               user.google_email,
               user.username,
               user.avatar,
               user.public_address,
-              user.level,
-              user.claimable_prize_count,
               user.id,
             ],
             (err, results, fields) => {

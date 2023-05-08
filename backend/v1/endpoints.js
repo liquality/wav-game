@@ -9,6 +9,13 @@ endpoints.createUser = {
   handler: userHandler.create,
   description: "create user",
 };
+endpoints.createUser = {
+  url: "/v1/user/:id",
+  method: "get",
+  middleware: [],
+  handler: userHandler.read,
+  description: "create user",
+};
 
 endpoints.updateUser = {
   url: "/v1/user/:id",
