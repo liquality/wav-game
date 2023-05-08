@@ -45,12 +45,9 @@ class User {
 
   read = async (id) => {
     const user = this;
-    console.log(user, "USER??");
     const promise = new Promise((resolve, reject) => {
       if (id) {
-        console.log(id, "inside here");
         MySQL.pool.getConnection((err, db) => {
-          console.log("Getting db connection", db, err);
           db.execute(
             "select * from `user` where id = ?",
             [id],
@@ -61,7 +58,6 @@ class User {
                 reject(new this.ApiError(404, "User not found"));
               } else {
                 user.set(results[0]);
-                console.log(results, "results??");
                 resolve(user);
               }
               db.release();

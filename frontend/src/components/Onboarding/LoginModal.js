@@ -50,15 +50,12 @@ export const LoginModal = (props) => {
 
     init();
   }, [loginResponse, content]);
-  console.log(loginResponse, "LOGINRESPONSE");
 
   const createNewWallet = async () => {
     const response = await AuthService.createWallet(tKey, verifierMap);
     setLoginResponse(response);
     setContent("pickAvatar");
   };
-
-  console.log(content, "WHICH CONTENT?");
 
   const whichContentToRender = () => {
     if (content === "loginOrRegister") {

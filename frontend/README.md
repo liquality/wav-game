@@ -11,4 +11,4 @@ Created using Liquality SDK + React
 # Run the app
 
 `npm install`
-`npm start`
+`npm run dev` //Opens on PORT=3005 which is important because thats where the service worker works
