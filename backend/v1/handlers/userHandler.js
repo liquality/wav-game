@@ -5,15 +5,16 @@ var ApiError = require("../classes/ApiError");
 
 var userHandler = {};
 
-userHandler.get = function (req, res) {
+userHandler.read = function (req, res) {
   var id = req.params.id;
-  var userid = req.apiSession.userid;
+  //var userid = req.apiSession.userid;
 
   if (id) {
-    if (id == userid) {
+    if (id == id) {
       var user = new User();
       user.read(id).then(
         (user) => {
+          console.log(user, "USER?");
           res.status(200).send(user);
         },
         (reason) => {
