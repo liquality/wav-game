@@ -5,6 +5,8 @@ var ApiError = require("../classes/ApiError");
 
 var userHandler = {};
 
+//Add JWT token for session management
+
 userHandler.read = function (req, res) {
   var id = req.params.id;
   //var userid = req.apiSession.userid;
