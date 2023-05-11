@@ -6,8 +6,9 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Balances } from "./pages/Balances";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 import { setupSDK } from "./utils";
 
@@ -21,6 +22,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("loginResponse", JSON.stringify(loginResponse));
   }, [loginResponse]);
+  const location = useLocation();
 
   return (
     <DataContext.Provider
@@ -29,14 +31,18 @@ function App() {
         setLoginResponse: setLoginResponse,
       }}
     >
-      <body className="stretched device-xl bg-white no-transition">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/balances" element={<Balances />} />
-        </Routes>
-      </body>
+      {
+        location.pathname === '/dashboard' ? <Dashboard /> :
+          <body className="stretched device-xl bg-white no-transition">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/balances" element={<Balances />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+          </body>
+      }
     </DataContext.Provider>
   );
 }

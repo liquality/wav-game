@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
@@ -16,8 +17,16 @@ module.exports = {
       silver: "#ecebff",
       "bubble-gum": "#ff77e9",
       bermuda: "#78dcca",
+      dark: 'rgb(var(--dark) / <alpha-value>)',
+      activePinkStroke: "#BC2B8B", 
+      activePink: "#EF22A9",
+      completedStroke: "#BF3948", 
+      completed: "#4B1F3E", 
+      lockedGray: "#333333",
+      lockedGrayStroke: "#828282"
     },
-    extend: {},
+    extend: {
+    },
   },
   plugins: [require("flowbite/plugin")],
 };
