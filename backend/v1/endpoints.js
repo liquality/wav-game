@@ -14,7 +14,7 @@ endpoints.createUser = {
 endpoints.readUser = {
   url: "/v1/user/:id",
   method: "get",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: userHandler.read,
   description: "create user",
 };

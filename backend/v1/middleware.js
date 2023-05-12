@@ -7,7 +7,7 @@ var config = require("../config.json");
 var middleware = {};
 
 // Middleware function to authenticate JWT token
-middleware.authenticateToken = function (req, res, next) {
+middleware.authenticateJWT = function (req, res, next) {
   // Get the token from the Authorization header
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1];
