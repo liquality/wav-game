@@ -40,7 +40,8 @@ userHandler.create = function (req, res) {
 
   user.create().then(
     (result) => {
-      res.status(200).send({ result });
+      console.log(result, "RESULT AFTER CREATE USER");
+      res.status(200).send(result);
     },
     (reject) => {
       res.status(400).send(new ApiError(400, reject));

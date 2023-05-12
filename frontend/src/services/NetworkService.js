@@ -30,14 +30,14 @@ const NetworkService = {
     });
     return promise;
   },
-  getResourceWithAuth: function (url, session) {
+  getResourceWithAuth: function (url, jwt) {
     var promise = new Promise((resolve, reject) => {
       let request = {
         method: "GET",
         headers: {
           Accept: "application/json",
-          //"Content-Type": "application/json",
-          //"x-session": session.guid,
+          Authorization: "Bearer " + jwt,
+          "Content-Type": "application/json",
         },
       };
 
@@ -54,16 +54,13 @@ const NetworkService = {
     });
     return promise;
   },
-  putResourceWithAuth: function (url, data, session) {
+  putResourceWithAuth: function (url, data, jwt) {
     var promise = new Promise((resolve, reject) => {
       var headers = {
         Accept: "application/json",
+        Authorization: "Bearer " + jwt,
         "Content-Type": "application/json",
       };
-
-      if (session) {
-        headers["x-session"] = session.guid;
-      }
 
       let request = {
         method: "PUT",
@@ -84,45 +81,18 @@ const NetworkService = {
     });
     return promise;
   },
-  putNoDataResourceWithAuth: function (url, session) {
+
+  postResourceWithAuth: function (url, data, jwt) {
     var promise = new Promise((resolve, reject) => {
       var headers = {
         Accept: "application/json",
+        Authorization: "Bearer " + jwt,
         "Content-Type": "application/json",
       };
 
-      if (session) {
+      /*   if (session) {
         headers["x-session"] = session.guid;
-      }
-
-      let request = {
-        method: "PUT",
-        headers: headers,
-      };
-
-      fetch(serverAddress + url, request)
-        .then((response) => {
-          return NetworkService.handleJsonResponse(response);
-        })
-        .then((responseJson) => {
-          resolve(responseJson);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-    return promise;
-  },
-  postResourceWithAuth: function (url, data, session) {
-    var promise = new Promise((resolve, reject) => {
-      var headers = {
-        Accept: "application/json",
-        // "Content-Type": "application/json",
-      };
-
-      if (session) {
-        headers["x-session"] = session.guid;
-      }
+      } */
 
       let request = {
         method: "POST",
@@ -170,16 +140,17 @@ const NetworkService = {
     });
     return promise;
   },
-  deleteResourceWithAuth: function (url, session) {
+  deleteResourceWithAuth: function (url, jwt) {
     var promise = new Promise((resolve, reject) => {
       var headers = {
         Accept: "application/json",
+        Authorization: "Bearer " + jwt,
         "Content-Type": "application/json",
       };
 
-      if (session) {
+      /*     if (session) {
         headers["x-session"] = session.guid;
-      }
+      } */
 
       let request = {
         method: "DELETE",
