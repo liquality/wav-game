@@ -11,7 +11,7 @@ endpoints.createUser = {
   handler: userHandler.create,
   description: "create user",
 };
-endpoints.createUser = {
+endpoints.readUser = {
   url: "/v1/user/:id",
   method: "get",
   middleware: [],

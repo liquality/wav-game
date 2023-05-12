@@ -1,5 +1,7 @@
 const MySQL = require("../../MySQL");
 const ApiError = require("./ApiError");
+const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
 
 class User {
   constructor(user) {
@@ -21,19 +23,25 @@ class User {
   /*                  */
   create = async () => {
     const user = this;
+    console.log(user, "GETTING HERE USER?");
     const promise = new Promise((resolve, reject) => {
-      this.MySQL.pool.getConnection((err, db) => {
+      MySQL.pool.getConnection((err, db) => {
         db.query(
           "insert into `user` (google_email,username,avatar,public_address) values (?,?,?,?);",
           [user.google_email, user.username, user.avatar, user.public_address],
           (err, results, fields) => {
             if (err) {
-              reject(new this.ApiError(500, err));
+              reject(new ApiError(500, err));
             } else if (results.length < 1) {
-              reject(new this.ApiError(500, "User not saved!"));
+              reject(new ApiError(500, "User not saved!"));
             } else {
-              user.id = results.insertId;
-              resolve(user);
+              const { id, google_email, username, avatar, public_address } =
+                user;
+              const token = jwt.sign(
+                { id, google_email, username, avatar, public_address },
+                "my-secret"
+              );
+              resolve(user, token);
             }
             db.release();
           }
@@ -129,5 +137,7 @@ class User {
     return promise;
   };
 }
+
+/* HELPER FUNCTIONS */
 
 module.exports = User;
