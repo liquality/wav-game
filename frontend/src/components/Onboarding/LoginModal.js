@@ -32,7 +32,7 @@ const directParams = {
 export const LoginModal = (props) => {
   const { show, setShow } = props;
   const [tKey, setTKey] = useState({});
-  const [content, setContent] = useState("pickArtist");
+  const [content, setContent] = useState("loginOrRegister");
 
   //const [show, setShow] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
@@ -53,7 +53,7 @@ export const LoginModal = (props) => {
 
   const createNewWallet = async () => {
     const response = await AuthService.createWallet(tKey, verifierMap);
-    setLoginResponse(response);
+    setLoginResponse(response); //heb
     setContent("pickAvatar");
   };
 
