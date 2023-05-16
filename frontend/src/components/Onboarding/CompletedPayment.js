@@ -36,10 +36,6 @@ export const CompletedPayment = (props) => {
       >
         Start earning rare NFTs
       </button>
-      <div className="flex justify-center items-center mt-3 mb-3">
-        powered by <LiqualityLogo />
-        Liquality
-      </div>
     </div>
   );
 };

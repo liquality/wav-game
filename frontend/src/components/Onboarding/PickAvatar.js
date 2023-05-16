@@ -1,32 +1,33 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { TextField } from "@mui/material";
 
 import { ReactComponent as AvatarPlaceholder } from "../../images/avatar_placeholder.svg";
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 
 export const PickAvatar = (props) => {
-  const { show, setShow, setContent } = props;
+  const { show, setShow, setContent, setHeaderText } = props;
   const [username, setUsername] = useState("");
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
 
+  const handleSetNewPage = () => {
+    setContent("pickArtist");
+    setHeaderText("Choose an artist");
+  };
+
   return (
     <div className="text-center mx-auto">
-      <p className="modalTitle mb-3">Pick Avatar</p>
-
-      <div className="flex justify-center items-center mx-auto">
+      <div className="flex justify-center items-center mx-auto mt-5">
         {" "}
         <AvatarPlaceholder />
       </div>
 
-      <p style={{ textDecoration: "none" }} className="modalTerms mt-2">
-        max. xxx kB (PNG, JPEG, WAV, xyz, xyz)
-      </p>
-      <input
-        type="password"
-        className="passwordInputBox mt-5 mb-7"
+      <inxput
+        type="text"
+        className="passwordInputBox mt-5 mb-2"
         placeholder="Choose username"
         value={username}
         onChange={handleUsernameChange}
@@ -34,17 +35,13 @@ export const PickAvatar = (props) => {
 
       {/* TODO: make button inactive if no username is put in */}
       <button
-        style={{ width: "85%" }}
-        className="modalButtonSignIn  mt-5 mb-3 px-4"
-        onClick={() => setContent("welcome")}
-        disabled={username}
+        style={{ width: "180px" }}
+        className="modalButtonSignIn  mt-5 mb-5 px-4"
+        onClick={handleSetNewPage}
+        disabled={username ? false : true}
       >
         Continue
       </button>
-      <div className="flex justify-center items-center mt-3 mb-3">
-        powered by <LiqualityLogo />
-        Liquality
-      </div>
     </div>
   );
 };
