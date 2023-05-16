@@ -108,18 +108,20 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .modalButtonSignIn {
-  border: 2px solid #d9d9d9;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
   border-radius: 30px;
-  background-color: white;
-  color: grey;
-  width: 70%;
+  background: #ef22a9;
+  color: rgb(255, 255, 255);
+  width: 30%;
   height: 45px;
+  text-transform: uppercase;
 }
 
 .modalButtonSignIn:hover {
-  border: 2px solid #d9d9d9 !important;
-  background-color: white !important;
-  color: grey !important;
+  border: 2px solid #a50f73 !important;
 }
 
 .modalButtonSignIn:active {
@@ -146,6 +148,33 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: auto;
   margin-right: auto;
 }
+
+.enter {
+  margin-top: 30px;
+  color: #ff6c7b;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-left: auto;
+  margin-right: auto;
+}
+.wavGameHeader {
+  color: #ffffff;
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 80px;
+  margin-top: -5%;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  margin-left: auto;
+  margin-right: auto;
+}
 .modalRow {
   flex: 1;
   flex-direction: row;
@@ -167,17 +196,32 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .modal-close-x {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 25px;
+  right: 25px;
   z-index: 9999;
   cursor: pointer;
 }
+
+.modal-header-notext {
+  margin-top: 5%;
+}
+
+/* WaveWrld/Modal header */
 .custom-modal {
   max-width: 80%;
 }
 .custom-modal .modal-content {
   background-color: #1e1e1e;
   color: #fff;
+}
+
+.modal-header-text {
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  text-align: center;
+  color: #e0e0e0;
 }
 
 .line {
@@ -192,8 +236,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .leftModalContainer {
-  width: 140rem;
-  border-right: 2px solid black;
+  width: 80rem;
+  border-right: 1px solid #828282;
   text-align: center;
 }
 
@@ -205,25 +249,37 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .rightModalContainer {
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 3%;
+  padding-right: 3%;
+
+  width: 50%;
 }
 
 .rightSubHeadingText {
-  font-family: "000 webfont";
+  font-family: "Sora";
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
-  color: #000000;
+  color: #bdbdbd;
 }
-.rightSubHeadingTextSmall {
-  font-family: "000 webfont";
+
+.eyebrowLg {
+  /* WaveWrld/Lg Eyebrow */
+  font-family: "Sora";
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  color: #bdbdbd;
+}
+.rightSubHeadingTextSmall {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
   line-height: 22px;
-  color: #000000;
+  color: #bdbdbd;
 }
 
 .headingBold {

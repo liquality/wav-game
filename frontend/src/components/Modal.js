@@ -2,9 +2,10 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { ReactComponent as ModalCloseX } from "../images/modal_close_x.svg";
+import { PoweredByLiquality } from "./PoweredByLiquality";
 
 export const CustomModal = (props) => {
-  const { content, setShow, show } = props;
+  const { content, setShow, show, modalHeaderText } = props;
   const [tKey, setTKey] = useState({});
 
   const handleClose = () => setShow(false);
@@ -12,6 +13,7 @@ export const CustomModal = (props) => {
 
   useEffect(() => {});
 
+  console.log(modalHeaderText, "MODAL HEADER text content");
   return (
     <>
       <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
@@ -19,8 +21,17 @@ export const CustomModal = (props) => {
           <ModalCloseX />
         </button>
 
-        <div className="line">heeej</div>
+        <p className="modal-header-text">
+          {modalHeaderText ? (
+            modalHeaderText
+          ) : (
+            <div className="modal-header-notext"></div>
+          )}
+        </p>
+        <div className="line"></div>
         {content()}
+        <div className="line"></div>
+        <PoweredByLiquality />
       </Modal>
     </>
   );

@@ -80,8 +80,6 @@ export const PickArtist = (props) => {
 
   return (
     <div className="text-center mx-auto">
-      <p className="modalTitle mb-4">Pick/Confirm your artist</p>
-
       {/*  */}
       <div className="flex justify-center items-center mx-auto">
         {" "}
@@ -95,10 +93,6 @@ export const PickArtist = (props) => {
       >
         Continue
       </button>
-      <div className="flex justify-center items-center mt-3 mb-3">
-        powered by <LiqualityLogo />
-        Liquality
-      </div>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import { AuthService, tryRegisterSW } from "@liquality/wallet-sdk";
 import { DataContext } from "../../DataContext";
 import { LoginOrRegister } from "./LogInOrRegister";
 import { PickAvatar } from "./PickAvatar";
-import { Welcome } from "./Welcome";
 import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
@@ -34,6 +33,7 @@ export const LoginModal = (props) => {
   const { show, setShow } = props;
   const [tKey, setTKey] = useState({});
   const [content, setContent] = useState("loginOrRegister");
+  const [headerText, setHeaderText] = useState("");
 
   //const [show, setShow] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
@@ -60,27 +60,51 @@ export const LoginModal = (props) => {
     const response = await AuthService.createWallet(tKey, verifierMap);
     setLoginResponse(response);
     setContent("pickAvatar");
+    setHeaderText("Pick An Avatar");
   };
 
   const whichContentToRender = () => {
     if (content === "loginOrRegister") {
-      return <LoginOrRegister createNewWallet={createNewWallet} />;
+      return (
+        <LoginOrRegister
+          setHeaderText={setHeaderText}
+          createNewWallet={createNewWallet}
+        />
+      );
     } else if (content === "pickAvatar") {
-      return <PickAvatar setContent={setContent} />;
-    } else if (content === "welcome") {
-      return <Welcome setContent={setContent} />;
+      return (
+        <PickAvatar setHeaderText={setHeaderText} setContent={setContent} />
+      );
     } else if (content === "pickArtist") {
-      return <PickArtist setContent={setContent} />;
+      return (
+        <PickArtist setHeaderText={setHeaderText} setContent={setContent} />
+      );
     } else if (content === "creditcardPayment") {
-      return <CreditcardPayment setContent={setContent} />;
+      return (
+        <CreditcardPayment
+          setHeaderText={setHeaderText}
+          setContent={setContent}
+        />
+      );
     } else if (content === "completedPayment") {
-      return <CompletedPayment handleClose={handleClose} />;
+      return (
+        <CompletedPayment
+          setHeaderText={setHeaderText}
+          handleClose={handleClose}
+        />
+      );
     } else return null;
   };
 
+  console.log(content, "CURRENT CONTENT");
   return (
     <>
-      <CustomModal show={show} content={whichContentToRender}>
+      <CustomModal
+        show={show}
+        setShow={setShow}
+        content={whichContentToRender}
+        modalHeaderText={headerText}
+      >
         {" "}
         {whichContentToRender()}
       </CustomModal>
