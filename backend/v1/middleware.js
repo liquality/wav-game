@@ -1,9 +1,37 @@
 //var Quota = require("./classes/Quota");
 var ApiError = require("./classes/ApiError");
+const jwt = require("jsonwebtoken");
 
 var config = require("../config.json");
 
 var middleware = {};
+
+// Middleware function to authenticate JWT token
+middleware.authenticateJWT = function (req, res, next) {
+  // Get the token from the Authorization header
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
+
+  // If no token is provided, return a 401 Unauthorized response
+  if (!token) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  //TODO: add secret in env variable/config file
+  // Verify the token
+  jwt.verify(token, "my-secret", (err, user) => {
+    if (err) {
+      // If the token is invalid, return a 403 Forbidden response
+      return res.status(403).json({ error: "Invalid token" });
+    }
+
+    // If the token is valid, attach the decoded user to the request object for further use
+    req.user = user;
+
+    // Proceed to the next middleware or route handler
+    next();
+  });
+};
 
 middleware.service = function (req, res, next) {
   if (req.connection.localAddress === req.connection.remoteAddress) {

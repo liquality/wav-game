@@ -58,7 +58,7 @@ export const LoginModal = (props) => {
 
   const createNewWallet = async () => {
     const response = await AuthService.createWallet(tKey, verifierMap);
-    setLoginResponse(response);
+    setLoginResponse(response); //heb
     setContent("pickAvatar");
     setHeaderText("Pick An Avatar");
   };

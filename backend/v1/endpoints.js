@@ -11,10 +11,10 @@ endpoints.createUser = {
   handler: userHandler.create,
   description: "create user",
 };
-endpoints.createUser = {
+endpoints.readUser = {
   url: "/v1/user/:id",
   method: "get",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: userHandler.read,
   description: "create user",
 };
@@ -22,7 +22,7 @@ endpoints.createUser = {
 endpoints.updateUser = {
   url: "/v1/user/:id",
   method: "put",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: userHandler.update,
   description: "update user",
 };
@@ -30,7 +30,7 @@ endpoints.updateUser = {
 endpoints.deleteUser = {
   url: "/v1/user/:id",
   method: "delete",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: userHandler.delete,
   description: "delete user",
 };
