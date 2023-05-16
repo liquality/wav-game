@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { FilledInput } from "@mui/material";
+import { TextField } from "@mui/material";
 
 import { ReactComponent as AvatarPlaceholder } from "../../images/avatar_placeholder.svg";
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
@@ -25,10 +25,9 @@ export const PickAvatar = (props) => {
         <AvatarPlaceholder />
       </div>
 
-      <FilledInput label="Label" placeholder="Placeholder" />
-      <input
-        type="password"
-        className="passwordInputBox mt-5 mb-7"
+      <inxput
+        type="text"
+        className="passwordInputBox mt-5 mb-2"
         placeholder="Choose username"
         value={username}
         onChange={handleUsernameChange}
@@ -36,10 +35,10 @@ export const PickAvatar = (props) => {
 
       {/* TODO: make button inactive if no username is put in */}
       <button
-        style={{ width: "85%" }}
-        className="modalButtonSignIn  mt-5 mb-3 px-4"
+        style={{ width: "180px" }}
+        className="modalButtonSignIn  mt-5 mb-5 px-4"
         onClick={handleSetNewPage}
-        disabled={username}
+        disabled={username ? false : true}
       >
         Continue
       </button>

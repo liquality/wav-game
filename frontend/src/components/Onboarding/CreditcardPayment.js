@@ -18,41 +18,22 @@ export const CreditcardPayment = (props) => {
     }
   };
   return (
-    <div className="flexDirectionRow">
-      <div className="leftModalContainerCreditcard">
-        <MysteryBox />
-        <div className="flexDirectionRow">
-          <p className="rightSubHeadingTextSmall ">How many?</p>
-
-          <div className="d-grid input-group">
-            <button onClick={handleDecrement} className="ml-4">
-              -
-            </button>
-            <input
-              type="number"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="form-control inputNumberIncrement"
-            />
-            <button onClick={handleIncrement} className="ml-4">
-              +
-            </button>
-          </div>
-        </div>
-        <div className="flexDirectionRow mt-4">
-          <p className="rightSubHeadingTextSmall ">Total Price</p>
-          <p className="rightSubHeadingTextSmall ml-8">$10</p>
-        </div>
-
-        <p
-          style={{ color: "#646F85", width: "30%" }}
-          className="rightSubHeadingTextSmall mt-5"
+    /*  <div className="flexDirectionRow">
+      <div className="flexDirectionRow">
+        <div
+          className="flex justify-center items-center align-center mt-5"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "5px",
+            width: "150px",
+            height: "200px",
+            backgroundColor: "white",
+          }}
         >
-          Game math it takes at least 20 to get to level 3
-        </p>
-
-        <br />
-        <br />
+         
+        </div>
       </div>
       <div className="rightModalContainer -mb-2">
         {" "}
@@ -61,19 +42,7 @@ export const CreditcardPayment = (props) => {
             Get ARTISTNAME NFTs & Pay with credit card
           </p>
 
-          <div className="flex justify-center items-center mt-5">
-            <CrossmintPayButton
-              clientId="_YOUR_CLIENT_ID_"
-              environment="_ENVIRONMENT_"
-              className="xmint-btn"
-              mintConfig={{
-                type: "erc-721",
-                quantity: "_NUMBER_OF_NFTS_",
-                totalPrice: "_PRICE_IN_NATIVE_TOKEN_",
-                // your custom minting arguments...
-              }}
-            />
-          </div>
+  
 
           <p
             style={{ color: "#646F85" }}
@@ -83,16 +52,66 @@ export const CreditcardPayment = (props) => {
             payment method (from credit card to cross chain crypto), from
             anywhere in the world.
           </p>
-
-          <div className="flex justify-center items-center mt-5">
-            powered by{" "}
-            <img
-              width="20"
-              src="https://www.crossmint.io/assets/crossmint/logo.svg"
-            />
-            crossmint
-          </div>
         </div>
+      </div>
+    </div> */
+
+    <div className="flex">
+      <div className=" w-1/2 flex justify-center items-center margin-auto">
+        {/* Big image container */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "5px",
+            width: "200px",
+            height: "450px",
+            backgroundColor: "white",
+          }}
+        ></div>
+      </div>
+      <div className="w-1/2 flex flex-col justify-center">
+        {/* Text container */}
+
+        <div className="flexDirectionRow">
+          {" "}
+          <img
+            className="avatarImage ml-2"
+            src="https://avatars.githubusercontent.com/u/34882183?v=4"
+            alt="Artist Avatar"
+          />{" "}
+          <p className="mt-2">Artist Name</p>
+        </div>
+
+        <p className="mb-4">Unreleased Song</p>
+        <p className="mb-6">Unreleased Song Title</p>
+        <br></br>
+        <p className="lineNoCenter" style={{ width: "50%" }}></p>
+
+        <p className="mb-4">Game Rules</p>
+        <p className="mb-4">
+          • 4 items to get to level 3 <br></br>• 8 to level 4 <br></br>•16 to
+          level 5 <br></br>•32 to level 6
+        </p>
+        <p className="lineNoCenter mb-4" style={{ width: "50%" }}></p>
+
+        <div className="flexDirectionRow">
+          <p className="mr-3">QUANTITYBOX </p>{" "}
+          <p className="mr-3 ml-3">Total $100 </p>
+        </div>
+
+        <CrossmintPayButton
+          clientId="_YOUR_CLIENT_ID_"
+          environment="_ENVIRONMENT_"
+          className="xmint-btn"
+          mintConfig={{
+            type: "erc-721",
+            quantity: "_NUMBER_OF_NFTS_",
+            totalPrice: "_PRICE_IN_NATIVE_TOKEN_",
+            // your custom minting arguments...
+          }}
+        />
       </div>
     </div>
   );

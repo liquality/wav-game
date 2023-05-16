@@ -1,7 +1,9 @@
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
+import { ReactComponent as NextBtn } from "../../images/next_btn.svg";
+
 import { useState, useEffect } from "react";
 export const PickArtist = (props) => {
-  const { setContent } = props;
+  const { setContent, setHeaderText } = props;
 
   const [selectedId, setSelectedId] = useState(1);
 
@@ -12,71 +14,146 @@ export const PickArtist = (props) => {
   function renderArtistGrid() {
     return (
       <div>
-        <div className="grid grid-cols-3 gap-11">
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 1 ? "bg-blue-500" : ""
-            }`}
+        <div className="grid grid-cols-3 gap-8 mt-4">
+          {" "}
+          <button
             onClick={() => handleClick(1)}
-          ></div>
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 2 ? "bg-blue-500" : ""
-            }`}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
             onClick={() => handleClick(2)}
-          ></div>
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 3 ? "bg-blue-500" : ""
-            }`}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
             onClick={() => handleClick(3)}
-          ></div>
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 4 ? "bg-blue-500" : ""
-            }`}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
             onClick={() => handleClick(4)}
-          ></div>
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 5 ? "bg-blue-500" : ""
-            }`}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
             onClick={() => handleClick(5)}
-          ></div>
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 6 ? "bg-blue-500" : ""
-            }`}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
             onClick={() => handleClick(6)}
-          ></div>
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 7 ? "bg-blue-500" : ""
-            }`}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
             onClick={() => handleClick(7)}
-          ></div>
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 8 ? "bg-blue-500" : ""
-            }`}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
             onClick={() => handleClick(8)}
-          ></div>
-          <div
-            className={`bg-gray-500 rounded-full h-12 w-12 ${
-              selectedId === 9 ? "bg-blue-500" : ""
-            }`}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
             onClick={() => handleClick(9)}
-          ></div>
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
+          <button
+            onClick={() => handleClick(10)}
+            className="defaultArtistBtn flexDirectionRow"
+          >
+            <img
+              className="avatarImage ml-2"
+              src="https://avatars.githubusercontent.com/u/34882183?v=4"
+              alt="Artist Avatar"
+            />
+            <span className="artistName">Artist Name</span>
+            <NextBtn className="mr-3" />
+          </button>
         </div>
 
         {selectedId && (
-          <p style={{ textDecoration: "none" }} className="modalTerms mt-3 ">
+          <p
+            style={{ textDecoration: "none", fontFamily: "Sora" }}
+            className="modalTerms mt-3 "
+          >
             ARTIST NAME SELECTED ID: {selectedId}.
           </p>
         )}
       </div>
     );
   }
+
+  const handleSetNewPage = () => {
+    setContent("creditcardPayment");
+    setHeaderText("Get NFTs to Play");
+  };
 
   return (
     <div className="text-center mx-auto">
@@ -87,9 +164,9 @@ export const PickArtist = (props) => {
       </div>
 
       <button
-        style={{ width: "105%" }}
-        className="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full  px-4 py-2 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 navBarStartBtn mt-5 mb-3 px-4"
-        onClick={() => setContent("creditcardPayment")}
+        style={{ width: "180px" }}
+        className="modalButtonSignIn  mt-5 mb-5 px-4"
+        onClick={handleSetNewPage}
       >
         Continue
       </button>

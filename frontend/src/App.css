@@ -230,6 +230,11 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0 auto;
 }
 
+.lineNoCenter {
+  border-bottom: 1px solid #828282;
+  width: 80%;
+}
+
 .flexDirectionRow {
   display: flex;
   flex-direction: row;
@@ -290,10 +295,10 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .passwordInputBox {
-  background-color: transparent;
-  color: #000000;
-
-  font-family: "000 webfont";
+  background-color: #36343b;
+  height: 45px;
+  color: #cac4d0;
+  font-family: "Sora";
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -303,21 +308,46 @@ input[type="number"]::-webkit-outer-spin-button {
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: solid #000000 1px;
   padding: 3px;
   margin: 15;
   width: 80%;
   padding-bottom: 10px;
 }
 
-input:focus {
-  outline: none;
+.avatarImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.artistName {
+  flex: 1;
+  text-align: center;
+}
+
+.defaultArtistBtn {
+  background: #4b1f3e;
+  /* WaveWrld/Cards/completed stroke */
+  width: 230px;
+  border: 1px solid #bf3948;
+  border-radius: 45px;
+  display: flex;
+  align-items: center;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.defaultArtistBtn:hover {
+  background: #7f2d67;
 }
 
 .passwordInputBox:focus {
   outline: none !important;
-  border: none;
-  text-decoration: none;
+  box-shadow: none;
+  border-bottom: solid #cac4d0 1px;
 }
 
 .inputNumberIncrement {
@@ -334,6 +364,11 @@ input:focus {
 
 button.xmint-btn span {
   display: none;
+}
+
+button.xmint-btn {
+  background-color: #36343b;
+  width: 40%;
 }
 button.xmint-btn:after {
   content: "Pay with Creditcard";
