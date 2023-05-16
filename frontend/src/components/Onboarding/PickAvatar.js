@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { FilledInput } from "@mui/material";
 
 import { ReactComponent as AvatarPlaceholder } from "../../images/avatar_placeholder.svg";
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
@@ -24,6 +25,7 @@ export const PickAvatar = (props) => {
         <AvatarPlaceholder />
       </div>
 
+      <FilledInput label="Label" placeholder="Placeholder" />
       <input
         type="password"
         className="passwordInputBox mt-5 mb-7"
