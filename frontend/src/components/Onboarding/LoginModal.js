@@ -10,6 +10,7 @@ import { Welcome } from "./Welcome";
 import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
+import { CustomModal } from "../Modal";
 
 const verifierMap = {
   google: {
@@ -32,7 +33,7 @@ const directParams = {
 export const LoginModal = (props) => {
   const { show, setShow } = props;
   const [tKey, setTKey] = useState({});
-  const [content, setContent] = useState("pickArtist");
+  const [content, setContent] = useState("loginOrRegister");
 
   //const [show, setShow] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
@@ -43,9 +44,13 @@ export const LoginModal = (props) => {
 
   useEffect(() => {
     const init = async () => {
-      await tryRegisterSW("/serviceworker/sw.js");
-      const tKeyResponse = await AuthService.init(directParams);
-      setTKey(tKeyResponse);
+      try {
+        await tryRegisterSW("/serviceworker/sw.js");
+        const tKeyResponse = await AuthService.init(directParams);
+        setTKey(tKeyResponse);
+      } catch (err) {
+        console.log(err, "error inited");
+      }
     };
 
     init();
@@ -75,12 +80,10 @@ export const LoginModal = (props) => {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
+      <CustomModal show={show} content={whichContentToRender}>
         {" "}
-        {/* Add a close button */}
-        <button className="" onClick={handleClose}></button>
         {whichContentToRender()}
-      </Modal>
+      </CustomModal>
     </>
   );
 };

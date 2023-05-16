@@ -1,13 +1,32 @@
 /* Global Styles */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=000 webfont:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sora");
 
 root {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
 }
+
+@font-face {
+  font-family: "000 webfont";
+  src: url("./fonts/000webfont\ Regular.ttf") format("truetype");
+  /* Add other font properties if needed */
+}
+
+@font-face {
+  font-family: "Akka";
+  src: url("./fonts/akka.ttf") format("truetype");
+  /* Add other font properties if needed */
+}
+
+@font-face {
+  font-family: "Alba";
+  src: url("./fonts/ALBA____.TTF") format("truetype");
+  /* Add other font properties if needed */
+}
+
 :root {
-  --ifm-font-family-base: "Montserrat";
+  --ifm-font-family-base: "000 webfont";
 }
 
 input[type="number"],
@@ -38,7 +57,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .navBarText {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -52,7 +71,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .navBold {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   font-weight: 700;
 }
 
@@ -62,25 +81,25 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .navBarStartBtn {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   font-size: 18px;
   background-color: #9d4dfa;
 }
 
 .headerBtn {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   font-size: 15px;
   background-color: #9d4dfa;
   padding: 6px;
 }
 
 .fontFamily {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
 }
 
 .belowHeaderText {
   font-size: 18px;
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   line-height: 22px;
 }
 
@@ -133,7 +152,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-bottom: 15px;
 }
 .modalTerms {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -146,9 +165,25 @@ input[type="number"]::-webkit-outer-spin-button {
 .modalTerms:hover {
   color: #878787;
 }
-
+.modal-close-x {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  cursor: pointer;
+}
 .custom-modal {
   max-width: 80%;
+}
+.custom-modal .modal-content {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.line {
+  border-bottom: 1px solid #828282;
+  width: 70%;
+  margin: 0 auto;
 }
 
 .flexDirectionRow {
@@ -175,7 +210,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .rightSubHeadingText {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
@@ -183,7 +218,7 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #000000;
 }
 .rightSubHeadingTextSmall {
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -202,7 +237,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: transparent;
   color: #000000;
 
-  font-family: "Montserrat";
+  font-family: "000 webfont";
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
