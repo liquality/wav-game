@@ -6,18 +6,21 @@ import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 interface IWavGame {
 
-struct IDParam {
-    bool status;
+struct NFTParam {
     uint id;
     uint amount;
+}
+struct SetParam {
+    bool status;
+    uint id;
 }
 
 struct LevelParam {
     uint8 requiredBurn;
     uint8 requiredMint;
     uint32 prizeCutOff;
-    IDParam[] burnableSet;
-    IDParam[] mintableSet;
+    SetParam[] burnableSet;
+    SetParam[] mintableSet;
 }
 
 /// @title A title that should describe the contract/interface
@@ -34,8 +37,8 @@ struct Level {
     uint256 mintCount;
 }
 
-function collect(address _gameOwner, address _recipient, IDParam[] calldata _input) external payable;
+function collect(address _gameOwner, address _recipient, NFTParam[] calldata _input) external payable;
 
-function levelUp(address _owner, uint256 _nextLevel, IDParam[] memory _input) external;
+function levelUp(address _owner, uint256 _nextLevel, NFTParam[] memory _input) external;
 
 }

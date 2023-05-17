@@ -8,9 +8,8 @@ import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "@opengsn/contracts/src/ERC2771Recipient.sol";
 import "@opengsn/contracts/src/interfaces/IERC2771Recipient.sol";
 import "./interfaces/IWavGame.sol";
-import "./interfaces/IWavContract.sol";
+import "./interfaces/IWavNFT.sol";
 import "./libraries/Helper.sol";
-import "hardhat/console.sol";
 
 
 contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165 {
@@ -19,101 +18,104 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
 
     uint256 public entryFee; // In wei
     uint256 constant internal ENTRY_LEVEL = 1; 
-    IWavContract public wavContract; 
+    IWavNFT public wavNFT; 
     address payable public revenueContract; // Platform revenue spliting contract
 
     mapping(address => IWavGame.Level[]) internal wavGames; // Levels are 0-indexed. i.e level 1 = 0 in level
     mapping(address => mapping(uint256 => EnumerableSet.AddressSet)) collectors;// Collectors per level per owner game
-    mapping(address => mapping(uint256 => EnumerableSet.UintSet)) burnableSet;// Burnable IDs per level per owner game
-    mapping(address => mapping(uint256 => EnumerableSet.UintSet)) mintableSet;// Mintable IDs per level per owner game
+    mapping(address => mapping(uint256 => EnumerableSet.UintSet)) burnableSet;// Burnable NFT sets per level per owner game
+    mapping(address => mapping(uint256 => EnumerableSet.UintSet)) mintableSet;// Mintable NFT sets per level per owner game
 
     
-    event Collected(address caller, address to, uint256 amount, uint256 refunded, uint256 totalMinted);
+    event Collected(address caller, address to, uint256 amountSent, uint256 totalMinted);
     event LeveledUp(address caller, address collector, uint256 nextLevel, uint256 totalMinted);
-    event SpecialMint(address caller, address collector, uint256 id, uint256 amount);
+    event SpecialMint(address collector, uint256 id, uint256 amount);
     event PaymentForwarded(address to, uint256 amount);
     event GameSet(address owner, uint256 level);
     event LevelSet(address owner, uint256 level);
 
+    error InsufficientPayment(uint256 requiredAmt, uint256 ammountSent);   
+    error NFTNotInMintableSet(uint256 invalidNFT, uint256 level);
+    error RequiredBurnNotMet(uint8 requiredBurn);
+    error FundsReleaseFailed();
+    error PaymentRequired();
+    error LevelNotFound();
+
 	// Create all initial artists
 	// create and map the 6 artist level / island to each artist, and define the Levels specific details per artist
-    constructor(IWavContract _wavContract, address _trustedForwarder,uint256 _entryFee, address payable _revenueContract) {
-        wavContract = _wavContract;
+    constructor(IWavNFT _wavNFT, address _trustedForwarder,uint256 _entryFee, address payable _revenueContract) {
+        wavNFT = _wavNFT;
         entryFee = _entryFee;
         revenueContract = _revenueContract;
         _setTrustedForwarder(_trustedForwarder);
     }
 
-    // constructor(IWavContract _wavContract, uint256 _entryFee, address payable _revenueContract) {
-    //     wavContract = _wavContract;
-    //     entryFee = _entryFee;
-    //     revenueContract = _revenueContract;
-    // }
-
-
     /// @notice This function mints level 1 NFTs to the recipient
     /// @param _recipient The recipient of the minted NFT
     /// @param _input ids and their corresponding quantities to mint
     /// @dev This function does not support gasless, has to be called directly by user, since it requires payment in ETH and refund is possible
-    function collect(address _gameOwner, address _recipient, IDParam[] calldata _input) external override payable nonReentrant {
-        require(msg.value > 0, "PAYMENT_REQUIRED");
-        require(Helper.getLevelIndex(ENTRY_LEVEL) < wavGames[_gameOwner].length, "LEVEL_DOES_NOT_EXIST");
+    function collect(address _gameOwner, address _recipient, NFTParam[] calldata _input) external override payable nonReentrant {
+        if(msg.value <= 0){
+            revert PaymentRequired();
+        }
+        if(Helper.getLevelIndex(ENTRY_LEVEL) >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
 
         uint totalPayable = 0;
         uint totalMinted = 0;
-        uint[] memory mintableIds = new uint[](_input.length); 
-        uint[] memory mintableAmountPerId = new uint[](_input.length);
+        uint[] memory mintableNFTs = new uint[](_input.length); 
+        uint[] memory mintableAmountPerNFTs = new uint[](_input.length);
+        EnumerableSet.UintSet storage mintables = mintableSet[_gameOwner][ENTRY_LEVEL];
 
         // Create mintable IDs and valid quantity based on mintable set for base and msg.value
         for (uint i; i < _input.length;) { 
-            require(mintableSet[_gameOwner][ENTRY_LEVEL].contains(_input[i].id), "NFTs_NOT_MINTABLE_FOR_LEVEL");
-            uint256 mintCost = _input[i].amount * entryFee;
-            if ((totalPayable + mintCost) > msg.value) { 
-                revert("INSUFFICIENT_MINT_AMOUNT");
+            if (!mintables.contains(_input[i].id)){
+                revert NFTNotInMintableSet(_input[i].id, ENTRY_LEVEL);
             }
-            mintableIds[i] = _input[i].id;
-            mintableAmountPerId[i] = _input[i].amount;
+            mintableNFTs[i] = _input[i].id;
+            mintableAmountPerNFTs[i] = _input[i].amount;
             totalMinted +=_input[i].amount;
-            totalPayable += mintCost;
+            totalPayable += _input[i].amount * entryFee;
             unchecked {++i;}
         }
-        // Payment split
-        _forwardValue(totalPayable);
-        // Mint NFT to _recipient
-        wavContract.mintBatch(_recipient, mintableIds, mintableAmountPerId, bytes(" "));
-        _syncMint(_gameOwner, ENTRY_LEVEL, _recipient, totalMinted);
-        // Refund any balance
-        uint256 refund =  msg.value - totalPayable;
-        if (totalPayable < msg.value) {
-            _msgSender().call{value: refund}(""); // Failed refunds remain in contract
+        
+        if (totalPayable > msg.value) { 
+            revert InsufficientPayment(totalPayable,msg.value);
         }
-        emit Collected(_msgSender(), _recipient, msg.value, refund, totalMinted);
+        wavNFT.mintBatch(_recipient, mintableNFTs, mintableAmountPerNFTs, bytes(" "));
+        _syncMint(_gameOwner, ENTRY_LEVEL, _recipient, totalMinted);
+
+        emit Collected(_msgSender(), _recipient, msg.value, totalMinted);
     }
-    function levelUp(address _gameOwner, uint256 _nextLevel, IDParam[] memory _input) external override nonReentrant {
-        require(_nextLevel > ENTRY_LEVEL && Helper.getLevelIndex(_nextLevel) < wavGames[_gameOwner].length, "INVALID_NEXT_LEVEL");  //next level details
+    function levelUp(address _gameOwner, uint256 _nextLevel, NFTParam[] memory _input) external override nonReentrant {
         uint256 nextLevelIndex = Helper.getLevelIndex(_nextLevel);
-        IWavGame.Level storage priorLevel = wavGames[_gameOwner][nextLevelIndex]; // 0-indexed array / 1-indexed levels
+        if(_nextLevel <= ENTRY_LEVEL || nextLevelIndex >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
         IWavGame.Level memory nextLevel = wavGames[_gameOwner][nextLevelIndex]; // 0-indexed array / 1-indexed levels
 
-        uint[] memory burnableIds = new uint[](_input.length);
-        uint[] memory burnableAmountPerId = new uint[](_input.length);
+        uint[] memory burnableNFTs = new uint[](_input.length);
+        uint[] memory burnableAmountPerNFTs = new uint[](_input.length);
+        EnumerableSet.UintSet storage burnables = burnableSet[_gameOwner][_nextLevel];
         uint totalBurnAmount;
-        
 
-        for (uint256 i = 0; i < _input.length;) { // ID is array, incase levelUP from 1 => 2, can have diff ids
-            if (burnableSet[_gameOwner][_nextLevel].contains(_input[i].id)) {
-                burnableIds[i] = _input[i].id;
-                burnableAmountPerId[i] = _input[i].amount;
+        for (uint256 i = 0; i < _input.length;) { 
+            if (burnables.contains(_input[i].id)) {
+                burnableNFTs[i] = _input[i].id;
+                burnableAmountPerNFTs[i] = _input[i].amount;
                 totalBurnAmount += _input[i].amount;
             }
             unchecked {++i;} 
         }
 
-        require(totalBurnAmount == nextLevel.requiredBurn, "REQUIRED_BURN_NOT_MET");
-        wavContract.burnBatch(_msgSender(), burnableIds, burnableAmountPerId);
-        priorLevel.burnCount += totalBurnAmount;
+        if(totalBurnAmount != nextLevel.requiredBurn){
+            revert RequiredBurnNotMet(nextLevel.requiredBurn);
+        }
+        wavNFT.burnBatch(_msgSender(), burnableNFTs, burnableAmountPerNFTs);
+        wavGames[_gameOwner][nextLevelIndex].burnCount += totalBurnAmount;
 
-        wavContract.mint(_msgSender(), mintableSet[_gameOwner][_nextLevel].values()[0], nextLevel.requiredMint, bytes(" "));
+        wavNFT.mint(_msgSender(), mintableSet[_gameOwner][_nextLevel].values()[0], nextLevel.requiredMint, bytes(" "));
         _syncMint(_gameOwner, _nextLevel, _msgSender(), nextLevel.requiredMint);
 
         emit LeveledUp(msg.sender, _msgSender(), _nextLevel, nextLevel.requiredMint);
@@ -151,29 +153,40 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
 
     
     //============================= Game Administration ============================
-    // No checks are done for mint and batchMints, these are admin functions, minting 
-    //a level-specific id through this functions may distrupt calculations on the game
+    // No checks are done for mint and batchMints, these are admin functions for minting non-game related NFTs, minting 
+    //a game-specific NFT through this functions may distrupt calculations on the game
     // Use special mint instead.
     function mint(address _recipient, uint _id, uint _amount) external onlyOwner {
-        wavContract.mint(_recipient, _id, _amount, " ");
+        wavNFT.mint(_recipient, _id, _amount, " ");
     }
     function wavMint(address _recipient, address _gameOwner, uint256 _level, uint256 _id, uint256 _amount) external onlyOwner {
-        require(mintableSet[_gameOwner][_level].contains(_id), "ID_NOT_MINTABLE_FOR_GIVEN_LEVEL");
-        require(Helper.getLevelIndex(_level) < wavGames[_gameOwner].length, "LEVEL_DOES_NOT_EXIST");
+        if(Helper.getLevelIndex(_level) >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
+        if (!mintableSet[_gameOwner][_level].contains(_id)){
+            revert NFTNotInMintableSet(_id, _level);
+        }
 
-        wavContract.mint(_recipient, _id, _amount, " ");
+        wavNFT.mint(_recipient, _id, _amount, " ");
         _syncMint(_gameOwner, _level, _recipient, _amount);
 
-        emit SpecialMint(msg.sender, _recipient, _id, _amount);
+        emit SpecialMint(_recipient, _id, _amount);
     }
     function batchMint(address _recipient, uint[] memory _ids, uint[] memory _amount) external onlyOwner {
-        wavContract.mintBatch(_recipient, _ids, _amount, " ");
+        wavNFT.mintBatch(_recipient, _ids, _amount, " ");
     } 
     function setFeePerMint(uint256  _entryFee) external onlyOwner {
         entryFee = _entryFee;
     }
     function setPaymentAddress(address payable _revenueContract) external onlyOwner {
         revenueContract = _revenueContract;
+    }
+    function forwardValue() external onlyOwner  {
+        (bool success, ) = revenueContract.call{value: address(this).balance}("");
+        if (!success) {
+            revert FundsReleaseFailed();
+        }
+        emit PaymentForwarded(revenueContract, address(this).balance);
     }
     // This creates an owner game if not exist, then populates the levels, and updates the game by adding new levels if exist.
     //This function always adds a new level to the owner game, only call this function when adding new levels to an owner gmae
@@ -194,34 +207,50 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             unchecked {++i;} 
         }
     }
-    function setLevel(address _gameOwner, uint256 _level, IWavGame.LevelParam calldata _updateParam) external onlyOwner {
+    function updateLevel(address _gameOwner, uint256 _level, IWavGame.LevelParam calldata _updateParam) external onlyOwner {
         // confirm level already exist
-        require(Helper.getLevelIndex(_level) < wavGames[_gameOwner].length, "LEVEL_DOES_NOT_EXIST");
-        wavGames[_gameOwner][Helper.getLevelIndex(_level)].requiredBurn = _updateParam.requiredBurn;
-        wavGames[_gameOwner][Helper.getLevelIndex(_level)].requiredMint = _updateParam.requiredMint;
-        wavGames[_gameOwner][Helper.getLevelIndex(_level)].prizeCutOff = _updateParam.prizeCutOff;
+        uint256 levelIndex = Helper.getLevelIndex(_level); 
+        if(Helper.getLevelIndex(_level) >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
+        wavGames[_gameOwner][levelIndex].requiredBurn = _updateParam.requiredBurn;
+        wavGames[_gameOwner][levelIndex].requiredMint = _updateParam.requiredMint;
+        wavGames[_gameOwner][levelIndex].prizeCutOff = _updateParam.prizeCutOff;
         _setBurnable(burnableSet[_gameOwner][_level], _updateParam.burnableSet);
         _setMintable(mintableSet[_gameOwner][_level], _updateParam.mintableSet);
         emit LevelSet(_gameOwner, _level);
     }
     function setRequiredBurn(address _gameOwner, uint256 _level, uint8 _requiredBurn) external onlyOwner {
-        require(Helper.getLevelIndex(_level) < wavGames[_gameOwner].length, "LEVEL_DOES_NOT_EXIST");
-        wavGames[_gameOwner][Helper.getLevelIndex(_level)].requiredBurn = _requiredBurn;
+        uint256 levelIndex = Helper.getLevelIndex(_level); 
+        if(levelIndex >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
+        wavGames[_gameOwner][levelIndex].requiredBurn = _requiredBurn;
     }
     function setRequiredMint(address _gameOwner, uint256 _level, uint8 _requiredMint) external onlyOwner {
-        require(Helper.getLevelIndex(_level) < wavGames[_gameOwner].length, "LEVEL_DOES_NOT_EXIST");
-        wavGames[_gameOwner][Helper.getLevelIndex(_level)].requiredMint = _requiredMint;
+        uint256 levelIndex = Helper.getLevelIndex(_level); 
+        if(levelIndex >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
+        wavGames[_gameOwner][levelIndex].requiredMint = _requiredMint;
     }
     function setPrizeCutOff(address _gameOwner, uint256 _level, uint8 _prizeCutOff) external onlyOwner {
-        require(Helper.getLevelIndex(_level) < wavGames[_gameOwner].length, "LEVEL_DOES_NOT_EXIST");
-        wavGames[_gameOwner][Helper.getLevelIndex(_level)].prizeCutOff = _prizeCutOff;
+        uint256 levelIndex = Helper.getLevelIndex(_level); 
+        if(levelIndex >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
+        wavGames[_gameOwner][levelIndex].prizeCutOff = _prizeCutOff;
     }
-    function setBurnableSet(address _gameOwner, uint256 _level, IDParam[] calldata _burnableSet) external onlyOwner {
-        require(Helper.getLevelIndex(_level) < wavGames[_gameOwner].length, "LEVEL_DOES_NOT_EXIST");
+    function setBurnableSet(address _gameOwner, uint256 _level, SetParam[] calldata _burnableSet) external onlyOwner {
+        if(Helper.getLevelIndex(_level) >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
         _setBurnable(burnableSet[_gameOwner][_level], _burnableSet);
     }	
-    function setMintableSet(address _gameOwner, uint256 _level, IDParam[] calldata _mintableSet) external onlyOwner {
-        require(Helper.getLevelIndex(_level) < wavGames[_gameOwner].length, "LEVEL_DOES_NOT_EXIST");
+    function setMintableSet(address _gameOwner, uint256 _level, SetParam[] calldata _mintableSet) external onlyOwner {
+        if(Helper.getLevelIndex(_level) >= wavGames[_gameOwner].length){
+            revert LevelNotFound();
+        }
         _setMintable(mintableSet[_gameOwner][_level], _mintableSet);
     }	
     function setTrustedForwarder(address _trustedForwarder) public onlyOwner {
@@ -229,18 +258,14 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     }
 
     function _syncMint(address _gameOwner, uint256 _level, address _recipient, uint256 _mintCount) internal {
-        Level memory level = wavGames[_gameOwner][Helper.getLevelIndex(_level)];
-        wavGames[_gameOwner][Helper.getLevelIndex(_level)].mintCount += _mintCount;
+        uint256 levelIndex = Helper.getLevelIndex(_level);
+        Level memory level = wavGames[_gameOwner][levelIndex];
+        wavGames[_gameOwner][levelIndex].mintCount += _mintCount;
         if (collectors[_gameOwner][_level].length() < level.prizeCutOff && !collectors[_gameOwner][_level].contains(_recipient)){
             collectors[_gameOwner][_level].add(_recipient);
         }
     }
-    function _forwardValue(uint256 _totalAmount) internal  {
-        (bool success, ) = revenueContract.call{value: _totalAmount}("");
-        require(success, "FUNDS_RELEASE_FAILED_OR_REVERTED");
-        emit PaymentForwarded(revenueContract, _totalAmount);
-    }
-    function _setBurnable(EnumerableSet.UintSet storage burnableSet, IWavGame.IDParam[] memory _burnableSet) internal  {
+    function _setBurnable(EnumerableSet.UintSet storage burnableSet, IWavGame.SetParam[] memory _burnableSet) internal  {
         // id for burn must be mintable from prevLevel
         for (uint256 i; i < _burnableSet.length;) {
             if (_burnableSet[i].status) {
@@ -251,7 +276,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             unchecked {++i;} 
         }
     }
-    function _setMintable(EnumerableSet.UintSet storage mintableSet, IWavGame.IDParam[] memory _mintableSet) internal  {
+    function _setMintable(EnumerableSet.UintSet storage mintableSet, IWavGame.SetParam[] memory _mintableSet) internal  {
         for (uint256 i; i < _mintableSet.length;) {
             if (_mintableSet[i].status) {
                 mintableSet.add(_mintableSet[i].id);
