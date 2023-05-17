@@ -7,6 +7,7 @@ let wavGame: any;
 let revenueContract: any;
 const ENTRY_LEVEL = 1;
 const entryFee = ethers.utils.parseEther("1.0");
+const trustedForwarder = "0xd8253782c45a12053594b9deB72d8e8aB2Fca54c"
 
 async function setup() {
   revenueContract = (await ethers.getSigners())[3].address;
@@ -19,6 +20,7 @@ async function setup() {
   const WavGame = await ethers.getContractFactory("WavGame");
   wavGame = await WavGame.deploy(
     wavContract.address,
+    trustedForwarder,
     entryFee.toString(),
     revenueContract
   );
