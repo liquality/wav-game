@@ -15,7 +15,7 @@ struct SetParam {
     uint id;
 }
 
-struct LevelParam {
+struct IslandParam {
     uint8 requiredBurn;
     uint8 requiredMint;
     uint32 prizeCutOff;
@@ -25,11 +25,11 @@ struct LevelParam {
 
 /// @title A title that should describe the contract/interface
 /// @author Liquality
-/// @notice Data structure for individual islands / levels
-/// @param maxSupply Maximum supply of level/island mintable sets in circulation
-/// @param requiredBurn Number of burnable NFT to burn to get current level mintable NFT 
+/// @notice Data structure for individual islands
+/// @param maxSupply Maximum supply of island mintable NFT set in circulation
+/// @param requiredBurn Number of burnable NFT to burn to get current island mintable NFT 
 /// @dev Explain to a developer any extra details
-struct Level {
+struct Island {
     uint8 requiredBurn;
     uint8 requiredMint;
     uint32 prizeCutOff;
@@ -37,8 +37,13 @@ struct Level {
     uint256 mintCount;
 }
 
-function collect(address _gameOwner, address _recipient, NFTParam[] calldata _input) external payable;
+struct Game {
+    Island[] islands;
+    address payable treasury;
+}
 
-function levelUp(address _owner, uint256 _nextLevel, NFTParam[] memory _input) external;
+function collect(address _gameID, address _recipient, NFTParam[] calldata _nfts) external payable;
+
+function levelUp(address _gameID, uint256 _islandID, NFTParam[] calldata _nfts) external;
 
 }
