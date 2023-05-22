@@ -1,24 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-    :root {
-        --dark: #211C1C;
-    }
-}
-
-
-.bg-dark {
-    background-color: #211C1C !important;
-}
-
 .level-card {
     display: flex;
     z-index: 222;
-    border-radius: 53px;
-    width: 17.93rem;
-    height: 26.12rem;
+    border-radius: 3.13rem;
     transition: all .4s ease-in-out;
     cursor: pointer;
     transform: scale(0.98);
@@ -71,7 +54,6 @@
 .side-bar {
     display: flex;
     border-radius: 53px;
-    width: 20rem !important;
     min-height: 5rem;
 }
 
@@ -79,7 +61,6 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 100%;
     overflow: hidden;
     display: flex;
 }
