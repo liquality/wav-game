@@ -4,10 +4,7 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 import { ethers } from "hardhat";
-import {
-  GelatoRelay,
-  SponsoredCallERC2771Request,
-} from "@gelatonetwork/relay-sdk";
+import {} from "@liquality/wallet-sdk";
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -17,35 +14,47 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
+  const tokenUri = process.env.TOKEN_URI as string;
+  const trustedForwarder = process.env.TRUSTED_FORWARDER as string;
+  const feePerMint = ethers.utils.parseEther(
+    process.env.FEE_PER_MINT as string
+  );
+
+  console.log("==================== Deploying Contracts ====================");
+
   // We get the contract to deploy
-  const Greeter = await ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const WavNFT = await ethers.getContractFactory("WavNFT");
+  const WavGame = await ethers.getContractFactory("WavGame");
 
-  await greeter.deployed();
+  // Deploy WavNFT
+  const wavNFT = await WavNFT.deploy(tokenUri);
+  console.log("Deployed WavNFT at : ", wavNFT.address);
 
-  
-  const relay = new GelatoRelay();
-  // Set up on-chain variables, such as target address
-const counter = "0xEEeBe2F778AA186e88dCf2FEb8f8231565769C27"; 
-const abi = ["function incrementContext()"];
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-const signer = provider.getSigner();
-const user = signer.getAddress();
+  // Deploy WavGame
+  const wavGame = await WavGame.deploy(
+    wavNFT.address,
+    trustedForwarder,
+    feePerMint.toString()
+  );
+  console.log("Deployed WavGame at : ", wavGame.address);
 
-// Generate the target payload
-const contract = new ethers.Contract(counter, abi, signer);
-const { data } = await contract.populateTransaction.incrementContext();
+  //Setup WavNFT
+  await wavNFT.transferOwnership(wavGame.address);
+  await wavNFT.setTrustedForwarder(wavGame.address);
 
-// Populate a relay request
-const request: CallWithERC2771Request = {
-  chainId: provider.network.chainId;
-  target: counter;
-  data: data;
-  user: user;
-};
+  console.log(
+    "==================== Completed WavNFT Setup ===================="
+  );
 
-const relayResponse = await relay.sponsoredCallERC2771(request, provider, apiKey);
+  // WavGame Config: Initialize all games
+  console.log(
+    "==================== Initializing all games ===================="
+  );
 
+  // Set payment contracts per games
+  console.log(
+    "==================== Complete Deployment & Initialization ===================="
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere

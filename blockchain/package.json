@@ -1,5 +1,13 @@
 {
-  "name": "hardhat-project",
+  "name": "wav-game-contract",
+  "version": "1.0.0",
+
+  "scripts": {
+    "compile": "hardhat compile && hardhat typechain",
+    "build": "yarn compile",
+    "lint": "TIMING=1 eslint \"**/*.ts*\""
+  },
+
   "devDependencies": {
     "@gelatonetwork/relay-context": "^2.1.0",
     "@nomiclabs/hardhat-ethers": "^2.2.3",

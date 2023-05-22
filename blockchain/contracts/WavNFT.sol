@@ -9,8 +9,7 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@opengsn/contracts/src/ERC2771Recipient.sol";
 
 contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable  {
-    constructor(string memory uri, address _trustedForwarder) ERC1155(uri){
-        _setTrustedForwarder(_trustedForwarder);
+    constructor(string memory uri) ERC1155(uri){
     }
 
     function pause() public onlyOwner {

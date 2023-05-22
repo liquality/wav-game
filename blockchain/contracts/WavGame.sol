@@ -205,7 +205,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     }
     // This creates a game if not exist, then populates the islands, or updates the game by adding new islands.
     //This function always adds a new island to the specified game, only call this function when adding new islands to an given game
-    function setGame(address _gameID, IWavGame.IslandParam[] memory _islands) external onlyOwner {
+    function setGame(address _gameID, IWavGame.IslandParam[] calldata _islands) external onlyOwner {
         _assertValidGameID(_gameID);
         if (wavGames[_gameID].islands.length <= 0) {
             gameIDs.push(_gameID);
