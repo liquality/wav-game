@@ -2,10 +2,11 @@
 
 Create a .config file similar to the config-sample.json file and substitute with your own DB credentials, API key(s) and RPC URL(s)
 
-`{
+```
+{
 "database_connection": {
 "host": "localhost",
-"user": "root",
+"user": "wav_game",
 "database": "wav_game",
 "password": "YOUR_DB_PASSWORD"
 },
@@ -13,16 +14,13 @@ Create a .config file similar to the config-sample.json file and substitute with
 "rpc_urls": {
 "mainnet_eth": "YOUR_RPC_URL_TO_ETH_MAINNET"
 }
-}`
+}
+```
+
+Then go to the `create.sql`file and copy its content. Paste the content in your local mysql server, I am using mariadb.
 
 ## Start backend server with:
 
-npm i
+npm i && npm start
 
-node index.js
-
-Public endpoint (using Heroku alt):
-
-```
-
-```
+(Nodemon listening for changes)

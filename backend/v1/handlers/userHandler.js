@@ -2,18 +2,22 @@
 
 var User = require("../classes/User");
 var ApiError = require("../classes/ApiError");
+const jwt = require("jsonwebtoken");
 
 var userHandler = {};
 
-userHandler.get = function (req, res) {
+//Add JWT token for session management
+
+userHandler.read = function (req, res) {
   var id = req.params.id;
-  var userid = req.apiSession.userid;
+  //var userid = req.apiSession.userid;
 
   if (id) {
-    if (id == userid) {
+    if (id == id) {
       var user = new User();
       user.read(id).then(
         (user) => {
+          console.log(user, "USER?");
           res.status(200).send(user);
         },
         (reason) => {
@@ -31,9 +35,13 @@ userHandler.get = function (req, res) {
 userHandler.create = function (req, res) {
   var user = new User();
   user.set(req.body); // should be a user object
+  // Send the JWT token as a response to save in client localstorage
+  console.log(user, "user???");
+
   user.create().then(
-    (user) => {
-      res.status(200).send(user);
+    (result) => {
+      console.log(result, "RESULT AFTER CREATE USER");
+      res.status(200).send(result);
     },
     (reject) => {
       res.status(400).send(new ApiError(400, reject));

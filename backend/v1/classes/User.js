@@ -1,3 +1,8 @@
+const MySQL = require("../../MySQL");
+const ApiError = require("./ApiError");
+const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
+
 class User {
   constructor(user) {
     this.set(user);
@@ -10,8 +15,6 @@ class User {
       this.username = user.username;
       this.avatar = user.avatar;
       this.public_address = user.public_address;
-      this.level = user.level;
-      this.claimable_prize_count = user.claimable_prize_count;
     }
   }
 
@@ -20,26 +23,25 @@ class User {
   /*                  */
   create = async () => {
     const user = this;
+    console.log(user, "GETTING HERE USER?");
     const promise = new Promise((resolve, reject) => {
-      this.MySQL.pool.getConnection((err, db) => {
+      MySQL.pool.getConnection((err, db) => {
         db.query(
-          "insert into `user` (google_email,username,avatar,public_address,level, claimable_prize_count) values (?,?,?,?,?,?,10,?);",
-          [
-            user.google_email,
-            user.username,
-            user.avatar,
-            user.public_address,
-            user.level,
-            user.claimable_prize_count,
-          ],
+          "insert into `user` (google_email,username,avatar,public_address) values (?,?,?,?);",
+          [user.google_email, user.username, user.avatar, user.public_address],
           (err, results, fields) => {
             if (err) {
-              reject(new this.ApiError(500, err));
+              reject(new ApiError(500, err));
             } else if (results.length < 1) {
-              reject(new this.ApiError(500, "User not saved!"));
+              reject(new ApiError(500, "User not saved!"));
             } else {
-              user.id = results.insertId;
-              resolve(user);
+              const { id, google_email, username, avatar, public_address } =
+                user;
+              const token = jwt.sign(
+                { id, google_email, username, avatar, public_address },
+                "my-secret"
+              );
+              resolve(user, token);
             }
             db.release();
           }
@@ -53,7 +55,7 @@ class User {
     const user = this;
     const promise = new Promise((resolve, reject) => {
       if (id) {
-        this.MySQL.pool.getConnection((err, db) => {
+        MySQL.pool.getConnection((err, db) => {
           db.execute(
             "select * from `user` where id = ?",
             [id],
@@ -83,14 +85,12 @@ class User {
       const promise = new Promise((resolve, reject) => {
         this.MySQL.pool.getConnection((err, db) => {
           db.query(
-            "update `user` set google_email=?, username=?, avatar=?, public_address=?, level=?, claimable_prize_count=? where id=?;",
+            "update `user` set google_email=?, username=?, avatar=?, public_address=? where id=?;",
             [
               user.google_email,
               user.username,
               user.avatar,
               user.public_address,
-              user.level,
-              user.claimable_prize_count,
               user.id,
             ],
             (err, results, fields) => {
@@ -137,5 +137,7 @@ class User {
     return promise;
   };
 }
+
+/* HELPER FUNCTIONS */
 
 module.exports = User;
