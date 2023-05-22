@@ -19,21 +19,17 @@ const Navbar = () => {
   }, [address]);
 
   return (
-    <nav className="bg-white sticky top-0  mt-1 z-10">
+    <nav className=" sticky top-0  mt-1 z-10">
       <div className="container flex flex-wrap justify-between ">
-        <a href="/" className="flex items-center">
-          <img
-            src="https://docs.liquality.io/img/logo_light.svg"
-            className="h-6 sm:h-10"
-            alt="Liquality Logo"
-          />
-        </a>
+        <p className="block py-2 navBarLogoText" aria-current="page">
+          wavGame_
+        </p>
 
         <div
           className="hidden w-full md:block md:w-auto"
           id="navbar-multi-level"
         >
-          <ul className="flex flex-col p-4 mt-4 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
+          <ul className="flex flex-col p-4 mt-4 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
             <li>
               <a
                 href="/"
