@@ -4,7 +4,7 @@ export const NavBar = () => {
         <nav className="dark:bg-slate-800 sticky top-0  z-10">
             <div className="container flex flex-wrap justify-between ">
                 <a href="/dashboard" className="dark:text-white flex items-center">
-                    WAVGAME
+                    WAVGAME_
                 </a>
 
                 <div

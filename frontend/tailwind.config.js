@@ -6,6 +6,9 @@ module.exports = {
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    container: {
+      center: true,
+    },
     colors: {
       transparent: "transparent",
       current: "currentColor",
@@ -18,12 +21,12 @@ module.exports = {
       "bubble-gum": "#ff77e9",
       bermuda: "#78dcca",
       dark: 'rgb(var(--dark) / <alpha-value>)',
-      activePinkStroke: "#BC2B8B", 
       activePink: "#EF22A9",
+      activePinkStroke: "#BC2B8B", 
       completedStroke: "#BF3948", 
       completed: "#4B1F3E", 
-      lockedGray: "#333333",
-      lockedGrayStroke: "#828282"
+      locked: "#333333",
+      lockedStroke: "#828282"
     },
     extend: {
     },

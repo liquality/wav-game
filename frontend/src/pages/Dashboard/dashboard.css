@@ -4,21 +4,99 @@
 
 @layer base {
     :root {
-      --dark: #211C1C;
+        --dark: #211C1C;
     }
+}
+
+
+.bg-dark {
+    background-color: #211C1C !important;
 }
 
 .level-card {
     display: flex;
+    z-index: 222;
     border-radius: 53px;
-    width: 287px;
-    height: 418px;
+    width: 17.93rem;
+    height: 26.12rem;
     transition: all .4s ease-in-out;
     cursor: pointer;
+    transform: scale(0.98);
 }
 
 .level-card:hover,
 .level-card.active {
-    transform: scale(1.2); 
+    transform: scale(1.25);
     z-index: 9999;
+}
+
+.level-card-level {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 45px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+
+    /* WaveWrld/white */
+
+    color: #F5F5F5;
+}
+
+.level-card-title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 45px;
+    /* or 102% */
+
+    display: flex;
+    align-items: center;
+
+    /* WaveWrld/white */
+
+    color: #F5F5F5;
+}
+
+.level-card-count {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    margin-bottom: 2rem;
+}
+
+.side-bar {
+    display: flex;
+    border-radius: 53px;
+    width: 20rem !important;
+    min-height: 5rem;
+}
+
+.level-tabs {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+}
+
+.level-tabs li {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 2rem;
+    cursor: pointer;
+}
+
+.level-tabs li .level-bar{
+    height: 10px;
+    width: 137px;
+    border-radius: 53px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
