@@ -11,12 +11,12 @@ FLUSH PRIVILEGES;
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `google_email` varchar(45) NOT NULL,
+  `serviceprovider_name` varchar(150) NOT NULL,
   `username` varchar(200) NOT NULL,
   `avatar` LONGBLOB,
   `public_address` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `google_email_UNIQUE` (`google_email`)
+  UNIQUE KEY `serviceprovider_name_UNIQUE` (`serviceprovider_name`)
 );
 CREATE TABLE `game` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

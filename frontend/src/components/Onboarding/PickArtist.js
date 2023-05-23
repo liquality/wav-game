@@ -2,6 +2,7 @@ import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg
 import { ReactComponent as NextBtn } from "../../images/next_btn.svg";
 
 import { useState, useEffect } from "react";
+import { fetchSession } from "../../utils";
 export const PickArtist = (props) => {
   const { setContent, setHeaderText } = props;
 
@@ -10,6 +11,8 @@ export const PickArtist = (props) => {
   function handleClick(id) {
     setSelectedId(id);
   }
+
+  console.log(fetchSession(), "session rnnn");
 
   function renderArtistGrid() {
     return (

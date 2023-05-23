@@ -1,12 +1,12 @@
 import NetworkService from "./NetworkService";
 
 const UserService = {
-  getUserByID: async function (userId, session) {
-    return NetworkService.getResourceWithAuth("v1/user/" + userId, session);
+  createUser: async function (userObject, jwt) {
+    return NetworkService.postResourceWithAuth("v1/user/", userObject, jwt);
   },
 
-  createUser: async function (session) {
-    return NetworkService.postResourceWithAuth("v1/user/", session);
+  getGameByUserId: async function (userId, jwt) {
+    return NetworkService.getResourceWithAuth("v1/game/" + userId, jwt);
   },
 };
 export default UserService;
