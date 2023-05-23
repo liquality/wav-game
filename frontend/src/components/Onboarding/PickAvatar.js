@@ -25,7 +25,7 @@ export const PickAvatar = (props) => {
         <AvatarPlaceholder />
       </div>
 
-      <inxput
+      <input
         type="text"
         className="passwordInputBox mt-5 mb-2"
         placeholder="Choose username"

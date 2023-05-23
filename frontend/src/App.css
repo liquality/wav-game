@@ -96,19 +96,19 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .headerBtn {
-  font-family: "000 webfont";
+  font-family: "Sora";
   font-size: 15px;
   background-color: #9d4dfa;
   padding: 6px;
 }
 
-.fontFamily {
+.webfont {
   font-family: "000 webfont";
 }
 
 .belowHeaderText {
   font-size: 18px;
-  font-family: "000 webfont";
+  font-family: "Sora";
   line-height: 22px;
 }
 
