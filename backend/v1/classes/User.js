@@ -11,7 +11,7 @@ class User {
   set(user) {
     if (typeof user !== "undefined") {
       this.id = user.id;
-      this.google_email = user.google_email;
+      this.serviceprovider_name = user.serviceprovider_name;
       this.username = user.username;
       this.avatar = user.avatar;
       this.public_address = user.public_address;
@@ -27,21 +27,44 @@ class User {
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
         db.query(
-          "insert into `user` (google_email,username,avatar,public_address) values (?,?,?,?);",
-          [user.google_email, user.username, user.avatar, user.public_address],
-          (err, results, fields) => {
+          "insert into `user` (serviceprovider_name,username,avatar,public_address) values (?,?,?,?);",
+          [
+            user.serviceprovider_name,
+            user.username,
+            user.avatar,
+            user.public_address,
+          ],
+          (err, insertResult, fields) => {
             if (err) {
               reject(new ApiError(500, err));
-            } else if (results.length < 1) {
+            } else if (insertResult.affectedRows < 1) {
               reject(new ApiError(500, "User not saved!"));
             } else {
-              const { id, google_email, username, avatar, public_address } =
-                user;
-              const token = jwt.sign(
-                { id, google_email, username, avatar, public_address },
-                "my-secret"
+              db.query(
+                "SELECT LAST_INSERT_ID() AS id",
+                (err, selectResult, fields) => {
+                  if (err) {
+                    reject(new ApiError(500, err));
+                  } else {
+                    const {
+                      serviceprovider_name,
+                      avatar,
+                      username,
+                      public_address,
+                    } = user;
+                    const id = selectResult[0].id;
+                    const token = jwt.sign({ id, public_address }, "my-secret");
+                    resolve({
+                      id,
+                      serviceprovider_name,
+                      avatar,
+                      username,
+                      public_address,
+                      token,
+                    });
+                  }
+                }
               );
-              resolve(user, token);
             }
             db.release();
           }
@@ -85,9 +108,9 @@ class User {
       const promise = new Promise((resolve, reject) => {
         this.MySQL.pool.getConnection((err, db) => {
           db.query(
-            "update `user` set google_email=?, username=?, avatar=?, public_address=? where id=?;",
+            "update `user` set serviceprovider_name=?, username=?, avatar=?, public_address=? where id=?;",
             [
-              user.google_email,
+              user.serviceprovider_name,
               user.username,
               user.avatar,
               user.public_address,

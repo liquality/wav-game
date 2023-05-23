@@ -1,7 +1,7 @@
 const serverAddress =
   "http://localhost:3000/" ||
   "https://hosted-backend.onrender.com/" ||
-  "https://www.wavgame.xyz/";
+  "https://www.hosteddomain.xyz/";
 if (process.env.REACT_APP_API_URL) {
   serverAddress = process.env.REACT_APP_API_URL;
 }
@@ -58,9 +58,12 @@ const NetworkService = {
     var promise = new Promise((resolve, reject) => {
       var headers = {
         Accept: "application/json",
-        Authorization: "Bearer " + jwt,
         "Content-Type": "application/json",
       };
+
+      if (jwt) {
+        headers["Authorization"] = "Bearer " + jwt;
+      }
 
       let request = {
         method: "PUT",
@@ -86,13 +89,12 @@ const NetworkService = {
     var promise = new Promise((resolve, reject) => {
       var headers = {
         Accept: "application/json",
-        Authorization: "Bearer " + jwt,
         "Content-Type": "application/json",
       };
 
-      /*   if (session) {
-        headers["x-session"] = session.guid;
-      } */
+      if (jwt) {
+        headers["Authorization"] = "Bearer " + jwt;
+      }
 
       let request = {
         method: "POST",
@@ -113,6 +115,7 @@ const NetworkService = {
     });
     return promise;
   },
+
   handleJsonResponse: function (response) {
     var promise = new Promise((resolve, reject) => {
       response
@@ -148,10 +151,9 @@ const NetworkService = {
         "Content-Type": "application/json",
       };
 
-      /*     if (session) {
-        headers["x-session"] = session.guid;
-      } */
-
+      if (jwt) {
+        headers["Authorization"] = "Bearer " + jwt;
+      }
       let request = {
         method: "DELETE",
         headers: headers,

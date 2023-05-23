@@ -7,7 +7,7 @@ export default function Home() {
   const [user, setUser] = React.useState({});
 
   //Example implementation of how to fetch from the networkservice
-  const fetchUser = async () => {
+  /*   const fetchUser = async () => {
     try {
       const user = await UserService.getUserByID(
         6, //userid
@@ -17,12 +17,12 @@ export default function Home() {
     } catch (err) {
       console.log(err, "Error fetching user");
     }
-  };
+  }; */
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const user = await fetchUser();
-      setUser(user);
+      //const user = await fetchUser();
+      //setUser(user);
     };
 
     fetchData();

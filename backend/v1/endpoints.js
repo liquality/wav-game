@@ -40,7 +40,7 @@ endpoints.deleteUser = {
 endpoints.createGame = {
   url: "/v1/game",
   method: "post",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: gameHandler.create,
   description: "create game",
 };
