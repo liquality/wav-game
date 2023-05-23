@@ -10,8 +10,6 @@ import "@opengsn/contracts/src/interfaces/IERC2771Recipient.sol";
 import "./interfaces/IWavGame.sol";
 import "./interfaces/IWavNFT.sol";
 import "./libraries/Helper.sol";
-import "hardhat/console.sol";
-
 
 contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165 {
     using EnumerableSet for EnumerableSet.UintSet;
@@ -67,47 +65,46 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     /// @param _recipient The recipient of the minted level 1 (First game island) NFT
     /// @param _nfts nft ids and their corresponding quantities to mint
     /// @dev This function 
-    function collect(address _gameID, address _recipient, NFTParam[] calldata _nfts) external override payable nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
+    function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint calldata _mintableAmountPerNFTs) external override payable nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
+        if (_mintableNFTs.length != _mintableAmountPerNFTs.length) {
+            revert ParametersMisMatch();
+        }
+
         uint totalPayable = 0;
         uint totalMinted = 0;
-        uint[] memory mintableNFTs = new uint[](_nfts.length); 
-        uint[] memory mintableAmountPerNFTs = new uint[](_nfts.length);
 
-        for (uint i; i < _nfts.length;) { 
-            if (!mintableSet[_gameID][ENTRY_LEVEL].contains(_nfts[i].id)){
-                revert NFTNotInMintableSet(_nfts[i].id, ENTRY_LEVEL);
+        for (uint i; i < _mintableNFTs.length;) { 
+            if (!mintableSet[_gameID][ENTRY_LEVEL].contains(_mintableNFTs[i])){
+                revert NFTNotInMintableSet(_mintableNFTs[i], ENTRY_LEVEL);
             }
-            mintableNFTs[i] = _nfts[i].id;
-            mintableAmountPerNFTs[i] = _nfts[i].amount;
-            totalMinted +=_nfts[i].amount;
-            totalPayable += _nfts[i].amount * feePerMint;
+            totalMinted +=_mintableAmountPerNFTs[i];
+            totalPayable += _mintableAmountPerNFTs[i] * feePerMint;
             unchecked {++i;}
         }
         
         if (totalPayable > msg.value) { 
             revert InsufficientPayment(totalPayable,msg.value);
         }
-        wavNFT.mintBatch(_recipient, mintableNFTs, mintableAmountPerNFTs, bytes(" "));
+        wavNFT.mintBatch(_recipient, _mintableNFTs, _mintableAmountPerNFTs, bytes(" "));
         availablePayments[_gameID] += msg.value;
         _syncMint(_gameID, ENTRY_LEVEL, _recipient, totalMinted);
 
         emit Collected(_msgSender(), _recipient, msg.value, totalMinted);
     }
-    function levelUp(address _gameID, uint256 _islandID, NFTParam[] calldata _nfts) external override nonReentrant onlyValidIsland(_gameID, _islandID) {
+    function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint calldata _burnableAmountPerNFTs) external override nonReentrant onlyValidIsland(_gameID, _islandID) {
+        if (_burnableNFTs.length != _burnableAmountPerNFTs.length) {
+            revert ParametersMisMatch();
+        }
         if(_islandID <= ENTRY_LEVEL) {
             revert InvalidNextLevel();
         }
         IWavGame.Island memory nextIsland = wavGames[_gameID].islands[Helper.getIslandIndex(_islandID)];
 
-        uint[] memory burnableNFTs = new uint[](_nfts.length);
-        uint[] memory burnableAmountPerNFTs = new uint[](_nfts.length);
         uint totalBurnAmount;
 
-        for (uint256 i = 0; i < _nfts.length;) { 
-            if (burnableSet[_gameID][_islandID].contains(_nfts[i].id)) {
-                burnableNFTs[i] = _nfts[i].id;
-                burnableAmountPerNFTs[i] = _nfts[i].amount;
-                totalBurnAmount += _nfts[i].amount;
+        for (uint256 i = 0; i < _burnableNFTs.length;) { 
+            if (burnableSet[_gameID][_islandID].contains(_burnableNFTs[i])) {
+                totalBurnAmount += _burnableAmountPerNFTs[i];
             }
             unchecked {++i;} 
         }
@@ -115,7 +112,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
         if(totalBurnAmount != nextIsland.requiredBurn){
             revert RequiredBurnNotMet(nextIsland.requiredBurn);
         }
-        wavNFT.burnBatch(_msgSender(), burnableNFTs, burnableAmountPerNFTs);
+        wavNFT.burnBatch(_msgSender(), _burnableNFTs, _burnableAmountPerNFTs);
         wavNFT.mint(_msgSender(), mintableSet[_gameID][_islandID].values()[0], nextIsland.requiredMint, bytes(" "));
    
         wavGames[_gameID].islands[Helper.getIslandIndex(_islandID-1)].burnCount += totalBurnAmount; // Increase burnCount of old/prev island

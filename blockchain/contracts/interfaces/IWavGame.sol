@@ -5,11 +5,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 interface IWavGame {
-
-struct NFTParam {
-    uint id;
-    uint amount;
-}
+    
 struct SetParam {
     bool status;
     uint id;
@@ -18,7 +14,7 @@ struct SetParam {
 struct IslandParam {
     uint8 requiredBurn;
     uint8 requiredMint;
-    uint32 prizeCutOff;
+    uint32 earlyBirdCutOff;
     SetParam[] burnableSet;
     SetParam[] mintableSet;
 }
@@ -32,7 +28,7 @@ struct IslandParam {
 struct Island {
     uint8 requiredBurn;
     uint8 requiredMint;
-    uint32 prizeCutOff;
+    uint32 earlyBirdCutOff;
     uint256 burnCount;
     uint256 mintCount;
 }
@@ -42,8 +38,8 @@ struct Game {
     address payable treasury;
 }
 
-function collect(address _gameID, address _recipient, NFTParam[] calldata _nfts) external payable;
+function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint calldata _mintableAmountPerNFTs) external payable;
 
-function levelUp(address _gameID, uint256 _islandID, NFTParam[] calldata _nfts) external;
+function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint calldata _burnableAmountPerNFTs) external;
 
 }
