@@ -43,7 +43,6 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     error RequiredBurnNotMet(uint8 requiredBurn);
     error InvalidGameID(address gameID);
     error InvalidNextLevel();
-    error FundsReleaseFailed();
     error ParametersMisMatch();
     error PaymentRequired();
     error IslandNotFound();
@@ -63,9 +62,10 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
 
     /// @notice This function mints level 1 (First game island) NFTs to the _recipient
     /// @param _recipient The recipient of the minted level 1 (First game island) NFT
-    /// @param _nfts nft ids and their corresponding quantities to mint
+    /// @param _mintableNFTs nft ids to mint
+    /// @param _mintableAmountPerNFTs nft quantities to mint
     /// @dev This function 
-    function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint calldata _mintableAmountPerNFTs) external override payable nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
+    function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint[] calldata _mintableAmountPerNFTs) external override payable nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
         if (_mintableNFTs.length != _mintableAmountPerNFTs.length) {
             revert ParametersMisMatch();
         }
@@ -91,7 +91,8 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
 
         emit Collected(_msgSender(), _recipient, msg.value, totalMinted);
     }
-    function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint calldata _burnableAmountPerNFTs) external override nonReentrant onlyValidIsland(_gameID, _islandID) {
+
+    function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint[] calldata _burnableAmountPerNFTs) external override nonReentrant onlyValidIsland(_gameID, _islandID) {
         if (_burnableNFTs.length != _burnableAmountPerNFTs.length) {
             revert ParametersMisMatch();
         }
@@ -184,9 +185,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             address payable treasury = wavGames[gameId].treasury;
             _assertValidTreasury(treasury);
             (bool success, ) = treasury.call{value: pendingPayment}("");
-            if (!success) {
-                revert FundsReleaseFailed();
-            }
+
             availablePayments[gameId] = 0;
             emit PaymentForwarded(gameId, pendingPayment);
             unchecked {++i;}

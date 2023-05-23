@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 interface IWavGame {
-    
+
 struct SetParam {
     bool status;
     uint id;
@@ -38,8 +38,8 @@ struct Game {
     address payable treasury;
 }
 
-function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint calldata _mintableAmountPerNFTs) external payable;
+function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint[] calldata _mintableAmountPerNFTs) external payable;
 
-function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint calldata _burnableAmountPerNFTs) external;
+function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint[] calldata _burnableAmountPerNFTs) external;
 
 }
