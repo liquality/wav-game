@@ -28,14 +28,14 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     mapping(address => mapping(uint256 => EnumerableSet.UintSet)) mintableSet;// Mintable NFT sets per islands per game
 
     
-    event LeveledUp(address caller, address collector, uint256 nextIslandID, uint256 totalMinted);
-    event Collected(address caller, address to, uint256 amountSent, uint256 totalMinted);
-    event TreasurySet(address gameID, address payable treasury);
-    event SpecialMint(address collector, uint256 id, uint256 amount);
-    event IslandUpdated(address gameID, uint256 islandID);
-    event PaymentForwarded(address to, uint256 amount);
-    event GameSet(address gameID, uint256 islandID);
-    event FeeSet(uint256 oldFee, uint256 newFee);
+    event LeveledUp(address indexed caller, address indexed collector, uint256 indexed nextIslandID, uint256 totalMinted);
+    event Collected(address indexed caller, address indexed to, uint256 indexed amountSent, uint256 totalMinted);
+    event TreasurySet(address indexed gameID, address payable indexed  treasury);
+    event SpecialMint(address indexed collector, uint256 indexed id, uint256 indexed amount);
+    event IslandUpdated(address indexed gameID, uint256 indexed islandID);
+    event PaymentForwarded(address indexed to, uint256 indexed amount);
+    event GameSet(address indexed gameID, uint256 indexed islandID);
+    event FeeSet(uint256 indexed oldFee, uint256 indexed newFee);
 
     error InsufficientPayment(uint256 requiredAmt, uint256 ammountSent);   
     error NFTNotInMintableSet(uint256 invalidNFT, uint256 islandID);
@@ -161,10 +161,8 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     function mint(address _recipient, uint _id, uint _amount) external onlyOwner {
         wavNFT.mint(_recipient, _id, _amount, " ");
     }
-    function wavMint(address _recipient, address _gameID, uint256 _islandID, uint256 _id, uint256 _amount) external onlyOwner {
-        if(Helper.getIslandIndex(_islandID) >= wavGames[_gameID].islands.length){
-            revert IslandNotFound();
-        }
+    function wavMint(address _recipient, address _gameID, uint256 _islandID, uint256 _id, uint256 _amount) external onlyOwner onlyValidIsland(_gameID, _islandID) {
+
         if (!mintableSet[_gameID][_islandID].contains(_id)){
             revert NFTNotInMintableSet(_id, _islandID);
         }
@@ -184,9 +182,10 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             uint256 pendingPayment = availablePayments[gameId];
             address payable treasury = wavGames[gameId].treasury;
             _assertValidTreasury(treasury);
-            (bool success, ) = treasury.call{value: pendingPayment}("");
+            ( bool success, ) = treasury.call{value: pendingPayment}("");
 
-            availablePayments[gameId] = 0;
+            if(success) availablePayments[gameId] = 0;
+
             emit PaymentForwarded(gameId, pendingPayment);
             unchecked {++i;}
         }
@@ -203,7 +202,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     //This function always adds a new island to the specified game, only call this function when adding new islands to an given game
     function setGame(address _gameID, IWavGame.IslandParam[] calldata _islands) external onlyOwner {
         _assertValidGameID(_gameID);
-        if (wavGames[_gameID].islands.length <= 0) {
+        if (wavGames[_gameID].islands.length == 0) {
             gameIDs.push(_gameID);
         }
         _setGame(_gameID, _islands);
@@ -243,26 +242,26 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
         }
     }
 
-    function _setBurnable(address _gameID, uint256 _islandID, EnumerableSet.UintSet storage burnableSet, IWavGame.SetParam[] memory _burnableSet) internal  {
-        for (uint256 i; i < _burnableSet.length;) {
-            if (_burnableSet[i].status) {
+    function _setBurnable(address _gameID, uint256 _islandID, EnumerableSet.UintSet storage oldBurnableSet, IWavGame.SetParam[] memory newBurnableSet) internal  {
+        for (uint256 i; i < newBurnableSet.length;) {
+            if (newBurnableSet[i].status) {
                 // NFT for burn must be mintable from prevLevel, to ensure levelup 
                 //is only possible from a level lower to the next immediate level 
-                if (_islandID != ENTRY_LEVEL && mintableSet[_gameID][_islandID - 1].contains(_burnableSet[i].id)) {
-                    burnableSet.add(_burnableSet[i].id);
+                if (_islandID != ENTRY_LEVEL && mintableSet[_gameID][_islandID - 1].contains(newBurnableSet[i].id)) {
+                    oldBurnableSet.add(newBurnableSet[i].id);
                 }
             } else {
-                burnableSet.remove(_burnableSet[i].id);
+                oldBurnableSet.remove(newBurnableSet[i].id);
             }
             unchecked {++i;} 
         }
     }
-    function _setMintable(EnumerableSet.UintSet storage mintableSet, IWavGame.SetParam[] memory _mintableSet) internal  {
-        for (uint256 i; i < _mintableSet.length;) {
-            if (_mintableSet[i].status) {
-                mintableSet.add(_mintableSet[i].id);
+    function _setMintable(EnumerableSet.UintSet storage oldMintableSet, IWavGame.SetParam[] memory newMintableSet) internal  {
+        for (uint256 i; i < newMintableSet.length;) {
+            if (newMintableSet[i].status) {
+                oldMintableSet.add(newMintableSet[i].id);
             } else {
-                mintableSet.remove(_mintableSet[i].id);
+                oldMintableSet.remove(newMintableSet[i].id);
             }
             unchecked {++i;} 
         }
@@ -282,7 +281,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
                 0,
                 0
             ));
-            uint256 islandID = Helper.getIslandID(wavGames[_gameID].islands.length - 1);
+            uint256 islandID = wavGames[_gameID].islands.length;
             _setBurnable(_gameID, islandID, burnableSet[_gameID][islandID], _islands[i].burnableSet);
             _setMintable(mintableSet[_gameID][islandID], _islands[i].mintableSet);
 
@@ -290,12 +289,12 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             unchecked {++i;} 
         }
     }
-    function _assertValidTreasury(address _contract) internal {
+    function _assertValidTreasury(address _contract) pure internal {
         if (_contract == address(0)) {
             revert InvalidTreasury(_contract);
         }
     }
-    function _assertValidGameID(address _gameID) internal {
+    function _assertValidGameID(address _gameID) pure internal {
         if (_gameID == address(0)) {
             revert InvalidGameID(_gameID);
         }
