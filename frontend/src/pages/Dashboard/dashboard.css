@@ -1,6 +1,6 @@
 .level-card {
     display: flex;
-    z-index: 222;
+    z-index: 10;
     border-radius: 3.13rem;
     transition: all .4s ease-in-out;
     cursor: pointer;
@@ -10,30 +10,26 @@
 .level-card:hover,
 .level-card.active {
     transform: scale(1.25);
-    z-index: 9999;
+    z-index: 12;
 }
 
 .level-card-level {
     font-style: normal;
+    font-family: "000 webfont";
     font-weight: 400;
-    font-size: 20px;
-    line-height: 45px;
+    font-size: 1.3rem;
+    line-height: 2.81rem;
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
-
-    /* WaveWrld/white */
-
     color: #F5F5F5;
 }
 
 .level-card-title {
     font-style: normal;
     font-weight: 400;
-    font-size: 44px;
-    line-height: 45px;
-    /* or 102% */
-
+    font-size: 1.25rem;
+    line-height: 2.81rem;
     display: flex;
     align-items: center;
 
@@ -44,17 +40,36 @@
 
 .level-card-count {
     font-weight: 300;
-    font-size: 14px;
-    line-height: 19px;
-    letter-spacing: 0.5px;
+    font-size: 0.75rem;
+    line-height: 1.188rem;
+    letter-spacing: 0.031rem;
     color: #FFFFFF;
     margin-bottom: 2rem;
 }
 
+.level-card-action {
+    font-weight: 300;
+    font-size: 0.65rem;
+    border-radius: 6.25rem;
+}
+
 .side-bar {
+    position: relative;
     display: flex;
-    border-radius: 53px;
-    min-height: 5rem;
+    align-items: end;
+    background-color: #252020;
+    border: 1px solid #973540;
+    border-radius: 3.31rem;
+    margin-bottom: 2rem;
+}
+
+.side-bar-secondary {
+    background-color: #2D2727;
+    border: 1px solid #973540;
+    border-radius: 3.31rem;
+    margin-top: 22rem;
+    z-index: 13;
+    position: absolute;
 }
 
 .level-tabs {
@@ -68,16 +83,61 @@
 .level-tabs li {
     float: left;
     display: flex;
+    font-family: "000 webfont";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.625rem;
+    line-height: 1.25rem;
     flex-direction: column;
     justify-content: space-between;
-    margin: 2rem;
+    margin: 1rem;
     cursor: pointer;
 }
 
-.level-tabs li .level-bar{
-    height: 10px;
-    width: 137px;
-    border-radius: 53px;
+.level-tabs li .level-bar {
+    min-height: 0.425rem;
+    min-width: 6.25rem;
+    max-height: 0.625rem;
+    max-width: 8.53rem;
+    border-radius: 3.31rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+.artist-name {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.75rem;
+    line-height: 2.188rem;
+    letter-spacing: 0.02em;
+    color: #FF9FA9;
+}
+
+.artist-desc {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.813rem;
+    line-height: 1.125rem;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+
+    color: #FF9FA9;
+}
+
+.artist-link {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.03em;
+    color: #F251BC;
+}
+
+.artist-wave-graphic {
+    align-self: center;
+    position: absolute;
+    top: -6.8rem;
 }
