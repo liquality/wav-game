@@ -1,19 +1,21 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/structs/EnumerableSetUpgradeable.sol";
 import "@opengsn/contracts/src/ERC2771Recipient.sol";
 import "@opengsn/contracts/src/interfaces/IERC2771Recipient.sol";
 import "./interfaces/IWavGame.sol";
 import "./interfaces/IWavNFT.sol";
 import "./libraries/Helper.sol";
 
-contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165 {
-    using EnumerableSet for EnumerableSet.UintSet;
-    using EnumerableSet for EnumerableSet.AddressSet;
+contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWavGame, ERC2771Recipient, ReentrancyGuardUpgradeable, ERC165Upgradeable {
+    using EnumerableSetUpgradeable for EnumerableSetUpgradeable.UintSet;
+    using EnumerableSetUpgradeable for EnumerableSetUpgradeable.AddressSet;
 
     uint256 public feePerMint; // In wei
     uint256 constant internal ENTRY_LEVEL = 1; 
@@ -23,9 +25,9 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     address[] gameIDs; // Refers to the artists
     mapping(address => uint256) availablePayments;
     mapping(address => Game) internal wavGames;
-    mapping(address => mapping(uint256 => EnumerableSet.AddressSet)) collectors;// Collectors per islands per game
-    mapping(address => mapping(uint256 => EnumerableSet.UintSet)) burnableSet;// Burnable NFT sets per islands per game
-    mapping(address => mapping(uint256 => EnumerableSet.UintSet)) mintableSet;// Mintable NFT sets per islands per game
+    mapping(address => mapping(uint256 => EnumerableSetUpgradeable.AddressSet)) collectors;// Collectors per islands per game
+    mapping(address => mapping(uint256 => EnumerableSetUpgradeable.UintSet)) burnableSet;// Burnable NFT sets per islands per game
+    mapping(address => mapping(uint256 => EnumerableSetUpgradeable.UintSet)) mintableSet;// Mintable NFT sets per islands per game
 
     
     event LeveledUp(address indexed caller, address indexed collector, uint256 indexed nextIslandID, uint256 totalMinted);
@@ -46,6 +48,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     error ParametersMisMatch();
     error PaymentRequired();
     error IslandNotFound();
+    error WavNftNotSet();
 
     modifier onlyValidIsland(address _gameID, uint256 _islandID) {
         if(Helper.getIslandIndex(_islandID) >= wavGames[_gameID].islands.length){
@@ -54,10 +57,27 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
         _;
     }
 
-    constructor(IWavNFT _wavNFT, address _trustedForwarder,uint256 _feePerMint) {
+    modifier whenWavNftSet() {
+        if(address(wavNFT) ==  address(0)){
+            revert WavNftNotSet();
+        }
+        _;
+    }
+    
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+    function _constructor(IWavNFT _wavNFT, address _trustedForwarder,uint256 _feePerMint) external onlyOwner {
         wavNFT = _wavNFT;
         feePerMint = _feePerMint;
         _setTrustedForwarder(_trustedForwarder);
+    }
+
+    function initialize() initializer public {
+        __Pausable_init();
+        __Ownable_init();
     }
 
     /// @notice This function mints level 1 (First game island) NFTs to the _recipient
@@ -65,7 +85,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     /// @param _mintableNFTs nft ids to mint
     /// @param _mintableAmountPerNFTs nft quantities to mint
     /// @dev This function 
-    function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint[] calldata _mintableAmountPerNFTs) external override payable nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
+    function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint[] calldata _mintableAmountPerNFTs) external override payable whenWavNftSet whenNotPaused nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
         if (_mintableNFTs.length != _mintableAmountPerNFTs.length) {
             revert ParametersMisMatch();
         }
@@ -92,7 +112,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
         emit Collected(_msgSender(), _recipient, msg.value, totalMinted);
     }
 
-    function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint[] calldata _burnableAmountPerNFTs) external override nonReentrant onlyValidIsland(_gameID, _islandID) {
+    function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint[] calldata _burnableAmountPerNFTs) external override whenWavNftSet whenNotPaused nonReentrant onlyValidIsland(_gameID, _islandID) {
         if (_burnableNFTs.length != _burnableAmountPerNFTs.length) {
             revert ParametersMisMatch();
         }
@@ -158,10 +178,10 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     // No checks are done for mint and batchMints, these are admin functions for minting non-game related NFTs, minting 
     //a game-specific NFT through this functions may distrupt calculations on the game
     // Use special mint instead.
-    function mint(address _recipient, uint _id, uint _amount) external onlyOwner {
+    function mint(address _recipient, uint _id, uint _amount) external whenWavNftSet onlyOwner {
         wavNFT.mint(_recipient, _id, _amount, " ");
     }
-    function wavMint(address _recipient, address _gameID, uint256 _islandID, uint256 _id, uint256 _amount) external onlyOwner onlyValidIsland(_gameID, _islandID) {
+    function wavMint(address _recipient, address _gameID, uint256 _islandID, uint256 _id, uint256 _amount) external whenWavNftSet onlyOwner onlyValidIsland(_gameID, _islandID) {
 
         if (!mintableSet[_gameID][_islandID].contains(_id)){
             revert NFTNotInMintableSet(_id, _islandID);
@@ -172,7 +192,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
 
         emit SpecialMint(_recipient, _id, _amount);
     }
-    function batchMint(address _recipient, uint[] memory _ids, uint[] memory _amount) external onlyOwner {
+    function batchMint(address _recipient, uint[] memory _ids, uint[] memory _amount) external whenWavNftSet onlyOwner {
         wavNFT.mintBatch(_recipient, _ids, _amount, " ");
     } 
     function forwardValue() external onlyOwner nonReentrant {
@@ -190,6 +210,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             unchecked {++i;}
         }
     }
+
     function setFeePerMint(uint256  _feePerMint) external onlyOwner {
         uint256 oldFee = feePerMint;
         feePerMint = _feePerMint;
@@ -233,6 +254,15 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
         _setMintable(mintableSet[_gameID][_islandID], _islandParam.mintableSet);
         emit IslandUpdated(_gameID, _islandID);
     }
+
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    function unpause() external onlyOwner {
+        _unpause();
+    }
+
     function _syncMint(address _gameID, uint256 _islandID, address _recipient, uint256 _mintCount) internal {
         uint256 islandIndex = Helper.getIslandIndex(_islandID);
         Island memory island = wavGames[_gameID].islands[islandIndex];
@@ -242,7 +272,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
         }
     }
 
-    function _setBurnable(address _gameID, uint256 _islandID, EnumerableSet.UintSet storage oldBurnableSet, IWavGame.SetParam[] memory newBurnableSet) internal  {
+    function _setBurnable(address _gameID, uint256 _islandID, EnumerableSetUpgradeable.UintSet storage oldBurnableSet, IWavGame.SetParam[] memory newBurnableSet) internal  {
         for (uint256 i; i < newBurnableSet.length;) {
             if (newBurnableSet[i].status) {
                 // NFT for burn must be mintable from prevLevel, to ensure levelup 
@@ -256,7 +286,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             unchecked {++i;} 
         }
     }
-    function _setMintable(EnumerableSet.UintSet storage oldMintableSet, IWavGame.SetParam[] memory newMintableSet) internal  {
+    function _setMintable(EnumerableSetUpgradeable.UintSet storage oldMintableSet, IWavGame.SetParam[] memory newMintableSet) internal  {
         for (uint256 i; i < newMintableSet.length;) {
             if (newMintableSet[i].status) {
                 oldMintableSet.add(newMintableSet[i].id);
@@ -266,10 +296,11 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             unchecked {++i;} 
         }
     }	
-    function _msgSender() internal view virtual override(Context, ERC2771Recipient) returns (address sender) {
+
+    function _msgSender() internal view virtual override(ContextUpgradeable, ERC2771Recipient) returns (address sender) {
         return ERC2771Recipient._msgSender();
     }
-    function _msgData() internal view virtual override(Context, ERC2771Recipient) returns (bytes calldata) {
+    function _msgData() internal view virtual override(ContextUpgradeable, ERC2771Recipient) returns (bytes calldata) {
         return ERC2771Recipient._msgData();
     }
     function _setGame(address _gameID, IWavGame.IslandParam[] memory _islands) internal {
