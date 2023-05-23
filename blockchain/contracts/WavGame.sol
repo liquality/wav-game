@@ -22,7 +22,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     IWavNFT public wavNFT; 
     // address payable public revenueContract; // Platform revenue spliting contract
 
-    address[] gameIDs;
+    address[] gameIDs; // Refers to the artists
     mapping(address => uint256) availablePayments;
     mapping(address => Game) internal wavGames;
     mapping(address => mapping(uint256 => EnumerableSet.AddressSet)) collectors;// Collectors per islands per game
