@@ -3,13 +3,27 @@ import { ReactComponent as NextBtn } from "../../images/next_btn.svg";
 
 import { useState, useEffect } from "react";
 import { fetchSession } from "../../utils";
+import UserService from "../../services/UserService";
 export const PickArtist = (props) => {
   const { setContent, setHeaderText } = props;
 
   const [selectedId, setSelectedId] = useState(1);
 
-  function handleClick(id) {
+  async function handleClick(id) {
     setSelectedId(id);
+
+    try {
+      const gameObject = await UserService.createGame(
+        {
+          user_id: fetchSession().id,
+          artist_name: `Artist ${selectedId}`,
+        },
+        fetchSession().token
+      );
+      console.log(gameObject, "Gaaame OBJEEECT");
+    } catch (err) {
+      console.log(err, "error creating game with artist");
+    }
   }
 
   console.log(fetchSession(), "session rnnn");

@@ -20,19 +20,23 @@ export const PickAvatar = (props) => {
   const handleSetNewPage = () => {
     // Call UserService.createUser() and pass the avatar image data along with other necessary data
     if (username && avatarImage && publicAddress) {
-      UserService.createUser({
-        serviceprovider_name: serviceproviderName,
-        username,
-        avatar: avatarImage,
-        public_address: publicAddress,
-      }).then((response) => {
-        //Set session
-        localStorage.setItem("session", JSON.stringify(response));
-        console.log(response, "user obj response");
+      try {
+        UserService.createUser({
+          serviceprovider_name: serviceproviderName,
+          username,
+          avatar: avatarImage,
+          public_address: publicAddress,
+        }).then((response) => {
+          //Set session
+          localStorage.setItem("session", JSON.stringify(response));
+          console.log(response, "user obj response");
 
-        setContent("pickArtist");
-        setHeaderText("Choose an artist");
-      });
+          setContent("pickArtist");
+          setHeaderText("Choose an artist");
+        });
+      } catch (err) {
+        console.log("Error creating user");
+      }
     } else {
       //Set error msg here
       console.log("Please provide an avatar & username");
@@ -86,10 +90,13 @@ export const PickAvatar = (props) => {
 
       {/* TODO: make button inactive if no username is put in */}
       <button
-        style={{ width: "180px" }}
         className="modalButtonSignIn  mt-5 mb-5 px-4"
         onClick={handleSetNewPage}
-        disabled={username ? false : true}
+        disabled={username && avatarImage ? false : true}
+        style={{
+          width: "180px",
+          opacity: username && avatarImage ? 1 : 0.5,
+        }}
       >
         Continue
       </button>

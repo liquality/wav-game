@@ -376,8 +376,15 @@ button.xmint-btn span {
 }
 
 button.xmint-btn {
-  background-color: #36343b;
+  background-color: #e61ea3;
   width: 40%;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-radius: 100px;
+  margin-top: 10px;
 }
 button.xmint-btn:after {
   content: "Pay with Creditcard";

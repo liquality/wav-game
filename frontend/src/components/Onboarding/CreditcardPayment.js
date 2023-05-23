@@ -64,22 +64,24 @@ export const CreditcardPayment = (props) => {
           both NFTs. To move through each level, you will need:
         </p>
         <p className="mb-4">
-          • 4 items to get to level 3 <br></br>• 8 to level 4 <br></br>•16 to
-          level 5 <br></br>•32 to level 6
+          • 4 items to get to level 3 <br></br>• 8 to level 4 <br></br>• 16 to
+          level 5 <br></br>• 32 to level 6
         </p>
         <p className="lineNoCenter mb-4" style={{ width: "50%" }}></p>
 
         <div className="flexDirectionRow mb-3">
           <input
-            className="form-input border-b border-gray-400 bg-transparent focus:ring-0 focus:border-gray-400"
+            style={{ width: "20%" }}
+            className="passwordInputBox"
             type="number"
+            placeholder="Quantity"
             id="nftAmount"
             name="nftAmount"
             value={nftAmount}
             onChange={handleAmountChange}
             required
           />
-          <p className="mr-3 ml-3">Total $100 </p>
+          <p className="mr-3 mt-2 ml-5">Total $100 </p>
         </div>
 
         <CrossmintPayButton

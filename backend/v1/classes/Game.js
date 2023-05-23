@@ -26,11 +26,11 @@ class Game {
   create = async () => {
     const game = this;
     const promise = new Promise((resolve, reject) => {
-      this.MySQL.pool.getConnection((err, db) => {
+      MySQL.pool.getConnection((err, db) => {
         db.query(
           "INSERT INTO `game` (status, user_id, level, artist_name, level_4_claimed_prizes, level_5_claimed_prizes, level_6_claimed_main_prize, claimable_prize_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
           [
-            game.status,
+            "not_started", //status default is not started when game is created
             game.user_id,
             game.level,
             game.artist_name,
@@ -40,6 +40,7 @@ class Game {
             game.claimable_prize_count,
           ],
           (err, results, fields) => {
+            console.log(err, "results", results);
             if (err) {
               reject(new ApiError(500, err));
             } else if (results.length < 1) {

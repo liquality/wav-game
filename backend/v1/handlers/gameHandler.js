@@ -30,15 +30,20 @@ gameHandler.read = function (req, res) {
 
 gameHandler.create = function (req, res) {
   var game = new Game();
-  game.set(req.body); // should be a user object
-  game.create().then(
-    (game) => {
-      res.status(200).send(game);
-    },
-    (reject) => {
-      res.status(400).send(new ApiError(400, reject));
-    }
-  );
+  console.log(req.body, "req body in game?", req.user, "User in gamehandler");
+  game.set(req.body); // should be a game object
+
+  if (req.body.user_id === req.user.id) {
+    console.log("Inside here");
+    game.create().then(
+      (game) => {
+        res.status(200).send(game);
+      },
+      (reject) => {
+        res.status(400).send(new ApiError(400, reject));
+      }
+    );
+  }
 };
 
 gameHandler.update = function (req, res) {
