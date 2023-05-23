@@ -44,7 +44,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     error InvalidTreasury(address treasury);
     error RequiredBurnNotMet(uint8 requiredBurn);
     error InvalidGameID(address gameID);
-    error RequestNotPermitted();
+    error InvalidNextLevel();
     error FundsReleaseFailed();
     error ParametersMisMatch();
     error PaymentRequired();
@@ -95,7 +95,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     }
     function levelUp(address _gameID, uint256 _islandID, NFTParam[] calldata _nfts) external override nonReentrant onlyValidIsland(_gameID, _islandID) {
         if(_islandID <= ENTRY_LEVEL) {
-            revert RequestNotPermitted();
+            revert InvalidNextLevel();
         }
         IWavGame.Island memory nextIsland = wavGames[_gameID].islands[Helper.getIslandIndex(_islandID)];
 
@@ -129,13 +129,13 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
     }
 
     //Returns true if msg.sender qualifies for special prize on artist collection
-    function isPrizedCollector(address _gameID, uint256 _islandID) public view returns (bool) {
+    function isEarlyBirdCollector(address _gameID, uint256 _islandID) public view returns (bool) {
         return collectors[_gameID][_islandID].contains(msg.sender);
     } 
-    function fetchPrizedCollectors(address _gameID, uint256 _islandID) public view returns (address[] memory) {
+    function fetchEarlyBirdCollectors(address _gameID, uint256 _islandID) public view returns (address[] memory) {
         return collectors[_gameID][_islandID].values();
     }
-    // Get all islands of a given gameID
+    // Get all islands and treasury of a given gameID
     function fetchGame(address _gameID) public view returns (IWavGame.Island[] memory, address) {
         return (wavGames[_gameID].islands, wavGames[_gameID].treasury);
    
@@ -231,8 +231,8 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
         if (_islandParam.requiredMint > 0) {
             wavGames[_gameID].islands[islandIndex].requiredMint = _islandParam.requiredMint;
         }
-        if (_islandParam.prizeCutOff > 0) {
-            wavGames[_gameID].islands[islandIndex].prizeCutOff = _islandParam.prizeCutOff;
+        if (_islandParam.earlyBirdCutOff > 0) {
+            wavGames[_gameID].islands[islandIndex].earlyBirdCutOff = _islandParam.earlyBirdCutOff;
         }
         _setBurnable(_gameID, _islandID, burnableSet[_gameID][_islandID], _islandParam.burnableSet);
         _setMintable(mintableSet[_gameID][_islandID], _islandParam.mintableSet);
@@ -242,10 +242,11 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
         uint256 islandIndex = Helper.getIslandIndex(_islandID);
         Island memory island = wavGames[_gameID].islands[islandIndex];
         wavGames[_gameID].islands[islandIndex].mintCount += _mintCount;
-        if (collectors[_gameID][_islandID].length() < island.prizeCutOff && !collectors[_gameID][_islandID].contains(_recipient)){
+        if (collectors[_gameID][_islandID].length() < island.earlyBirdCutOff && !collectors[_gameID][_islandID].contains(_recipient)){
             collectors[_gameID][_islandID].add(_recipient);
         }
     }
+
     function _setBurnable(address _gameID, uint256 _islandID, EnumerableSet.UintSet storage burnableSet, IWavGame.SetParam[] memory _burnableSet) internal  {
         for (uint256 i; i < _burnableSet.length;) {
             if (_burnableSet[i].status) {
@@ -281,7 +282,7 @@ contract WavGame is IWavGame, Ownable, ERC2771Recipient, ReentrancyGuard, ERC165
             wavGames[_gameID].islands.push(IWavGame.Island(
                 _islands[i].requiredBurn,
                 _islands[i].requiredMint,
-                _islands[i].prizeCutOff,
+                _islands[i].earlyBirdCutOff,
                 0,
                 0
             ));
