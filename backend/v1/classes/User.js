@@ -61,9 +61,9 @@ class User {
             [id],
             (err, results, fields) => {
               if (err) {
-                reject(new this.ApiError(500, err));
+                reject(new ApiError(500, err));
               } else if (results.length < 1) {
-                reject(new this.ApiError(404, "User not found"));
+                reject(new ApiError(404, "User not found"));
               } else {
                 user.set(results[0]);
                 resolve(user);
@@ -73,7 +73,7 @@ class User {
           );
         });
       } else {
-        reject(new this.ApiError(500, "Missing user id"));
+        reject(new ApiError(500, "Missing user id"));
       }
     });
     return promise;
@@ -95,9 +95,9 @@ class User {
             ],
             (err, results, fields) => {
               if (err) {
-                reject(new this.ApiError(500, err));
+                reject(new ApiError(500, err));
               } else if (results.affectedRows < 1) {
-                reject(new this.ApiError(404, "User not found!"));
+                reject(new ApiError(404, "User not found!"));
               } else {
                 resolve(user);
               }
@@ -120,9 +120,9 @@ class User {
             [id],
             (err, results, fields) => {
               if (err) {
-                reject(new this.ApiError(500, err));
+                reject(new ApiError(500, err));
               } else if (results.length < 1) {
-                reject(new this.ApiError(400, "Nothing deleted"));
+                reject(new ApiError(400, "Nothing deleted"));
               } else {
                 resolve();
               }
@@ -131,7 +131,7 @@ class User {
           );
         });
       } else {
-        reject(new this.ApiError(400, "Missing user id"));
+        reject(new ApiError(400, "Missing user id"));
       }
     });
     return promise;

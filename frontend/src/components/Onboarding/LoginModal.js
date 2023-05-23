@@ -27,6 +27,8 @@ const directParams = {
   enableLogging: true,
   networkUrl: "https://goerli.infura.io/v3/a8684b771e9e4997a567bbd7189e0b27",
   network: "testnet",
+  web3AuthClientId:
+    "BJTC4gveo6EM5dm2cLJnPUiBH3n6IeirFpMwHP1GrFyhW4_UnGN88We66cELQS4HNrPYcKLiNIjASG9pS4fboFE",
 };
 
 export const LoginModal = (props) => {

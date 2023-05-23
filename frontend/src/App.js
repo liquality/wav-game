@@ -23,21 +23,21 @@ function App() {
   }, [loginResponse]);
 
   return (
-    <DataContext.Provider
-      value={{
-        loginResponse: loginResponse,
-        setLoginResponse: setLoginResponse,
-      }}
-    >
-      <body className="stretched device-xl bg-white no-transition">
+    <body className="stretched device-xl no-transition">
+      <DataContext.Provider
+        value={{
+          loginResponse: loginResponse,
+          setLoginResponse: setLoginResponse,
+        }}
+      >
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/balances" element={<Balances />} />
         </Routes>
-      </body>
-    </DataContext.Provider>
+      </DataContext.Provider>{" "}
+    </body>
   );
 }
 
