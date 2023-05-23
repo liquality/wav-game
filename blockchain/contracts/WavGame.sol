@@ -255,6 +255,10 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         emit IslandUpdated(_gameID, _islandID);
     }
 
+    function transferWavNftOwnership(address newOwner) external whenWavNftSet onlyOwner {
+        wavNFT.transferOwnership(newOwner);
+    }
+
     function pause() external onlyOwner {
         _pause();
     }
