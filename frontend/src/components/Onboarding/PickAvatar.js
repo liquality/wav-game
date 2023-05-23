@@ -17,7 +17,6 @@ export const PickAvatar = (props) => {
     setUsername(e.target.value);
   };
 
-  console.log(fetchSession(), "session rnnn");
   const handleSetNewPage = () => {
     // Call UserService.createUser() and pass the avatar image data along with other necessary data
     if (username && avatarImage && publicAddress) {
