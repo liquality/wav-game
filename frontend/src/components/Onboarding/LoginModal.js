@@ -38,7 +38,7 @@ export const LoginModal = (props) => {
   const [content, setContent] = useState("loginOrRegister");
   const [headerText, setHeaderText] = useState("");
 
-  //const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
   //const { loginResponse, setLoginResponse } = React.useContext(DataContext);
 
@@ -60,8 +60,10 @@ export const LoginModal = (props) => {
   }, [loginResponse, content]);
 
   const createNewWallet = async () => {
+    setLoading(true);
     const response = await AuthService.createWallet(tKey, verifierMap);
     setLoginResponse(response);
+    setLoading(false);
     //TODO: create user in db here
     setContent("pickAvatar");
     setHeaderText("Pick An Avatar");
@@ -73,6 +75,7 @@ export const LoginModal = (props) => {
         <LoginOrRegister
           setHeaderText={setHeaderText}
           createNewWallet={createNewWallet}
+          loading={loading}
         />
       );
     } else if (content === "pickAvatar") {
