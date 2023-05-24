@@ -1,8 +1,9 @@
-import { useState, PropsWithChildren } from "react";
+import { useState, PropsWithChildren, useTransition } from "react";
 import "../../App.css";
 import "./dashboard.css";
 import { NavBar } from "./NavBar";
 import { Sidebar } from "./Sidebar";
+import classNames from "classnames";
 
 const levels = [
   {
@@ -76,22 +77,31 @@ const levelStyles = {
 export const Dashboard = (props: PropsWithChildren) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  function onSelectLevel(level: number) {
+    startTransition(() => {
+      setSelectedLevel(level);
+    });
+  }
   return (
-    <div className="md:mx-3 grid min-h-screen grid-rows-header bg-dark">
-      <div>
-        <NavBar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} />
-      </div>
+    <div className="grid grid-rows-header bg-dark">
+      <NavBar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} />
 
-      <div className="grid md:grid-cols-sidebar">
+      <div className="grid md:grid-cols-sidebar mt-24 container">
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
-        <div className="grid min-h-screen ml-3 overflow-hidden">
+        <div className="grid md:ml-20">
           <div className="flex flex-col items-center">
+            <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
+            <div className="game-header-level">LEVEL: 3 </div>
+            <div className="game-header-title">TK’S GAME_</div>
+            <div className="game-header-counter">COLLECTABLES: 42</div>
+            </div>
             <div className="flex justify-center my-5">
               <ul className="level-tabs">
                 {levels.map((level) => {
                   const styles = levelStyles[level.status];
                   return <li key={level.id} 
-                            onClick={() => setSelectedLevel(level.id)}>
+                            onClick={() => onSelectLevel(level.id)}>
                     <div className={`${styles.text}`}>
                       {level.label}
                     </div>
@@ -106,8 +116,12 @@ export const Dashboard = (props: PropsWithChildren) => {
                 const styles = levelStyles[level.status];
                 return <div
                   key={level.id}
-                  onClick={() => setSelectedLevel(level.id)}
-                  className={`text-white px-5 py-4 flex flex-col justify-between level-card ${selectedLevel === level.id ? 'active' : 'inactive'} dark:border ${styles.border} ${styles.background}`}>
+                  onClick={() => onSelectLevel(level.id)}
+                  className={classNames({
+                    [`dark:border ${styles.border} ${styles.background}`]: true,
+                    "text-white px-5 py-4 flex flex-col justify-between level-card": true, 
+                    "active": selectedLevel === level.id
+                })}>
                   <div className="flex flex-col justify-between">
                     <div className="level-card-level">
                       {level.title}

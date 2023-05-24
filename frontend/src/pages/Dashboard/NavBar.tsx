@@ -8,7 +8,7 @@ export const NavBar = (props: Props) => {
         <nav className={classNames({
             "bg-dark": true, // colors
             "flex items-center": true, // layout
-            "w-full fixed z-[9999] px-4 shadow-sm h-16": true, //positioning & styling
+            "w-full fixed z-[9999] h-20": true, //positioning & styling
         })}>
             <div className="container flex flex-wrap justify-between">
                 <a href="/dashboard" className="dark:text-white flex items-center mainHeaderText">
@@ -18,11 +18,9 @@ export const NavBar = (props: Props) => {
                 <div
                     className="hidden w-full md:block md:w-auto"
                 >
-                    <ul className="flex flex-col p-4 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0">
+                    <ul className="flex flex-col rounded-lg md:flex-row md:mt-0">
                         <li>
-
-                            {/* account  */}
-                            <div className="border-t border-t-indigo-800 p-4">
+                            <div className="py-4">
                                 <div className="flex items-center">
                                     <img
                                         src={
