@@ -12,6 +12,10 @@ contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable
     constructor(string memory uri) ERC1155(uri){
     }
 
+    function setURI(string memory newURI) public onlyOwner {
+        _setURI(newURI);
+    }
+
     function pause() public onlyOwner {
         _pause();
     }
