@@ -49,6 +49,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
     error PaymentRequired();
     error IslandNotFound();
     error WavNftNotSet();
+    error BurnBatchFailed();
 
     modifier onlyValidIsland(address _gameID, uint256 _islandID) {
         if(Helper.getIslandIndex(_islandID) >= wavGames[_gameID].islands.length){
@@ -57,27 +58,18 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         _;
     }
 
-    modifier whenWavNftSet() {
-        if(address(wavNFT) ==  address(0)){
-            revert WavNftNotSet();
-        }
-        _;
-    }
-    
-
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
-    function _constructor(IWavNFT _wavNFT, address _trustedForwarder,uint256 _feePerMint) external onlyOwner {
+
+    function initialize(IWavNFT _wavNFT, address _trustedForwarder,uint256 _feePerMint) initializer public {
+        __Pausable_init();
+        __Ownable_init();
+
         wavNFT = _wavNFT;
         feePerMint = _feePerMint;
         _setTrustedForwarder(_trustedForwarder);
-    }
-
-    function initialize() initializer public {
-        __Pausable_init();
-        __Ownable_init();
     }
 
     /// @notice This function mints level 1 (First game island) NFTs to the _recipient
@@ -85,7 +77,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
     /// @param _mintableNFTs nft ids to mint
     /// @param _mintableAmountPerNFTs nft quantities to mint
     /// @dev This function 
-    function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint[] calldata _mintableAmountPerNFTs) external override payable whenWavNftSet whenNotPaused nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
+    function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint[] calldata _mintableAmountPerNFTs) external override payable  whenNotPaused nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
         if (_mintableNFTs.length != _mintableAmountPerNFTs.length) {
             revert ParametersMisMatch();
         }
@@ -105,6 +97,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         if (totalPayable > msg.value) { 
             revert InsufficientPayment(totalPayable,msg.value);
         }
+
         wavNFT.mintBatch(_recipient, _mintableNFTs, _mintableAmountPerNFTs, bytes(" "));
         availablePayments[_gameID] += msg.value;
         _syncMint(_gameID, ENTRY_LEVEL, _recipient, totalMinted);
@@ -112,7 +105,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         emit Collected(_msgSender(), _recipient, msg.value, totalMinted);
     }
 
-    function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint[] calldata _burnableAmountPerNFTs) external override whenWavNftSet whenNotPaused nonReentrant onlyValidIsland(_gameID, _islandID) {
+    function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint[] calldata _burnableAmountPerNFTs) external override  whenNotPaused nonReentrant onlyValidIsland(_gameID, _islandID) {
         if (_burnableNFTs.length != _burnableAmountPerNFTs.length) {
             revert ParametersMisMatch();
         }
@@ -133,8 +126,15 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         if(totalBurnAmount != nextIsland.requiredBurn){
             revert RequiredBurnNotMet(nextIsland.requiredBurn);
         }
-        wavNFT.burnBatch(_msgSender(), _burnableNFTs, _burnableAmountPerNFTs);
-        wavNFT.mint(_msgSender(), mintableSet[_gameID][_islandID].values()[0], nextIsland.requiredMint, bytes(" "));
+        
+        // Burn Collectors NFTs... create EIP2771 calldata by appending _msgSender()
+        bytes memory burnBatchCallData = abi.encodePacked(abi.encodeWithSelector(IWavNFT.burnBatch.selector, _burnableNFTs, _burnableAmountPerNFTs),abi.encodePacked(_msgSender()));
+        (bool success, ) = address(wavNFT).call(burnBatchCallData);
+
+        if(!success) revert BurnBatchFailed();
+
+        EnumerableSetUpgradeable.UintSet storage _mintableSet = mintableSet[_gameID][_islandID];
+        wavNFT.mint(_msgSender(), _mintableSet.values()[0], nextIsland.requiredMint, bytes(" "));
    
         wavGames[_gameID].islands[Helper.getIslandIndex(_islandID-1)].burnCount += totalBurnAmount; // Increase burnCount of old/prev island
         _syncMint(_gameID, _islandID, _msgSender(), nextIsland.requiredMint);
@@ -178,10 +178,10 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
     // No checks are done for mint and batchMints, these are admin functions for minting non-game related NFTs, minting 
     //a game-specific NFT through this functions may distrupt calculations on the game
     // Use special mint instead.
-    function mint(address _recipient, uint _id, uint _amount) external whenWavNftSet onlyOwner {
+    function mint(address _recipient, uint _id, uint _amount) external  onlyOwner {
         wavNFT.mint(_recipient, _id, _amount, " ");
     }
-    function wavMint(address _recipient, address _gameID, uint256 _islandID, uint256 _id, uint256 _amount) external whenWavNftSet onlyOwner onlyValidIsland(_gameID, _islandID) {
+    function wavMint(address _recipient, address _gameID, uint256 _islandID, uint256 _id, uint256 _amount) external  onlyOwner onlyValidIsland(_gameID, _islandID) {
 
         if (!mintableSet[_gameID][_islandID].contains(_id)){
             revert NFTNotInMintableSet(_id, _islandID);
@@ -192,7 +192,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
 
         emit SpecialMint(_recipient, _id, _amount);
     }
-    function batchMint(address _recipient, uint[] memory _ids, uint[] memory _amount) external whenWavNftSet onlyOwner {
+    function batchMint(address _recipient, uint[] memory _ids, uint[] memory _amount) external  onlyOwner {
         wavNFT.mintBatch(_recipient, _ids, _amount, " ");
     } 
     function forwardValue() external onlyOwner nonReentrant {
@@ -255,7 +255,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         emit IslandUpdated(_gameID, _islandID);
     }
 
-    function transferWavNftOwnership(address newOwner) external whenWavNftSet onlyOwner {
+    function transferWavNftOwnership(address newOwner) external  onlyOwner {
         wavNFT.transferOwnership(newOwner);
     }
 
