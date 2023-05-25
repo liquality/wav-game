@@ -54,13 +54,22 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.mainHeaderText {
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 39px;
+  color: #f5f5f5;
+}
+
 .navBarText {
   font-family: "Sora";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  /* identical to box height */
+
+  color: #f5f5f5;
 
   text-align: center;
   letter-spacing: -0.08px;
@@ -172,6 +181,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: auto;
   margin-right: auto;
 }
+
 .wavGameHeader {
   color: #ffffff;
   font-family: "000 webfont";
@@ -184,11 +194,13 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: auto;
   margin-right: auto;
 }
+
 .modalRow {
   flex: 1;
   flex-direction: row;
   margin-bottom: 15px;
 }
+
 .modalTerms {
   font-family: "000 webfont";
   font-style: normal;
@@ -203,6 +215,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .modalTerms:hover {
   color: #878787;
 }
+
 .modal-close-x {
   position: absolute;
   top: 25px;
@@ -219,6 +232,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .custom-modal {
   max-width: 80%;
 }
+
 .custom-modal .modal-content {
   background-color: #1e1e1e;
   color: #fff;
@@ -301,6 +315,7 @@ input[type="number"]::-webkit-outer-spin-button {
   letter-spacing: 0.02em;
   color: #bdbdbd;
 }
+
 .rightSubHeadingTextSmall {
   font-family: "Sora";
   font-style: normal;
@@ -313,6 +328,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .headingBold {
   font-weight: 700;
 }
+
 .headingThin {
   font-weight: 400;
 }
@@ -400,6 +416,7 @@ button.xmint-btn {
   border-radius: 100px;
   margin-top: 10px;
 }
+
 button.xmint-btn:after {
   content: "Pay with Creditcard";
   color: white;

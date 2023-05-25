@@ -1,0 +1,181 @@
+.level-card {
+    display: flex;
+    z-index: 11;
+    border-radius: 3.13rem;
+    transition: all .4s ease-in-out;
+    cursor: pointer;
+    transform: scale(0.98);
+    width: 20.13rem;
+    height: 32.5rem;
+}
+
+.level-card:not(:last-child) {
+    margin-right: -10rem;
+}
+
+.level-card:hover,
+.level-card.active {
+    transform: scale(1.25);
+    z-index: 20;
+}
+
+.level-card-level {
+    font-style: normal;
+    font-family: "000 webfont";
+    font-weight: 400;
+    font-size: 1.3rem;
+    line-height: 2.81rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    color: #F5F5F5;
+}
+
+.level-card-title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 2.81rem;
+    display: flex;
+    align-items: center;
+    color: #F5F5F5;
+}
+
+.level-card-count {
+    font-weight: 300;
+    font-size: 0.75rem;
+    line-height: 1.188rem;
+    letter-spacing: 0.031rem;
+    color: #FFFFFF;
+    margin-bottom: 2rem;
+}
+
+.level-card-action {
+    font-weight: 300;
+    font-size: 0.65rem;
+    border-radius: 6.25rem;
+}
+
+.side-bar {
+    display: flex;
+    align-items: end;
+    background-color: #252020;
+    border: 1px solid #973540;
+    border-radius: 3.31rem;
+    margin-bottom: 2rem;
+    z-index: 9999 !important;
+}
+
+.side-bar-secondary {
+    background-color: #2D2727;
+    border: 1px solid #973540;
+    border-radius: 3.31rem;
+    position: relative;
+    margin-top: 12rem;
+    z-index: 13;
+}
+
+.level-tabs {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.level-tabs li {
+    float: left;
+    display: flex;
+    font-family: "000 webfont";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.625rem;
+    line-height: 1.25rem;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.level-tabs li .level-bar {
+    height: 0.625rem;
+    width: 8.563rem;
+    border-radius: 3.31rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.artist-name {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.75rem;
+    line-height: 2.188rem;
+    letter-spacing: 0.02em;
+    color: #FF9FA9;
+}
+
+.artist-desc {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.813rem;
+    line-height: 1.125rem;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+
+    color: #FF9FA9;
+}
+
+.artist-link {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.03em;
+    color: #F251BC;
+}
+
+.artist-wave-graphic {
+    align-self: center;
+    position: absolute;
+    top: -6.8rem;
+}
+
+.artist-content {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.02em;
+}
+
+.artist-info {
+    border-top: 1px solid #BF3948;
+}
+
+.game-header {
+    border-top: 1px solid #BF3948;
+}
+
+.game-header-level,
+.game-header-counter {
+    font-family: '000 webfont';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.625rem;
+    line-height: 1.563rem;
+    color: #E0E0E0;
+
+}
+
+.game-header-title {
+    font-family: 'Alba';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.563rem;
+    line-height: 3.688rem;
+    text-align: center;
+    color: #E0E0E0;
+}

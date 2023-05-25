@@ -6,8 +6,9 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Balances } from "./pages/Balances";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 import { setupSDK } from "./utils";
 import Footer from "./components/Footer";
@@ -22,6 +23,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("loginResponse", JSON.stringify(loginResponse));
   }, [loginResponse]);
+  const location = useLocation();
 
   return (
     <body className="stretched device-xl no-transition">
@@ -30,13 +32,17 @@ function App() {
           loginResponse: loginResponse,
           setLoginResponse: setLoginResponse,
         }}
-      >
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/balances" element={<Balances />} />
-        </Routes>
+      > {
+          location.pathname === '/artist' ? <Dashboard /> :
+            <>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/balances" element={<Balances />} />
+              </Routes>
+            </>
+        }
         <Footer />
       </DataContext.Provider>{" "}
     </body>
