@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --dark: #211C1C;
+    }
+}
+
+.bg-dark {
+    background-color: #211C1C !important;
+  }
+
