@@ -2,24 +2,22 @@ var express = require("express");
 var app = express();
 var v1 = require("./v1/");
 var bodyParser = require("body-parser");
+var cors = require("cors");
+
 var { expressjwt: jwt } = require("express-jwt");
+
+//TODO: store better secret in hidden config file
+const secret = "my-secret";
 
 var appPort = process.env.PORT || 3000;
 
-//app.use(v1);
-const secret = "my-secret";
-
-// Configure express-jwt middleware
 app.use(
+  cors(),
   bodyParser.json({ limit: "5mb" }),
   jwt({
     secret: secret,
     algorithms: ["HS256"],
-    // Optional: Customize the request property name where the decoded token will be attached (default: 'user')
-    // requestProperty: 'auth',
-    // Optional: Add additional options if needed
-    // ...other options
-  }).unless({ path: ["/v1/user"], method: ["POST"] }), // Exclude '/v1/user' path from JWT authentication
+  }).unless({ path: ["/v1/user", "/v1/user/login"], method: ["POST", "GET"] }), // Exclude '/v1/user' and '/v1/user/login' paths from JWT authentication
   v1
 );
 

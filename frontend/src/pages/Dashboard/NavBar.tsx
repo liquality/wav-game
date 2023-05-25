@@ -11,7 +11,7 @@ export const NavBar = (props: Props) => {
             "w-full fixed z-[9999] h-20": true, //positioning & styling
         })}>
             <div className="container flex flex-wrap justify-between">
-                <a href="/dashboard" className="dark:text-white flex items-center mainHeaderText">
+                <a href="/artist" className="dark:text-white flex items-center mainHeaderText">
                     WAVGAME_
                 </a>
 

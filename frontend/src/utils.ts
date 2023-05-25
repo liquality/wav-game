@@ -17,3 +17,10 @@ export function setupSDK() {
 export function getPrivateKey(): string {
     return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.privateKey;
 }
+
+
+export const fetchSession = () => {
+    const sessionString = localStorage.getItem('session');
+    const session = JSON.parse(sessionString);
+    return session
+}

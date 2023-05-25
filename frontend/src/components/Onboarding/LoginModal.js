@@ -10,6 +10,7 @@ import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
+import UserService from "../../services/UserService";
 
 const verifierMap = {
   google: {
@@ -27,6 +28,8 @@ const directParams = {
   enableLogging: true,
   networkUrl: "https://goerli.infura.io/v3/a8684b771e9e4997a567bbd7189e0b27",
   network: "testnet",
+  web3AuthClientId:
+    "BJTC4gveo6EM5dm2cLJnPUiBH3n6IeirFpMwHP1GrFyhW4_UnGN88We66cELQS4HNrPYcKLiNIjASG9pS4fboFE",
 };
 
 export const LoginModal = (props) => {
@@ -58,7 +61,8 @@ export const LoginModal = (props) => {
 
   const createNewWallet = async () => {
     const response = await AuthService.createWallet(tKey, verifierMap);
-    setLoginResponse(response); //heb
+    setLoginResponse(response);
+    //TODO: create user in db here
     setContent("pickAvatar");
     setHeaderText("Pick An Avatar");
   };
@@ -73,7 +77,12 @@ export const LoginModal = (props) => {
       );
     } else if (content === "pickAvatar") {
       return (
-        <PickAvatar setHeaderText={setHeaderText} setContent={setContent} />
+        <PickAvatar
+          setHeaderText={setHeaderText}
+          setContent={setContent}
+          serviceproviderName={loginResponse.loginResponse.userInfo.email}
+          publicAddress={loginResponse.loginResponse.publicAddress}
+        />
       );
     } else if (content === "pickArtist") {
       return (
@@ -96,7 +105,6 @@ export const LoginModal = (props) => {
     } else return null;
   };
 
-  console.log(content, "CURRENT CONTENT");
   return (
     <>
       <CustomModal

@@ -25,25 +25,25 @@ function App() {
   const location = useLocation();
 
   return (
-    <DataContext.Provider
-      value={{
-        loginResponse: loginResponse,
-        setLoginResponse: setLoginResponse,
-      }}
-    >
-      {
-        location.pathname === '/dashboard' ? <Dashboard /> :
-          <body className="stretched device-xl bg-white no-transition">
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/balances" element={<Balances />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-          </body>
+    <body className="stretched device-xl no-transition">
+      <DataContext.Provider
+        value={{
+          loginResponse: loginResponse,
+          setLoginResponse: setLoginResponse,
+        }}
+      > {
+        location.pathname === '/artist' ? <Dashboard /> :
+        <>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/balances" element={<Balances />} />
+        </Routes>
+        </>
       }
-    </DataContext.Provider>
+      </DataContext.Provider>{" "}
+    </body>
   );
 }
 
