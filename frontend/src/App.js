@@ -11,6 +11,7 @@ import { Balances } from "./pages/Balances";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 import { setupSDK } from "./utils";
+import Footer from "./components/Footer";
 
 function App() {
   setupSDK();
@@ -32,16 +33,17 @@ function App() {
           setLoginResponse: setLoginResponse,
         }}
       > {
-        location.pathname === '/artist' ? <Dashboard /> :
-        <>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/balances" element={<Balances />} />
-        </Routes>
-        </>
-      }
+          location.pathname === '/artist' ? <Dashboard /> :
+            <>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/balances" element={<Balances />} />
+              </Routes>
+            </>
+        }
+        <Footer />
       </DataContext.Provider>{" "}
     </body>
   );
