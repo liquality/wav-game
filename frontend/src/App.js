@@ -10,6 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import { Balances } from "./pages/Balances";
 
 import { setupSDK } from "./utils";
+import Footer from "./components/Footer";
 
 function App() {
   setupSDK();
@@ -36,6 +37,7 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="/balances" element={<Balances />} />
         </Routes>
+        <Footer />
       </DataContext.Provider>{" "}
     </body>
   );
