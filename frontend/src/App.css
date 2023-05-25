@@ -5,7 +5,7 @@
 
 body {
   background-color: #1e1e1e;
-  color: white;
+  color: #e0e0e0;
   font-family: "Sora";
 }
 
@@ -55,7 +55,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .navBarText {
-  font-family: "000 webfont";
+  font-family: "Sora";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -86,7 +86,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .navBarText:hover {
   text-decoration: none;
-  color: #9d4dfa;
+  color: white;
 }
 
 .navBarStartBtn {

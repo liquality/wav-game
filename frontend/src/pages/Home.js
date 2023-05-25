@@ -1,6 +1,7 @@
 import React from "react";
 import { LoginModal } from "../components/Onboarding/LoginModal";
 import UserService from "../services/UserService";
+import { ReactComponent as HowToPlay } from "../images/how_to_play.svg";
 
 export default function Home() {
   const [show, setShow] = React.useState(false);
@@ -34,29 +35,17 @@ export default function Home() {
 
   console.log(user, "USER STATE");
   return (
-    <div className="align-left pl-4 pt-5">
-      <div className="h-screen flex ">
-        <div className="headerBox">
-          <h1 className="mb-4 font-bold tracking-tight leading-none text-docsGrey-900 md:text-3xl lg:text-4xl dark:text-white fontFamily">
-            wavGAME is here
-          </h1>
-          <p className="mb-4 text-4xl font-bold tracking-tight belowHeaderText">
-            Collect, unlock tracks, chase early releases and swag, or step-up
-            the game to win it all from your favorite artist.
-          </p>
-          <p className="mb-4 fontFamily">
-            A fun burn-to-win NFT experience in 6 levels.
-          </p>
+    <div className="mt-5">
+      <div className="flex justify-center items-center">
+        <HowToPlay />
+        <br></br>
+      </div>
 
-          <button
-            onClick={() => setShow(true)}
-            type="button"
-            class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900  headerBtn"
-          >
-            Start collecting
-          </button>
-          <LoginModal setShow={setShow} show={show} />
-        </div>
+      <div className="mt-3" style={{ width: "30%", margin: "auto" }}>
+        <p className="text-xs	text-center">
+          At each level, trade 2 collectables for one. At the final level, one
+          lucky winner takes the ultimate prize from their favorite artist.
+        </p>
       </div>
     </div>
   );
