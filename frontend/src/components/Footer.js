@@ -1,8 +1,8 @@
 import React from "react";
 
-import { ReactComponent as Twitter } from "../images/twitter.svg";
-import { ReactComponent as Telegram } from "../images/telegram.svg";
-import { ReactComponent as Discord } from "../images/discord.svg";
+import { ReactComponent as DiscordIcon } from "../images/Discord.svg";
+import { ReactComponent as TelegramIcon } from "../images/Telegram.svg";
+import { ReactComponent as TwitterIcon } from "../images/Twitter.svg";
 
 const Footer = () => {
   return (
@@ -18,7 +18,7 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <Twitter />
+            <TwitterIcon />
           </a>{" "}
           <a
             className="md:hover:text-white-700 ml-3"
@@ -26,7 +26,7 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <Discord />
+            <DiscordIcon />
           </a>{" "}
           <a
             className="md:hover:text-white-700 ml-3"
@@ -34,7 +34,7 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <Telegram />
+            <TelegramIcon />
           </a>{" "}
         </div>
         <p
