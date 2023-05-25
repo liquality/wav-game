@@ -249,6 +249,20 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: row;
 }
 
+.footer {
+  flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+
+  background-color: #272222;
+}
+
+.alignTextToRight {
+  text-align: "right";
+  margin: 0px auto 0px auto;
+}
+
 .leftModalContainer {
   width: 80rem;
   border-right: 1px solid #828282;
