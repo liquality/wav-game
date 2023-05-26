@@ -1,7 +1,6 @@
 import { useState, PropsWithChildren, useTransition } from "react";
 import "../../App.css";
 import "./dashboard.css";
-import { NavBar } from "./NavBar";
 import { Sidebar } from "./Sidebar";
 import classNames from "classnames";
 

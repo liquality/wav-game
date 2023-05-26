@@ -547,3 +547,20 @@ div.background {
 .coral {
   color: #ff9fa9;
 }
+
+.userMenuText {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 17px;
+
+  letter-spacing: 1px;
+}
+
+.userMenuAddressText {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  color: #cac4d0;
+}
