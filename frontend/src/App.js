@@ -10,7 +10,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { Balances } from "./pages/Balances";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 
-import { setupSDK } from "./utils";
+import { fetchSession, setupSDK } from "./utils";
 import Footer from "./components/Footer";
 
 function App() {
@@ -32,17 +32,20 @@ function App() {
           loginResponse: loginResponse,
           setLoginResponse: setLoginResponse,
         }}
-      > {
-          location.pathname === '/artist' ? <Dashboard /> :
-            <>
-              <Navbar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/balances" element={<Balances />} />
-              </Routes>
-            </>
-        }
+      >
+        {" "}
+        {fetchSession().token ? (
+          <Dashboard />
+        ) : (
+          <>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/balances" element={<Balances />} />
+            </Routes>
+          </>
+        )}
         <Footer />
       </DataContext.Provider>{" "}
     </body>
