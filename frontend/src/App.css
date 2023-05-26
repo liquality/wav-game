@@ -5,10 +5,9 @@
 
 body {
   background-color: #1e1e1e;
-  color: white;
+  color: #e0e0e0;
   font-family: "Sora";
 }
-
 
 @font-face {
   font-family: "000 webfont";
@@ -56,22 +55,21 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .mainHeaderText {
-
   font-family: "000 webfont";
   font-style: normal;
   font-weight: 400;
   font-size: 39px;
-  color: #F5F5F5;
+  color: #f5f5f5;
 }
 
 .navBarText {
-  font-family: "000 webfont";
+  font-family: "Sora";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
 
-  color: #F5F5F5;
+  color: #f5f5f5;
 
   text-align: center;
   letter-spacing: -0.08px;
@@ -97,7 +95,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .navBarText:hover {
   text-decoration: none;
-  color: #9d4dfa;
+  color: white;
 }
 
 .navBarStartBtn {
@@ -422,4 +420,130 @@ button.xmint-btn {
 button.xmint-btn:after {
   content: "Pay with Creditcard";
   color: white;
+}
+
+.containerHomePage {
+  border-radius: 31px;
+  border: 1px solid #973540;
+  width: 194px;
+  height: 224px;
+}
+
+.secondContainerHome {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  opacity: 0.1;
+}
+
+.thirdContainerHome {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  opacity: 0.2;
+}
+
+div.background {
+  background-color: beige;
+  border: 2px solid black;
+}
+
+#container {
+  position: relative;
+  border-radius: 31px;
+  border: 1px solid #973540;
+  width: 194px;
+  height: 224px;
+}
+#block {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=60);
+  -moz-opacity: 0.6;
+  opacity: 0.2;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockOne {
+  background: #2d2727;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockTwo {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=10);
+  -moz-opacity: 0.1;
+  opacity: 0.1;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockThree {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=20);
+  -moz-opacity: 0.2;
+  opacity: 0.2;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockFour {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=34);
+  -moz-opacity: 0.34;
+  opacity: 0.34;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockFive {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=54);
+  -moz-opacity: 0.54;
+  opacity: 0.54;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockSix {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#text {
+  position: absolute;
+  left: 16.19%;
+  right: 48.57%;
+  top: 12.03%;
+  bottom: 80.45%;
+  /* WaveWrld/Level bars */
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 20px;
+  /* identical to box height, or 77% */
+  /* WaveWrld/light coral */
+  color: #ff9fa9;
+  height: 100%;
+  width: 100%;
+}
+
+.lineCoral {
+  border: 1px solid #973540;
+  width: 90%;
+  margin: auto;
+}
+
+.lightPink {
+  color: #f251bc;
+}
+
+.coral {
+  color: #ff9fa9;
 }
