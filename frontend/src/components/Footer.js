@@ -1,8 +1,8 @@
 import React from "react";
 
-import { ReactComponent as DiscordIcon } from "../images/Discord.svg";
-import { ReactComponent as TelegramIcon } from "../images/Telegram.svg";
-import { ReactComponent as TwitterIcon } from "../images/Twitter.svg";
+import { ReactComponent as DiscordIcon } from "../images/discord.svg";
+import { ReactComponent as TelegramIcon } from "../images/telegram.svg";
+import { ReactComponent as TwitterIcon } from "../images/twitter.svg";
 
 const Footer = () => {
   return (

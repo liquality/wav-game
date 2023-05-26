@@ -18,7 +18,7 @@ export const PickArtist = (props) => {
           user_id: fetchSession().id,
           artist_name: `Artist ${selectedId}`,
         },
-        fetchSession().token
+        fetchSession()?.token
       );
       console.log(gameObject, "Gaaame OBJEEECT");
     } catch (err) {
