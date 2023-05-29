@@ -16,6 +16,10 @@ import { ReactComponent as Arrow } from "../../images/arrow_home.svg";
 import { ReactComponent as Winner } from "../../images/winner.svg";
 import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import { ReactComponent as DecoratedLine } from "../../images/decorated_line.svg";
+import { ReactComponent as Twitter } from "../../images/twitter.svg";
+import { ReactComponent as Discord } from "../../images/discord.svg";
+import { ReactComponent as Telegram } from "../../images/telegram.svg";
+import { ReactComponent as Github } from "../../images/github.svg";
 
 import { ArtistGrid } from "../ArtistGrid";
 
@@ -225,6 +229,61 @@ export default function HomeWhenNotSignedIn() {
           <DecoratedLine />
         </div>
         <br />
+      </div>
+      <div className="flex justify-center items-center relative mt-5 mb-5">
+        <div className="builtWithLiqSDKContainer">
+          <p
+            className="absolute webfont lightCoral "
+            style={{
+              left: "15%",
+              bottom: "0%",
+              top: "10%",
+              fontSize: 64,
+              lineHeight: 0.6,
+            }}
+          >
+            Built with the <br></br> Liquality SDK
+          </p>
+
+          <p
+            className="absolute text-s"
+            style={{
+              right: "15%",
+              bottom: "0%",
+              top: "10%",
+
+              lineHeight: 1.4,
+            }}
+          >
+            Liquality provides open-source infrastructure <br></br> legos that
+            make web3 easy for users <br></br>and developers while maintaining
+            the values of Web3.
+          </p>
+          <p
+            className="absolute text-xs lightPink flexDirectionRow"
+            style={{
+              right: "33%",
+              bottom: "0%",
+              top: "40%",
+
+              lineHeight: 1.4,
+            }}
+          >
+            SEE SDK DOCUMENTATION <SmallPinkArrow className="ml-2 mt-1" />
+          </p>
+          <p
+            className="absolute  lightPink flexDirectionRow"
+            style={{
+              right: "35%",
+              bottom: "0%",
+              top: "60%",
+              lineHeight: 1.4,
+            }}
+          >
+            <Twitter className="mr-3 " /> <Telegram className="mr-3 " />{" "}
+            <Github className="mr-3 -mt-1" /> <Discord className="mr-3" />
+          </p>
+        </div>
       </div>
     </div>
   );
