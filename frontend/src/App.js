@@ -34,18 +34,12 @@ function App() {
         }}
       >
         {" "}
-        {fetchSession().token ? (
-          <Dashboard />
-        ) : (
-          <>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/balances" element={<Balances />} />
-            </Routes>
-          </>
-        )}
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/balances" element={<Balances />} />
+        </Routes>
         <Footer />
       </DataContext.Provider>{" "}
     </body>

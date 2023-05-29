@@ -21,6 +21,10 @@ export function getPrivateKey(): string {
 
 export const fetchSession = () => {
     const sessionString = localStorage.getItem('session');
-    const session = JSON.parse(sessionString);
-    return session
+    if (sessionString) {
+        const session = JSON.parse(sessionString);
+        return session
+    }
+    else return null
+
 }

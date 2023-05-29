@@ -365,9 +365,15 @@ input[type="number"]::-webkit-outer-spin-button {
   text-align: center;
 }
 
+.softPink {
+  color: #ffa3da !important;
+}
+
 .defaultArtistBtn {
   background: #4b1f3e;
   /* WaveWrld/Cards/completed stroke */
+  padding: 5px;
+  margin-left: 10px;
   width: 230px;
   border: 1px solid #bf3948;
   border-radius: 45px;
@@ -541,14 +547,12 @@ div.background {
 }
 
 .lightPink {
-  color: #f251bc;
+  color: #f251bc !important;
 }
 
 .coral {
   color: #ff9fa9;
 }
-<<<<<<< Updated upstream
-=======
 
 .userMenuText {
   font-family: "Sora";
@@ -580,4 +584,35 @@ div.background {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
->>>>>>> Stashed changes
+
+.lighterGreyHomeContainer {
+  background-color: #262020;
+  height: 40%;
+  width: 100%;
+  border-bottom: 1px solid #973540;
+  border-top: 1px solid #973540;
+}
+
+.levelCardText {
+  position: absolute;
+
+  left: 15.28%;
+  right: 16.17%;
+  top: 28.57%;
+  bottom: 46.62%;
+}
+
+.levelCardSvg {
+  position: absolute;
+  left: 60.28%;
+  right: 16.17%;
+  top: 70.57%;
+  bottom: 40.62%;
+}
+
+.levelCardUnion {
+  position: absolute;
+  left: 45.28%;
+  top: 80%;
+  bottom: 0%;
+}
