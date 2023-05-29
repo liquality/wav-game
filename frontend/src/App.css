@@ -448,7 +448,7 @@ div.background {
   position: relative;
   border-radius: 31px;
   border: 1px solid #973540;
-  width: 194px;
+  width: 20%;
   height: 224px;
 }
 #block {
@@ -547,3 +547,37 @@ div.background {
 .coral {
   color: #ff9fa9;
 }
+<<<<<<< Updated upstream
+=======
+
+.userMenuText {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 17px;
+
+  letter-spacing: 1px;
+}
+
+.userMenuAddressText {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  color: #cac4d0;
+}
+
+.welcomeToWavGame {
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 86px;
+  line-height: 56px;
+  /* identical to box height, or 65% */
+
+  background: linear-gradient(90.02deg, #fe7a8b -1.51%, #b721eb 87.84%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+>>>>>>> Stashed changes
