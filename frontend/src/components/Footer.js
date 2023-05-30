@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="flexDirectionRow ml-5 mt-4">
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://docs.liquality.io/functions/auth"
+            href="https://twitter.com/Liquality_io/"
             target="_blank"
             rel="noreferrer"
           >
@@ -22,7 +22,7 @@ const Footer = () => {
           </a>{" "}
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://docs.liquality.io/functions/auth"
+            href="https://discord.com/invite/35yAGaQ3gx"
             target="_blank"
             rel="noreferrer"
           >
@@ -30,7 +30,7 @@ const Footer = () => {
           </a>{" "}
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://docs.liquality.io/functions/auth"
+            href="https://t.me/liquality"
             target="_blank"
             rel="noreferrer"
           >

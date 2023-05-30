@@ -22,10 +22,10 @@ import { ReactComponent as Telegram } from "../../images/telegram.svg";
 import { ReactComponent as Github } from "../../images/github.svg";
 
 import { ArtistGrid } from "../ArtistGrid";
+import { LoginModal } from "../Onboarding/LoginModal";
 
 export default function HomeWhenNotSignedIn() {
   const [show, setShow] = React.useState(false);
-  const [user, setUser] = React.useState({});
 
   const handleArtistClick = () => {
     console.log("Artist clicked, should refer thi his/her website");
@@ -65,6 +65,12 @@ export default function HomeWhenNotSignedIn() {
       <ArtistGrid handleClick={handleArtistClick} />
       <br></br>
       <br></br>
+      <div className="mt-2 mb-24 flex justify-center items-center">
+        <button className="pinkBtn " onClick={() => setShow(true)}>
+          {" "}
+          CHOOSE ARTIST
+        </button>
+      </div>
 
       {/* How to play */}
       <div className="lighterGreyHomeContainer mt-5">
@@ -210,7 +216,13 @@ export default function HomeWhenNotSignedIn() {
             </span>
           </div>
         </div>
-        <div className="mt-24"></div>
+        <div className="mt-24 mb-24 flex justify-center items-center">
+          <button className="pinkBtn " onClick={() => setShow(true)}>
+            {" "}
+            START GAME
+          </button>
+        </div>
+
         <br></br>
       </div>
 
@@ -227,10 +239,22 @@ export default function HomeWhenNotSignedIn() {
             our experiments with the WRLD.
           </p>
         </div>
-        <div className="mt-3 flex flex-row">
-          <p className="text-xs lightPink mt-5 m-auto">CONNECT ON DISCORD</p>
-        </div>
-        <SmallPinkArrow />
+
+        <a
+          class="hover:no-underline hover:text-decoration-none"
+          href="https://discord.com/invite/35yAGaQ3gx"
+          target="blank"
+          rel="noreferrer"
+        >
+          <p
+            className="text-xs no-underline lightPink flexDirectionRow mt-5 text-center justify-center items-center"
+            style={{
+              lineHeight: 1.4,
+            }}
+          >
+            CONNECT ON DISCORD <SmallPinkArrow className="ml-2" />
+          </p>
+        </a>
 
         <br />
         <div className="flex justify-center items-center relative mt-5 mb-5">
@@ -277,14 +301,23 @@ export default function HomeWhenNotSignedIn() {
                 marginBottom: "25%",
               }}
             ></div>
-            <p
-              className="absolute text-xs lightPink flexDirectionRow"
-              style={{
-                lineHeight: 1.4,
-              }}
+
+            <a
+              href="https://docs.liquality.io/"
+              target="blank"
+              rel="noreferrer"
             >
-              SEE SDK DOCUMENTATION <SmallPinkArrow className="ml-2 mt-1" />
-            </p>
+              {" "}
+              <p
+                className="absolute text-xs lightPink flexDirectionRow"
+                style={{
+                  lineHeight: 1.4,
+                }}
+              >
+                SEE SDK DOCUMENTATION <SmallPinkArrow className="ml-2 mt-1" />
+              </p>
+            </a>
+
             <div
               style={{
                 marginBottom: "35%",
@@ -296,12 +329,36 @@ export default function HomeWhenNotSignedIn() {
                 lineHeight: 1.4,
               }}
             >
-              <Twitter className="mr-3 " /> <Telegram className="mr-3 " />{" "}
-              <Github className="mr-3 -mt-1" /> <Discord className="mr-3" />
+              <a
+                href="https://twitter.com/Liquality_io/"
+                target="blank"
+                rel="noreferrer"
+              >
+                <Twitter className="mr-3 " />
+              </a>
+              <a href="https://t.me/liquality" target="blank" rel="noreferrer">
+                <Telegram className="mr-3 " />
+              </a>
+              <a
+                href="https://github.com/liquality"
+                target="blank"
+                rel="noreferrer"
+              >
+                <Github className="mr-3 -mt-1" />
+              </a>{" "}
+              <a
+                href="https://discord.com/invite/35yAGaQ3gx"
+                target="blank"
+                rel="noreferrer"
+              >
+                {" "}
+                <Discord className="mr-3" />
+              </a>
             </p>
           </div>
         </div>
       </div>
+      <LoginModal setShow={setShow} show={show} />
     </div>
   );
 }

@@ -5,9 +5,8 @@ import UserMenu from "../pages/Dashboard/UserMenu";
 
 const Navbar = () => {
   const [address, setAddress] = React.useState("Sign in");
-  const [show, setShow] = React.useState(false);
-
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
+  const [show, setShow] = React.useState(false);
 
   const openModal = () => {
     setUserMenuOpen(true);
