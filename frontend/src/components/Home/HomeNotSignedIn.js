@@ -32,6 +32,7 @@ export default function HomeWhenNotSignedIn() {
   };
   return (
     <div className="mt-5">
+      {/* Welcome to wavgame hero */}
       <div className="flex justify-center items-center relative">
         <HeroShape />
         <span className="absolute left-34 top-32 welcomeToWavGame">
@@ -48,7 +49,7 @@ export default function HomeWhenNotSignedIn() {
         </div>
         <br></br>
       </div>
-
+      {/* Artists text */}
       <div className="lineCoral mb-5 mt-5"></div>
       <div className="flex justify-center items-center">
         {" "}
@@ -60,10 +61,12 @@ export default function HomeWhenNotSignedIn() {
         <br></br>creators’ collective experiences.
       </p>
 
+      {/* Artist grid */}
       <ArtistGrid handleClick={handleArtistClick} />
       <br></br>
       <br></br>
 
+      {/* How to play */}
       <div className="lighterGreyHomeContainer mt-5">
         <br></br>
         <br></br>
@@ -77,6 +80,8 @@ export default function HomeWhenNotSignedIn() {
             lucky winner takes the ultimate prize from their favorite artist.
           </p>
         </div>
+
+        {/* 6 cards with levels */}
         <div className="mt-5 p-5 flexDirectionRow">
           <div id="container">
             <div id="blockOne"></div>
@@ -188,6 +193,8 @@ export default function HomeWhenNotSignedIn() {
             />
           </div>
         </div>
+        {/* end of 6 cards with levels */}
+        {/* Rewards tout */}
         <div className="flex justify-center items-center relative mt-5">
           <RewardsTout className="mt-5" />
 
@@ -207,6 +214,7 @@ export default function HomeWhenNotSignedIn() {
         <br></br>
       </div>
 
+      {/* Our vision */}
       <div className="m-auto text-center justify-center items-center">
         <div className="mt-5"></div>
         <p className="webfont lightCoral" style={{ fontSize: "64px" }}>
@@ -230,6 +238,7 @@ export default function HomeWhenNotSignedIn() {
         </div>
         <br />
       </div>
+      {/* Built with the LIQ SDK */}
       <div className="flex justify-center items-center relative mt-5 mb-5">
         <div className="builtWithLiqSDKContainer">
           <p
@@ -245,44 +254,52 @@ export default function HomeWhenNotSignedIn() {
             Built with the <br></br> Liquality SDK
           </p>
 
-          <p
-            className="absolute text-s"
+          <div
+            className="absolute "
             style={{
-              right: "15%",
-              bottom: "0%",
+              right: "20%",
               top: "10%",
-
-              lineHeight: 1.4,
+              width: "30%",
             }}
           >
-            Liquality provides open-source infrastructure <br></br> legos that
-            make web3 easy for users <br></br>and developers while maintaining
-            the values of Web3.
-          </p>
-          <p
-            className="absolute text-xs lightPink flexDirectionRow"
-            style={{
-              right: "33%",
-              bottom: "0%",
-              top: "40%",
-
-              lineHeight: 1.4,
-            }}
-          >
-            SEE SDK DOCUMENTATION <SmallPinkArrow className="ml-2 mt-1" />
-          </p>
-          <p
-            className="absolute  lightPink flexDirectionRow"
-            style={{
-              right: "35%",
-              bottom: "0%",
-              top: "60%",
-              lineHeight: 1.4,
-            }}
-          >
-            <Twitter className="mr-3 " /> <Telegram className="mr-3 " />{" "}
-            <Github className="mr-3 -mt-1" /> <Discord className="mr-3" />
-          </p>
+            <p
+              className="absolute text-s"
+              style={{
+                lineHeight: 1.4,
+              }}
+            >
+              Liquality provides open-source infrastructure <br></br> legos that
+              make web3 easy for users <br></br>and developers while maintaining
+              the values of Web3.
+            </p>
+            <div
+              style={{
+                marginBottom: "25%",
+              }}
+            ></div>
+            <p
+              className="absolute text-xs lightPink flexDirectionRow"
+              style={{
+                lineHeight: 1.4,
+              }}
+            >
+              SEE SDK DOCUMENTATION <SmallPinkArrow className="ml-2 mt-1" />
+            </p>
+            <div
+              style={{
+                marginBottom: "35%",
+              }}
+            ></div>
+            <p
+              className="absolute  lightPink flexDirectionRow"
+              style={{
+                lineHeight: 1.4,
+              }}
+            >
+              <Twitter className="mr-3 " /> <Telegram className="mr-3 " />{" "}
+              <Github className="mr-3 -mt-1" /> <Discord className="mr-3" />
+            </p>
+          </div>
         </div>
       </div>
     </div>
