@@ -8,15 +8,12 @@ import { fetchSession } from "../../utils";
 export const CreditcardPayment = (props) => {
   const { setContent } = props;
   const [nftAmount, setNftAmount] = useState(1);
+  const [session, setSession] = useState(false);
 
-  const handleIncrement = () => {
-    setNftAmount(nftAmount + 1);
-  };
-
-  const handleDecrement = () => {
-    if (nftAmount > 0) {
-      setNftAmount(nftAmount - 1);
-    }
+  const handleDoneWithCheckout = () => {
+    console.log("Done with checkout");
+    setSession(true);
+    window.location.reload();
   };
 
   const handleAmountChange = (event) => {
@@ -26,6 +23,19 @@ export const CreditcardPayment = (props) => {
 
     setNftAmount(inputValue);
   };
+
+  useEffect(() => {
+    const init = async () => {
+      if (!session)
+        try {
+          console.log("Session here");
+        } catch (err) {
+          console.log(err, "error inited");
+        }
+    };
+
+    init();
+  }, [session]);
 
   return (
     <div className="flex">
@@ -86,6 +96,7 @@ export const CreditcardPayment = (props) => {
         </div>
 
         <CrossmintPayButton
+          onClick={handleDoneWithCheckout}
           clientId="_YOUR_CLIENT_ID_"
           environment="_ENVIRONMENT_"
           className="xmint-btn"

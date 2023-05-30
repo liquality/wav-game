@@ -2,12 +2,57 @@ import React from "react";
 import { LoginModal } from "./Onboarding/LoginModal";
 import { fetchSession } from "../utils";
 import UserMenu from "../pages/Dashboard/UserMenu";
+import UserService from "../services/UserService";
 
 const Navbar = () => {
   const [address, setAddress] = React.useState("Sign in");
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
+  const [user, setUser] = React.useState({});
 
+  const fetchUser = async () => {
+    try {
+      const user = await UserService.getUserByUserId(
+        fetchSession().id, //userid
+        fetchSession().token
+      );
+      return user;
+    } catch (err) {
+      console.log(err, "Error fetching user");
+    }
+  };
+
+  const AvatarComponent = ({ avatarData }) => {
+    // Convert the binary data to a base64-encoded string
+    const base64Image = Buffer.from(avatarData).toString("base64");
+
+    // Create the data URL with the base64 image data
+    const imageUrl = `data:image/png;base64,${base64Image}`;
+
+    return (
+      <img
+        src={imageUrl}
+        height={36}
+        width={36}
+        className="rounded-full "
+        alt="avatar"
+      />
+    );
+  };
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const user = await fetchUser();
+      setUser(user);
+    };
+
+    fetchData();
+
+    return () => {
+      //any cleanup
+    };
+  }, []);
+  console.log(user, "userobject");
   const openModal = () => {
     setUserMenuOpen(true);
   };
@@ -50,15 +95,9 @@ const Navbar = () => {
             <ul className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
               {fetchSession()?.token ? (
                 <button onClick={openModal}>
-                  <img
-                    src={
-                      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    }
-                    height={36}
-                    width={36}
-                    className="rounded-full "
-                    alt="avatar"
-                  />
+                  {user.avatar ? (
+                    <AvatarComponent avatarData={user.avatar} />
+                  ) : null}
                 </button>
               ) : (
                 <li onClick={() => setShow(true)}>

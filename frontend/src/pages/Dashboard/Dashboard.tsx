@@ -82,7 +82,7 @@ export const Dashboard = (props: PropsWithChildren) => {
       setSelectedLevel(level);
     });
   }
-  console.log("are we in dashboard?");
+
   return (
     <div className="">
       {/* <NavBar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} /> */}
