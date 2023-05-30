@@ -46,9 +46,9 @@ export const PickArtist = (props) => {
   };
 
   return (
-    <div className="text-center mx-auto">
+    <div className="contentView text-center mx-auto">
       {/*  */}
-      <div className="flex justify-center items-center mx-auto">
+      <div className="flex justify-center items-center mx-auto mt-5">
         {" "}
         {renderArtistGrid()}
       </div>

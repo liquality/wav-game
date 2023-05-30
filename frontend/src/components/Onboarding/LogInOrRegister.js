@@ -9,10 +9,9 @@ export const LoginOrRegister = (props) => {
   return (
     <>
       {loading ? (
-        <div className="m-5 p-5 flex justify-center items-center ">
+        <div className="contentView m-5 p-5 flex justify-center items-center ">
           <div className="m-4 p-4">
             <SpinningLoader />
-            Loading...
           </div>
         </div>
       ) : (
@@ -55,7 +54,7 @@ export const LoginOrRegister = (props) => {
           </div>
           <div className="rightModalContainer ">
             {" "}
-            <div style={{ width: 170 }}>
+            <div style={{ width: "18rem" }}>
               <div className="mt-4 mb-5">
                 <p className="eyebrowLg mt-5">
                   <b>WELCOME</b>

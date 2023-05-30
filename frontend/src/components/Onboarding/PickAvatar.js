@@ -53,7 +53,7 @@ export const PickAvatar = (props) => {
   };
 
   return (
-    <div className="text-center mx-auto">
+    <div className="text-center mx-auto contentView">
       <div
         className="flex justify-center items-center mx-auto mt-5"
         style={{ cursor: "pointer" }}
