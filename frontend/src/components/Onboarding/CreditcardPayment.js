@@ -3,6 +3,7 @@ import { ReactComponent as MysteryBox } from "../../images/mystery_box.svg";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
+import { fetchSession } from "../../utils";
 
 export const CreditcardPayment = (props) => {
   const { setContent } = props;

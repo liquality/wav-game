@@ -1,8 +1,8 @@
 import React from "react";
 
-import { ReactComponent as Twitter } from "../images/twitter.svg";
-import { ReactComponent as Telegram } from "../images/telegram.svg";
-import { ReactComponent as Discord } from "../images/discord.svg";
+import { ReactComponent as DiscordIcon } from "../images/discord.svg";
+import { ReactComponent as TelegramIcon } from "../images/telegram.svg";
+import { ReactComponent as TwitterIcon } from "../images/twitter.svg";
 
 const Footer = () => {
   return (
@@ -14,27 +14,27 @@ const Footer = () => {
         <div className="flexDirectionRow ml-5 mt-4">
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://docs.liquality.io/functions/auth"
+            href="https://twitter.com/Liquality_io/"
             target="_blank"
             rel="noreferrer"
           >
-            <Twitter />
+            <TwitterIcon />
           </a>{" "}
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://docs.liquality.io/functions/auth"
+            href="https://discord.com/invite/35yAGaQ3gx"
             target="_blank"
             rel="noreferrer"
           >
-            <Discord />
+            <DiscordIcon />
           </a>{" "}
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://docs.liquality.io/functions/auth"
+            href="https://t.me/liquality"
             target="_blank"
             rel="noreferrer"
           >
-            <Telegram />
+            <TelegramIcon />
           </a>{" "}
         </div>
         <p

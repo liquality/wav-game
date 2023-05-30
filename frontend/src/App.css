@@ -5,10 +5,9 @@
 
 body {
   background-color: #1e1e1e;
-  color: white;
+  color: #e0e0e0;
   font-family: "Sora";
 }
-
 
 @font-face {
   font-family: "000 webfont";
@@ -56,22 +55,21 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .mainHeaderText {
-
   font-family: "000 webfont";
   font-style: normal;
   font-weight: 400;
   font-size: 39px;
-  color: #F5F5F5;
+  color: #f5f5f5;
 }
 
 .navBarText {
-  font-family: "000 webfont";
+  font-family: "Sora";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
 
-  color: #F5F5F5;
+  color: #f5f5f5;
 
   text-align: center;
   letter-spacing: -0.08px;
@@ -97,7 +95,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .navBarText:hover {
   text-decoration: none;
-  color: #9d4dfa;
+  color: white;
 }
 
 .navBarStartBtn {
@@ -106,6 +104,16 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: #9d4dfa;
 }
 
+.pinkBtn {
+  align-items: center;
+  padding: 0px 5px;
+  gap: 8px;
+  width: 227px;
+  height: 56px;
+  /* WaveWrld/button pink */
+  background: #e61ea3;
+  border-radius: 100px;
+}
 .headerBtn {
   font-family: "Sora";
   font-size: 15px;
@@ -367,9 +375,15 @@ input[type="number"]::-webkit-outer-spin-button {
   text-align: center;
 }
 
+.softPink {
+  color: #ffa3da !important;
+}
+
 .defaultArtistBtn {
   background: #4b1f3e;
   /* WaveWrld/Cards/completed stroke */
+  padding: 5px;
+  margin-left: 10px;
   width: 230px;
   border: 1px solid #bf3948;
   border-radius: 45px;
@@ -422,4 +436,204 @@ button.xmint-btn {
 button.xmint-btn:after {
   content: "Pay with Creditcard";
   color: white;
+}
+
+.containerHomePage {
+  border-radius: 31px;
+  border: 1px solid #973540;
+  width: 194px;
+  height: 224px;
+}
+
+.secondContainerHome {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  opacity: 0.1;
+}
+
+.thirdContainerHome {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  opacity: 0.2;
+}
+
+div.background {
+  background-color: beige;
+  border: 2px solid black;
+}
+
+#container {
+  position: relative;
+  border-radius: 31px;
+  border: 1px solid #973540;
+  width: 20%;
+  height: 224px;
+}
+#block {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=60);
+  -moz-opacity: 0.6;
+  opacity: 0.2;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockOne {
+  background: #2d2727;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockTwo {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=10);
+  -moz-opacity: 0.1;
+  opacity: 0.1;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockThree {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=20);
+  -moz-opacity: 0.2;
+  opacity: 0.2;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockFour {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=34);
+  -moz-opacity: 0.34;
+  opacity: 0.34;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockFive {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  filter: alpha(opacity=54);
+  -moz-opacity: 0.54;
+  opacity: 0.54;
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#blockSix {
+  background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
+  border-radius: 31px;
+  height: 100%;
+  width: 100%;
+}
+
+#text {
+  position: absolute;
+  left: 16.19%;
+  right: 48.57%;
+  top: 12.03%;
+  bottom: 80.45%;
+  /* WaveWrld/Level bars */
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 20px;
+  /* identical to box height, or 77% */
+  /* WaveWrld/light coral */
+  color: #ff9fa9;
+  height: 100%;
+  width: 100%;
+}
+
+.lineCoral {
+  border: 1px solid #973540;
+  width: 90%;
+  margin: auto;
+}
+
+.lightPink {
+  color: #f251bc !important;
+}
+
+.lightCoral {
+  color: #ff9fa9 !important;
+}
+
+.userMenuText {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 17px;
+
+  letter-spacing: 1px;
+}
+
+.userMenuAddressText {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  color: #cac4d0;
+}
+
+.welcomeToWavGame {
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 86px;
+  line-height: 56px;
+  /* identical to box height, or 65% */
+
+  background: linear-gradient(90.02deg, #fe7a8b -1.51%, #b721eb 87.84%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lighterGreyHomeContainer {
+  background-color: #262020;
+  height: 40%;
+  width: 100%;
+  border-bottom: 1px solid #973540;
+  border-top: 1px solid #973540;
+}
+
+.levelCardText {
+  position: absolute;
+
+  left: 15.28%;
+  right: 16.17%;
+  top: 28.57%;
+  bottom: 46.62%;
+}
+
+.levelCardSvg {
+  position: absolute;
+  left: 60.28%;
+  right: 16.17%;
+  top: 70.57%;
+  bottom: 40.62%;
+}
+
+.levelCardUnion {
+  position: absolute;
+  left: 45.28%;
+  top: 80%;
+  bottom: 0%;
+}
+
+.builtWithLiqSDKContainer {
+  background: #262020;
+  /* WaveWrld/dark orange */
+
+  border: 1px solid #973540;
+
+  width: 80%;
+  height: 377px;
+  border-radius: 53px;
 }
