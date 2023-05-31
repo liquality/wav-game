@@ -1,11 +1,8 @@
-const serverAddress =
-  "http://localhost:3005/" ||
-  "https://hosted-backend.onrender.com/" ||
-  "https://www.hosteddomain.xyz/";
-if (process.env.REACT_APP_API_URL) {
-  serverAddress = process.env.REACT_APP_API_URL;
-}
+const serverAddress = process.env.REACT_APP_SERVER_ADDRESS
+  ? process.env.REACT_APP_SERVER_ADDRESS
+  : "http://localhost:3000";
 
+console.log(serverAddress, "serveraddress");
 const NetworkService = {
   getResource: function (url) {
     var promise = new Promise((resolve, reject) => {
