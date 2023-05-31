@@ -39,13 +39,13 @@ export default function HomeWhenNotSignedIn() {
           Welcome to Wavgame
         </span>
         <div
-          style={{ width: "40%", left: "46%", top: "67%" }}
+          style={{ width: "30%", left: "46%", top: "65%" }}
           className="absolute"
         >
-          <span className=" ">
+          <p className=" ">
             Win your favorite artists' collectibles. A fun burn-to-win on-chain
             experience made up of 6 levels.
-          </span>
+          </p>
         </div>
         <br></br>
       </div>
