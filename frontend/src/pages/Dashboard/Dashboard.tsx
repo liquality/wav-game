@@ -3,6 +3,7 @@ import "../../App.css";
 import "./dashboard.css";
 import { Sidebar } from "./Sidebar";
 import classNames from "classnames";
+import { TradeModal } from "../../components/Trade/TradeModal";
 
 const levels = [
   {
@@ -76,6 +77,8 @@ const levelStyles = {
 export const Dashboard = (props: PropsWithChildren) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showTrade, setShowTrade] = useState(false);
+
   const [isPending, startTransition] = useTransition();
   function onSelectLevel(level: number) {
     startTransition(() => {
@@ -133,7 +136,10 @@ export const Dashboard = (props: PropsWithChildren) => {
                     <div className="flex flex-col justify-between">
                       <div className="level-card-count">{level.count}</div>
                       <div>
-                        <button className="bg-white p-3 text-activePink level-card-action">
+                        <button
+                          className="bg-white p-3 text-activePink level-card-action"
+                          onClick={() => setShowTrade(true)}
+                        >
                           TRADE NOW
                         </button>
                       </div>
@@ -145,6 +151,7 @@ export const Dashboard = (props: PropsWithChildren) => {
           </div>
         </div>
       </div>
+      <TradeModal setShow={setShowTrade} show={showTrade} />
     </div>
   );
 };

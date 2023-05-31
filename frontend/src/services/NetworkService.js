@@ -1,5 +1,5 @@
 const serverAddress =
-  "http://localhost:3000/" ||
+  "http://localhost:3005/" ||
   "https://hosted-backend.onrender.com/" ||
   "https://www.hosteddomain.xyz/";
 if (process.env.REACT_APP_API_URL) {

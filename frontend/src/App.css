@@ -568,6 +568,10 @@ div.background {
   width: 100%;
 }
 
+.coral {
+  color: #ff6979;
+}
+
 .lineCoral {
   border: 1px solid #973540;
   width: 90%;
