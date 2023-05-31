@@ -1,9 +1,9 @@
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
-import { ReactComponent as NextBtn } from "../../images/next_btn.svg";
 
 import { useState, useEffect } from "react";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
+import { ArtistGrid } from "../ArtistGrid";
 export const PickArtist = (props) => {
   const { setContent, setHeaderText } = props;
 
@@ -27,134 +27,13 @@ export const PickArtist = (props) => {
   }
 
   console.log(fetchSession(), "session rnnn");
-
+  const handleArtistClick = () => {
+    console.log("Artist clicked, should refer thi his/her website");
+  };
   function renderArtistGrid() {
     return (
       <div>
-        <div className="grid grid-cols-3 gap-8 mt-4">
-          {" "}
-          <button
-            onClick={() => handleClick(1)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(2)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(3)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(4)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(5)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(6)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(7)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(8)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(9)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-          <button
-            onClick={() => handleClick(10)}
-            className="defaultArtistBtn flexDirectionRow"
-          >
-            <img
-              className="avatarImage ml-2"
-              src="https://avatars.githubusercontent.com/u/34882183?v=4"
-              alt="Artist Avatar"
-            />
-            <span className="artistName">Artist Name</span>
-            <NextBtn className="mr-3" />
-          </button>
-        </div>
-
+        <ArtistGrid handleClick={handleArtistClick} />
         {selectedId && (
           <p
             style={{ textDecoration: "none", fontFamily: "Sora" }}

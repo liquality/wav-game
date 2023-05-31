@@ -1,7 +1,7 @@
 import React from "react";
 
 import { fetchSession } from "../utils";
-import { Dashboard } from "./Dashboard/Dashboard";
+import { Artist } from "./Artist/Artist";
 import HomeWhenNotSignedIn from "../components/Home/HomeNotSignedIn";
 
 export default function Home() {
@@ -36,6 +36,6 @@ export default function Home() {
 
   console.log(user, "USER STATE", fetchSession());
   return (
-    <div>{fetchSession()?.token ? <Dashboard /> : <HomeWhenNotSignedIn />}</div>
+    <div>{fetchSession()?.token ? <Artist /> : <HomeWhenNotSignedIn />}</div>
   );
 }

@@ -104,6 +104,16 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: #9d4dfa;
 }
 
+.pinkBtn {
+  align-items: center;
+  padding: 0px 5px;
+  gap: 8px;
+  width: 227px;
+  height: 56px;
+  /* WaveWrld/button pink */
+  background: #e61ea3;
+  border-radius: 100px;
+}
 .headerBtn {
   font-family: "Sora";
   font-size: 15px;
@@ -365,9 +375,15 @@ input[type="number"]::-webkit-outer-spin-button {
   text-align: center;
 }
 
+.softPink {
+  color: #ffa3da !important;
+}
+
 .defaultArtistBtn {
   background: #4b1f3e;
   /* WaveWrld/Cards/completed stroke */
+  padding: 5px;
+  margin-left: 10px;
   width: 230px;
   border: 1px solid #bf3948;
   border-radius: 45px;
@@ -448,7 +464,7 @@ div.background {
   position: relative;
   border-radius: 31px;
   border: 1px solid #973540;
-  width: 194px;
+  width: 20%;
   height: 224px;
 }
 #block {
@@ -541,11 +557,11 @@ div.background {
 }
 
 .lightPink {
-  color: #f251bc;
+  color: #f251bc !important;
 }
 
-.coral {
-  color: #ff9fa9;
+.lightCoral {
+  color: #ff9fa9 !important;
 }
 
 .userMenuText {
@@ -563,4 +579,61 @@ div.background {
   font-weight: 400;
   font-size: 12px;
   color: #cac4d0;
+}
+
+.welcomeToWavGame {
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 86px;
+  line-height: 56px;
+  /* identical to box height, or 65% */
+
+  background: linear-gradient(90.02deg, #fe7a8b -1.51%, #b721eb 87.84%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lighterGreyHomeContainer {
+  background-color: #262020;
+  height: 40%;
+  width: 100%;
+  border-bottom: 1px solid #973540;
+  border-top: 1px solid #973540;
+}
+
+.levelCardText {
+  position: absolute;
+
+  left: 15.28%;
+  right: 16.17%;
+  top: 28.57%;
+  bottom: 46.62%;
+}
+
+.levelCardSvg {
+  position: absolute;
+  left: 60.28%;
+  right: 16.17%;
+  top: 70.57%;
+  bottom: 40.62%;
+}
+
+.levelCardUnion {
+  position: absolute;
+  left: 45.28%;
+  top: 80%;
+  bottom: 0%;
+}
+
+.builtWithLiqSDKContainer {
+  background: #262020;
+  /* WaveWrld/dark orange */
+
+  border: 1px solid #973540;
+
+  width: 80%;
+  height: 377px;
+  border-radius: 53px;
 }

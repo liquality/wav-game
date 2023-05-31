@@ -7,7 +7,7 @@ var cors = require("cors");
 var { expressjwt: jwt } = require("express-jwt");
 
 //TODO: store better secret in hidden config file
-const secret = "my-secret";
+const secret = process.env.JWT_SECRET || "my-secret";
 
 var appPort = process.env.PORT || 3000;
 

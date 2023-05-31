@@ -6,9 +6,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Balances } from "./pages/Balances";
-import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 import { fetchSession, setupSDK } from "./utils";
 import Footer from "./components/Footer";
@@ -23,7 +22,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("loginResponse", JSON.stringify(loginResponse));
   }, [loginResponse]);
-  const location = useLocation();
 
   return (
     <body className="stretched device-xl no-transition">

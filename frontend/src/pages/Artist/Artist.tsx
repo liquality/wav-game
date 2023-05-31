@@ -1,6 +1,6 @@
 import { useState, PropsWithChildren, useTransition } from "react";
 import "../../App.css";
-import "./dashboard.css";
+import "./artist.css";
 import { Sidebar } from "./Sidebar";
 import classNames from "classnames";
 
@@ -73,7 +73,7 @@ const levelStyles = {
   },
 };
 
-export const Dashboard = (props: PropsWithChildren) => {
+export const Artist = (props: PropsWithChildren) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
