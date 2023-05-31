@@ -1,16 +1,13 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Modal } from "react-bootstrap";
-import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
+
 import { AuthService, tryRegisterSW } from "@liquality/wallet-sdk";
-import { DataContext } from "../../DataContext";
 import { LoginOrRegister } from "./LogInOrRegister";
 import { PickAvatar } from "./PickAvatar";
 import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
-import UserService from "../../services/UserService";
 
 const verifierMap = {
   google: {
@@ -24,7 +21,7 @@ const verifierMap = {
 
 // 1. Setup Service Provider
 const directParams = {
-  baseUrl: `http://localhost:3005/serviceworker`,
+  baseUrl: `https://wav-game-staging-public.liquality.io//serviceworker`,
   enableLogging: true,
   networkUrl: "https://goerli.infura.io/v3/a8684b771e9e4997a567bbd7189e0b27",
   network: "testnet",

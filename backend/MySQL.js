@@ -1,4 +1,4 @@
-var mysql = require('mysql2');
+var mysql = require("mysql2");
 
 var pool = mysql.createPool({
   host: process.env.MYSQLHOST,
