@@ -1,5 +1,6 @@
-const serverAddress =
-  "http://localhost:3000/" || process.env.REACT_APP_SERVER_ADDRESS;
+const serverAddress = process.env.REACT_APP_SERVER_ADDRESS
+  ? process.env.REACT_APP_SERVER_ADDRESS
+  : "http://localhost:3000";
 
 console.log(serverAddress, "serveraddress");
 const NetworkService = {
