@@ -31,7 +31,11 @@ export const TradeStart = (props) => {
 
             <div className="pr-5 pt-5 mt-3 flexDirectionColumn">
               <DoubleArrow className="m-auto" />
-              <button style={{ width: "140px" }} className="pinkBtn m-5">
+              <button
+                onClick={() => setContent("processingTrade")}
+                style={{ width: "140px" }}
+                className="pinkBtn m-5"
+              >
                 TRADE
               </button>
               <DoubleArrow className="m-auto" />

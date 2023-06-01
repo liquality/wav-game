@@ -664,3 +664,23 @@ div.background {
   height: 377px;
   border-radius: 53px;
 }
+
+.processing-div {
+  width: 514px;
+  height: 9px;
+  background: #4f4f4f;
+  transition: width 3s;
+}
+
+.processing-div.complete {
+  animation: fillDiv 3s linear forwards;
+}
+
+@keyframes fillDiv {
+  from {
+    width: 0;
+  }
+  to {
+    width: 514px;
+  }
+}

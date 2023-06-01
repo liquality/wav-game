@@ -1,15 +1,14 @@
-import * as React from "react";
 import { useState, useEffect } from "react";
-import { PickAvatar } from "../Onboarding/PickAvatar";
 import { PickArtist } from "../Onboarding/PickArtist";
 import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
 import { CompletedPayment } from "../Onboarding/CompletedPayment";
 import { CustomModal } from "../Modal";
 import { TradeStart } from "./TradeStart";
+import { ProcessingTrade } from "./ProcessingTrade";
 
 export const TradeModal = (props) => {
   const { show, setShow } = props;
-  const [content, setContent] = useState("loginOrRegister");
+  const [content, setContent] = useState("tradeStart");
   const [headerText, setHeaderText] = useState("Trade");
 
   const [loading, setLoading] = useState(false);
@@ -34,22 +33,14 @@ export const TradeModal = (props) => {
   };
 
   const whichContentToRender = () => {
-    if (content === "loginOrRegister") {
-      return (
-        <TradeStart
-          setHeaderText={setHeaderText}
-          createNewWallet={createNewWallet}
-          loading={loading}
-        />
-      );
+    if (content === "tradeStart") {
+      return <TradeStart setContent={setContent} />;
       //TODO
-    } else if (content === "pickAvatar") {
+    } else if (content === "processingTrade") {
       return (
-        <PickAvatar
+        <ProcessingTrade
           setHeaderText={setHeaderText}
           setContent={setContent}
-          serviceproviderName={""}
-          publicAddress={""}
         />
       );
     } else if (content === "pickArtist") {
