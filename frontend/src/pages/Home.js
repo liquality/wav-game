@@ -34,7 +34,6 @@ export default function Home() {
     };
   }, []);
 
-  console.log(user, "USER STATE", fetchSession());
   if (fetchSession()?.token) {
     fetchArtist();
     return <Artist artist={artist} />;

@@ -13,7 +13,6 @@ export const CustomModal = (props) => {
 
   useEffect(() => {});
 
-  console.log(window.innerHeight, "inner height");
   return (
     <>
       <Modal

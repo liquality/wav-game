@@ -14,6 +14,7 @@ export const TradeModal = (props) => {
 
   const [loading, setLoading] = useState(false);
 
+  console.log("Inside trademodaaaaal");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

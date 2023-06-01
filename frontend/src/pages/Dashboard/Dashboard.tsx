@@ -86,6 +86,8 @@ export const Dashboard = (props: PropsWithChildren) => {
     });
   }
 
+  console.log("showtrade::", showTrade);
+
   return (
     <div className="">
       {/* <NavBar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} /> */}

@@ -76,6 +76,7 @@ const Navbar = () => {
     }
   }, [address]);
 
+  console.log(user, "user?");
   console.log();
   return (
     <div>
@@ -95,7 +96,7 @@ const Navbar = () => {
             <ul className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
               {fetchSession()?.token ? (
                 <button onClick={openModal}>
-                  {user.avatar ? (
+                  {user?.avatar ? (
                     <AvatarComponent avatarData={user.avatar} />
                   ) : null}
                 </button>
