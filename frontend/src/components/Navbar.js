@@ -30,13 +30,15 @@ const Navbar = () => {
     const imageUrl = `data:image/png;base64,${base64Image}`;
 
     return (
-      <img
-        src={imageUrl}
-        height={36}
-        width={36}
-        className="rounded-full "
-        alt="avatar"
-      />
+      <div className="userAvatar p-2">
+        <img
+          src={imageUrl}
+          height={36}
+          width={36}
+          className="rounded-full "
+          alt="avatar"
+        />
+      </div>
     );
   };
 
@@ -86,7 +88,7 @@ const Navbar = () => {
       <nav className=" sticky top-0  mt-1 z-10">
         <div className="container flex flex-wrap justify-between ">
           <p className="block py-2 navBarLogoText" aria-current="page">
-            wavGame_
+            wavGame
           </p>
 
           <div
@@ -95,7 +97,7 @@ const Navbar = () => {
           >
             <ul className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
               {fetchSession()?.token ? (
-                <button onClick={openModal}>
+                <button onClick={() => setUserMenuOpen(!userMenuOpen)}>
                   {user?.avatar ? (
                     <AvatarComponent avatarData={user.avatar} />
                   ) : null}

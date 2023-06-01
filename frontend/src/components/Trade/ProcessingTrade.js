@@ -6,7 +6,7 @@ import ProcessingTx from "../ProcessingTx";
 
 export const ProcessingTrade = (props) => {
   const { setContent } = props;
-  const [txHash, setTxHash] = useState("");
+  const [txHash, setTxHash] = useState("xx");
 
   const startTrade = async (data) => {
     //Trade here from liq sdk
@@ -25,7 +25,7 @@ export const ProcessingTrade = (props) => {
     fetchData();
 
     return () => {};
-  }, []);
+  }, [txHash, setTxHash, startTrade]);
 
   return (
     <div className="contentView flex">

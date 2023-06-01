@@ -591,13 +591,25 @@ div.background {
   color: #ff9fa9 !important;
 }
 
+.userAvatar {
+  border: none;
+  padding: 10;
+  box-shadow: 0 0 0 1px #f251bc;
+  border-radius: 50%;
+}
+
 .userMenuText {
   font-family: "Sora";
   font-style: normal;
   font-weight: 300;
   font-size: 17px;
+}
 
+.userMenuDiv {
+  background-color: #262020;
   letter-spacing: 1px;
+  border: 1px solid #4f4f4f;
+  border-radius: 20px;
 }
 
 .userMenuAddressText {

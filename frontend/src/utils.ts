@@ -14,6 +14,20 @@ export function setupSDK() {
     });
 }
 
+
+
+//Helper function to shorten addresses
+export const shortenAddress = (address: string): string => {
+    return String(address).substr(0, 5) +
+        "..." +
+        String(address).substr(38, 4)
+}
+export const logOut = () => {
+
+    localStorage.removeItem("session");
+    window.location.reload()
+};
+
 export function getPrivateKey(): string {
     return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.privateKey;
 }
