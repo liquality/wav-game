@@ -23,7 +23,6 @@ class User {
   /*                  */
   create = async () => {
     const user = this;
-    console.log(user, "GETTING HERE USER?");
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
         db.query(
@@ -156,6 +155,44 @@ class User {
       } else {
         reject(new ApiError(400, "Missing user id"));
       }
+    });
+    return promise;
+  };
+
+  loginUser = async (serviceprovider_name) => {
+    const promise = new Promise((resolve, reject) => {
+      MySQL.pool.getConnection((err, db) => {
+        db.query(
+          "SELECT * FROM `user` WHERE serviceprovider_name = ? LIMIT 1;",
+          [serviceprovider_name],
+          (err, results, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else if (results.length < 1) {
+              resolve({});
+            } else {
+              const storedUser = results[0];
+              const {
+                id,
+                serviceprovider_name,
+                avatar,
+                username,
+                public_address,
+              } = storedUser;
+              const token = jwt.sign({ id, public_address }, "my-secret");
+              resolve({
+                id,
+                serviceprovider_name,
+                avatar,
+                username,
+                public_address,
+                token,
+              });
+            }
+            db.release();
+          }
+        );
+      });
     });
     return promise;
   };

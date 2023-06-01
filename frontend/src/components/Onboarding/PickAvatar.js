@@ -29,7 +29,6 @@ export const PickAvatar = (props) => {
         }).then((response) => {
           //Set session
           localStorage.setItem("session", JSON.stringify(response));
-          console.log(response, "user obj response");
 
           setContent("pickArtist");
           setHeaderText("Choose an artist");
@@ -53,9 +52,8 @@ export const PickAvatar = (props) => {
     }
   };
 
-  console.log(avatarImage, "avatarImage");
   return (
-    <div className="text-center mx-auto">
+    <div className="text-center mx-auto contentView">
       <div
         className="flex justify-center items-center mx-auto mt-5"
         style={{ cursor: "pointer" }}

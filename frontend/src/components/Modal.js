@@ -13,10 +13,14 @@ export const CustomModal = (props) => {
 
   useEffect(() => {});
 
-  console.log(modalHeaderText, "MODAL HEADER text content");
   return (
     <>
-      <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
+      <Modal
+        style={{ minHeight: `${window.innerHeight}px` }}
+        show={show}
+        onHide={handleClose}
+        dialogClassName="custom-modal"
+      >
         <button className="modal-close-x" onClick={handleClose}>
           <ModalCloseX />
         </button>
@@ -30,6 +34,7 @@ export const CustomModal = (props) => {
         </p>
         <div className="line"></div>
         {content()}
+
         <div className="line"></div>
         <PoweredByLiquality />
       </Modal>

@@ -3,6 +3,7 @@ import "../../App.css";
 import "./artist.css";
 import { Sidebar } from "./Sidebar";
 import classNames from "classnames";
+import { TradeModal } from "../../components/Trade/TradeModal";
 
 const levels = [
   {
@@ -77,75 +78,82 @@ type Props = {
   artist: any;
 };
 
-
 export const Artist = (props: Props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [_isPending, startTransition] = useTransition();
+  const [showTrade, setShowTrade] = useState(false);
   function onSelectLevel(level: number) {
     startTransition(() => {
       setSelectedLevel(level);
     });
   }
-  console.log("are we in dashboard?", props.artist);
+
   return (
     <div className="container flex">
       {/* <NavBar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} /> */}
 
-      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} artist={props.artist}/>
+      <Sidebar
+        open={sidebarOpen}
+        setOpen={setSidebarOpen}
+        artist={props.artist}
+      />
       <div className="flex flex-col items-center md:ml-20">
-          <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
-            <div className="game-header-level">LEVEL: 3 </div>
-            <div className="game-header-title">TK’S GAME_</div>
-            <div className="game-header-counter">COLLECTABLES: 42</div>
-          </div>
-          <div className="flex flex-row md:flex-col justify-center my-5">
-            <ul className="level-tabs">
-              {levels.map((level) => {
-                const styles = levelStyles[level.status];
-                return (
-                  <li key={level.id} onClick={() => onSelectLevel(level.id)}>
-                    <div className={`${styles.text}`}>{level.label}</div>
-                    <div
-                      className={`level-bar dark:border ${styles.border} ${styles.background}`}
-                    ></div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="flex flex-row mt-5">
+        <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
+          <div className="game-header-level">LEVEL: 3 </div>
+          <div className="game-header-title">TK’S GAME_</div>
+          <div className="game-header-counter">COLLECTABLES: 42</div>
+        </div>
+        <div className="flex flex-row md:flex-col justify-center my-5">
+          <ul className="level-tabs">
             {levels.map((level) => {
               const styles = levelStyles[level.status];
               return (
-                <div
-                  key={level.id}
-                  onClick={() => onSelectLevel(level.id)}
-                  className={classNames({
-                    [`dark:border ${styles.border} ${styles.background}`]:
-                      true,
-                    "text-white px-5 py-4 flex flex-col justify-between level-card":
-                      true,
-                    active: selectedLevel === level.id,
-                  })}
-                >
-                  <div className="flex flex-col justify-between">
-                    <div className="level-card-level">{level.title}</div>
-                    <div className="level-card-title">{level.content}</div>
-                  </div>
-                  <div className="flex flex-col justify-between">
-                    <div className="level-card-count">{level.count}</div>
-                    <div>
-                      <button className="bg-white p-3 text-activePink level-card-action">
-                        TRADE NOW
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <li key={level.id} onClick={() => onSelectLevel(level.id)}>
+                  <div className={`${styles.text}`}>{level.label}</div>
+                  <div
+                    className={`level-bar dark:border ${styles.border} ${styles.background}`}
+                  ></div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </div>
+        <div className="flex flex-row mt-5">
+          {levels.map((level) => {
+            const styles = levelStyles[level.status];
+            return (
+              <div
+                key={level.id}
+                onClick={() => onSelectLevel(level.id)}
+                className={classNames({
+                  [`dark:border ${styles.border} ${styles.background}`]: true,
+                  "text-white px-5 py-4 flex flex-col justify-between level-card":
+                    true,
+                  active: selectedLevel === level.id,
+                })}
+              >
+                <div className="flex flex-col justify-between">
+                  <div className="level-card-level">{level.title}</div>
+                  <div className="level-card-title">{level.content}</div>
+                </div>
+                <div className="flex flex-col justify-between">
+                  <div className="level-card-count">{level.count}</div>
+                  <div>
+                    <button
+                      onClick={() => setShowTrade(true)}
+                      className="bg-white p-3 text-activePink level-card-action"
+                    >
+                      TRADE NOW
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <TradeModal setShow={setShowTrade} show={showTrade} />
     </div>
   );
 };

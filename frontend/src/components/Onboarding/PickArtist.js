@@ -9,9 +9,7 @@ export const PickArtist = (props) => {
 
   const [selectedId, setSelectedId] = useState(1);
 
-  async function handleClick(id) {
-    setSelectedId(id);
-
+  async function createGame() {
     try {
       const gameObject = await UserService.createGame(
         {
@@ -20,20 +18,15 @@ export const PickArtist = (props) => {
         },
         fetchSession()?.token
       );
-      console.log(gameObject, "Gaaame OBJEEECT");
     } catch (err) {
       console.log(err, "error creating game with artist");
     }
   }
 
-  console.log(fetchSession(), "session rnnn");
-  const handleArtistClick = () => {
-    console.log("Artist clicked, should refer thi his/her website");
-  };
   function renderArtistGrid() {
     return (
-      <div>
-        <ArtistGrid handleClick={handleArtistClick} />
+      <div className="mt-5">
+        <ArtistGrid handleClick={setSelectedId} />
         {selectedId && (
           <p
             style={{ textDecoration: "none", fontFamily: "Sora" }}
@@ -46,15 +39,16 @@ export const PickArtist = (props) => {
     );
   }
 
-  const handleSetNewPage = () => {
+  const handleSetNewPage = async () => {
+    await createGame();
     setContent("creditcardPayment");
     setHeaderText("Get NFTs to Play");
   };
 
   return (
-    <div className="text-center mx-auto">
+    <div className="contentView text-center mx-auto">
       {/*  */}
-      <div className="flex justify-center items-center mx-auto">
+      <div className="flex justify-center items-center mx-auto mt-5">
         {" "}
         {renderArtistGrid()}
       </div>

@@ -2,12 +2,61 @@ import React from "react";
 import { LoginModal } from "./Onboarding/LoginModal";
 import { fetchSession } from "../utils";
 import UserMenu from "../pages/Artist/UserMenu";
+import UserService from "../services/UserService";
 
 const Navbar = () => {
   const [address, setAddress] = React.useState("Sign in");
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
+  const [user, setUser] = React.useState({});
+  console.log(fetchSession(), "fetchsesh", user);
+  const fetchUser = async () => {
+    if (fetchSession()?.id) {
+      console.log("in here?");
+      try {
+        const user = await UserService.getUserByUserId(
+          fetchSession().id, //userid
+          fetchSession().token
+        );
+        return user;
+      } catch (err) {
+        console.log(err, "Error fetching user");
+      }
+    } else return {};
+  };
 
+  const AvatarComponent = ({ avatarData }) => {
+    // Convert the binary data to a base64-encoded string
+    const base64Image = Buffer.from(avatarData).toString("base64");
+
+    // Create the data URL with the base64 image data
+    const imageUrl = `data:image/png;base64,${base64Image}`;
+
+    return (
+      <div className="userAvatar p-2">
+        <img
+          src={imageUrl}
+          height={36}
+          width={36}
+          className="rounded-full "
+          alt="avatar"
+        />
+      </div>
+    );
+  };
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const user = await fetchUser();
+      setUser(user);
+    };
+
+    fetchData();
+
+    return () => {
+      //any cleanup
+    };
+  }, []);
   const openModal = () => {
     setUserMenuOpen(true);
   };
@@ -31,7 +80,6 @@ const Navbar = () => {
     }
   }, [address]);
 
-  console.log();
   return (
     <div>
       {userMenuOpen ? (
@@ -40,7 +88,7 @@ const Navbar = () => {
       <nav className=" sticky top-0  mt-1 z-10">
         <div className="container flex flex-wrap justify-between ">
           <p className="block py-2 navBarLogoText" aria-current="page">
-            wavGame_
+            wavGame
           </p>
 
           <div
@@ -49,16 +97,10 @@ const Navbar = () => {
           >
             <ul className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
               {fetchSession()?.token ? (
-                <button onClick={openModal}>
-                  <img
-                    src={
-                      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    }
-                    height={36}
-                    width={36}
-                    className="rounded-full "
-                    alt="avatar"
-                  />
+                <button onClick={() => setUserMenuOpen(!userMenuOpen)}>
+                  {user?.avatar ? (
+                    <AvatarComponent avatarData={user.avatar} />
+                  ) : null}
                 </button>
               ) : (
                 <li onClick={() => setShow(true)}>
