@@ -1,7 +1,7 @@
 import React from "react";
 import { LoginModal } from "./Onboarding/LoginModal";
 import { fetchSession } from "../utils";
-import UserMenu from "../pages/Dashboard/UserMenu";
+import UserMenu from "../pages/Artist/UserMenu";
 import UserService from "../services/UserService";
 
 const Navbar = () => {

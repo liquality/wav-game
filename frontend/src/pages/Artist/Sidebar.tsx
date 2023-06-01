@@ -17,9 +17,10 @@ export type NavItem = {
 type Props = {
   open: boolean;
   setOpen(open: boolean): void;
+  artist: any
 };
 
-export const Sidebar = ({ open, setOpen }: Props) => {
+export const Sidebar = ({ open, setOpen, artist }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, (e) => {
     setOpen(false);
@@ -37,9 +38,9 @@ export const Sidebar = ({ open, setOpen }: Props) => {
     >
       <div className="flex flex-col place-items-end side-bar">
         <div className="flex flex-col px-5 gap-4 mt-5">
-          <div className="artist-name">TK</div>
+          <div className="artist-name">{artist.name}</div>
           <div className="artist-desc">
-            Artist, Producer, Singer, Songwriter
+            {artist.description}
           </div>
           <a className="artist-link flex items-center" href="/#">
             CHANGE ARTIST
@@ -62,16 +63,13 @@ export const Sidebar = ({ open, setOpen }: Props) => {
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>BIO</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus
-              justo, at tincidunt lacus ... Read More
+            {artist.bio} ... Read More
             </p>
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>FUN FACT</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              tincidunt{" "}
+            {artist.facts}{" "}
             </p>
           </div>
         </div>

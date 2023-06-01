@@ -23,10 +23,13 @@ export const PickArtist = (props) => {
     }
   }
 
+  const handleArtistClick = () => {
+    console.log("Artist clicked, should refer thi his/her website");
+  };
   function renderArtistGrid() {
     return (
-      <div className="mt-5">
-        <ArtistGrid handleClick={setSelectedId} />
+      <div>
+        <ArtistGrid handleClick={handleArtistClick} />
         {selectedId && (
           <p
             style={{ textDecoration: "none", fontFamily: "Sora" }}

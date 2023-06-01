@@ -1,7 +1,7 @@
 import { useState, PropsWithChildren, useTransition } from "react";
 import "../../App.css";
 import "./dashboard.css";
-import { Sidebar } from "./Sidebar";
+import { Sidebar } from "../Artist/Sidebar";
 import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
 
@@ -91,7 +91,7 @@ export const Dashboard = (props: PropsWithChildren) => {
       {/* <NavBar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} /> */}
 
       <div className="grid md:grid-cols-sidebar mt-3 container">
-        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
+        <Sidebar artist={""} open={sidebarOpen} setOpen={setSidebarOpen} />
         <div className="grid md:ml-20">
           <div className="flex flex-col items-center">
             <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">

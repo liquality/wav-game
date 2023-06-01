@@ -6,7 +6,7 @@ import { ReactComponent as TwitterIcon } from "../images/twitter.svg";
 
 const Footer = () => {
   return (
-    <footer class="footer">
+    <footer className="footer">
       <div className="flexDirectionRow">
         <p className="webfont" style={{ fontSize: "39px" }}>
           WavGame
