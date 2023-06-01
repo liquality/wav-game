@@ -1,7 +1,7 @@
 import React from "react";
 import { LoginModal } from "./Onboarding/LoginModal";
 import { fetchSession } from "../utils";
-import UserMenu from "../pages/Dashboard/UserMenu";
+import UserMenu from "../pages/Artist/UserMenu";
 
 const Navbar = () => {
   const [address, setAddress] = React.useState("Sign in");
