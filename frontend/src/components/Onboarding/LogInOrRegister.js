@@ -18,7 +18,7 @@ export const LoginOrRegister = (props) => {
         <div className="flexDirectionRow">
           <div className="leftModalContainer">
             <p className="enter">enter</p>
-            <p className="wavGameHeader">wavGAME_</p>
+            <p className="wavGameHeader">wavGAME</p>
 
             <div className="mt-4 mb-5 ">
               <button

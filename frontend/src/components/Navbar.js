@@ -9,17 +9,20 @@ const Navbar = () => {
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const [user, setUser] = React.useState({});
-
+  console.log(fetchSession(), "fetchsesh", user);
   const fetchUser = async () => {
-    try {
-      const user = await UserService.getUserByUserId(
-        fetchSession().id, //userid
-        fetchSession().token
-      );
-      return user;
-    } catch (err) {
-      console.log(err, "Error fetching user");
-    }
+    if (fetchSession()?.id) {
+      console.log("in here?");
+      try {
+        const user = await UserService.getUserByUserId(
+          fetchSession().id, //userid
+          fetchSession().token
+        );
+        return user;
+      } catch (err) {
+        console.log(err, "Error fetching user");
+      }
+    } else return {};
   };
 
   const AvatarComponent = ({ avatarData }) => {
@@ -54,7 +57,6 @@ const Navbar = () => {
       //any cleanup
     };
   }, []);
-  console.log(user, "userobject");
   const openModal = () => {
     setUserMenuOpen(true);
   };
@@ -78,8 +80,6 @@ const Navbar = () => {
     }
   }, [address]);
 
-  console.log(user, "user?");
-  console.log();
   return (
     <div>
       {userMenuOpen ? (

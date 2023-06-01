@@ -11,7 +11,6 @@ export const CreditcardPayment = (props) => {
   const [session, setSession] = useState(false);
 
   const handleDoneWithCheckout = () => {
-    console.log("Done with checkout");
     setSession(true);
     window.location.reload();
   };

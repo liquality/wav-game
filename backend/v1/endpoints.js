@@ -19,6 +19,14 @@ endpoints.readUser = {
   description: "create user",
 };
 
+endpoints.loginUser = {
+  url: "/v1/user/login/:serviceprovider_name",
+  method: "get",
+  middleware: [],
+  handler: userHandler.loginUser,
+  description: "login user",
+};
+
 endpoints.updateUser = {
   url: "/v1/user/:id",
   method: "put",

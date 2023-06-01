@@ -8,6 +8,8 @@ import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
+import { fetchSession, seeIfUserCanLogIn } from "../../utils";
+import UserService from "../../services/UserService";
 
 const verifierMap = {
   google: {
@@ -40,7 +42,6 @@ export const LoginModal = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
-  //const { loginResponse, setLoginResponse } = React.useContext(DataContext);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -58,15 +59,37 @@ export const LoginModal = (props) => {
 
     init();
   }, [loginResponse, content]);
-  console.log(window.location.href, "location HREF");
+
+  const loginUser = async (serviceprovider_name) => {
+    try {
+      UserService.loginUser(serviceprovider_name).then((response) => {
+        localStorage.setItem("session", JSON.stringify(response));
+      });
+    } catch (err) {
+      console.log("Error logging in user");
+    }
+  };
+
   const createNewWallet = async () => {
-    setLoading(true);
-    const response = await AuthService.createWallet(tKey, verifierMap);
-    setLoginResponse(response);
-    setLoading(false);
-    //TODO: create user in db here
-    setContent("pickAvatar");
-    setHeaderText("Pick An Avatar");
+    if (seeIfUserCanLogIn()) {
+      setLoading(true);
+      const response = await AuthService.loginUsingSSO(tKey, verifierMap);
+      await loginUser(response.loginResponse.userInfo.email);
+      setLoginResponse(response);
+      //some ugly code here but works for now lol
+      setTimeout(() => {
+        setLoading(false);
+        window.location.reload();
+      }, 2000);
+    } else {
+      setLoading(true);
+      const response = await AuthService.createWallet(tKey, verifierMap);
+      setLoginResponse(response);
+      setLoading(false);
+      //TODO: create user in db here
+      setContent("pickAvatar");
+      setHeaderText("Pick An Avatar");
+    }
   };
 
   const whichContentToRender = () => {
@@ -83,8 +106,8 @@ export const LoginModal = (props) => {
         <PickAvatar
           setHeaderText={setHeaderText}
           setContent={setContent}
-          serviceproviderName={loginResponse.loginResponse.userInfo.email}
-          publicAddress={loginResponse.loginResponse.publicAddress}
+          serviceproviderName={loginResponse?.loginResponse?.userInfo?.email}
+          publicAddress={loginResponse?.loginResponse?.publicAddress}
         />
       );
     } else if (content === "pickArtist") {

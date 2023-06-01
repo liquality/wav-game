@@ -88,7 +88,6 @@ export const Artist = (props: Props) => {
       setSelectedLevel(level);
     });
   }
-  console.log("showtrade::", showTrade);
 
   return (
     <div className="container flex">
