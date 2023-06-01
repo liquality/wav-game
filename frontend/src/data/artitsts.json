@@ -1,0 +1,146 @@
+[
+    {
+        "id": "tk",
+        "name": "TK",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "ab",
+        "name": "AB",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "cd",
+        "name": "CD",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "cc",
+        "name": "CC",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "dd",
+        "name": "DD",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "as",
+        "name": "AS",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "xx",
+        "name": "XX",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "zz",
+        "name": "ZZ",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "nn",
+        "name": "NN",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "ww",
+        "name": "WW",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "oo",
+        "name": "OO",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    },
+    {
+        "id": "pp",
+        "name": "PP",
+        "description": "Artist, Producer, Singer, Songwriter",
+        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
+        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
+        "socials": {
+            "twitter": "@test",
+            "discord": "#12234",
+            "telegram": "@test"
+        }
+    }
+]

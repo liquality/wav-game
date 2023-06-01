@@ -3,10 +3,12 @@ import React from "react";
 import { fetchSession } from "../utils";
 import { Artist } from "./Artist/Artist";
 import HomeWhenNotSignedIn from "../components/Home/HomeNotSignedIn";
+import ArtistService from '../services/ArtistService';
 
 export default function Home() {
   const [show, setShow] = React.useState(false);
   const [user, setUser] = React.useState({});
+  const [artist, setArtist] = React.useState({});
 
   //Example implementation of how to fetch from the networkservice
   /*   const fetchUser = async () => {
@@ -21,10 +23,22 @@ export default function Home() {
     }
   }; */
 
+   const fetchArtist = async (id) => {
+    try {
+      const artist = await ArtistService.findArtistById(id);
+      return artist;
+    } catch (err) {
+      console.log(err, "Error fetching the artist");
+    }
+  }; 
+
   React.useEffect(() => {
     const fetchData = async () => {
       //const user = await fetchUser();
       //setUser(user);
+
+      const user = await fetchArtist('tk');
+      setArtist(user);
     };
 
     fetchData();
@@ -35,7 +49,10 @@ export default function Home() {
   }, []);
 
   console.log(user, "USER STATE", fetchSession());
-  return (
-    <div>{fetchSession()?.token ? <Artist /> : <HomeWhenNotSignedIn />}</div>
-  );
+  if(fetchSession()?.token) {
+    fetchArtist()
+    return (<Artist artist={artist}/>)
+  }
+
+  return (<HomeWhenNotSignedIn />)
 }
