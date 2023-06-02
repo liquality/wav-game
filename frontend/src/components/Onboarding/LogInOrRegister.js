@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import { SpinningLoader } from "../SpinningLoader";
+import CustomButton from "../Button";
 
 export const LoginOrRegister = (props) => {
   const { createNewWallet, loading } = props;
@@ -17,37 +18,46 @@ export const LoginOrRegister = (props) => {
       ) : (
         <div className="flexDirectionRow">
           <div className="leftModalContainer">
-            <p className="enter">enter</p>
+            <p className="enter violet">enter</p>
             <p className="wavGameHeader">wavGAME</p>
-
+            <br></br>
+            <p className="text-s">Register or Log-in</p>
             <div className="mt-4 mb-5 ">
-              <button
-                className="modalButtonSignIn mb-3"
+              <CustomButton
+                mb="10px"
+                type="big"
                 onClick={() => createNewWallet()}
+                pink
               >
-                Google
-              </button>
+                GOOGLE
+              </CustomButton>
               <br></br>
-              <button
-                className="modalButtonSignIn  mb-3"
+              <CustomButton
+                mb="10px"
+                type="big"
                 onClick={() => createNewWallet()}
+                pink
               >
-                Discord
-              </button>{" "}
+                DISCORD
+              </CustomButton>
               <br></br>
-              <button
-                className="modalButtonSignIn  mb-3"
+              <CustomButton
+                mb="10px"
+                type="big"
                 onClick={() => createNewWallet()}
+                pink
               >
-                Facebook
-              </button>{" "}
+                FACEBOOK
+              </CustomButton>
               <br></br>
-              <button
-                className="modalButtonSignIn  mb-3"
+              <CustomButton
+                mb="10px"
+                type="big"
                 onClick={() => createNewWallet()}
+                pink
               >
-                Twitch
-              </button>{" "}
+                TWITCH
+              </CustomButton>
             </div>
             <br />
             <br />

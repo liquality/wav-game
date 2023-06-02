@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
+import CustomButton from "../Button";
 export const PickArtist = (props) => {
   const { setContent, setHeaderText } = props;
 
-  const [selectedId, setSelectedId] = useState(1);
+  const [selectedId, setSelectedId] = useState(null);
 
   async function createGame() {
     try {
@@ -53,13 +54,15 @@ export const PickArtist = (props) => {
         {renderArtistGrid()}
       </div>
 
-      <button
-        style={{ width: "180px" }}
-        className="modalButtonSignIn  mt-5 mb-5 px-4"
+      <CustomButton
+        type="big"
+        pink
+        disabled={selectedId ? false : true}
         onClick={handleSetNewPage}
+        mt="100px"
       >
-        Continue
-      </button>
+        CONTINUE
+      </CustomButton>
     </div>
   );
 };

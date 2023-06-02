@@ -4,6 +4,7 @@ import "./artist.css";
 import { Sidebar } from "./Sidebar";
 import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
+import CustomButton from "../../components/Button";
 
 const levels = [
   {
@@ -74,16 +75,12 @@ const levelStyles = {
   },
 };
 
-type Props = {
-  artist: any;
-};
-
-export const Artist = (props: Props) => {
+export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [_isPending, startTransition] = useTransition();
   const [showTrade, setShowTrade] = useState(false);
-  function onSelectLevel(level: number) {
+  function onSelectLevel(level) {
     startTransition(() => {
       setSelectedLevel(level);
     });
@@ -128,8 +125,7 @@ export const Artist = (props: Props) => {
                 onClick={() => onSelectLevel(level.id)}
                 className={classNames({
                   [`dark:border ${styles.border} ${styles.background}`]: true,
-                  "text-white px-5 py-4 flex flex-col justify-between level-card":
-                    true,
+                  "text-white px-5 py-4 flex flex-col justify-between level-card": true,
                   active: selectedLevel === level.id,
                 })}
               >
@@ -140,12 +136,14 @@ export const Artist = (props: Props) => {
                 <div className="flex flex-col justify-between">
                   <div className="level-card-count">{level.count}</div>
                   <div>
-                    <button
+                    <CustomButton
+                      white
+                      type="small"
                       onClick={() => setShowTrade(true)}
-                      className="bg-white p-3 text-activePink level-card-action"
+                      disabled={false}
                     >
                       TRADE NOW
-                    </button>
+                    </CustomButton>
                   </div>
                 </div>
               </div>
