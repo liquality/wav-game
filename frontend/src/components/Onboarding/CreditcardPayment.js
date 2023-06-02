@@ -94,6 +94,8 @@ export const CreditcardPayment = (props) => {
           <p className="mr-3 mt-2 ml-5">Total $100 </p>
         </div>
 
+        {/* collect function called here, in crossmint dashboard we need to provide WavGame Contract address etc  */}
+        {/* Level up should be gasless. */}
         <CrossmintPayButton
           onClick={handleDoneWithCheckout}
           clientId="_YOUR_CLIENT_ID_"
