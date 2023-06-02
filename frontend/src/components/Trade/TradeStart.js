@@ -4,6 +4,7 @@ import { ReactComponent as NftBigPreview } from "../../images/nft_preview_big.sv
 import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
 import * as React from "react";
 import { useState, useEffect } from "react";
+import CustomButton from "../Button";
 
 export const TradeStart = (props) => {
   const { setContent } = props;
@@ -24,15 +25,20 @@ export const TradeStart = (props) => {
               </div>
             </div>
 
-            <div className="pr-5 pt-5 mt-4 flexDirectionColumn">
+            <div className="pr-5 pt-5 mt-4 flexDirectionColumn m-start">
               <DoubleArrow className="m-auto" />
-              <button
+              <CustomButton
                 onClick={() => setContent("processingTrade")}
-                style={{ width: "140px" }}
-                className="pinkBtn m-5"
+                pink
+                type="big"
+                mt="50px"
+                mb="50px"
+                ml="50px"
+                mr="40px"
               >
                 TRADE
-              </button>
+              </CustomButton>
+
               <DoubleArrow className="m-auto" />
             </div>
             <div className=" pr-5 flexDirectionColumn ">
