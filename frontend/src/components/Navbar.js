@@ -9,10 +9,8 @@ const Navbar = () => {
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const [user, setUser] = React.useState({});
-  console.log(fetchSession(), "fetchsesh", user);
   const fetchUser = async () => {
     if (fetchSession()?.id) {
-      console.log("in here?");
       try {
         const user = await UserService.getUserByUserId(
           fetchSession().id, //userid
