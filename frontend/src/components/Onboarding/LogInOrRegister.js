@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import { SpinningLoader } from "../SpinningLoader";
+import CustomButton from "../Button";
 
 export const LoginOrRegister = (props) => {
   const { createNewWallet, loading } = props;
@@ -21,6 +22,15 @@ export const LoginOrRegister = (props) => {
             <p className="wavGameHeader">wavGAME</p>
 
             <div className="mt-4 mb-5 ">
+              <CustomButton type="big" disabled>
+                Disabled Button
+              </CustomButton>
+              <CustomButton type="small" pink>
+                Smallpink
+              </CustomButton>
+              <CustomButton type="big" white>
+                Big whit
+              </CustomButton>
               <button
                 className="modalButtonSignIn mb-3"
                 onClick={() => createNewWallet()}

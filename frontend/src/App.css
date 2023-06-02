@@ -695,3 +695,22 @@ div.background {
   color: #eee;
   text-shadow: -1px 0 #555, 0 1px #555, 1px 0 #555, 0 -1px #555;
 }
+
+.custom-button:hover,
+.custom-button:focus {
+  background: #ff82af !important;
+  border-radius: 100px;
+  color: white !important;
+}
+
+.custom-button:active {
+  background: #bb007b !important;
+  border-radius: 100px;
+  color: white !important;
+}
+
+.disabledBtn {
+  background: #4f4f4f;
+  color: white !important;
+  border-radius: 100px;
+}
