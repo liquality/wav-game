@@ -18,46 +18,46 @@ export const LoginOrRegister = (props) => {
       ) : (
         <div className="flexDirectionRow">
           <div className="leftModalContainer">
-            <p className="enter">enter</p>
+            <p className="enter violet">enter</p>
             <p className="wavGameHeader">wavGAME</p>
-
+            <br></br>
+            <p className="text-s">Register or Log-in</p>
             <div className="mt-4 mb-5 ">
-              <CustomButton type="big" disabled>
-                Disabled Button
+              <CustomButton
+                mb="10px"
+                type="big"
+                onClick={() => createNewWallet()}
+                pink
+              >
+                GOOGLE
               </CustomButton>
-              <CustomButton type="small" pink>
-                Smallpink
+              <br></br>
+              <CustomButton
+                mb="10px"
+                type="big"
+                onClick={() => createNewWallet()}
+                pink
+              >
+                DISCORD
               </CustomButton>
-              <CustomButton type="big" white>
-                Big whit
+              <br></br>
+              <CustomButton
+                mb="10px"
+                type="big"
+                onClick={() => createNewWallet()}
+                pink
+              >
+                FACEBOOK
               </CustomButton>
-              <button
-                className="modalButtonSignIn mb-3"
-                onClick={() => createNewWallet()}
-              >
-                Google
-              </button>
               <br></br>
-              <button
-                className="modalButtonSignIn  mb-3"
+              <CustomButton
+                mb="10px"
+                type="big"
                 onClick={() => createNewWallet()}
+                pink
               >
-                Discord
-              </button>{" "}
-              <br></br>
-              <button
-                className="modalButtonSignIn  mb-3"
-                onClick={() => createNewWallet()}
-              >
-                Facebook
-              </button>{" "}
-              <br></br>
-              <button
-                className="modalButtonSignIn  mb-3"
-                onClick={() => createNewWallet()}
-              >
-                Twitch
-              </button>{" "}
+                TWITCH
+              </CustomButton>
             </div>
             <br />
             <br />

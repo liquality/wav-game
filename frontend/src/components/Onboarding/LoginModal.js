@@ -74,7 +74,7 @@ export const LoginModal = (props) => {
     if (seeIfUserCanLogIn()) {
       setLoading(true);
       const response = await AuthService.loginUsingSSO(tKey, verifierMap);
-      await loginUser(response.loginResponse.userInfo.email);
+      await loginUser(response.loginResponse?.userInfo?.email);
       setLoginResponse(response);
       //some ugly code here but works for now lol
       setTimeout(() => {
