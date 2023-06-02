@@ -31,7 +31,7 @@ export const ProcessingTrade = (props) => {
     <div className="contentView flex">
       <div className=" justify-center items-center  m-auto">
         <div style={{ width: "100%" }}>
-          <ProcessingTx txHash={txHash} setTxHash={setTxHash} />
+          <ProcessingTx txHash={txHash} />
           <div className="flex">
             <p className="flexDirectionRow">
               <GreenCheckmark className="mr-3" /> CONFIRMED

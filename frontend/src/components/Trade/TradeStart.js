@@ -10,14 +10,9 @@ export const TradeStart = (props) => {
   const [nftAmount, setNftAmount] = useState(1);
 
   return (
-    <div className="contentView flex">
-      <div className="p-4 flexDirectionRow  margin-auto">
-        <div
-          className="justify-center items-center "
-          style={{
-            paddingLeft: "20%",
-          }}
-        >
+    <div className="contentView flex justify-around">
+      <div className="p-4 ml-5 flexDirectionRow ">
+        <div>
           {" "}
           <div className="flexDirectionRow">
             <div className="flexDirectionColumn">
@@ -29,7 +24,7 @@ export const TradeStart = (props) => {
               </div>
             </div>
 
-            <div className="pr-5 pt-5 mt-3 flexDirectionColumn">
+            <div className="pr-5 pt-5 mt-4 flexDirectionColumn">
               <DoubleArrow className="m-auto" />
               <button
                 onClick={() => setContent("processingTrade")}

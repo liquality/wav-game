@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 
-const ProcessingTx = (props) => {
-  const { txHash, setTxHash } = props;
-  const [animationComplete, setAnimationComplete] = useState(false);
-
+export default function ProcessingTx({ txHash }) {
+  const [percentageFilled, setPercentageFilled] = useState(0);
+  const [isRunning, setIsRunning] = useState(true);
   useEffect(() => {
-    if (txHash) {
-      setAnimationComplete(true);
-      setTimeout(() => {
-        setTxHash(null);
-        setAnimationComplete(false);
-      }, 3000); // Change the timeout value as needed
+    if (percentageFilled < 100 && isRunning) {
+      setTimeout(() => setPercentageFilled((prev) => (prev += 2)), 180);
     }
-  }, [txHash, setTxHash]);
-
+  }, [percentageFilled, isRunning]);
   return (
-    <div className="mb-5">
+    <div>
       <p className="webfont text-2xl">{txHash ? "Complete" : "Processing"}</p>
-      <div
-        className={`processing-div ${animationComplete ? "complete" : ""}`}
-      />
+
+      <div className="progressbar mb-5">
+        <div
+          style={{
+            height: "100%",
+            width: `${percentageFilled}%`,
+            backgroundColor: "#A0E117",
+            transition: "width 0.5s",
+          }}
+        ></div>
+      </div>
     </div>
   );
-};
-
-export default ProcessingTx;
+}
