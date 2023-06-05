@@ -162,6 +162,7 @@ export const Artist = (props) => {
           </div>
           <Leaderboard />
         </div>
+        <div className="flex flex-col  items-center   pt-24 mt-12"></div>
       </div>
 
       <TradeModal setShow={setShowTrade} show={showTrade} />
