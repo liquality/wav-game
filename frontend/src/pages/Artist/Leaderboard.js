@@ -5,6 +5,12 @@ import "./artist.css";
 
 const Leaderboard = ({ isOpen, onClose }) => {
   const [user, setUser] = React.useState({});
+  const [showNfts, setShowNfts] = React.useState(false);
+
+  const activeToggleStyle = {
+    borderBottom: "1px solid #f251bc",
+    color: "#f251bc",
+  };
 
   const fetchUser = async () => {
     try {
@@ -64,11 +70,22 @@ const Leaderboard = ({ isOpen, onClose }) => {
   };
   return (
     <div className="flex flex-col justify-center items-center leaderboardContainer relative">
-      <div style={{ top: "-30%" }} className="mt-3 mb-5 absolute left-0">
-        hej leaderboard
+      <div
+        style={!showNfts ? activeToggleStyle : null}
+        className="mt-3 mb-5 absolute left-0 leaderboardToggle"
+      >
+        <button onClick={() => setShowNfts(false)}>LEADERBOARD</button>
+      </div>
+      <div
+        style={showNfts ? activeToggleStyle : null}
+        className="mt-3 mb-5 absolute nftsToggle"
+      >
+        <button onClick={() => setShowNfts(true)}>NFTs</button>
       </div>
 
-      <div className="mt-3 mb-5">{renderLeaderboardToggled()}</div>
+      <div className="mt-3 mb-5">
+        {showNfts ? null : renderLeaderboardToggled()}
+      </div>
     </div>
   );
 };

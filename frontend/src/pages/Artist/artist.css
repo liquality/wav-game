@@ -223,3 +223,18 @@
   border-bottom: 1px solid #828282;
   border-top: 1px solid #828282;
 }
+
+.leaderboardToggle {
+  line-height: 27px;
+  top: -30%;
+  font-size: 13px;
+  color: #bdbdbd;
+}
+
+.nftsToggle {
+  top: -30%;
+  left: 10%;
+  line-height: 27px;
+  font-size: 13px;
+  color: #bdbdbd;
+}
