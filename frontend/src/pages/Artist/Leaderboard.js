@@ -35,6 +35,45 @@ const Leaderboard = ({ isOpen, onClose }) => {
     };
   }, []);
 
+  const renderNFTsToggled = () => {
+    return (
+      <div class="">
+        <table class="w-full text-sm text-left text-white-500 dark:text-white-400">
+          <tbody>
+            <tr class="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
+              >
+                Level
+              </th>
+              <td class="px-6 py-4">1</td>
+              <td class="px-6 py-4">2</td>
+              <td class="px-6 py-4">3</td>
+              <td class="px-6 py-4">4</td>
+              <td class="px-6 py-4">5</td>
+              <td class="px-6 py-4">6</td>
+            </tr>
+            <tr class="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
+              >
+                NFTs
+              </th>
+              <td class="px-6 py-4">20</td>
+              <td class="px-6 py-4">6</td>
+              <td class="px-6 py-4">--</td>
+              <td class="px-6 py-4">--</td>
+              <td class="px-6 py-4">--</td>
+              <td class="px-6 py-4">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   const renderLeaderboardToggled = () => {
     return (
       <div class="">
@@ -74,7 +113,7 @@ const Leaderboard = ({ isOpen, onClose }) => {
     );
   };
   return (
-    <div className="flex flex-col justify-center items-center leaderboardContainer relative">
+    <div className="flex flex-col justify-center w-full items-center leaderboardContainer relative">
       <div
         style={!showNfts ? activeToggleStyle : null}
         className="mt-3 mb-5 absolute left-0 leaderboardToggle"
@@ -108,7 +147,7 @@ const Leaderboard = ({ isOpen, onClose }) => {
       </div>
 
       <div className="mt-3 mb-5">
-        {showNfts ? null : renderLeaderboardToggled()}
+        {showNfts ? renderNFTsToggled() : renderLeaderboardToggled()}
       </div>
     </div>
   );

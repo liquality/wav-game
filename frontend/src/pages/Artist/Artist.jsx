@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
 import CustomButton from "../../components/Button";
 import Leaderboard from "./Leaderboard";
+import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 
 const levels = [
   {
@@ -149,7 +150,16 @@ export const Artist = (props) => {
             );
           })}
         </div>
-        <div className="flex flex-col md:flex-row w-full items-center   pt-24 mt-12">
+        <div className="flex flex-col  items-center   pt-24 mt-12">
+          <div className="flex flex-col justify-center items-center  mb-24 relative">
+            <RewardsTout className="mt-5" />
+
+            <div style={{ left: "24%", top: "35%" }} className="absolute">
+              <span className="lightCoral">
+                EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS!
+              </span>
+            </div>
+          </div>
           <Leaderboard />
         </div>
       </div>
