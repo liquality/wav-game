@@ -5,6 +5,7 @@ import { Sidebar } from "./Sidebar";
 import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
 import CustomButton from "../../components/Button";
+import Leaderboard from "./Leaderboard";
 
 const levels = [
   {
@@ -88,8 +89,6 @@ export const Artist = (props) => {
 
   return (
     <div className="container flex">
-      {/* <NavBar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} /> */}
-
       <Sidebar
         open={sidebarOpen}
         setOpen={setSidebarOpen}
@@ -150,7 +149,11 @@ export const Artist = (props) => {
             );
           })}
         </div>
+        <div className="flex flex-col md:flex-row w-full items-center   pt-24 mt-12">
+          <Leaderboard />
+        </div>
       </div>
+
       <TradeModal setShow={setShowTrade} show={showTrade} />
     </div>
   );

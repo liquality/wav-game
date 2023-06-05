@@ -1,220 +1,225 @@
 .level-card {
-    display: flex;
-    z-index: 11;
-    border-radius: 3.13rem;
-    transition: all .4s ease-in-out;
-    cursor: pointer;
-    transform: scale(0.98);
+  display: flex;
+  z-index: 11;
+  border-radius: 3.13rem;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+  transform: scale(0.98);
 }
 
 /* Small devices such as large phones (640px and up) */
 @media only screen and (min-width: 40em) {
-    .level-card {
-        width: 100%;
-        height: 32.5rem;
-    }
+  .level-card {
+    width: 100%;
+    height: 32.5rem;
+  }
 
-    .level-card:not(:last-child) {
-        margin-right: 0;
-    }
+  .level-card:not(:last-child) {
+    margin-right: 0;
+  }
 }
 
 /* Medium devices such as tablets (768px and up) */
 @media only screen and (min-width: 48em) {
+  .level-card {
+    width: 17.13rem;
+    height: 32.5rem;
+  }
 
-    .level-card {
-        width: 17.13rem;
-        height: 32.5rem;
-    }
-
-    .level-card:not(:last-child) {
-        margin-right: -8rem;
-    }
+  .level-card:not(:last-child) {
+    margin-right: -8rem;
+  }
 }
 
 /* Large devices such as laptops (1024px and up) */
 @media only screen and (min-width: 64em) {
-    .level-card {
-        width: 20.13rem;
-        height: 32.5rem;
-    }
+  .level-card {
+    width: 20.13rem;
+    height: 32.5rem;
+  }
 
-    .level-card:not(:last-child) {
-        margin-right: -10rem;
-    }
+  .level-card:not(:last-child) {
+    margin-right: -10rem;
+  }
 }
 
 /* Largest devices such as desktops (1280px and up) */
-@media only screen and (min-width: 80em) {}
-
+@media only screen and (min-width: 80em) {
+}
 
 .level-card:not(:last-child) {
-    margin-right: -10rem;
+  margin-right: -10rem;
 }
 
 .level-card:hover,
 .level-card.active {
-    transform: scale(1.25);
-    z-index: 20;
+  transform: scale(1.25);
+  z-index: 20;
 }
 
 .level-card-level {
-    font-style: normal;
-    font-family: "000 webfont";
-    font-weight: 400;
-    font-size: 1.3rem;
-    line-height: 2.81rem;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    color: #F5F5F5;
+  font-style: normal;
+  font-family: "000 webfont";
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 2.81rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  color: #f5f5f5;
 }
 
 .level-card-title {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.25rem;
-    line-height: 2.81rem;
-    display: flex;
-    align-items: center;
-    color: #F5F5F5;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 2.81rem;
+  display: flex;
+  align-items: center;
+  color: #f5f5f5;
 }
 
 .level-card-count {
-    font-weight: 300;
-    font-size: 0.75rem;
-    line-height: 1.188rem;
-    letter-spacing: 0.031rem;
-    color: #FFFFFF;
-    margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.188rem;
+  letter-spacing: 0.031rem;
+  color: #ffffff;
+  margin-bottom: 2rem;
 }
 
 .level-card-action {
-    font-weight: 300;
-    font-size: 0.65rem;
-    border-radius: 6.25rem;
+  font-weight: 300;
+  font-size: 0.65rem;
+  border-radius: 6.25rem;
 }
 
 .side-bar {
-    display: flex;
-    align-items: end;
-    background-color: #252020;
-    border: 1px solid #973540;
-    border-radius: 3.31rem;
-    margin-bottom: 2rem;
-    z-index: 9999 !important;
+  display: flex;
+  align-items: end;
+  background-color: #252020;
+  border: 1px solid #973540;
+  border-radius: 3.31rem;
+  margin-bottom: 2rem;
+  z-index: 9999 !important;
 }
 
 .side-bar-secondary {
-    background-color: #2D2727;
-    border: 1px solid #973540;
-    border-radius: 3.31rem;
-    position: relative;
-    margin-top: 12rem;
-    z-index: 13;
+  background-color: #2d2727;
+  border: 1px solid #973540;
+  border-radius: 3.31rem;
+  position: relative;
+  margin-top: 12rem;
+  z-index: 13;
 }
 
 .level-tabs {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
 }
 
 .level-tabs li {
-    float: left;
-    display: flex;
-    font-family: "000 webfont";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.625rem;
-    line-height: 1.25rem;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 1rem;
-    cursor: pointer;
+  float: left;
+  display: flex;
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.625rem;
+  line-height: 1.25rem;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem;
+  cursor: pointer;
 }
 
 .level-tabs li .level-bar {
-    height: 0.625rem;
-    width: 8.563rem;
-    border-radius: 3.31rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  height: 0.625rem;
+  width: 8.563rem;
+  border-radius: 3.31rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .artist-name {
-    font-family: 'Sora';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.75rem;
-    line-height: 2.188rem;
-    letter-spacing: 0.02em;
-    color: #FF9FA9;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 2.188rem;
+  letter-spacing: 0.02em;
+  color: #ff9fa9;
 }
 
 .artist-desc {
-    font-family: 'Sora';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 0.813rem;
-    line-height: 1.125rem;
-    letter-spacing: 0.02em;
-    text-transform: capitalize;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.813rem;
+  line-height: 1.125rem;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
 
-    color: #FF9FA9;
+  color: #ff9fa9;
 }
 
 .artist-link {
-    font-family: 'Sora';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 0.75rem;
-    line-height: 1.25rem;
-    letter-spacing: 0.03em;
-    color: #F251BC;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.03em;
+  color: #f251bc;
 }
 
 .artist-wave-graphic {
-    align-self: center;
-    position: absolute;
-    top: -6.8rem;
+  align-self: center;
+  position: absolute;
+  top: -6.8rem;
 }
 
 .artist-content {
-    font-family: 'Sora';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.25rem;
-    letter-spacing: 0.02em;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.02em;
 }
 
 .artist-info {
-    border-top: 1px solid #BF3948;
+  border-top: 1px solid #bf3948;
 }
 
 .game-header {
-    border-top: 1px solid #BF3948;
+  border-top: 1px solid #bf3948;
 }
 
 .game-header-level,
 .game-header-counter {
-    font-family: '000 webfont';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.625rem;
-    line-height: 1.563rem;
-    color: #E0E0E0;
-
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.625rem;
+  line-height: 1.563rem;
+  color: #e0e0e0;
 }
 
 .game-header-title {
-    font-family: 'Alba';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.563rem;
-    line-height: 3.688rem;
-    text-align: center;
-    color: #E0E0E0;
+  font-family: "Alba";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.563rem;
+  line-height: 3.688rem;
+  text-align: center;
+  color: #e0e0e0;
+}
+
+.leaderboardContainer {
+  width: 100%;
+  height: 150px;
+  border-bottom: 1px solid #828282;
+  border-top: 1px solid #828282;
 }

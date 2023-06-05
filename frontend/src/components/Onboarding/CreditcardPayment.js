@@ -11,8 +11,9 @@ export const CreditcardPayment = (props) => {
   const [session, setSession] = useState(false);
 
   const handleDoneWithCheckout = () => {
-    setSession(true);
-    window.location.reload();
+    //setSession(true);
+    //window.location.reload();
+    console.log("Mint btn click");
   };
 
   const handleAmountChange = (event) => {
@@ -98,13 +99,13 @@ export const CreditcardPayment = (props) => {
         {/* Level up should be gasless. */}
         <CrossmintPayButton
           onClick={handleDoneWithCheckout}
-          clientId="_YOUR_CLIENT_ID_"
-          environment="_ENVIRONMENT_"
+          clientId="d40b03b9-09a3-4ad8-a4f8-15fef67cad21"
+          environment="staging"
           className="xmint-btn"
           mintConfig={{
             type: "erc-721",
-            quantity: "_NUMBER_OF_NFTS_",
-            totalPrice: "_PRICE_IN_NATIVE_TOKEN_",
+            quantity: 1,
+            totalPrice: "0.005",
             // your custom minting arguments...
           }}
         />
