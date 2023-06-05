@@ -238,3 +238,11 @@
   font-size: 13px;
   color: #bdbdbd;
 }
+
+.sendNfts {
+  top: -20%;
+  font-size: 13px;
+  color: "#f251bc";
+  line-height: 27px;
+  text-transform: uppercase;
+}
