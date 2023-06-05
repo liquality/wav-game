@@ -12,6 +12,7 @@ import { Balances } from "./pages/Balances";
 import { fetchSession, setupSDK } from "./utils";
 import Footer from "./components/Footer";
 
+
 function App() {
   setupSDK();
 

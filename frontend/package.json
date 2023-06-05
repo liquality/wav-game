@@ -7,6 +7,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@liquality/wallet-sdk": "^2.0.0-next.1",
+    "@marker.io/browser": "^0.16.0",
     "@mui/material": "^5.13.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
