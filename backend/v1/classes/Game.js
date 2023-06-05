@@ -40,7 +40,6 @@ class Game {
             game.claimable_prize_count,
           ],
           (err, results, fields) => {
-            console.log(err, "results", results);
             if (err) {
               reject(new ApiError(500, err));
             } else if (results.length < 1) {
@@ -72,7 +71,6 @@ class Game {
                 reject(new ApiError(404, "Game not found"));
               } else {
                 game.set(results[0]);
-                console.log(results, "results??");
                 resolve(game);
               }
               db.release();

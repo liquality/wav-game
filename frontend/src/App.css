@@ -240,12 +240,25 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* WaveWrld/Modal header */
 .custom-modal {
-  max-width: 80%;
-}
+  top: 0;
+  left: 0;
+  max-width: 100%;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 .custom-modal .modal-content {
   background-color: #1e1e1e;
   color: #fff;
+}
+.modal-content {
+  max-width: 100%;
+  min-width: 97vw;
+  min-height: 97vh;
+  overflow: auto;
 }
 
 .modal-header-text {
@@ -273,6 +286,11 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: row;
 }
 
+.flexDirectionCol {
+  display: flex;
+  flex-direction: column;
+}
+
 .footer {
   flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
   padding-top: 10px;
@@ -289,8 +307,13 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .leftModalContainer {
   width: 80rem;
+  height: 70vh;
   border-right: 1px solid #828282;
   text-align: center;
+}
+
+.contentView {
+  height: 70vh;
 }
 
 .leftModalContainerCreditcard {
@@ -550,6 +573,10 @@ div.background {
   width: 100%;
 }
 
+.coral {
+  color: #ff6979;
+}
+
 .lineCoral {
   border: 1px solid #973540;
   width: 90%;
@@ -564,13 +591,25 @@ div.background {
   color: #ff9fa9 !important;
 }
 
+.userAvatar {
+  border: none;
+  padding: 10;
+  box-shadow: 0 0 0 1px #f251bc;
+  border-radius: 50%;
+}
+
 .userMenuText {
   font-family: "Sora";
   font-style: normal;
   font-weight: 300;
   font-size: 17px;
+}
 
+.userMenuDiv {
+  background-color: #262020;
   letter-spacing: 1px;
+  border: 1px solid #4f4f4f;
+  border-radius: 20px;
 }
 
 .userMenuAddressText {
@@ -636,4 +675,46 @@ div.background {
   width: 80%;
   height: 377px;
   border-radius: 53px;
+}
+
+.progressbar {
+  position: relative;
+  overflow: hidden;
+  width: 350px;
+  height: 9px;
+  background-color: #4f4f4f;
+}
+
+.progressPercent {
+  font-weight: 600;
+  font-family: "Sora";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #eee;
+  text-shadow: -1px 0 #555, 0 1px #555, 1px 0 #555, 0 -1px #555;
+}
+
+.custom-button:hover,
+.custom-button:focus {
+  background: #ff82af !important;
+  border-radius: 100px;
+  color: white !important;
+}
+
+.custom-button:active {
+  background: #bb007b !important;
+  border-radius: 100px;
+  color: white !important;
+}
+
+.disabledBtn {
+  background: #4f4f4f;
+  color: white !important;
+  border-radius: 100px;
+}
+
+.violet {
+  color: #c154f3 !important;
 }

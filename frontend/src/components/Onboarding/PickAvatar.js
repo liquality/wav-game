@@ -6,6 +6,7 @@ import { ReactComponent as AvatarPlaceholder } from "../../images/avatar_placeho
 import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import UserService from "../../services/UserService";
 import { fetchSession } from "../../utils";
+import CustomButton from "../Button";
 
 export const PickAvatar = (props) => {
   const { serviceproviderName, publicAddress, setContent, setHeaderText } =
@@ -29,7 +30,6 @@ export const PickAvatar = (props) => {
         }).then((response) => {
           //Set session
           localStorage.setItem("session", JSON.stringify(response));
-          console.log(response, "user obj response");
 
           setContent("pickArtist");
           setHeaderText("Choose an artist");
@@ -53,9 +53,8 @@ export const PickAvatar = (props) => {
     }
   };
 
-  console.log(avatarImage, "avatarImage");
   return (
-    <div className="text-center mx-auto">
+    <div className="text-center mx-auto contentView">
       <div
         className="flex justify-center items-center mx-auto mt-5"
         style={{ cursor: "pointer" }}
@@ -88,18 +87,15 @@ export const PickAvatar = (props) => {
         onChange={handleUsernameChange}
       />
 
-      {/* TODO: make button inactive if no username is put in */}
-      <button
-        className="modalButtonSignIn  mt-5 mb-5 px-4"
+      <CustomButton
+        mt={"100px"}
+        type="big"
+        pink
         onClick={handleSetNewPage}
         disabled={username && avatarImage ? false : true}
-        style={{
-          width: "180px",
-          opacity: username && avatarImage ? 1 : 0.5,
-        }}
       >
-        Continue
-      </button>
+        CONTINUE
+      </CustomButton>
     </div>
   );
 };
