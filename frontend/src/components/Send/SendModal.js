@@ -35,24 +35,12 @@ export const SendModal = (props) => {
       );
       //TODO
     } else if (content === "prepareSend") {
-      return <PrepareSend selectedNft={selectedNft} />;
+      return (
+        <PrepareSend handleClose={handleClose} selectedNft={selectedNft} />
+      );
     } else if (content === "pickArtist") {
       return (
         <PickArtist setHeaderText={setHeaderText} setContent={setContent} />
-      );
-    } else if (content === "creditcardPayment") {
-      return (
-        <CreditcardPayment
-          setHeaderText={setHeaderText}
-          setContent={setContent}
-        />
-      );
-    } else if (content === "completedPayment") {
-      return (
-        <CompletedPayment
-          setHeaderText={setHeaderText}
-          handleClose={handleClose}
-        />
       );
     } else return null;
   };
