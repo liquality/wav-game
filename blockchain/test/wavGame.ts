@@ -118,10 +118,10 @@ describe("WavGame Contract", async function () {
         })
       ).to.emit(wavGame, "Collected");
 
-      // expect(await wavNFT.balanceOf(player1, 3)).to.equal(3); // Level 1 NFT ID for artist2 is 3
-      // expect(
-      //   (await wavGame.getIsland(artist2GameID, ENTRY_LEVEL)).mintCount
-      // ).to.equal(3); // MintCount for level 1 (first game island) should increase
+      expect(await wavNFT.balanceOf(player1, 3)).to.equal(3); // Level 1 NFT ID for artist2 is 3
+      expect(
+        (await wavGame.getIsland(artist2GameID, ENTRY_LEVEL)).mintCount
+      ).to.equal(3); // MintCount for level 1 (first game island) should increase
     });
   });
 
