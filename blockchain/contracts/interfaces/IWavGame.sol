@@ -15,8 +15,8 @@ struct IslandParam {
     uint8 requiredBurn;
     uint8 requiredMint;
     uint32 earlyBirdCutOff;
-    SetParam[] burnableSet;
-    SetParam[] mintableSet;
+    uint256 mintable;
+    uint256 burnable;
 }
 
 /// @title A title that should describe the contract/interface
@@ -29,6 +29,8 @@ struct Island {
     uint8 requiredBurn;
     uint8 requiredMint;
     uint32 earlyBirdCutOff;
+    uint256 mintable;
+    uint256 burnable;
     uint256 burnCount;
     uint256 mintCount;
 }
@@ -38,8 +40,22 @@ struct Game {
     address payable treasury;
 }
 
-function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint[] calldata _mintableAmountPerNFTs) external payable;
+function collect(uint256 _gameID, address _recipient, uint _amount) external payable;
 
-function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint[] calldata _burnableAmountPerNFTs) external;
+function levelUp(uint256 _gameID, uint256 _newIslandID) external;
+
+function setGame(uint256 _gameID, IWavGame.IslandParam[] calldata _islands) external;
+
+function setTreasuries(uint256[] calldata _gameIDs, address payable[] calldata _treasuries) external;
+
+function updateIsland(uint256 _gameID, uint256 _islandID, IWavGame.IslandParam calldata _islandParam) external;
+
+function transferWavNftOwnership(address newOwner) external;
+
+function setFeePerMint(uint256  _feePerMint) external;
+
+function forwardValue() external;
+
+function wavMint(uint256 _gameID, uint256 _islandID, address _recipient, uint256  _amount) external;
 
 }
