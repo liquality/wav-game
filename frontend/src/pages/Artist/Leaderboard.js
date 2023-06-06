@@ -4,7 +4,7 @@ import "../../App.css";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 
-const Leaderboard = ({ isOpen, onClose }) => {
+const Leaderboard = ({ setShowSendModal }) => {
   const [user, setUser] = React.useState({});
   const [showNfts, setShowNfts] = React.useState(false);
 
@@ -14,6 +14,7 @@ const Leaderboard = ({ isOpen, onClose }) => {
   };
 
   const openSendModal = () => {
+    setShowSendModal(true);
     console.log("open send modal here");
   };
 
