@@ -17,7 +17,7 @@ const verifierMap = {
     typeOfLogin: "google",
     clientId:
       "852640103435-0qhvrgpkm66c9hu0co6edkhao3hrjlv3.apps.googleusercontent.com",
-    verifier: "liquality-google-testnet",
+    verifier: "liquality-wavgame",
   },
 };
 
@@ -71,9 +71,11 @@ export const LoginModal = (props) => {
   };
 
   const createNewWallet = async () => {
+    //Dont create new wallet if user has localstorage shares
     if (seeIfUserCanLogIn()) {
       setLoading(true);
       const response = await AuthService.loginUsingSSO(tKey, verifierMap);
+      localStorage.setItem("loginResponse", JSON.stringify(response));
       await loginUser(response.loginResponse?.userInfo?.email);
       setLoginResponse(response);
       //some ugly code here but works for now lol
@@ -84,6 +86,7 @@ export const LoginModal = (props) => {
     } else {
       setLoading(true);
       const response = await AuthService.createWallet(tKey, verifierMap);
+      localStorage.setItem("loginResponse", JSON.stringify(response));
       setLoginResponse(response);
       setLoading(false);
       //TODO: create user in db here

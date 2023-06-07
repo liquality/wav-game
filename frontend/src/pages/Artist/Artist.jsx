@@ -5,6 +5,9 @@ import { Sidebar } from "./Sidebar";
 import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
 import CustomButton from "../../components/Button";
+import Leaderboard from "./Leaderboard";
+import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
+import { SendModal } from "../../components/Send/SendModal";
 
 const levels = [
   {
@@ -80,6 +83,8 @@ export const Artist = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [_isPending, startTransition] = useTransition();
   const [showTrade, setShowTrade] = useState(false);
+  const [showSend, setShowSend] = useState(false);
+
   function onSelectLevel(level) {
     startTransition(() => {
       setSelectedLevel(level);
@@ -88,8 +93,6 @@ export const Artist = (props) => {
 
   return (
     <div className="container flex">
-      {/* <NavBar onMenuButtonClick={() => setSidebarOpen((prev) => !prev)} /> */}
-
       <Sidebar
         open={sidebarOpen}
         setOpen={setSidebarOpen}
@@ -150,8 +153,24 @@ export const Artist = (props) => {
             );
           })}
         </div>
+        <div className="flex flex-col  items-center   pt-24 mt-12">
+          <div className="flex flex-col justify-center items-center  mb-24 relative">
+            <RewardsTout className="mt-5" />
+
+            <div style={{ left: "24%", top: "35%" }} className="absolute">
+              <span className="lightCoral">
+                EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS!
+              </span>
+            </div>
+          </div>
+          <Leaderboard setShowSendModal={setShowSend} />
+        </div>
+        <div className="flex flex-col  items-center   pt-24 mt-12"></div>
       </div>
+
       <TradeModal setShow={setShowTrade} show={showTrade} />
+
+      <SendModal setShow={setShowSend} show={showSend} />
     </div>
   );
 };

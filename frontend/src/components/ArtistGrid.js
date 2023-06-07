@@ -6,7 +6,7 @@ export const ArtistGrid = (props) => {
   const { handleClick } = props;
 
   return (
-    <div class="justify-center">
+    <div className="justify-center">
       <div className="flexDirectionRow justify-center mb-3">
         <button onClick={() => handleClick(1)} className="defaultArtistBtn ">
           <img

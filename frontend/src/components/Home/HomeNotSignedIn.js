@@ -241,7 +241,7 @@ export default function HomeWhenNotSignedIn() {
         </div>
 
         <a
-          class="hover:no-underline hover:text-decoration-none"
+          className="hover:no-underline hover:text-decoration-none"
           href="https://discord.com/invite/35yAGaQ3gx"
           target="blank"
           rel="noreferrer"
