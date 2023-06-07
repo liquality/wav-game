@@ -5,6 +5,7 @@ import { CompletedPayment } from "../Onboarding/CompletedPayment";
 import { CustomModal } from "../Modal";
 import { SendStart } from "./SendStart";
 import { PrepareSend } from "./PrepareSend";
+import { ProcessingSend } from "./ProcessingSend";
 
 export const SendModal = (props) => {
   const { show, setShow } = props;
@@ -13,6 +14,7 @@ export const SendModal = (props) => {
   const [selectedNft, setSelectedNft] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [txHash, setTxHash] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -36,11 +38,20 @@ export const SendModal = (props) => {
       //TODO
     } else if (content === "prepareSend") {
       return (
-        <PrepareSend handleClose={handleClose} selectedNft={selectedNft} />
+        <PrepareSend
+          setContent={setContent}
+          setTxHash={txHash}
+          handleClose={handleClose}
+          selectedNft={selectedNft}
+        />
       );
-    } else if (content === "pickArtist") {
+    } else if (content === "processingSend") {
       return (
-        <PickArtist setHeaderText={setHeaderText} setContent={setContent} />
+        <ProcessingSend
+          setContent={setContent}
+          handleClose={handleClose}
+          txHash={txHash}
+        />
       );
     } else return null;
   };

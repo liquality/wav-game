@@ -12,8 +12,6 @@ export const NftImages = (props) => {
     borderRadius: "20px",
   };
 
-  console.log(nfts, "wats nfts?", selectedNft, "ööööööselected nft index?");
-
   const renderMoreThanThreeImages = () => {
     let rows = [];
     if (nfts) {

@@ -1,35 +1,36 @@
 import { NftService } from "@liquality/wallet-sdk";
-import { shortenAddress } from "../../utils";
-import UserService from "../../services/UserService";
+import { getPrivateKey, shortenAddress } from "../../utils";
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { ReactComponent as Polygon } from "../../images/polygon.svg";
-
-import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CustomButton from "../Button";
+
 const imagePlaceholder =
   "https://flowbite.com/docs/images/examples/image-4@2x.jpg";
-export const PrepareSend = ({ selectedNft, handleClose }) => {
+
+export const PrepareSend = ({
+  setTxHash,
+  setContent,
+  selectedNft,
+  handleClose,
+}) => {
   const [addressInput, setAddressInput] = useState("");
 
-  const sendNft = async (address, chainId) => {};
+  const sendNft = async (address, chainId) => {
+    const transferRequest = {
+      contractAddress: selectedNft.contract.address,
+      receiver: addressInput,
+      tokenIDs: [selectedNft.id],
+    };
+    let pk = getPrivateKey();
+    setContent("processingSend");
+    //let txHash = await NftService.transferNft(transferRequest, 137, pk, true);
+    //setTxHash(txHash);
+  };
 
   const handleSendInput = (e) => {
     setAddressInput(e.target.value);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      /* const nftData = await fetchNfts();
-      setNfts(nftData); */
-    };
-
-    fetchData();
-
-    return () => {
-      //any cleanup
-    };
-  }, []);
 
   return (
     <div className="contentView flex justify-center">
@@ -80,7 +81,7 @@ export const PrepareSend = ({ selectedNft, handleClose }) => {
         <input
           style={{ width: "50%" }}
           className="passwordInputBox"
-          type="number"
+          type="text"
           placeholder="Send to..."
           id="nftAmount"
           name="nftAmount"
@@ -93,7 +94,7 @@ export const PrepareSend = ({ selectedNft, handleClose }) => {
           All fees paid by wavWRLD / Average network speed
         </p>
 
-        <div className="flexDirectionRow mb-3">
+        <div className="flexDirectionRow mb-3 mt-3">
           <CustomButton
             disabled={!addressInput ? true : false}
             pink
@@ -102,7 +103,7 @@ export const PrepareSend = ({ selectedNft, handleClose }) => {
           >
             CONTINUE
           </CustomButton>
-          <button className=" ml-5 mr-5" onClick={handleClose}>
+          <button className="ml-5 mr-5" onClick={handleClose}>
             CANCEL
           </button>
         </div>

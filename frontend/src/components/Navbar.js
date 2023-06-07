@@ -63,21 +63,6 @@ const Navbar = () => {
     setUserMenuOpen(false);
   };
 
-  React.useEffect(() => {
-    if (localStorage.getItem("loginResponse")) {
-      const connectedAccount = JSON.parse(
-        localStorage.getItem("loginResponse")
-      ).loginResponse;
-      if (connectedAccount) {
-        setAddress(
-          String(connectedAccount.publicAddress).substr(0, 5) +
-            "..." +
-            String(connectedAccount.publicAddress).substr(38, 4)
-        );
-      }
-    }
-  }, [address]);
-
   return (
     <div>
       {userMenuOpen ? (

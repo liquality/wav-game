@@ -1,8 +1,4 @@
-import { ReactComponent as NftPreview } from "../../images/nft_preview.svg";
-import { ReactComponent as NftBigPreview } from "../../images/nft_preview_big.svg";
 import { NftService } from "@liquality/wallet-sdk";
-
-import * as React from "react";
 import { useState, useEffect } from "react";
 import CustomButton from "../Button";
 import { NftImages } from "./NftImages";
@@ -16,6 +12,7 @@ export const SendStart = ({
   const [nfts, setNfts] = useState([]);
 
   const fetchNfts = async (address, chainId) => {
+    //TODO: fetch your own public address from localstorage instead
     const nfts = await NftService.getNfts(
       "0xe7910F0b83ad155737043c771E2594f74B0BB739",
       137
@@ -30,13 +27,7 @@ export const SendStart = ({
     };
 
     fetchData();
-
-    return () => {
-      //any cleanup
-    };
   }, [selectedNft]);
-
-  console.log(nfts, "wats nfts?", selectedNft, "selected nft index?");
 
   return (
     <div className="contentView flex justify-center">
