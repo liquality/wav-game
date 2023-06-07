@@ -8,8 +8,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@opengsn/contracts/src/ERC2771Recipient.sol";
 
+
 contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable  {
+
     constructor(string memory uri) ERC1155(uri){
+
     }
 
     function setURI(string memory newURI) public onlyOwner {
@@ -26,7 +29,7 @@ contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable
 
     function mint(address account, uint256 id, uint256 amount, bytes memory data)
         public
-        onlyOwner
+        
     {
         _mint(account, id, amount, data);
     }
@@ -45,7 +48,7 @@ contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable
     {
         super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
-
+    
     function setTrustedForwarder(address _trustedForwarder) public onlyOwner {
         _setTrustedForwarder(_trustedForwarder);
     }
