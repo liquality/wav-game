@@ -1,123 +1,152 @@
 .side-bar {
-    display: flex;
-    align-items: end;
-    background-color: #252020;
-    border: 1px solid #973540;
-    border-radius: 3.31rem;
-    margin-bottom: 2rem;
-    z-index: 9999 !important;
+  display: flex;
+  align-items: end;
+  background-color: #252020;
+  border: 1px solid #973540;
+  border-radius: 3.31rem;
+  margin-bottom: 2rem;
+  z-index: 9999 !important;
 }
 
 .side-bar-secondary {
-    background-color: #2D2727;
-    border: 1px solid #973540;
-    border-radius: 3.31rem;
-    position: relative;
-    margin-top: 12rem;
-    z-index: 13;
+  background-color: #2d2727;
+  border: 1px solid #973540;
+  border-radius: 3.31rem;
+  position: relative;
+  margin-top: 12rem;
+  z-index: 13;
 }
 
 .level-tabs {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
 }
 
 .level-tabs li {
-    float: left;
-    display: flex;
-    font-family: "000 webfont";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.625rem;
-    line-height: 1.25rem;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 1rem;
-    cursor: pointer;
+  float: left;
+  display: flex;
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.625rem;
+  line-height: 1.25rem;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem;
+  cursor: pointer;
 }
 
 .level-tabs li .level-bar {
-    height: 0.625rem;
-    width: 8.563rem;
-    border-radius: 3.31rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  height: 0.625rem;
+  width: 8.563rem;
+  border-radius: 3.31rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .artist-name {
-    font-family: 'Sora';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.75rem;
-    line-height: 2.188rem;
-    letter-spacing: 0.02em;
-    color: #FF9FA9;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 2.188rem;
+  letter-spacing: 0.02em;
+  color: #ff9fa9;
 }
 
 .artist-desc {
-    font-family: 'Sora';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 0.813rem;
-    line-height: 1.125rem;
-    letter-spacing: 0.02em;
-    text-transform: capitalize;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.813rem;
+  line-height: 1.125rem;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
 
-    color: #FF9FA9;
+  color: #ff9fa9;
 }
 
 .artist-link {
-    font-family: 'Sora';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 0.75rem;
-    line-height: 1.25rem;
-    letter-spacing: 0.03em;
-    color: #F251BC;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.03em;
+  color: #f251bc;
 }
 
 .artist-wave-graphic {
-    align-self: center;
-    position: absolute;
-    top: -6.8rem;
+  align-self: center;
+  position: absolute;
+  top: -6.8rem;
 }
 
 .artist-content {
-    font-family: 'Sora';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.25rem;
-    letter-spacing: 0.02em;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.02em;
 }
 
 .artist-info {
-    border-top: 1px solid #BF3948;
+  border-top: 1px solid #bf3948;
 }
 
 .game-header {
-    border-top: 1px solid #BF3948;
+  border-top: 1px solid #bf3948;
 }
 
 .game-header-level,
 .game-header-counter {
-    font-family: '000 webfont';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.625rem;
-    line-height: 1.563rem;
-    color: #E0E0E0;
-
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.625rem;
+  line-height: 1.563rem;
+  color: #e0e0e0;
 }
 
 .game-header-title {
-    font-family: 'Alba';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.563rem;
-    line-height: 3.688rem;
-    text-align: center;
-    color: #E0E0E0;
+  font-family: "Alba";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.563rem;
+  line-height: 3.688rem;
+  text-align: center;
+  color: #e0e0e0;
+}
+
+.leaderboardContainer {
+  width: 165%;
+  height: 150px;
+  border-bottom: 1px solid #828282;
+  border-top: 1px solid #828282;
+}
+
+.leaderboardToggle {
+  line-height: 27px;
+  top: -30%;
+  font-size: 13px;
+  color: #bdbdbd;
+}
+
+.nftsToggle {
+  top: -30%;
+  left: 10%;
+  line-height: 27px;
+  font-size: 13px;
+  color: #bdbdbd;
+}
+
+.sendNfts {
+  top: -20%;
+  font-size: 13px;
+  color: "#f251bc";
+  line-height: 27px;
+  text-transform: uppercase;
 }
