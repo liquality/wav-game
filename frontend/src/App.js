@@ -12,24 +12,15 @@ import { Balances } from "./pages/Balances";
 import { fetchSession, setupSDK } from "./utils";
 import Footer from "./components/Footer";
 
-
 function App() {
   setupSDK();
-
-  const [loginResponse, setLoginResponse] = useState(
-    JSON.parse(localStorage.getItem("loginResponse")) || {}
-  );
-
-  useEffect(() => {
-    localStorage.setItem("loginResponse", JSON.stringify(loginResponse));
-  }, [loginResponse]);
 
   return (
     <body className="stretched device-xl no-transition">
       <DataContext.Provider
         value={{
-          loginResponse: loginResponse,
-          setLoginResponse: setLoginResponse,
+          loginResponse: "",
+          setLoginResponse: "",
         }}
       >
         {" "}

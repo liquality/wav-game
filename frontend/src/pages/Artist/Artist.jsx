@@ -7,6 +7,7 @@ import { TradeModal } from "../../components/Trade/TradeModal";
 import CustomButton from "../../components/Button";
 import Leaderboard from "./Leaderboard";
 import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
+import { SendModal } from "../../components/Send/SendModal";
 
 const levels = [
   {
@@ -82,6 +83,8 @@ export const Artist = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [_isPending, startTransition] = useTransition();
   const [showTrade, setShowTrade] = useState(false);
+  const [showSend, setShowSend] = useState(false);
+
   function onSelectLevel(level) {
     startTransition(() => {
       setSelectedLevel(level);
@@ -160,12 +163,14 @@ export const Artist = (props) => {
               </span>
             </div>
           </div>
-          <Leaderboard />
+          <Leaderboard setShowSendModal={setShowSend} />
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12"></div>
       </div>
 
       <TradeModal setShow={setShowTrade} show={showTrade} />
+
+      <SendModal setShow={setShowSend} show={showSend} />
     </div>
   );
 };
