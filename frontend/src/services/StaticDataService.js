@@ -9,13 +9,15 @@ const StaticDataService = {
     },
     getArtists: async function () {
         if (!ARTISTS) {
-            ARTISTS = await this.fetchData('../data/artitsts.json');;
+            const content = await import('../data/artists.json');
+            ARTISTS = content.default;
         }
         return ARTISTS;
     },
     getLevels: async function () {
         if (!LEVELS) {
-            LEVELS = await this.fetchData('../data/levels.json');;
+            const content = await import('../data/levels.json');
+            LEVELS = content.default;
         }
         console.log('levelts', LEVELS)
         return LEVELS;

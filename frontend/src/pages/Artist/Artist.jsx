@@ -35,11 +35,10 @@ export const Artist = (props) => {
           <div className="game-header-counter">COLLECTABLES: 42</div>
         </div>
         <div className="flex flex-row md:flex-col justify-center my-5">
-          <GameTabs levels={levels} currentLevel={1}/>
-
+          <GameTabs levels={levels} currentLevel={1} />
         </div>
-        <div className="flex flex-row mt-5">
-          <GameCards levels={levels} currentLevel={1}/>
+        <div className="w-full flex flex-col justify-center">
+          <GameCards levels={levels} currentLevel={1} />
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12">
           <div className="flex flex-col justify-center items-center  mb-24 relative">
