@@ -3,7 +3,7 @@ import React from "react";
 import { fetchSession } from "../utils";
 import { Artist } from "./Artist/Artist";
 import HomeWhenNotSignedIn from "../components/Home/HomeNotSignedIn";
-import StaticDataService from "../services/ArtistService";
+import StaticDataService from "../services/StaticDataService";
 
 export default function Home() {
   const [user, setUser] = React.useState({});
