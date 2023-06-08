@@ -23,8 +23,8 @@ export const shortenAddress = (address: string): string => {
         String(address).substr(38, 4)
 }
 export const logOut = () => {
-
     localStorage.removeItem("session");
+    localStorage.removeItem("loginResponse");
     window.location.reload()
 };
 

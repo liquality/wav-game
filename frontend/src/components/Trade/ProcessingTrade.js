@@ -12,6 +12,9 @@ export const ProcessingTrade = (props) => {
     //Trade here from liq sdk
     //const txHash = await sendNft(nftData)
     const txHash = "";
+    //wavGameContract.approval(privateKey, )
+    //wavNftContract.levelUp()
+    //call database to add level here as well
     setTxHash(txHash);
     setContent("processingTrade");
   };

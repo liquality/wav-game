@@ -718,3 +718,29 @@ div.background {
 .violet {
   color: #c154f3 !important;
 }
+
+.nftImageSendMany {
+  border-radius: 20px;
+  width: 120.57px;
+  height: 156.17px;
+}
+
+.nftImageSendTwo {
+  border-radius: 20px;
+
+  width: 247.41px;
+  height: 319.27px;
+}
+
+.nftImageSendOne {
+  border-radius: 20px;
+
+  width: 272px;
+  height: 351px;
+}
+
+.nftImagePrepared {
+  width: 367px;
+  height: 472px;
+  border-radius: 20px;
+}
