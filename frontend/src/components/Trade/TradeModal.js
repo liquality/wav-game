@@ -31,6 +31,9 @@ export const TradeModal = (props) => {
     setHeaderText("Pick An Avatar");
   };
 
+  //TODO you need collect() you need to call gameIds array that Oluchi hardcoded
+  //
+
   const whichContentToRender = () => {
     if (content === "tradeStart") {
       return <TradeStart setContent={setContent} />;

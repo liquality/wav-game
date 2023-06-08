@@ -98,12 +98,11 @@ export const CreditcardPayment = (props) => {
         {/* collect function called here, in crossmint dashboard we need to provide WavGame Contract address etc  */}
         {/* Level up should be gasless. */}
         <CrossmintPayButton
-          onClick={handleDoneWithCheckout}
           clientId="d40b03b9-09a3-4ad8-a4f8-15fef67cad21"
           environment="staging"
           className="xmint-btn"
           mintConfig={{
-            type: "erc-721",
+            type: "erc-1155",
             quantity: 1,
             totalPrice: "0.005",
             // your custom minting arguments...

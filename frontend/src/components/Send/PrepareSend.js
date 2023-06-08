@@ -24,8 +24,8 @@ export const PrepareSend = ({
     };
     let pk = getPrivateKey();
     setContent("processingSend");
-    //let txHash = await NftService.transferNft(transferRequest, 137, pk, true);
-    //setTxHash(txHash);
+    let txHash = await NftService.transferNft(transferRequest, 80001, pk, true);
+    setTxHash(txHash);
   };
 
   const handleSendInput = (e) => {

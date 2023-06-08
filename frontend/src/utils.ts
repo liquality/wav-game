@@ -2,9 +2,10 @@ import { setup } from "@liquality/wallet-sdk";
 
 export function setupSDK() {
     setup({
-        alchemyApiKey: 'JmoTKlpUIjzd1y5-8h-La50OewZULyL0',
+        alchemyApiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
         etherscanApiKey: '-',
         infuraProjectId: '-',
+        gelatoApiKey: process.env.REACT_APP_GELATO_API_KEY,
         pocketNetworkApplicationID: '-',
         quorum: 1,
         slowGasPriceMultiplier: 1,
