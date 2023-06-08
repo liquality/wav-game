@@ -122,7 +122,7 @@
 }
 
 .leaderboardContainer {
-  width: 165%;
+  width: 145%;
   height: 150px;
   border-bottom: 1px solid #828282;
   border-top: 1px solid #828282;
@@ -137,7 +137,7 @@
 
 .nftsToggle {
   top: -30%;
-  left: 10%;
+  left: 12%;
   line-height: 27px;
   font-size: 13px;
   color: #bdbdbd;

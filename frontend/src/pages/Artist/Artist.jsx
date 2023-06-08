@@ -8,7 +8,7 @@ import { GameCards } from "../../components/GameCards/GameCards";
 import { GameTabs } from "../../components/GameTabs/GameTabs";
 import Leaderboard from "./Leaderboard";
 import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
-import levels from '../../data/levels.json';
+import levels from "../../data/levels.json";
 
 export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
@@ -44,7 +44,7 @@ export const Artist = (props) => {
           <div className="flex flex-col justify-center items-center  mb-24 relative">
             <RewardsTout className="mt-5" />
 
-            <div style={{ left: "24%", top: "35%" }} className="absolute">
+            <div style={{ left: "20%", top: "35%" }} className="absolute">
               <span className="lightCoral">
                 EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS!
               </span>
