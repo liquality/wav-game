@@ -1,0 +1,1 @@
+export type ButtonMode = 'default' | 'pink' | 'inactive' | 'stroke' | 'pinkStroke';

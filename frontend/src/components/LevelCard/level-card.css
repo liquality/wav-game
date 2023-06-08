@@ -1,0 +1,451 @@
+.level-card {
+  position: absolute;
+  display: flex;
+  border-radius: 3.13rem;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+  height: 32.5rem !important;
+  width: 20.313rem;
+  padding: 3.125rem;
+}
+
+.level-card-level {
+  font-style: normal;
+  font-family: "000 webfont";
+  font-weight: 400;
+  font-size: 1.813rem;
+  line-height: 2.813rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.level-card-title {
+  font-family: 'Alba';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.75rem;
+  line-height: 2.813rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.level-card-edition {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.813rem;
+  line-height: 1.188rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.level-card-instructions {
+  font-family: 'Sora';
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.188rem;
+  letter-spacing: 0.031rem;
+  margin-bottom: 2.5rem;
+}
+
+.level-card-instructions-empty-actions {
+  margin-bottom: 0;
+  margin-top: 2.5rem;
+}
+
+
+/* ACTIVE */
+.level-card--active {
+  color: #FF5DC8;
+  border: 1px solid #F251BC;
+  background-color: #BC2B8B;
+}
+
+.level-card--active.active,
+
+.level-card--active:hover .level-card-title,
+.level-card--active:hover .level-card-instructions,
+.level-card--active:hover .level-card-edition,
+.level-card--active:hover .level-card-level,
+
+.level-card--active.active .level-card-title,
+.level-card--active.active .level-card-instructions,
+.level-card--active.active .level-card-edition,
+.level-card--active.active .level-card-level {
+  color: #FFFFFF;
+}
+
+
+/* COMPLETED */
+.level-card--completed {
+  color: #F5F5F5;
+  border: 1px solid #BF3948;
+  background-color: #4B1F3E;
+}
+
+.level-card--completed .level-card-level,
+.level-card--completed .level-card-title,
+.level-card--completed .level-card-edition {
+  color: #973540;
+}
+
+.level-card--completed .level-card-instructions {
+  opacity: 0.8;
+}
+
+.level-card--completed:hover .level-card-level,
+.level-card--completed:hover .level-card-title,
+.level-card--completed:hover .level-card-edition,
+.level-card--completed:active .level-card-level,
+.level-card--completed:active .level-card-title,
+.level-card--completed:active .level-card-edition,
+.level-card--completed.active .level-card-level,
+.level-card--completed.active .level-card-title,
+.level-card--completed.active .level-card-edition {
+  color: #FF9FA9;
+}
+
+.level-card--completed:hover .level-card-instructions,
+.level-card--completed:active .level-card-instructions,
+.level-card--completed.active .level-card-instructions {
+  color: #FFFFFF;
+}
+
+
+/* LOCKED */
+.level-card--locked {
+  color: #828282;
+  border: 1px solid #828282;
+  background-color: #333333;
+}
+
+.level-card--locked.active,
+.level-card--locked:active,
+.level-card--locked:hover {
+  color: #F2F2F2;
+}
+
+.level-card--locked .level-card-instructions {
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.438rem;
+  line-height: 1.938rem;
+  text-transform: uppercase;
+}
+
+
+/* NEXT */
+.level-card--next {
+  color: #828282;
+  border: 2px solid #F251BC;
+  background-color: #333333;
+  outline: 2px solid #C154F3;
+  outline-offset: 0.313rem;
+  position: relative;
+}
+
+
+.level-card--next::before {
+  content: "";
+  position: absolute;
+  display: block;
+  z-index: 15;
+  background: url('../../images/card-bg-off.svg');
+  background-repeat: no-repeat;
+  top: -2rem;
+  left: 4rem;
+  bottom: 0rem;
+  right: -1.5rem;
+  background-size: contain;
+}
+
+
+.level-card--next:hover::before,
+.level-card--next:active::before,
+.level-card--next.active::before {
+  content: "";
+  position: absolute;
+  display: block;
+  z-index: 15;
+  background: url('../../images/card-bg-active.svg');
+  background-repeat: no-repeat;
+  top: -2rem;
+  left: 4rem;
+  bottom: 0rem;
+  right: -1.5rem;
+  background-size: contain;
+}
+
+.level-card--next:hover,
+.level-card--next:active,
+.level-card--next.active {
+  color: #F2F2F2;
+}
+
+/* UPCOMMING */
+.level-card--upcomming {
+  color: #828282;
+  border: 1px solid #828282;
+  background-color: #333333;
+}
+
+.level-card--upcomming:hover,
+.level-card--upcomming:active,
+.level-card--upcomming.active {
+  color: #F2F2F2;
+}
+
+
+.level-card--won {
+  background: linear-gradient(90deg, #BF3948 1.15%, #962BC7 100%);
+  border: 1px solid #FF9FA9;
+}
+
+.level-card--won .level-card-title {
+  font-family: 'Akka';
+  opacity: 0.8;
+  font-weight: normal;
+  font-size: 2.175rem;
+  line-height: 2.625rem;
+  color: #FFFFFF;
+  z-index: 20;
+  min-height: 10rem;
+}
+
+.level-card--won::before {
+  content: "";
+  position: absolute;
+  display: block;
+  z-index: 15;
+  background: url('../../images/won-card-bg.svg');
+  background-repeat: no-repeat;
+  top: 0;
+  left: 5rem;
+  bottom: 0;
+  right: -2.5rem;
+  background-size: contain;
+}
+
+/* Active level 1 */
+.level-card--display--1--1 {
+  z-index: 600;
+  transform: scale(1);
+}
+
+.level-card--display--1--2 {
+  z-index: 500;
+  transform: scale(0.9);
+  left: 9rem;
+}
+
+.level-card--display--1--3 {
+  z-index: 400;
+  transform: scale(0.8);
+  left: 17rem;
+}
+
+.level-card--display--1--4 {
+  z-index: 300;
+  transform: scale(0.7);
+  left: 24rem;
+}
+
+.level-card--display--1--5 {
+  z-index: 200;
+  transform: scale(0.6);
+  left: 30rem;
+}
+
+.level-card--display--1--6 {
+  z-index: 100;
+  transform: scale(0.5);
+  left: 35rem;
+}
+
+
+/* Active level 2 */
+.level-card--display--2--1 {
+  z-index: 500;
+  transform: scale(0.8);
+}
+
+.level-card--display--2--2 {
+  z-index: 600;
+  left: 9rem;
+  transform: scale(1);
+}
+
+.level-card--display--2--3 {
+  z-index: 500;
+  transform: scale(0.9);
+  left: 17rem;
+}
+
+.level-card--display--2--4 {
+  z-index: 300;
+  transform: scale(0.8);
+  left: 24rem;
+}
+
+.level-card--display--2--5 {
+  z-index: 200;
+  transform: scale(0.7);
+  left: 30rem;
+}
+
+.level-card--display--2--6 {
+  z-index: 100;
+  transform: scale(0.6);
+  left: 35rem;
+}
+
+/* Active level 3 */
+.level-card--display--3--1 {
+  z-index: 400;
+  transform: scale(0.8);
+}
+
+.level-card--display--3--2 {
+  z-index: 500;
+  left: 9rem;
+  transform: scale(0.9);
+}
+
+.level-card--display--3--3 {
+  z-index: 600;
+  transform: scale(1);
+  left: 17rem;
+}
+
+.level-card--display--3--4 {
+  z-index: 300;
+  transform: scale(0.9);
+  left: 24rem;
+}
+
+.level-card--display--3--5 {
+  z-index: 200;
+  transform: scale(0.8);
+  left: 30rem;
+}
+
+.level-card--display--3--6 {
+  z-index: 100;
+  transform: scale(0.7);
+  left: 35rem;
+}
+
+/* Active level 4 */
+.level-card--display--4--1 {
+  z-index: 300;
+  transform: scale(0.7);
+}
+
+.level-card--display--4--2 {
+  z-index: 400;
+  left: 9rem;
+  transform: scale(0.8);
+}
+
+.level-card--display--4--3 {
+  z-index: 500;
+  transform: scale(0.9);
+  left: 17rem;
+}
+
+.level-card--display--4--4 {
+  z-index: 600;
+  transform: scale(1);
+  left: 24rem;
+}
+
+.level-card--display--4--5 {
+  z-index: 500;
+  transform: scale(0.9);
+  left: 30rem;
+}
+
+.level-card--display--4--6 {
+  z-index: 400;
+  transform: scale(0.8);
+  left: 35rem;
+}
+
+
+/* Active level 5 */
+.level-card--display--5--1 {
+  z-index: 200;
+  transform: scale(0.6);
+}
+
+.level-card--display--5--2 {
+  z-index: 300;
+  left: 7rem;
+  transform: scale(0.7);
+}
+
+.level-card--display--5--3 {
+  z-index: 400;
+  transform: scale(0.8);
+  left: 14.5rem;
+}
+
+.level-card--display--5--4 {
+  z-index: 500;
+  transform: scale(0.9);
+  left: 22rem;
+}
+
+.level-card--display--5--5 {
+  z-index: 600;
+  transform: scale(1);
+  left: 29rem;
+}
+
+.level-card--display--5--6 {
+  z-index: 500;
+  transform: scale(0.9);
+  left: 35rem;
+}
+
+/* Active level 6 */
+.level-card--display--6--1 {
+  z-index: 100;
+  transform: scale(0.5);
+}
+
+.level-card--display--6--2 {
+  z-index: 200;
+  left: 7rem;
+  transform: scale(0.6);
+}
+
+.level-card--display--6--3 {
+  z-index: 300;
+  transform: scale(0.7);
+  left: 14.5rem;
+}
+
+.level-card--display--6--4 {
+  z-index: 400;
+  transform: scale(0.8);
+  left: 22rem;
+}
+
+.level-card--display--6--5 {
+  z-index: 500;
+  transform: scale(0.9);
+  left: 29rem;
+}
+
+.level-card--display--6--6 {
+  z-index: 600;
+  transform: scale(1);
+  left: 35rem;
+}
