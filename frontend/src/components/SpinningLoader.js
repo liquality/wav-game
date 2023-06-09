@@ -37,8 +37,8 @@ export const SpinningLoader = () => {
           y2="110.455"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#9C55F6" />
-          <stop offset="1" stop-color="#2CD2CA" />
+          <stop stopColor="#9C55F6" />
+          <stop offset="1" stopColor="#2CD2CA" />
         </linearGradient>
       </defs>
     </svg>

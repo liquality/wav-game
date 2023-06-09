@@ -8,6 +8,9 @@ export default function ProcessingTx({ txHash }) {
       setTimeout(() => setPercentageFilled((prev) => (prev += 2)), 180);
     }
   }, [percentageFilled, isRunning]);
+
+  console.log(process.env.REACT_APP_GELATO_API_KEY, "api key");
+
   return (
     <div>
       <p className="webfont text-2xl">{txHash ? "Complete" : "Processing"}</p>

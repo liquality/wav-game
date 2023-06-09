@@ -1,82 +1,15 @@
-import { useState, PropsWithChildren, useTransition } from "react";
+import { useState, useTransition } from "react";
 import "../../App.css";
 import "./artist.css";
 import { Sidebar } from "./Sidebar";
 import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
-import CustomButton from "../../components/Button";
+import { GameCards } from "../../components/GameCards/GameCards";
+import { GameTabs } from "../../components/GameTabs/GameTabs";
 import Leaderboard from "./Leaderboard";
 import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
+import levels from "../../data/levels.json";
 import { SendModal } from "../../components/Send/SendModal";
-
-const levels = [
-  {
-    id: 1,
-    label: "LVL 1",
-    status: "completed",
-    title: "LEVEL 1",
-    content: "Get 1 Unreleased Song",
-    count: "You have 2.",
-  },
-  {
-    id: 2,
-    label: "LVL 2",
-    status: "completed",
-    title: "LEVEL 2",
-    content: "Get 1 Unreleased Song",
-    count: "You have 2.",
-  },
-  {
-    id: 3,
-    label: "LVL 3",
-    status: "active",
-    title: "LEVEL 3",
-    content: "Get 1 Unreleased Song",
-    count: "You have 2.",
-  },
-  {
-    id: 4,
-    label: "LV 4",
-    status: "locked",
-    title: "LEVEL 4",
-    content: "Get 1 Unreleased Song",
-    count: "You have 2.",
-  },
-  {
-    id: 5,
-    label: "LVL 5",
-    status: "locked",
-    title: "LEVEL 5",
-    content: "Get 1 Unreleased Song",
-    count: "You have 2.",
-  },
-  {
-    id: 6,
-    label: "LVL 6",
-    status: "locked",
-    title: "LEVEL 6",
-    content: "Get 1 Unreleased Song",
-    count: "You have 2.",
-  },
-];
-
-const levelStyles = {
-  completed: {
-    border: "border-completedStroke",
-    text: "text-completedStroke",
-    background: "bg-completed",
-  },
-  active: {
-    border: "border-activePinkStroke",
-    text: "text-activePinkStroke",
-    background: "bg-activePink",
-  },
-  locked: {
-    border: "border-lockedStroke",
-    text: "text-lockedStroke",
-    background: "bg-locked",
-  },
-};
 
 export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
@@ -105,59 +38,16 @@ export const Artist = (props) => {
           <div className="game-header-counter">COLLECTABLES: 42</div>
         </div>
         <div className="flex flex-row md:flex-col justify-center my-5">
-          <ul className="level-tabs">
-            {levels.map((level) => {
-              const styles = levelStyles[level.status];
-              return (
-                <li key={level.id} onClick={() => onSelectLevel(level.id)}>
-                  <div className={`${styles.text}`}>{level.label}</div>
-                  <div
-                    className={`level-bar dark:border ${styles.border} ${styles.background}`}
-                  ></div>
-                </li>
-              );
-            })}
-          </ul>
+          <GameTabs levels={levels} currentLevel={1} />
         </div>
-        <div className="flex flex-row mt-5">
-          {levels.map((level) => {
-            const styles = levelStyles[level.status];
-            return (
-              <div
-                key={level.id}
-                onClick={() => onSelectLevel(level.id)}
-                className={classNames({
-                  [`dark:border ${styles.border} ${styles.background}`]: true,
-                  "text-white px-5 py-4 flex flex-col justify-between level-card": true,
-                  active: selectedLevel === level.id,
-                })}
-              >
-                <div className="flex flex-col justify-between">
-                  <div className="level-card-level">{level.title}</div>
-                  <div className="level-card-title">{level.content}</div>
-                </div>
-                <div className="flex flex-col justify-between">
-                  <div className="level-card-count">{level.count}</div>
-                  <div>
-                    <CustomButton
-                      white
-                      type="small"
-                      onClick={() => setShowTrade(true)}
-                      disabled={false}
-                    >
-                      TRADE NOW
-                    </CustomButton>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="w-full flex flex-col justify-center">
+          <GameCards levels={levels} currentLevel={1} />
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12">
           <div className="flex flex-col justify-center items-center  mb-24 relative">
             <RewardsTout className="mt-5" />
 
-            <div style={{ left: "24%", top: "35%" }} className="absolute">
+            <div style={{ left: "20%", top: "35%" }} className="absolute">
               <span className="lightCoral">
                 EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS!
               </span>

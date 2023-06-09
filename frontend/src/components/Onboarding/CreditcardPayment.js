@@ -103,8 +103,11 @@ export const CreditcardPayment = (props) => {
           className="xmint-btn"
           mintConfig={{
             type: "erc-1155",
-            quantity: 1,
-            totalPrice: "0.005",
+            _amount: 1,
+            totalPrice: "0.0005",
+            _recipient: "0xe7910F0b83ad155737043c771E2594f74B0BB739",
+            _gameID: "1000",
+
             // your custom minting arguments...
           }}
         />

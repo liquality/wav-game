@@ -3,7 +3,7 @@ import React from "react";
 import { fetchSession } from "../utils";
 import { Artist } from "./Artist/Artist";
 import HomeWhenNotSignedIn from "../components/Home/HomeNotSignedIn";
-import ArtistService from "../services/ArtistService";
+import StaticDataService from "../services/StaticDataService";
 
 export default function Home() {
   const [user, setUser] = React.useState({});
@@ -11,7 +11,7 @@ export default function Home() {
 
   const fetchArtist = async (id) => {
     try {
-      const artist = await ArtistService.findArtistById(id);
+      const artist = await StaticDataService.findArtistById(id);
       return artist;
     } catch (err) {
       console.log(err, "Error fetching the artist");
@@ -35,7 +35,6 @@ export default function Home() {
   }, []);
 
   if (fetchSession()?.token) {
-    fetchArtist();
     return <Artist artist={artist} />;
   }
 
