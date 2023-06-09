@@ -6,7 +6,6 @@ import { ReactComponent as ArrowRight } from "../../images/arrow_right.svg";
 import { ReactComponent as DiscordIcon } from "../../images/discord.svg";
 import { ReactComponent as TelegramIcon } from "../../images/telegram.svg";
 import { ReactComponent as TwitterIcon } from "../../images/twitter.svg";
-import ArtistImage from "../../images/artist.png";
 
 export type NavItem = {
   label: string;
@@ -17,10 +16,11 @@ export type NavItem = {
 type Props = {
   open: boolean;
   setOpen(open: boolean): void;
-  artist: any
+  artist: any;
+  image: any;
 };
 
-export const Sidebar = ({ open, setOpen, artist }: Props) => {
+export const Sidebar = ({ open, setOpen, artist, image }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, (e) => {
     setOpen(false);
@@ -58,7 +58,7 @@ export const Sidebar = ({ open, setOpen, artist }: Props) => {
               <DiscordIcon className="m-2" />
               <TelegramIcon className="m-2" />
             </div>
-            <img className="mt-" src={ArtistImage} alt="" />
+            <img className="mt-" src={image} alt="" />
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>BIO</h2>

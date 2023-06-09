@@ -9,7 +9,8 @@
         "quote": "The wavROOM was a special experience that was great for honoring my collectors with a private showcase for their early support. The performance was recorded and minted, which made it a memory to last forever.",
         "socials": {
             "twitter": "TKtheLegend"
-        }
+        },
+        "image": "tk.jpg"
     },
     {
         "id": "tarot",
@@ -21,7 +22,8 @@
         "quote": "",
         "socials": {
             "twitter": "tarotsings"
-        }
+        },
+        "image": "tarot.jpg"
     },
     {
         "id": "black-dave",
@@ -33,7 +35,8 @@
         "quote": "The wavROOM experience was sick because I was able to perform for a room of people where I recognized every person. Connecting with fans on an individual level becomes harder and harder as you grow, so to be able to recognize and connect with each person in the room is a special experience.",
         "socials": {
             "twitter": "BlackDave"
-        }
+        },
+        "image": "black-dave.jpg"
     },
     {
         "id": "abjo",
@@ -45,7 +48,8 @@
         "quote": "wavROOM is one of the most immersive IRL experiences about music NFTs I've ever been a part of and is easily my most memorable performance in the space!.",
         "socials": {
             "twitter": "_AbJo"
-        }
+        },
+        "image": "abjo.jpg"
     },
     {
         "id": "cam-murdoch",
@@ -57,7 +61,8 @@
         "quote": "wavROOM was my first web3 performance and an experience I'll remember forever.",
         "socials": {
             "twitter": "cammurdochmusic"
-        }
+        },
+        "image": "cam-murdoch.jpg"
     },
     {
         "id": "karma-violetta",
@@ -69,7 +74,8 @@
         "quote": "It was really magical to perform in the wavROOM—We felt truly seen by our collectors and those who have supported us since Day 1. It gave us the space to express ourselves authentically and share our story and music without holding back.",
         "socials": {
             "twitter": "KarmaVioletta"
-        }
+        },
+        "image": "karma-violetta.jpg"
     },
     {
         "id": "fred-riko",
@@ -81,7 +87,8 @@
         "quote": "Having the space and the audience to explore as an artist was incredible—the wavROOM was truly a unique experience.",
         "socials": {
             "twitter": "fredrikomusic"
-        }
+        },
+        "image": "fred-riko.jpg"
     },
     {
         "id": "futrxlgnd",
@@ -93,7 +100,8 @@
         "quote": "",
         "socials": {
             "twitter": "futrxlgnd"
-        }
+        },
+        "image": "futrxlgnd.jpg"
     },
     {
         "id": "jadyn-violet",
@@ -105,6 +113,7 @@
         "quote": "The wavROOM experience was the definition of what a true artist and listener relationship looks like.",
         "socials": {
             "twitter": "jadynviolet"
-        }
+        },
+        "image": "jadyn-violet.jpg"
     }
 ]

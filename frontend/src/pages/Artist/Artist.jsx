@@ -17,6 +17,7 @@ export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
   let routeParams = useParams();
   const [artist, setArtist] = useState({});
+  const [image, setImage] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [_isPending, startTransition] = useTransition();
   const [showTrade, setShowTrade] = useState(false);
@@ -35,7 +36,9 @@ export const Artist = (props) => {
     const fetchData = async () => {
       const artistId = routeParams.artistId || 'tk'; // TODO: remove the default
       const _artist = await fetchArtist(artistId);
+      const _image = (await import(`../../images/artists/${_artist.image}`)).default;
       setArtist(_artist);
+      setImage(_image);
     };
 
     fetchData();
@@ -57,6 +60,7 @@ export const Artist = (props) => {
         open={sidebarOpen}
         setOpen={setSidebarOpen}
         artist={artist}
+        image={image}
       />
       <div className="flex flex-col items-center md:ml-20">
         <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
