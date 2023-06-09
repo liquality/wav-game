@@ -2,6 +2,8 @@ import { useState, useTransition } from "react";
 import "../../App.css";
 import "./artist.css";
 import { Sidebar } from "./Sidebar";
+import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
+
 import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
 import { GameCards } from "../../components/GameCards/GameCards";
@@ -10,6 +12,7 @@ import Leaderboard from "./Leaderboard";
 import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import levels from "../../data/levels.json";
 import { SendModal } from "../../components/Send/SendModal";
+import { getPublicKey } from "../../utils";
 
 export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
@@ -57,6 +60,7 @@ export const Artist = (props) => {
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12"></div>
       </div>
+      <button onClick={() => setShowTrade(true)}>Trade</button>
 
       <TradeModal setShow={setShowTrade} show={showTrade} />
 

@@ -33,6 +33,10 @@ export function getPrivateKey(): string {
     return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.privateKey;
 }
 
+export function getPublicKey(): string {
+    return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.publicAddress;
+}
+
 export function seeIfUserCanLogIn() {
     for (var i = 0; i < localStorage.length; i++) {
         var key = localStorage.key(i);

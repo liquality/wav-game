@@ -25,6 +25,7 @@ export default function ProcessingTx({ txHash }) {
           }}
         ></div>
       </div>
+      <a href={`https://mumbai.polygonscan.com/address/${txHash}`}></a>
     </div>
   );
 }

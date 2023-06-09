@@ -24,6 +24,7 @@ export const TradeModal = (props) => {
   const [wavNfts, setWavNfts] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [txHash, setTxHash] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -31,7 +32,10 @@ export const TradeModal = (props) => {
   useEffect(() => {
     const initializeContract = async () => {
       try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        //TODO use infura hardcoded url mumbai rpc
+        const provider = new ethers.providers.JsonRpcProvider(
+          "https://polygon-mumbai.g.alchemy.com/v2/cgkNW5QlsKZ8D_64-ggyUUj2aYGJqejc"
+        );
         // Create a new instance of the contract using the ABI and address
         const nftContract = new ethers.Contract(
           WAV_NFT_ADDRESS,
@@ -59,33 +63,24 @@ export const TradeModal = (props) => {
     initializeContract();
   }, []);
 
-  console.log(
-    wavNfts,
-    "wav nfts from alchemy",
-    nftContract,
-    "nft contract, proxy:",
-    gameContract
-  );
-
-  const createNewWallet = async () => {
-    setLoading(true);
-
-    setLoading(false);
-    //TODO: create user in db here
-    setContent("pickAvatar");
-    setHeaderText("Pick An Avatar");
-  };
-
   //TODO you need collect() you need to call gameIds array that Oluchi hardcoded
   //
 
   const whichContentToRender = () => {
     if (content === "tradeStart") {
-      return <TradeStart setContent={setContent} />;
+      return (
+        <TradeStart
+          setContent={setContent}
+          gameContract={gameContract}
+          nftContract={nftContract}
+          setTxHash={setTxHash}
+        />
+      );
       //TODO
     } else if (content === "processingTrade") {
       return (
         <ProcessingTrade
+          txHash={txHash}
           setHeaderText={setHeaderText}
           setContent={setContent}
         />
