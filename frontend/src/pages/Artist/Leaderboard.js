@@ -38,36 +38,36 @@ const Leaderboard = ({ setShowSendModal }) => {
 
   const renderNFTsToggled = () => {
     return (
-      <div class="">
-        <table class="text-sm text-left text-white-500 dark:text-white-400">
+      <div className="">
+        <table className="text-sm text-left text-white-500 dark:text-white-400">
           <tbody>
-            <tr class="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
+            <tr className="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
+                className="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
               >
                 Level
               </th>
-              <td class="px-6 py-4">1</td>
-              <td class="px-6 py-4">2</td>
-              <td class="px-6 py-4">3</td>
-              <td class="px-6 py-4">4</td>
-              <td class="px-6 py-4">5</td>
-              <td class="px-6 py-4">6</td>
+              <td className="px-6 py-4">1</td>
+              <td className="px-6 py-4">2</td>
+              <td className="px-6 py-4">3</td>
+              <td className="px-6 py-4">4</td>
+              <td className="px-6 py-4">5</td>
+              <td className="px-6 py-4">6</td>
             </tr>
-            <tr class="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
+            <tr className="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
+                className="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
               >
                 NFTs
               </th>
-              <td class="px-6 py-4">20</td>
-              <td class="px-6 py-4">6</td>
-              <td class="px-6 py-4">--</td>
-              <td class="px-6 py-4">--</td>
-              <td class="px-6 py-4">--</td>
-              <td class="px-6 py-4">--</td>
+              <td className="px-6 py-4">20</td>
+              <td className="px-6 py-4">6</td>
+              <td className="px-6 py-4">--</td>
+              <td className="px-6 py-4">--</td>
+              <td className="px-6 py-4">--</td>
+              <td className="px-6 py-4">--</td>
             </tr>
           </tbody>
         </table>
@@ -77,36 +77,36 @@ const Leaderboard = ({ setShowSendModal }) => {
 
   const renderLeaderboardToggled = () => {
     return (
-      <div class="">
-        <table class="text-sm text-left text-white-500 dark:text-white-400">
+      <div className="">
+        <table className="text-sm text-left text-white-500 dark:text-white-400">
           <tbody>
-            <tr class="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
+            <tr className="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
+                className="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
               >
                 Level
               </th>
-              <td class="px-6 py-4">1</td>
-              <td class="px-6 py-4">2</td>
-              <td class="px-6 py-4">3</td>
-              <td class="px-6 py-4">4</td>
-              <td class="px-6 py-4">5</td>
-              <td class="px-6 py-4">6</td>
+              <td className="px-6 py-4">1</td>
+              <td className="px-6 py-4">2</td>
+              <td className="px-6 py-4">3</td>
+              <td className="px-6 py-4">4</td>
+              <td className="px-6 py-4">5</td>
+              <td className="px-6 py-4">6</td>
             </tr>
-            <tr class="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
+            <tr className="bg-transparent  dark:bg-gray-800 dark:border-gray-700">
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
+                className="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
               >
                 Players
               </th>
-              <td class="px-6 py-4">54</td>
-              <td class="px-6 py-4">66</td>
-              <td class="px-6 py-4">9</td>
-              <td class="px-6 py-4">14</td>
-              <td class="px-6 py-4">110</td>
-              <td class="px-6 py-4">4</td>
+              <td className="px-6 py-4">54</td>
+              <td className="px-6 py-4">66</td>
+              <td className="px-6 py-4">9</td>
+              <td className="px-6 py-4">14</td>
+              <td className="px-6 py-4">110</td>
+              <td className="px-6 py-4">4</td>
             </tr>
           </tbody>
         </table>

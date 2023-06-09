@@ -2,5 +2,5 @@
 .game-cards {
    position: relative;
    display: flex;
-   min-height: 32.5rem !important;;
+   min-height: 32.5rem !important;
 }
