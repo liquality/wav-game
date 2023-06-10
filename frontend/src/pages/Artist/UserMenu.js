@@ -2,9 +2,13 @@ import React from "react";
 import { fetchSession, logOut, shortenAddress } from "../../utils";
 import UserService from "../../services/UserService";
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
+import { useNavigate } from "react-router-dom";
+import StaticDataService from "../../services/StaticDataService";
 
 const UserMenu = ({ isOpen, onClose }) => {
   const [user, setUser] = React.useState({});
+  const [games, setGames] = React.useState([]);
+  const navigate = useNavigate();
 
   const fetchUser = async () => {
     try {
@@ -19,16 +23,56 @@ const UserMenu = ({ isOpen, onClose }) => {
     }
   };
 
+  const fetchGamesByUserId = async () => {
+    try {
+      const user = await UserService.getGameByUserId(
+        fetchSession().id, //userid
+        fetchSession().token
+      );
+
+      return user;
+    } catch (err) {
+      console.log(err, "Error fetching user");
+    }
+  };
+
   React.useEffect(() => {
     const fetchData = async () => {
       const user = await fetchUser();
       setUser(user);
+      const games = await fetchGamesByUserId();
+      setGames(games);
     };
     fetchData();
     return () => {
       //any cleanup
     };
   }, []);
+
+  console.log(games, "GAAAMES");
+
+  const renderNumberOfActiveGames = () => {
+    let rows = [];
+    if (games) {
+      rows = games.map((game, index) => {
+        return (
+          <div className="pr-5 mt-3">
+            <button
+              className="pl-3 pt-4 userMenuText"
+              onClick={() => navigate(`/artist/${game.artist_name}`)}
+            >
+              Game {game.game_symbol_id / 1000}
+            </button>
+          </div>
+        );
+      });
+    } else {
+      return <p>No NFTs available</p>;
+    }
+
+    return rows;
+  };
+
   return (
     <>
       {isOpen && (
@@ -42,9 +86,7 @@ const UserMenu = ({ isOpen, onClose }) => {
           </p>
           <div style={{ width: "100%" }} className="line"></div>
 
-          <p className="pl-3 pt-4 userMenuText">Game 1</p>
-          <p className="pl-3 pt-4 userMenuText">Game 2</p>
-          <p className="pl-3 pt-4 pb-3 userMenuText">Game 3</p>
+          {renderNumberOfActiveGames()}
           <div style={{ width: "100%" }} className="line"></div>
           <p className="pl-3 pt-4 userMenuText">Choose New Artist</p>
           <p

@@ -10,7 +10,7 @@ const UserService = {
   },
 
   getGameByUserId: async function (userId, jwt) {
-    return NetworkService.getResourceWithAuth("/v1/game/" + userId, jwt);
+    return NetworkService.getResourceWithAuth("/v1/games/" + userId, jwt);
   },
 
   createGame: async function (gameObject, jwt) {
