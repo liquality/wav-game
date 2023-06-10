@@ -4,11 +4,12 @@ import { PickArtist } from "../Onboarding/PickArtist";
 import { CustomModal } from "../Modal";
 
 import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
+import { GameIncentives } from "./GameIncentives";
 
 export const ChooseNewArtistModal = (props) => {
   const { show, setShow } = props;
   const [content, setContent] = useState("chooseArtistStart");
-  const [headerText, setHeaderText] = useState("Send");
+  const [headerText, setHeaderText] = useState("Choose an artist");
   const [selectedNft, setSelectedNft] = useState(null);
 
   const [selectedArtist, setSelectedArtist] = useState(null);
@@ -23,7 +24,7 @@ export const ChooseNewArtistModal = (props) => {
     init();
   }, [content]);
 
-  console.log("are we haere?");
+  console.log("are we haere?", content);
 
   const whichContentToRender = () => {
     if (content === "chooseArtistStart") {
@@ -32,25 +33,23 @@ export const ChooseNewArtistModal = (props) => {
           selectedId={selectedArtist}
           setSelectedId={setSelectedArtist}
           setContent={setContent}
+          setHeaderText={setHeaderText}
         />
       );
       //TODO
     } else if (content === "gameIncentives") {
       return (
-        <CreditcardPayment
+        <GameIncentives
+          selectedArtist={selectedArtist}
           setContent={setContent}
-          setTxHash={txHash}
-          handleClose={handleClose}
-          selectedNft={selectedNft}
         />
       );
     } else if (content === "creditCardPayment") {
       return (
         <CreditcardPayment
+          selectedId={selectedArtist}
+          setHeaderText={setHeaderText}
           setContent={setContent}
-          setTxHash={txHash}
-          handleClose={handleClose}
-          selectedNft={selectedNft}
         />
       );
     } else return null;

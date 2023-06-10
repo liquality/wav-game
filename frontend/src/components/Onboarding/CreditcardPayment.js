@@ -55,7 +55,7 @@ export const CreditcardPayment = (props) => {
             src="https://avatars.githubusercontent.com/u/34882183?v=4"
             alt="Artist Avatar"
           />{" "}
-          <p className="mt-2">Artist Name</p>
+          <p className="mt-2">{selectedId.name}</p>
         </div>
         <p className="lineNoCenter mt-5 mb-4" style={{ width: "50%" }}></p>
 
@@ -81,7 +81,9 @@ export const CreditcardPayment = (props) => {
             onChange={handleAmountChange}
             required
           />
-          <p className="mr-3 mt-2 ml-5">Total ${0.5 * nftAmount} </p>
+          <p className="mr-3 mt-2 ml-5">
+            <b>TOTAL:</b> ${0.5 * nftAmount}{" "}
+          </p>
         </div>
 
         <CrossmintPayButton

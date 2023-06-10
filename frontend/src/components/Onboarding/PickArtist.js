@@ -6,7 +6,7 @@ import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
 import CustomButton from "../Button";
 export const PickArtist = (props) => {
-  const { setContent, setHeaderText, setSelectedId, selectedId } = props;
+  const { type, setContent, setHeaderText, setSelectedId, selectedId } = props;
 
   async function createGame() {
     try {
@@ -41,9 +41,16 @@ export const PickArtist = (props) => {
   }
 
   const handleSetNewPage = async () => {
-    await createGame();
-    setContent("creditcardPayment");
-    setHeaderText("Get NFTs to Play");
+    if (type !== "onboarding") {
+      console.log("in choose new artist");
+      setContent("gameIncentives");
+      setHeaderText("Game Incentives");
+    } else {
+      console.log("creating gamme...");
+      await createGame();
+      setContent("creditcardPayment");
+      setHeaderText("Get NFTs to Play");
+    }
   };
 
   return (

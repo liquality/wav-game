@@ -121,6 +121,7 @@ export const LoginModal = (props) => {
           setSelectedId={setSelectedId}
           setHeaderText={setHeaderText}
           setContent={setContent}
+          type={"onboarding"}
         />
       );
     } else if (content === "creditcardPayment") {
