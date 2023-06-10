@@ -11,48 +11,19 @@ export const CreditcardPayment = (props) => {
   const { setContent, selectedId } = props;
   const [nftAmount, setNftAmount] = useState(1);
   const [session, setSession] = useState(false);
-  const [selectedArtist, setSelectedArtist] = useState(null);
   const navigate = useNavigate();
 
   const handleDoneWithCheckout = () => {
-    navigate(`/artist/${selectedArtist.id}`);
-    console.log("Mint btn click", `/artist/${selectedArtist.id}`);
+    navigate(`/artist/${selectedId.id}`);
+    console.log("Mint btn click", `/artist/${selectedId.id}`);
   };
 
   const handleAmountChange = (event) => {
     const { name, value } = event.target;
     //prevent negative nrs
     var inputValue = Number(value) < 0 ? 0 : value;
-
     setNftAmount(inputValue);
   };
-
-  const fetchArtistBySelectedId = async () => {
-    try {
-      const artist = await StaticDataService.findArtistByNumberId(selectedId);
-      return artist;
-    } catch (err) {
-      console.log(err, "Error fetching the artist");
-    }
-  };
-
-  useEffect(() => {
-    const init = async () => {
-      if (!selectedArtist) {
-        let fetchedArtist = await fetchArtistBySelectedId();
-        setSelectedArtist(fetchedArtist);
-      }
-
-      if (!session)
-        try {
-          console.log("Session here");
-        } catch (err) {
-          console.log(err, "error inited");
-        }
-    };
-
-    init();
-  }, [session]);
 
   let totalNFTsPrice = (0.0005 * nftAmount).toString();
   return (
@@ -112,7 +83,6 @@ export const CreditcardPayment = (props) => {
           />
           <p className="mr-3 mt-2 ml-5">Total ${0.5 * nftAmount} </p>
         </div>
-        {console.log(selectedId, "Selected ID", selectedArtist, "fetch art")}
 
         <CrossmintPayButton
           onClick={handleDoneWithCheckout}
@@ -125,7 +95,7 @@ export const CreditcardPayment = (props) => {
             _amount: nftAmount,
             totalPrice: totalNFTsPrice,
             _recipient: getPublicKey(),
-            _gameID: selectedId,
+            _gameID: selectedId.number_id,
 
             // your custom minting arguments...
           }}

@@ -33,7 +33,7 @@ export const ArtistGrid = (props) => {
           <div className="flexDirectionRow justify-center mb-3">
             <button
               key={index}
-              onClick={() => handleClick(item.number_id)}
+              onClick={() => handleClick(item)}
               className="defaultArtistBtn "
             >
               <img

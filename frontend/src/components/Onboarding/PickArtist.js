@@ -10,13 +10,11 @@ export const PickArtist = (props) => {
 
   async function createGame() {
     try {
-      const game_symbol_id = selectedId * 1000;
-
       const gameObject = await UserService.createGame(
         {
           user_id: fetchSession().id,
-          artist_name: `Artist ${selectedId}`,
-          game_symbol_id,
+          artist_name: selectedId.id,
+          game_symbol_id: selectedId.number_id,
         },
         fetchSession()?.token
       );
@@ -35,7 +33,7 @@ export const PickArtist = (props) => {
             style={{ textDecoration: "none", fontFamily: "Sora" }}
             className="modalTerms mt-3 "
           >
-            ARTIST NAME SELECTED ID: {selectedId}.
+            ARTIST NAME SELECTED ID: {selectedId.number_id}.
           </p>
         )}
       </div>

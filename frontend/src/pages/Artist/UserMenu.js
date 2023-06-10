@@ -5,9 +5,10 @@ import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { useNavigate } from "react-router-dom";
 import StaticDataService from "../../services/StaticDataService";
 
-const UserMenu = ({ isOpen, onClose }) => {
+const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
   const [user, setUser] = React.useState({});
   const [games, setGames] = React.useState([]);
+
   const navigate = useNavigate();
 
   const fetchUser = async () => {
@@ -49,7 +50,10 @@ const UserMenu = ({ isOpen, onClose }) => {
     };
   }, []);
 
-  console.log(games, "GAAAMES");
+  const handleChooseNewArtist = () => {
+    setShowPickArtistModal(true);
+    onClose();
+  };
 
   const renderNumberOfActiveGames = () => {
     let rows = [];
@@ -88,7 +92,13 @@ const UserMenu = ({ isOpen, onClose }) => {
 
           {renderNumberOfActiveGames()}
           <div style={{ width: "100%" }} className="line"></div>
-          <p className="pl-3 pt-4 userMenuText">Choose New Artist</p>
+          <button
+            className="pl-3 pt-4 userMenuText"
+            onClick={() => handleChooseNewArtist()}
+          >
+            Choose New Artist
+          </button>
+
           <p
             onClick={logOut}
             className="cursor-pointer pl-3 pt-4 pb-3 userMenuText lightPink"
