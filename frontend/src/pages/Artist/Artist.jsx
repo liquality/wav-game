@@ -25,6 +25,7 @@ export const Artist = (props) => {
   const [_isPending, startTransition] = useTransition();
   const [showTrade, setShowTrade] = useState(false);
   const [showSend, setShowSend] = useState(false);
+  const [levelClicked, setLevelClicked] = useState(null);
 
   const fetchArtist = async (id) => {
     try {
@@ -34,6 +35,13 @@ export const Artist = (props) => {
       console.log(err, "Error fetching the artist");
     }
   };
+
+  const setShowTradeAndGetLevel = (level) => {
+    setShowTrade(true);
+    setLevelClicked(level);
+  };
+
+  console.log(levelClicked, "lvl clicked?");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +66,8 @@ export const Artist = (props) => {
     });
   }
 
+  console.log(showTrade, "showtrade?");
+
   return (
     <div className="container flex">
       <Sidebar
@@ -76,7 +86,11 @@ export const Artist = (props) => {
           <GameTabs levels={levels} currentLevel={1} />
         </div>
         <div className="w-full flex flex-col justify-center">
-          <GameCards levels={levels} currentLevel={1} />
+          <GameCards
+            setShowTrade={setShowTradeAndGetLevel}
+            levels={levels}
+            currentLevel={1}
+          />
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12">
           <div className="flex flex-col justify-center items-center  mb-24 relative">

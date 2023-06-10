@@ -1,4 +1,5 @@
 import { setup } from "@liquality/wallet-sdk";
+import StaticDataService from "./services/StaticDataService";
 
 export function setupSDK() {
     setup({
@@ -65,5 +66,16 @@ export const fetchSession = () => {
         return session
     }
     else return null
+
+}
+
+export const getGameIdBasedOnHref = async () => {
+
+    // Get the last part of the window location href
+    const hrefParts = window.location.href.split('/');
+    const lastPart = hrefParts[hrefParts.length - 1];
+    //based on window location, return artist
+    const artist = await StaticDataService.findArtistById(lastPart)
+    return artist
 
 }

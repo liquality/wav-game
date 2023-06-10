@@ -1,16 +1,16 @@
-import './level-card.css';
+import "./level-card.css";
 import classNames from "classnames";
-import { Button } from '../Button/Button';
+import { Button } from "../Button/Button";
 import { ReactComponent as LockIcon } from "../../images/lock_icon.svg";
-import { ButtonMode } from '../../types/ButtonMode';
-import { LevelStatus } from '../../types/LevelStatus';
-
+import { ButtonMode } from "../../types/ButtonMode";
+import { LevelStatus } from "../../types/LevelStatus";
+import CustomButton from "../Button";
 
 export interface LevelActionProps {
   label: string;
   /**
-    * Click handler for the card action
-    */
+   * Click handler for the card action
+   */
   onActionClick?: (level: number) => void;
   mode: ButtonMode;
   useIcon?: boolean;
@@ -23,26 +23,24 @@ interface Level {
 */
   id: number;
   /**
-    * The level title
-    */
+   * The level title
+   */
   title: string;
 
   /**
-  * The level Edition or Quantity
-  */
+   * The level Edition or Quantity
+   */
   edition?: string;
 
   /**
-    * The level instructions
-    */
+   * The level instructions
+   */
   instructions: string;
-
 }
 
 interface CardProps {
-
   /**
-   * The level of the card 
+   * The level of the card
    */
   level: Level;
 
@@ -51,45 +49,50 @@ interface CardProps {
    */
   status: LevelStatus;
 
-
   /**
-  * The action text
-  */
+   * The action text
+   */
   actions: LevelActionProps[];
 
   /**
-  * Flag to know if it's the current card 
-  */
+   * Flag to know if it's the current card
+   */
   current?: number;
 
   /**
-    * Optional click handler for the card action
-    */
+   * Optional click handler for the card action
+   */
   onActionClick?: (level: number) => void;
 
   /**
-  * Set the current level temporary
-  */
+   * Set the current level temporary
+   */
   setLevel?: (level?: number) => void;
+  setShowTrade: (level: number) => void;
 }
 
 /**
  * Level Card Component
  */
 export const LevelCard = ({
-  status = 'locked',
+  status = "locked",
   current = 3, // default active card level
   actions = [],
+  setShowTrade,
   ...props
 }: CardProps) => {
-  const { setLevel, onActionClick, level: { edition, title, instructions, id } } = props;
+  const {
+    setLevel,
+    onActionClick,
+    level: { edition, title, instructions, id },
+  } = props;
   const active = current === id;
   return (
     <div
-      onMouseOver={() => setLevel ? setLevel(id) : () => { }}
-      onMouseLeave={() => setLevel ? setLevel(null) : () => { }}
+      onMouseOver={() => (setLevel ? setLevel(id) : () => {})}
+      onMouseLeave={() => (setLevel ? setLevel(null) : () => {})}
       className={classNames({
-        'level-card flex flex-col justify-between': true,
+        "level-card flex flex-col justify-between": true,
         [`level-card--display--${current}--${id}`]: true,
         [`level-card--${status}`]: true,
         active,
@@ -101,22 +104,46 @@ export const LevelCard = ({
         <div className="level-card-edition">{edition}</div>
       </div>
       <div className="flex flex-col justify-between">
-        <div className={classNames({
-          "level-card-instructions-empty-actions": !actions || actions.length <= 0,
-          "level-card-instructions": true,
-          active,
-        })}>{instructions}</div>
-        <div className='flex justify-between'>
+        <div
+          className={classNames({
+            "level-card-instructions-empty-actions":
+              !actions || actions.length <= 0,
+            "level-card-instructions": true,
+            active,
+          })}
+        >
+          {instructions}
+        </div>
+        <div className="flex justify-between">
+          <CustomButton
+            white
+            type="small"
+            onClick={() => setShowTrade(id)}
+            disabled={false}
+            mt="10px"
+            mb=""
+            ml=""
+            mr=""
+          >
+            TRADE NOW
+          </CustomButton>
           {actions.map((action) => {
-            return (<Button
-              disabled={!active}
-              key={action.label}
-              mode={action.mode}
-              link={action.link}
-              onClick={() => onActionClick ? onActionClick(id) : () => { }}
-            >
-              <>{action.useIcon ? <LockIcon style={{ marginRight: '0.5rem' }} /> : null}{action.label}</>
-            </Button>)
+            return (
+              <Button
+                disabled={!active}
+                key={action.label}
+                mode={action.mode}
+                link={action.link}
+                onClick={() => (onActionClick ? onActionClick(id) : () => {})}
+              >
+                <>
+                  {action.useIcon ? (
+                    <LockIcon style={{ marginRight: "0.5rem" }} />
+                  ) : null}
+                  {action.label}
+                </>
+              </Button>
+            );
           })}
         </div>
       </div>
