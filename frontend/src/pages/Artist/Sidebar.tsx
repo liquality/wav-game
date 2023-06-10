@@ -25,6 +25,8 @@ export const Sidebar = ({ open, setOpen, artist, image }: Props) => {
   useOnClickOutside(ref, (e) => {
     setOpen(false);
   });
+  console.log(image, "imgage sidebar");
+
   return (
     <div
       className={classNames({
@@ -39,9 +41,7 @@ export const Sidebar = ({ open, setOpen, artist, image }: Props) => {
       <div className="flex flex-col place-items-end side-bar">
         <div className="flex flex-col px-5 gap-4 mt-5">
           <div className="artist-name">{artist.name}</div>
-          <div className="artist-desc">
-            {artist.description}
-          </div>
+          <div className="artist-desc">{artist.description}</div>
           <a className="artist-link flex items-center" href="/#">
             CHANGE ARTIST
             <ArrowRight className="ml-3" />
@@ -62,15 +62,11 @@ export const Sidebar = ({ open, setOpen, artist, image }: Props) => {
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>BIO</h2>
-            <p>
-            {artist.bio} ... Read More
-            </p>
+            <p>{artist.bio} ... Read More</p>
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>FUN FACT</h2>
-            <p>
-            {artist.facts}{" "}
-            </p>
+            <p>{artist.facts} </p>
           </div>
         </div>
       </div>

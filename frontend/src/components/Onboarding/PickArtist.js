@@ -6,16 +6,17 @@ import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
 import CustomButton from "../Button";
 export const PickArtist = (props) => {
-  const { setContent, setHeaderText } = props;
-
-  const [selectedId, setSelectedId] = useState(null);
+  const { setContent, setHeaderText, setSelectedId, selectedId } = props;
 
   async function createGame() {
     try {
+      const game_symbol_id = selectedId * 1000;
+
       const gameObject = await UserService.createGame(
         {
           user_id: fetchSession().id,
           artist_name: `Artist ${selectedId}`,
+          game_symbol_id,
         },
         fetchSession()?.token
       );
@@ -24,6 +25,7 @@ export const PickArtist = (props) => {
     }
   }
 
+  console.log(selectedId, "selected id");
   function renderArtistGrid() {
     return (
       <div className="mt-5">

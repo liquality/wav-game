@@ -2,6 +2,7 @@ import { NftService } from "@liquality/wallet-sdk";
 import { useState, useEffect } from "react";
 import CustomButton from "../Button";
 import { NftImages } from "./NftImages";
+import { SpinningLoader } from "../SpinningLoader";
 
 export const SendStart = ({
   selectedNft,
@@ -10,20 +11,23 @@ export const SendStart = ({
   handleClose,
 }) => {
   const [nfts, setNfts] = useState([]);
+  const [loadingNfts, setLoadingNfts] = useState(false);
 
   const fetchNfts = async (address, chainId) => {
     //TODO: fetch your own public address from localstorage instead
     const nfts = await NftService.getNfts(
-      "0xe7910F0b83ad155737043c771E2594f74B0BB739",
-      137
+      "0xb81B9B88e764cb6b4E02c5D0F6D6D9051A61E020",
+      80001
     );
     return nfts;
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoadingNfts(true);
       const nftData = await fetchNfts();
       setNfts(nftData);
+      setLoadingNfts(false);
     };
 
     fetchData();
@@ -35,17 +39,25 @@ export const SendStart = ({
         <div>
           {" "}
           <div className="flexDirectionCol mt-1">
-            <p>
-              TK WavGame Collection - {nfts.length === 1 ? <br></br> : null}
-              Season 1 | 2
-            </p>
+            {loadingNfts ? (
+              <div style={{ marginTop: 150, marginBottom: 50 }}>
+                <SpinningLoader />
+              </div>
+            ) : (
+              <>
+                <p>
+                  TK WavGame Collection - {nfts.length === 1 ? <br></br> : null}
+                  Season 1 | 2
+                </p>
 
-            {/* This should be an img read from metadata, if multiple images, show a grid/row */}
-            <NftImages
-              nfts={nfts.slice(0, 3)}
-              selectedNft={selectedNft}
-              setSelectedNft={setSelectedNft}
-            />
+                {/* This should be an img read from metadata, if multiple images, show a grid/row */}
+                <NftImages
+                  nfts={nfts.slice(0, 3)}
+                  selectedNft={selectedNft}
+                  setSelectedNft={setSelectedNft}
+                />
+              </>
+            )}
           </div>
           <div className="flexDirectionCol">
             <br></br>
