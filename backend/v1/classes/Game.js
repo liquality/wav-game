@@ -147,6 +147,35 @@ class Game {
     });
     return promise;
   };
+
+  readGameByUserId = async (userId) => {
+    const game = this;
+    const promise = new Promise((resolve, reject) => {
+      if (userId) {
+        MySQL.pool.getConnection((err, db) => {
+          console.log("inside db connect");
+          db.execute(
+            "select * from `game` where user_id = ?",
+            [userId],
+            (err, results, fields) => {
+              if (err) {
+                reject(new ApiError(500, err));
+              } else if (results.length < 1) {
+                reject(new ApiError(404, "Game not found"));
+              } else {
+                game.set(results[0]);
+                resolve(results);
+              }
+              db.release();
+            }
+          );
+        });
+      } else {
+        reject(new ApiError(500, "Missing user id"));
+      }
+    });
+    return promise;
+  };
 }
 
 module.exports = Game;

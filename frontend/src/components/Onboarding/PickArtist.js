@@ -6,17 +6,15 @@ import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
 import CustomButton from "../Button";
 export const PickArtist = (props) => {
-  const { setContent, setHeaderText, setSelectedId, selectedId } = props;
+  const { type, setContent, setHeaderText, setSelectedId, selectedId } = props;
 
   async function createGame() {
     try {
-      const game_symbol_id = selectedId * 1000;
-
       const gameObject = await UserService.createGame(
         {
           user_id: fetchSession().id,
-          artist_name: `Artist ${selectedId}`,
-          game_symbol_id,
+          artist_name: selectedId.id,
+          game_symbol_id: selectedId.number_id,
         },
         fetchSession()?.token
       );
@@ -35,7 +33,7 @@ export const PickArtist = (props) => {
             style={{ textDecoration: "none", fontFamily: "Sora" }}
             className="modalTerms mt-3 "
           >
-            ARTIST NAME SELECTED ID: {selectedId}.
+            ARTIST NAME SELECTED ID: {selectedId.number_id}.
           </p>
         )}
       </div>
@@ -43,9 +41,16 @@ export const PickArtist = (props) => {
   }
 
   const handleSetNewPage = async () => {
-    await createGame();
-    setContent("creditcardPayment");
-    setHeaderText("Get NFTs to Play");
+    if (type !== "onboarding") {
+      await createGame();
+      setContent("gameIncentives");
+      setHeaderText("Game Incentives");
+    } else {
+      console.log("creating gamme...");
+      await createGame();
+      setContent("creditcardPayment");
+      setHeaderText("Get NFTs to Play");
+    }
   };
 
   return (

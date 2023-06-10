@@ -58,7 +58,7 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, []);
+  }, [routeParams]);
 
   function onSelectLevel(level) {
     startTransition(() => {
@@ -79,7 +79,9 @@ export const Artist = (props) => {
       <div className="flex flex-col items-center md:ml-20">
         <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
           <div className="game-header-level">LEVEL: 3 </div>
-          <div className="game-header-title">TK’S GAME_</div>
+          <div className="game-header-title">
+            {artist?.name?.toUpperCase()}'s GAME_
+          </div>
           <div className="game-header-counter">COLLECTABLES: 42</div>
         </div>
         <div className="flex flex-row md:flex-col justify-center my-5">

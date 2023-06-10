@@ -55,9 +55,17 @@ endpoints.createGame = {
 endpoints.readGame = {
   url: "/v1/game/:id",
   method: "get",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: gameHandler.read,
-  description: "create game",
+  description: "read game",
+};
+
+endpoints.readGameByUserId = {
+  url: "/v1/games/:userid",
+  method: "get",
+  middleware: [middleware.authenticateJWT],
+  handler: gameHandler.readGamesByUserId,
+  description: "read game by user id ",
 };
 
 endpoints.updateGame = {
