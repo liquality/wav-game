@@ -62,7 +62,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
         return (
           <div className="pr-5 mt-3">
             <button
-              className="pl-3 pt-4 userMenuText"
+              className="pl-3 pb-3 userMenuText"
               onClick={() => navigate(`/artist/${game.artist_name}`)}
             >
               Game {game.game_symbol_id / 1000}

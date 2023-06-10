@@ -58,7 +58,7 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, []);
+  }, [routeParams]);
 
   function onSelectLevel(level) {
     startTransition(() => {

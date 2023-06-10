@@ -42,7 +42,7 @@ export const PickArtist = (props) => {
 
   const handleSetNewPage = async () => {
     if (type !== "onboarding") {
-      console.log("in choose new artist");
+      await createGame();
       setContent("gameIncentives");
       setHeaderText("Game Incentives");
     } else {
