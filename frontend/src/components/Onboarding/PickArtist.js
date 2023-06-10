@@ -27,7 +27,7 @@ export const PickArtist = (props) => {
   function renderArtistGrid() {
     return (
       <div className="mt-5">
-        <ArtistGrid handleClick={setSelectedId} />
+        <ArtistGrid selectedId={selectedId} handleClick={setSelectedId} />
         {selectedId && (
           <p
             style={{ textDecoration: "none", fontFamily: "Sora" }}
