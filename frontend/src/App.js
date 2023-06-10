@@ -7,12 +7,13 @@ import { Route, Routes } from "react-router-dom";
 import { Balances } from "./pages/Balances";
 import { setupSDK } from "./utils";
 import Footer from "./components/Footer";
+import { Artist } from "./pages/Artist/Artist";
 
 function App() {
   setupSDK();
 
   return (
-    <body className="stretched device-xl no-transition">
+    <div className="stretched device-xl no-transition">
       <DataContext.Provider
         value={{
           loginResponse: "",
@@ -25,10 +26,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/balances" element={<Balances />} />
+          <Route path="/artist/:artistId" element={<Artist />} />
         </Routes>
         <Footer />
       </DataContext.Provider>{" "}
-    </body>
+    </div>
   );
 }
 

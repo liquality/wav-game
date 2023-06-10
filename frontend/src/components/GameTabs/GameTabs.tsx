@@ -39,6 +39,7 @@ export const GameTabs = ({
         <div className="grid gap-x-2 grid-cols-6">
             {levels.map(l => {
                 return (<LevelTab
+                    key={l.id}
                     status={l.status as LevelStatus}
                     level={l.id} />);
             }

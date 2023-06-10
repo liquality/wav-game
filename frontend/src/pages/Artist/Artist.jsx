@@ -1,4 +1,4 @@
-import { useState, useTransition } from "react";
+import { useState, useEffect, useTransition } from "react";
 import "../../App.css";
 import "./artist.css";
 import { Sidebar } from "./Sidebar";
@@ -12,14 +12,45 @@ import Leaderboard from "./Leaderboard";
 import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import levels from "../../data/levels.json";
 import { SendModal } from "../../components/Send/SendModal";
+import StaticDataService from "../../services/StaticDataService";
+import { useParams } from "react-router-dom";
 import { getPublicKey } from "../../utils";
 
 export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
+  let routeParams = useParams();
+  const [artist, setArtist] = useState({});
+  const [image, setImage] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [_isPending, startTransition] = useTransition();
   const [showTrade, setShowTrade] = useState(false);
   const [showSend, setShowSend] = useState(false);
+
+  const fetchArtist = async (id) => {
+    try {
+      const artist = await StaticDataService.findArtistById(id);
+      return artist;
+    } catch (err) {
+      console.log(err, "Error fetching the artist");
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const artistId = routeParams.artistId || "tk"; // TODO: remove the default
+      const _artist = await fetchArtist(artistId);
+      const _image = (await import(`../../images/artists/${_artist.image}`))
+        .default;
+      setArtist(_artist);
+      setImage(_image);
+    };
+
+    fetchData();
+
+    return () => {
+      //any cleanup
+    };
+  }, []);
 
   function onSelectLevel(level) {
     startTransition(() => {
@@ -32,7 +63,8 @@ export const Artist = (props) => {
       <Sidebar
         open={sidebarOpen}
         setOpen={setSidebarOpen}
-        artist={props.artist}
+        artist={artist}
+        image={image}
       />
       <div className="flex flex-col items-center md:ml-20">
         <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">

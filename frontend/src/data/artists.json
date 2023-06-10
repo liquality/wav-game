@@ -1,146 +1,122 @@
 [
-    {
-        "id": "tk",
-        "name": "TK",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
+  {
+    "number_id": 1000,
+    "id": "tk",
+    "name": "TK",
+    "description": "Artist, Producer, Singer, Songwriter",
+    "bio": "Pop-fusion artist TK's unique life journey is reflected in his music as he masterfully blends R&B, alternative & rock sounds, influenced by the African rhythmic undertones of his heritage.Providence-born, Nigerian-bred, London-raised, DMV-hardened, and LA-based, TK takes listeners on an unparalleled journey of genre-bending music through vivid soundscapes & brilliant storytelling.",
+    "readMore": "An innovator and disruptor in the web3 space, TK has been featured on top NFT platforms such as Sound.xyz, OpenSea, Zora and Catalog, selling out multiple NFT collections related to his music. Most recently, he ranked as the third all-time trending artist based on primary sales on Sound.xyz for his audio-visual NFT collection Eternal Garden, raising $50,000 of revenue in one week and receiving recognition from Billboard for his accomplishments. With years of experience as a singer-songwriter, multi-instrumentalist and producer, TK’s work with the world’s biggest musicians like Rihanna, The Weeknd, Usher, and Jaden & Willow Smith has shaped him into one of the most prolific artists of this generation.",
+    "favoriteGames": "3-way tie between The Legend of Zelda, Kingdom Hearts, and Super Smash Bros.",
+    "quote": "The wavROOM was a special experience that was great for honoring my collectors with a private showcase for their early support. The performance was recorded and minted, which made it a memory to last forever.",
+    "socials": {
+      "twitter": "TKtheLegend"
     },
-    {
-        "id": "ab",
-        "name": "AB",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
+    "image": "tk.jpg",
+    "image_url": "https://imgur.com/C8dodbz"
+  },
+  {
+    "number_id": 2000,
+    "id": "tarot",
+    "name": "TAROT",
+    "description": "Singer, Songwriter",
+    "bio": "TAROT is a Los Angeles-based independent singer-songwriter who has been creating a world for her music & community as the CEO of her music. Her captivating sound & soulful vocals create an enchanting atmosphere that transports listeners on a journey of self-discovery & introspection. TAROT has performed across the world & spoken on panels about the future of the music industry.",
+    "readMore": "TAROT's music seamlessly blends elements of singer-songwriting with ethereal melodies, crafting a sonic experience that resonates deeply with fans. She has independently released multiple singles since 2020. TAROT’s ambition is to be a trailblazer for up and coming artists in today’s state of the music industry, through building direct relationships with fans and utilizing technology and storytelling in an innovative way.",
+    "favoriteGames": "Candy Crush.",
+    "quote": "",
+    "socials": {
+      "twitter": "tarotsings"
     },
-    {
-        "id": "cd",
-        "name": "CD",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
+    "image": "tarot.jpg",
+    "image_url": "https://imgur.com/7dnt7Zx"
+  },
+  {
+    "number_id": 3000,
+    "id": "black-dave",
+    "name": "Black Dave",
+    "description": "Artist, Producer, Engineer",
+    "bio": "Black Dave is a recording artist, producer, engineer, & artist focusing on both traditional &  non-traditional means of promoting his work. Establishing himself through the use of blockchain & NFT technology, he’s known to be a multidisciplinary creative, citing anime, rap, hardcore rock, streetwear & sneaker culture as influences.",
+    "readMore": "As a child, he spent many years unknowingly watching anime with his grandmother before formally discovering it through the cult anime, Berserk. A proud native of Charleston, SC, Black Dave played bass and produced in several bands ranging from punk to metalcore, moving to rap music in 2014 with his first mixtape, Owl Eyes Part 2. His music experiments with creating an intersection at rap, rock and lo-fi. In 2020, he recorded and released a 3-song EP each month. Since 2021, Black Dave has been placing a lot of focus on web3 and NFT technology, creating art, music and experiences using the technology, making the NFT 100 list in 2022 among many other successes.",
+    "favoriteGames": "Final Fantasy 7.",
+    "quote": "The wavROOM experience was sick because I was able to perform for a room of people where I recognized every person. Connecting with fans on an individual level becomes harder and harder as you grow, so to be able to recognize and connect with each person in the room is a special experience.",
+    "socials": {
+      "twitter": "BlackDave"
     },
-    {
-        "id": "cc",
-        "name": "CC",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
+    "image": "black-dave.jpg",
+    "image_url": "https://imgur.com/9ZMcxCo"
+  },
+  {
+    "number_id": 4000,
+    "id": "abjo",
+    "name": "AbJo",
+    "description": "",
+    "bio": "Aaron Nash, better known by his stage name AbJo, is a sonic powerhouse in the current electronic scene. The San Diego native developed his passion for music from a young age, becoming well-versed in a wide range of instruments. During his college years, he utilized his classical training to dive into the realm of music production.",
+    "readMore": "In 2010, AbJo connected with Andre Power and Joe Kay, co-founders of the Soulection empire. His 11-track Sankofa EP dropped via Soulection the following year alongside projects from Ta-Ku, Evil Needle, and Insightful, marking his first of many releases with the label. In addition to performances at CRSSD, SXSW, and Coachella with the Soulection family, AbJo had a slew of headlining shows in Japan, South Korea, and Europe in the books. AbJo has also shared the stage with Smino, GoldLink, Blu & Exile, Little Dragon, Lauryn Hill, and Talib Kweli. With production credits for Kweli and Phonte on his resume, AbJo continues to refine his energetic fusion of electronic and hip-hop imbued with Brazilian influences. Recently, AbJo has immersed himself into the music NFT space, as a genesis artist and one of the first producers active on now-cornerstone web3 platforms like decentralized music streaming service Audius, premier music NFT platform Sound.xyz, and boutique 1/1 music NFT platform Catalog, as well as performing at and getting involved with ZORATOPIA via leading NFT protocol ZORA.",
+    "favoriteGames": "Tekken the Series #5 & Ace Combat Series.",
+    "quote": "wavROOM is one of the most immersive IRL experiences about music NFTs I've ever been a part of and is easily my most memorable performance in the space!.",
+    "socials": {
+      "twitter": "_AbJo"
     },
-    {
-        "id": "dd",
-        "name": "DD",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
+    "image": "abjo.jpg",
+    "image_url": "https://imgur.com/MBwSKvV"
+  },
+  {
+    "number_id": 5000,
+    "id": "cam-murdoch",
+    "name": "Cam Murdoch",
+    "description": "",
+    "bio": "Cam Murdoch is a musician and visual artist responsible for cultivating the genre, aesthetic, and movement known as Future Surf. Subsequently, he is 1/3 of the hosts of Future Surf Radio and is currently developing a digital oasis called Surf Noir as a long-term worldbuilding effort around his art.",
+    "readMore": "",
+    "favoriteGames": "Final Fantasy.",
+    "quote": "wavROOM was my first web3 performance and an experience I'll remember forever.",
+    "socials": {
+      "twitter": "cammurdochmusic"
     },
-    {
-        "id": "as",
-        "name": "AS",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
+    "image": "cam-murdoch.jpg",
+    "image_url": "https://imgur.com/zK5rp2W"
+  },
+  {
+    "number_id": 6000,
+    "id": "karma-violetta",
+    "name": "KarmaVioletta",
+    "description": "",
+    "bio": "KarmaVioletta is a Miami-based music duo & couple, involved in the Web3, creator & wellness spaces. They are also founders of the metalabel and community known as wavWRLD. The duo was formed in 2019 by Karma S. & Violetta H., who fell in love & started creating in their home studio. They transcend genres with their eclectic style, but most often they're making electronic music, ranging from deep house to tech-house, from organic house to afro house.",
+    "readMore": "",
+    "favoriteGames": "What Do You Meme? & Beach Buggy Racing in our Tesla.",
+    "quote": "It was really magical to perform in the wavROOM—We felt truly seen by our collectors and those who have supported us since Day 1. It gave us the space to express ourselves authentically and share our story and music without holding back.",
+    "socials": {
+      "twitter": "KarmaVioletta"
     },
-    {
-        "id": "xx",
-        "name": "XX",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
+    "image": "karma-violetta.jpg",
+    "image_url": "https://imgur.com/HolICxf"
+  },
+  {
+    "number_id": 7000,
+    "id": "fred-riko",
+    "name": "Fred Riko",
+    "description": "",
+    "bio": "Musician and singer-songwriter Fred Riko blends together folk, country, jazz, and more for a modern interpretation of classic music. His songs show their influences of the past, while lending an eye to the cultural spirit of the present.",
+    "readMore": "",
+    "favoriteGames": "Tony Hawk Pro Skater 4 is the best game of all-time for me.",
+    "quote": "Having the space and the audience to explore as an artist was incredible—the wavROOM was truly a unique experience.",
+    "socials": {
+      "twitter": "fredrikomusic"
     },
-    {
-        "id": "zz",
-        "name": "ZZ",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
+    "image": "fred-riko.jpg",
+    "image_url": "https://imgur.com/2g3Jq24"
+  },
+  {
+    "number_id": 8000,
+    "id": "jadyn-violet",
+    "name": "Jadyn Violet",
+    "description": "",
+    "bio": "Jadyn Violet is a passionate community builder and artist. In 2021, he stumbled upon the web3 music scene & knew he had found his calling. He quickly mobilized, launching the Underground Violet Rave, a daily Twitter Space where he fosters connections & discussions about the future of music x tech.",
+    "readMore": "Born and raised in the small town of Franklin, New Jersey. He ditched the traditional path of business school to chase his dreams of becoming a musician & pioneer in the decentralized technology movement.In 2021, he stumbled upon the web3 music scene and knew he had found his calling. He quickly mobilized, launching the Underground Violet Rave, a daily Twitter Space where he fostered connections and discussions about the future of music and technology. Jadyn's passion and drive paid off in April of 2022 when he released his first NFT, the Violet Token, which sold out in mere hours. He took the show on the road, organizing the first in-real-life Underground Violet Rave in Brooklyn during NFT NYC. The event was a huge success, and Jadyn continued to host raves in Virginia, Cincinnati, Miami, and Denver overall attracting over 2000 attendees. Jadyn's goal is to continue growing his community through valuable content and conversation, as well as expanding his reach and influence through trading attention. Throughout the year of 2022, innovation and experimentation were on the top of the mind. Jadyn has sold out multiple music collectible collections, done the first ever Ai live performance video, built one of the first independent token gated artist websites, held 24 hour shows, and on-boarded over 300 people into the web3 space. He's on a mission to empower independent artists and seduce people into the world of blockchain technology, one rave at a time.",
+    "favoriteGames": "Call of Duty Black Ops 2.",
+    "quote": "The wavROOM experience was the definition of what a true artist and listener relationship looks like.",
+    "socials": {
+      "twitter": "jadynviolet"
     },
-    {
-        "id": "nn",
-        "name": "NN",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
-    },
-    {
-        "id": "ww",
-        "name": "WW",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
-    },
-    {
-        "id": "oo",
-        "name": "OO",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
-    },
-    {
-        "id": "pp",
-        "name": "PP",
-        "description": "Artist, Producer, Singer, Songwriter",
-        "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt malesuada ex sit amet fringilla. Aenean sagittis finibus justo, at tincidunt lacus",
-        "facts": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt.",
-        "socials": {
-            "twitter": "@test",
-            "discord": "#12234",
-            "telegram": "@test"
-        }
-    }
+    "image": "jadyn-violet.jpg",
+    "image_url": "https://imgur.com/ap6ze8R"
+  }
 ]

@@ -1,10 +1,15 @@
+div:has(> .level-card) {
+  position: relative;
+  height: 32.5rem;
+}
+
 .level-card {
   position: absolute;
   display: flex;
   border-radius: 3.13rem;
   transition: all .3s ease-in-out;
   cursor: pointer;
-  height: 32.5rem !important;
+  height: 32.5rem;
   width: 20.313rem;
   padding: 3.125rem;
 }

@@ -4,16 +4,19 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 import { fetchSession, getPublicKey } from "../../utils";
+import StaticDataService from "../../services/StaticDataService";
+import { useNavigate } from "react-router-dom";
 
 export const CreditcardPayment = (props) => {
   const { setContent, selectedId } = props;
   const [nftAmount, setNftAmount] = useState(1);
   const [session, setSession] = useState(false);
+  const [selectedArtist, setSelectedArtist] = useState(null);
+  const navigate = useNavigate();
 
   const handleDoneWithCheckout = () => {
-    //setSession(true);
-    //window.location.reload();
-    console.log("Mint btn click");
+    navigate(`/artist/${selectedArtist.id}`);
+    console.log("Mint btn click", `/artist/${selectedArtist.id}`);
   };
 
   const handleAmountChange = (event) => {
@@ -24,8 +27,22 @@ export const CreditcardPayment = (props) => {
     setNftAmount(inputValue);
   };
 
+  const fetchArtistBySelectedId = async () => {
+    try {
+      const artist = await StaticDataService.findArtistByNumberId(selectedId);
+      return artist;
+    } catch (err) {
+      console.log(err, "Error fetching the artist");
+    }
+  };
+
   useEffect(() => {
     const init = async () => {
+      if (!selectedArtist) {
+        let fetchedArtist = await fetchArtistBySelectedId();
+        setSelectedArtist(fetchedArtist);
+      }
+
       if (!session)
         try {
           console.log("Session here");
@@ -95,8 +112,10 @@ export const CreditcardPayment = (props) => {
           />
           <p className="mr-3 mt-2 ml-5">Total ${0.5 * nftAmount} </p>
         </div>
+        {console.log(selectedId, "Selected ID", selectedArtist, "fetch art")}
 
         <CrossmintPayButton
+          onClick={handleDoneWithCheckout}
           clientId="d40b03b9-09a3-4ad8-a4f8-15fef67cad21"
           environment="staging"
           className="xmint-btn"
@@ -106,7 +125,7 @@ export const CreditcardPayment = (props) => {
             _amount: nftAmount,
             totalPrice: totalNFTsPrice,
             _recipient: getPublicKey(),
-            _gameID: selectedId * 1000,
+            _gameID: selectedId,
 
             // your custom minting arguments...
           }}

@@ -22,6 +22,26 @@ module.exports = function override(config) {
     url: require.resolve("url"),
   });
   config.resolve.fallback = fallback;
+
+  // Add the file loader or URL loader configuration
+  config.module.rules.push(
+    {
+      test: /\.(png|jpe?g|gif)$/i,
+      use: [
+        {
+          loader: "url-loader",
+          options: {
+            limit: 8192, // Specify the maximum size (in bytes) for embedding images as Data URLs
+            name: "[name].[ext]",
+            outputPath: "images/", // The output directory for the images
+            publicPath: "/images/", // The public URL path for the images
+          },
+        },
+      ],
+    }
+    // Add more loader configurations if needed
+  );
+
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
       process: "process/browser",

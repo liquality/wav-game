@@ -33,12 +33,12 @@ export const ArtistGrid = (props) => {
           <div className="flexDirectionRow justify-center mb-3">
             <button
               key={index}
-              onClick={() => handleClick(index + 1)}
+              onClick={() => handleClick(item.number_id)}
               className="defaultArtistBtn "
             >
               <img
+                src={require(`../images/artists/${item.image}`).default}
                 className="avatarImage ml-2"
-                src="https://avatars.githubusercontent.com/u/34882183?v=4"
                 alt="Artist Avatar"
               />
               <span className="artistName">{item.name + " "}</span>
@@ -65,6 +65,7 @@ export const ArtistGrid = (props) => {
       <div className="flexDirectionRow justify-center mb-3">
         {renderButtons(6, 8)}
       </div>
+      <blackDave />
     </div>
   );
 };
