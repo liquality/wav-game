@@ -3,10 +3,10 @@ import { ReactComponent as MysteryBox } from "../../images/mystery_box.svg";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
-import { fetchSession } from "../../utils";
+import { fetchSession, getPublicKey } from "../../utils";
 
 export const CreditcardPayment = (props) => {
-  const { setContent } = props;
+  const { setContent, selectedId } = props;
   const [nftAmount, setNftAmount] = useState(1);
   const [session, setSession] = useState(false);
 
@@ -37,6 +37,7 @@ export const CreditcardPayment = (props) => {
     init();
   }, [session]);
 
+  let totalNFTsPrice = (0.0005 * nftAmount).toString();
   return (
     <div className=" contentView flex">
       <div className="p-4 w-1/2 flex justify-center items-center margin-auto">
@@ -92,20 +93,21 @@ export const CreditcardPayment = (props) => {
             onChange={handleAmountChange}
             required
           />
-          <p className="mr-3 mt-2 ml-5">Total $100 </p>
+          <p className="mr-3 mt-2 ml-5">Total ${0.5 * nftAmount} </p>
         </div>
 
-        {/* collect function called here, in crossmint dashboard we need to provide WavGame Contract address etc  */}
-        {/* Level up should be gasless. */}
         <CrossmintPayButton
-          onClick={handleDoneWithCheckout}
           clientId="d40b03b9-09a3-4ad8-a4f8-15fef67cad21"
           environment="staging"
           className="xmint-btn"
+          mintTo={getPublicKey()}
           mintConfig={{
-            type: "erc-721",
-            quantity: 1,
-            totalPrice: "0.005",
+            type: "erc-1155",
+            _amount: nftAmount,
+            totalPrice: totalNFTsPrice,
+            _recipient: getPublicKey(),
+            _gameID: selectedId * 1000,
+
             // your custom minting arguments...
           }}
         />

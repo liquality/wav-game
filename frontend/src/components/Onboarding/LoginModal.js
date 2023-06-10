@@ -42,6 +42,7 @@ export const LoginModal = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
+  const [selectedId, setSelectedId] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -115,11 +116,17 @@ export const LoginModal = (props) => {
       );
     } else if (content === "pickArtist") {
       return (
-        <PickArtist setHeaderText={setHeaderText} setContent={setContent} />
+        <PickArtist
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+          setHeaderText={setHeaderText}
+          setContent={setContent}
+        />
       );
     } else if (content === "creditcardPayment") {
       return (
         <CreditcardPayment
+          selectedId={selectedId}
           setHeaderText={setHeaderText}
           setContent={setContent}
         />
