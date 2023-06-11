@@ -7,9 +7,9 @@ import { ReactComponent as TwitterIcon } from "../images/twitter.svg";
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="flexDirectionRow">
-        <p className="webfont" style={{ fontSize: "39px" }}>
-          WavGame
+      <div className="container flex flex-wrap justify-between">
+        <p className="block py-2 logo-text">
+          WavGame <div className="logo-addon">Beta</div>
         </p>
         <div className="flexDirectionRow ml-5 mt-4">
           <a

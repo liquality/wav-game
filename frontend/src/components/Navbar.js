@@ -83,9 +83,9 @@ const Navbar = () => {
         />
       ) : null}
       <nav className=" sticky top-0  mt-1 z-10">
-        <div className="container flex flex-wrap justify-between ">
-          <p className="block py-2 navBarLogoText" aria-current="page">
-            wavGame
+        <div className="container flex flex-wrap justify-between">
+          <p className="block py-2 logo-text" aria-current="page">
+            WavGame <div className="logo-addon">Beta</div>
           </p>
 
           <div
