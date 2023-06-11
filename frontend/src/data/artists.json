@@ -15,7 +15,7 @@
     {
         "id": "tarot",
         "name": "TAROT",
-        "description": "Singer, Songwriter",
+        "description": "",
         "bio": "TAROT is a Los Angeles-based independent singer-songwriter who has been creating a world for her music & community as the CEO of her music. Her captivating sound & soulful vocals create an enchanting atmosphere that transports listeners on a journey of self-discovery & introspection. TAROT has performed across the world & spoken on panels about the future of the music industry.",
         "readMore": "TAROT's music seamlessly blends elements of singer-songwriting with ethereal melodies, crafting a sonic experience that resonates deeply with fans. She has independently released multiple singles since 2020. TAROT’s ambition is to be a trailblazer for up and coming artists in today’s state of the music industry, through building direct relationships with fans and utilizing technology and storytelling in an innovative way.",
         "favoriteGames": "Candy Crush.",
@@ -89,19 +89,6 @@
             "twitter": "fredrikomusic"
         },
         "image": "fred-riko.jpg"
-    },
-    {
-        "id": "futrxlgnd",
-        "name": "FUTRxLGND",
-        "description": "",
-        "bio": "Experimental Hip-Hop artists JAYPROB and Rocky Snyda come together to form New York's new rap sensation FUTRxLGND.  The duo has been making waves in New York’s underground music scene for some time now, focusing mainly on their independent artistry and building a community following.",
-        "readMore": "The collective is not only compromised of the duo but of extended members of different artistic mediums such as photography, styling, art, etc. throughout their community. It wasn’t until January 2022 that the “duo” released their first collaborative song “BRONXLYN”. BRONXLYN has recently done a million views on TikTok. 2 million across socials. Rocky Snyda is a recording artist from Flatbush Brooklyn. Rocky's known for her eclectic style, genre-bending music, and most importantly her love for the color orange. JAYPROB is an emerging Recording/Visual Artist from uptown NYC. Jay's known for his titillating approach to music and shocking visuals. Together the two have been a nonstop force to be reckoned with. With their unique and ever-changing styles (both sonically and visually) the two have been able to give a new spin on what NYC sounds and looks like from their eccentric perspective.",
-        "favoriteGames": "",
-        "quote": "",
-        "socials": {
-            "twitter": "futrxlgnd"
-        },
-        "image": "futrxlgnd.jpg"
     },
     {
         "id": "jadyn-violet",
