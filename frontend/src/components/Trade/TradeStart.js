@@ -29,23 +29,23 @@ export const TradeStart = (props) => {
       const signer = new ethers.Wallet(getPrivateKey(), provider);
 
       //TODO: based on artist.number_id & user_id, you have to get the game_level from userdb
-      /*      console.log(
+      console.log(
         "PK:",
         getPrivateKey(),
         "PUBLIC ADDRESS:",
         getPublicKey(),
         "SIGNER OBJ:",
         signer
-      ); */
+      );
 
-      /*    const mint = await gameContract
+      /*      const mint = await gameContract
         .connect(signer)
         .collect(1000, getPublicKey(), 1, {
           value: ethers.utils.parseEther("0.0005"),
-        }); */
+        });  */
 
       // Check approval
-      /*    const approved = await nftContract.isApprovedForAll(
+      const approved = await nftContract.isApprovedForAll(
         getPublicKey(),
         WAV_PROXY_ADDRESS
       );
@@ -56,14 +56,14 @@ export const TradeStart = (props) => {
           .setApprovalForAll(WAV_PROXY_ADDRESS, true);
       }
 
-
-
       //TODO use SDK and gelato to call levelUp() gaslessly
       //TODO gameID should come from db
-      let txHashLevelUp = await gameContract.connect(signer).levelUp(artist.number_id, 2);
+      let txHashLevelUp = await gameContract
+        .connect(signer)
+        .levelUp(artist.number_id, 2);
       //TODO: add level up to db here
       setTxHash(txHashLevelUp);
-      setContent("processingTrade"); */
+      setContent("processingTrade");
     } catch (err) {
       console.log("Something with wrong with trade ERROR:", err);
     }

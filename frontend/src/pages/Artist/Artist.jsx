@@ -64,8 +64,6 @@ export const Artist = (props) => {
     });
   }
 
-  console.log(showTrade, "showtrade?");
-
   return (
     <div className="container flex">
       <Sidebar
@@ -106,7 +104,6 @@ export const Artist = (props) => {
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12"></div>
       </div>
-      <button onClick={() => setShowTrade(true)}>Trade</button>
 
       <TradeModal setShow={setShowTrade} show={showTrade} />
 

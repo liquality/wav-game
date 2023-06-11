@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import CustomButton from "../Button";
 import { NftImages } from "./NftImages";
 import { SpinningLoader } from "../SpinningLoader";
+import { getPublicKey } from "../../utils";
 
 export const SendStart = ({
   selectedNft,
@@ -15,23 +16,24 @@ export const SendStart = ({
 
   const fetchNfts = async (address, chainId) => {
     //TODO: fetch your own public address from localstorage instead
-    const nfts = await NftService.getNfts(
-      "0xb81B9B88e764cb6b4E02c5D0F6D6D9051A61E020",
-      80001
-    );
+    const nfts = await NftService.getNfts(getPublicKey(), 80001);
     return nfts;
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoadingNfts(true);
-      const nftData = await fetchNfts();
-      setNfts(nftData);
-      setLoadingNfts(false);
+      if (!nfts) {
+        setLoadingNfts(true);
+        const nftData = await fetchNfts();
+        setNfts(nftData);
+        setLoadingNfts(false);
+      }
     };
 
     fetchData();
   }, [selectedNft]);
+
+  console.log(nfts, "nft data");
 
   return (
     <div className="contentView flex justify-center">
@@ -46,13 +48,13 @@ export const SendStart = ({
             ) : (
               <>
                 <p>
-                  TK WavGame Collection - {nfts.length === 1 ? <br></br> : null}
+                  WavGame Collection - {nfts.length === 1 ? <br></br> : null}
                   Season 1 | 2
                 </p>
 
                 {/* This should be an img read from metadata, if multiple images, show a grid/row */}
                 <NftImages
-                  nfts={nfts.slice(0, 3)}
+                  nfts={nfts}
                   selectedNft={selectedNft}
                   setSelectedNft={setSelectedNft}
                 />
