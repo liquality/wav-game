@@ -28,7 +28,6 @@ export const TradeStart = (props) => {
       const artist = await getArtist();
       const signer = new ethers.Wallet(getPrivateKey(), provider);
 
-      console.log(artist.number_id, "nr id");
       //TODO: based on artist.number_id & user_id, you have to get the game_level from userdb
       /*      console.log(
         "PK:",

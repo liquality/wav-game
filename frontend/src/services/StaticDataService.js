@@ -18,7 +18,6 @@ const StaticDataService = {
       const content = await import("../data/levels.json");
       LEVELS = content.default;
     }
-    console.log("levelts", LEVELS);
     return LEVELS;
   },
   findArtistById: async function (id) {

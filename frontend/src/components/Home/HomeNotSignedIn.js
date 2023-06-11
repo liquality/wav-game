@@ -27,9 +27,7 @@ import { LoginModal } from "../Onboarding/LoginModal";
 export default function HomeWhenNotSignedIn() {
   const [show, setShow] = React.useState(false);
 
-  const handleArtistClick = () => {
-    console.log("Artist clicked, should refer thi his/her website");
-  };
+  const handleArtistClick = () => {};
   return (
     <div className="mt-5">
       {/* Welcome to wavgame hero */}

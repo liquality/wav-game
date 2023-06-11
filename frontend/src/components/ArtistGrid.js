@@ -43,8 +43,6 @@ export const ArtistGrid = (props) => {
     init();
   }, []);
 
-  console.log(artistData, games);
-
   const renderButtons = (startHere, endHere) => {
     let rows = [];
     if (artistData.length > 0) {
@@ -58,7 +56,6 @@ export const ArtistGrid = (props) => {
           buttonStyle = { backgroundColor: "#E61EA3" };
         }
 
-        console.log(selectedId, item.number_id, "wats");
         return (
           <div className="flexDirectionRow justify-center mb-3" key={index}>
             <button

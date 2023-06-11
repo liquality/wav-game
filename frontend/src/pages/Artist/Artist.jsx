@@ -41,8 +41,6 @@ export const Artist = (props) => {
     setLevelClicked(level);
   };
 
-  console.log(levelClicked, "lvl clicked?");
-
   useEffect(() => {
     const fetchData = async () => {
       const artistId = routeParams.artistId || "tk"; // TODO: remove the default

@@ -153,7 +153,6 @@ class Game {
     const promise = new Promise((resolve, reject) => {
       if (userId) {
         MySQL.pool.getConnection((err, db) => {
-          console.log("inside db connect");
           db.execute(
             "select * from `game` where user_id = ?",
             [userId],
