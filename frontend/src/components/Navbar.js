@@ -67,7 +67,6 @@ const Navbar = () => {
     setUserMenuOpen(false);
   };
 
-  console.log(showPickArtistModal, "shooow chose artist");
   return (
     <div>
       {userMenuOpen ? (

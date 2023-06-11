@@ -2,10 +2,13 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { ReactComponent as NextBtn } from "../images/next_btn.svg";
 import StaticDataService from "../services/StaticDataService";
+import { fetchSession } from "../utils";
+import UserService from "../services/UserService";
 
 export const ArtistGrid = (props) => {
-  const { handleClick } = props;
+  const { selectedId, handleClick } = props;
   const [artistData, setArtistData] = useState([]);
+  const [games, setGames] = useState([]);
 
   const fetchArtist = async (id) => {
     try {
@@ -16,9 +19,24 @@ export const ArtistGrid = (props) => {
     }
   };
 
+  const fetchGamesByUserId = async () => {
+    try {
+      const user = await UserService.getGameByUserId(
+        fetchSession().id, //userid
+        fetchSession().token
+      );
+
+      return user;
+    } catch (err) {
+      console.log(err, "Error fetching user");
+    }
+  };
+
   useEffect(() => {
     const init = async () => {
       let artistArray = await fetchArtist();
+      let gamesArray = await fetchGamesByUserId();
+      setGames(gamesArray);
       setArtistData(artistArray);
     };
 
@@ -29,12 +47,22 @@ export const ArtistGrid = (props) => {
     let rows = [];
     if (artistData.length > 0) {
       rows = artistData.slice(startHere, endHere).map((item, index) => {
+        const isDisabled = games.some((game) => game.artist_name === item.id);
+
+        let buttonStyle;
+        if (isDisabled) {
+          buttonStyle = { backgroundColor: "#3D2A38", borderColor: "#4F4F4F" };
+        } else if (selectedId.number_id === item.number_id) {
+          buttonStyle = { backgroundColor: "#E61EA3" };
+        }
+
         return (
-          <div className="flexDirectionRow justify-center mb-3">
+          <div className="flexDirectionRow justify-center mb-3" key={index}>
             <button
-              key={index}
               onClick={() => handleClick(item)}
-              className="defaultArtistBtn "
+              className="defaultArtistBtn"
+              disabled={isDisabled}
+              style={buttonStyle}
             >
               <img
                 src={require(`../images/artists/${item.image}`).default}

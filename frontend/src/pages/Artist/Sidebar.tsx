@@ -25,7 +25,6 @@ export const Sidebar = ({ open, setOpen, artist, image }: Props) => {
   useOnClickOutside(ref, (e) => {
     setOpen(false);
   });
-  console.log(image, "imgage sidebar");
 
   return (
     <div

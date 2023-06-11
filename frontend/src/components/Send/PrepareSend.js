@@ -25,15 +25,9 @@ export const PrepareSend = ({
 
     let pk = getPrivateKey();
     setContent("processingSend");
-    console.log(
-      transferRequest,
-      pk,
-      "transfer req and PK and SELECTEDNFT",
-      selectedNft
-    );
+
     let txHash = await NftService.transferNft(transferRequest, 80001, pk, true);
     setTxHash(txHash);
-    console.log(txHash, "TXHASH");
   };
 
   const handleSendInput = (e) => {

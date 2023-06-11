@@ -15,7 +15,6 @@ export const CreditcardPayment = (props) => {
 
   const handleDoneWithCheckout = () => {
     navigate(`/artist/${selectedId.id}`);
-    console.log("Mint btn click", `/artist/${selectedId.id}`);
   };
 
   const handleAmountChange = (event) => {

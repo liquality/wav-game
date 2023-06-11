@@ -6,7 +6,14 @@ import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
 import CustomButton from "../Button";
 export const PickArtist = (props) => {
-  const { type, setContent, setHeaderText, setSelectedId, selectedId } = props;
+  const {
+    type,
+    setContent,
+    setHeaderText,
+    setSelectedId,
+    selectedId,
+    handleClose,
+  } = props;
 
   async function createGame() {
     try {
@@ -23,19 +30,10 @@ export const PickArtist = (props) => {
     }
   }
 
-  console.log(selectedId, "selected id");
   function renderArtistGrid() {
     return (
       <div className="mt-5">
-        <ArtistGrid handleClick={setSelectedId} />
-        {selectedId && (
-          <p
-            style={{ textDecoration: "none", fontFamily: "Sora" }}
-            className="modalTerms mt-3 "
-          >
-            ARTIST NAME SELECTED ID: {selectedId.number_id}.
-          </p>
-        )}
+        <ArtistGrid selectedId={selectedId} handleClick={setSelectedId} />
       </div>
     );
   }
@@ -46,7 +44,6 @@ export const PickArtist = (props) => {
       setContent("gameIncentives");
       setHeaderText("Game Incentives");
     } else {
-      console.log("creating gamme...");
       await createGame();
       setContent("creditcardPayment");
       setHeaderText("Get NFTs to Play");
@@ -61,15 +58,21 @@ export const PickArtist = (props) => {
         {renderArtistGrid()}
       </div>
 
-      <CustomButton
-        type="big"
-        pink
-        disabled={selectedId ? false : true}
-        onClick={handleSetNewPage}
-        mt="100px"
-      >
-        CONTINUE
-      </CustomButton>
+      <div className="flexDirectionRow flex justify-center items-center mt-24 ">
+        <CustomButton
+          type="big"
+          pink
+          disabled={selectedId ? false : true}
+          onClick={handleSetNewPage}
+        >
+          {type === "onboarding" ? "CONTINUE" : "SELECT"}
+        </CustomButton>
+        {type === "onboarding" ? null : (
+          <button className="ml-5 mr-5" onClick={handleClose}>
+            CANCEL
+          </button>
+        )}
+      </div>
     </div>
   );
 };

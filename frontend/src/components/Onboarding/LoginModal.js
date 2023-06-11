@@ -122,6 +122,7 @@ export const LoginModal = (props) => {
           setHeaderText={setHeaderText}
           setContent={setContent}
           type={"onboarding"}
+          handleClose={handleClose}
         />
       );
     } else if (content === "creditcardPayment") {

@@ -34,6 +34,7 @@ export const ChooseNewArtistModal = (props) => {
           setSelectedId={setSelectedArtist}
           setContent={setContent}
           setHeaderText={setHeaderText}
+          handleClose={handleClose}
         />
       );
       //TODO

@@ -32,14 +32,12 @@ gameHandler.readGamesByUserId = function (req, res) {
   const userid = Number(req.params.userid);
   const userIdFromSession = req.user.id;
   //var userid = req.apiSession.userid;
-  console.log("inside game handler", userid, userIdFromSession);
   if (userid) {
     if (userid === userIdFromSession) {
       var game = new Game();
       game.readGameByUserId(userid).then(
         (game) => {
           res.status(200).send(game);
-          console.log(game, "game return");
         },
         (reason) => {
           res.status(400).send(new ApiError(400, reason));
