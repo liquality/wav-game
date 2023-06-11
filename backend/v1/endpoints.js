@@ -69,9 +69,9 @@ endpoints.readGameByUserId = {
 };
 
 endpoints.updateGame = {
-  url: "/v1/game/:id",
+  url: "/v1/game/:userid",
   method: "put",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: gameHandler.update,
   description: "update game",
 };

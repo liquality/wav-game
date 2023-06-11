@@ -62,6 +62,7 @@ export const TradeStart = (props) => {
         .connect(signer)
         .levelUp(artist.number_id, 2);
       //TODO: add level up to db here
+
       setTxHash(txHashLevelUp);
       setContent("processingTrade");
     } catch (err) {

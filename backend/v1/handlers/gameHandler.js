@@ -68,13 +68,12 @@ gameHandler.create = function (req, res) {
 };
 
 gameHandler.update = function (req, res) {
-  var id = req.params.id;
   var game = new Game();
   game.set(req.body);
-  //TODO: do we need apiSession and userid?
-  //game.id = req.apiSession.userid;
+  const userid = Number(req.params.userid);
+  const userIdFromSession = req.user.id;
 
-  if (id == id) {
+  if (userid == userIdFromSession) {
     game.update().then(
       (game) => {
         res.status(200).send(game);
