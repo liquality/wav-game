@@ -17,6 +17,7 @@ class Game {
       this.level_5_claimed_prizes = game.level_5_claimed_prizes;
       this.level_6_claimed_main_prize = game.level_6_claimed_main_prize;
       this.claimable_prize_count = game.claimable_prize_count;
+      this.game_symbol_id = game.game_symbol_id;
     }
   }
 
@@ -28,7 +29,7 @@ class Game {
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
         db.query(
-          "INSERT INTO `game` (status, user_id, level, artist_name, level_4_claimed_prizes, level_5_claimed_prizes, level_6_claimed_main_prize, claimable_prize_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+          "INSERT INTO `game` (status, user_id, level, artist_name, level_4_claimed_prizes, level_5_claimed_prizes, level_6_claimed_main_prize, claimable_prize_count, game_symbol_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
           [
             "not_started", //status default is not started when game is created
             game.user_id,
@@ -38,6 +39,7 @@ class Game {
             game.level_5_claimed_prizes,
             game.level_6_claimed_main_prize,
             game.claimable_prize_count,
+            game.game_symbol_id,
           ],
           (err, results, fields) => {
             if (err) {
@@ -90,7 +92,7 @@ class Game {
       const promise = new Promise((resolve, reject) => {
         this.MySQL.pool.getConnection((err, db) => {
           db.query(
-            "UPDATE `game` SET status=?, user_id=?, level=?, artist_name=?, level_4_claimed_prizes=?, level_5_claimed_prizes=?, level_6_claimed_main_prize=?, claimable_prize_count=? WHERE id=?;",
+            "UPDATE `game` SET status=?, user_id=?, level=?, artist_name=?, level_4_claimed_prizes=?, level_5_claimed_prizes=?, level_6_claimed_main_prize=?, claimable_prize_count=? game_symbol_id=? WHERE id=?;",
             [
               game.status,
               game.user_id,
@@ -141,6 +143,34 @@ class Game {
         });
       } else {
         reject(new ApiError(400, "Missing game id"));
+      }
+    });
+    return promise;
+  };
+
+  readGameByUserId = async (userId) => {
+    const game = this;
+    const promise = new Promise((resolve, reject) => {
+      if (userId) {
+        MySQL.pool.getConnection((err, db) => {
+          db.execute(
+            "select * from `game` where user_id = ?",
+            [userId],
+            (err, results, fields) => {
+              if (err) {
+                reject(new ApiError(500, err));
+              } else if (results.length < 1) {
+                reject(new ApiError(404, "Game not found"));
+              } else {
+                game.set(results[0]);
+                resolve(results);
+              }
+              db.release();
+            }
+          );
+        });
+      } else {
+        reject(new ApiError(500, "Missing user id"));
       }
     });
     return promise;

@@ -6,16 +6,22 @@ import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
 import CustomButton from "../Button";
 export const PickArtist = (props) => {
-  const { setContent, setHeaderText } = props;
-
-  const [selectedId, setSelectedId] = useState(null);
+  const {
+    type,
+    setContent,
+    setHeaderText,
+    setSelectedId,
+    selectedId,
+    handleClose,
+  } = props;
 
   async function createGame() {
     try {
       const gameObject = await UserService.createGame(
         {
           user_id: fetchSession().id,
-          artist_name: `Artist ${selectedId}`,
+          artist_name: selectedId.id,
+          game_symbol_id: selectedId.number_id,
         },
         fetchSession()?.token
       );
@@ -27,23 +33,21 @@ export const PickArtist = (props) => {
   function renderArtistGrid() {
     return (
       <div className="mt-5">
-        <ArtistGrid handleClick={setSelectedId} />
-        {selectedId && (
-          <p
-            style={{ textDecoration: "none", fontFamily: "Sora" }}
-            className="modalTerms mt-3 "
-          >
-            ARTIST NAME SELECTED ID: {selectedId}.
-          </p>
-        )}
+        <ArtistGrid selectedId={selectedId} handleClick={setSelectedId} />
       </div>
     );
   }
 
   const handleSetNewPage = async () => {
-    await createGame();
-    setContent("creditcardPayment");
-    setHeaderText("Get NFTs to Play");
+    if (type !== "onboarding") {
+      await createGame();
+      setContent("gameIncentives");
+      setHeaderText("Game Incentives");
+    } else {
+      await createGame();
+      setContent("creditcardPayment");
+      setHeaderText("Get NFTs to Play");
+    }
   };
 
   return (
@@ -54,15 +58,21 @@ export const PickArtist = (props) => {
         {renderArtistGrid()}
       </div>
 
-      <CustomButton
-        type="big"
-        pink
-        disabled={selectedId ? false : true}
-        onClick={handleSetNewPage}
-        mt="100px"
-      >
-        CONTINUE
-      </CustomButton>
+      <div className="flexDirectionRow flex justify-center items-center mt-24 ">
+        <CustomButton
+          type="big"
+          pink
+          disabled={selectedId ? false : true}
+          onClick={handleSetNewPage}
+        >
+          {type === "onboarding" ? "CONTINUE" : "SELECT"}
+        </CustomButton>
+        {type === "onboarding" ? null : (
+          <button className="ml-5 mr-5" onClick={handleClose}>
+            CANCEL
+          </button>
+        )}
+      </div>
     </div>
   );
 };

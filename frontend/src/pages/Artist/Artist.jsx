@@ -2,6 +2,8 @@ import { useState, useEffect, useTransition } from "react";
 import "../../App.css";
 import "./artist.css";
 import { Sidebar } from "./Sidebar";
+import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
+
 import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
 import { GameCards } from "../../components/GameCards/GameCards";
@@ -12,6 +14,7 @@ import levels from "../../data/levels.json";
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
+import { getPublicKey } from "../../utils";
 
 export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
@@ -22,6 +25,7 @@ export const Artist = (props) => {
   const [_isPending, startTransition] = useTransition();
   const [showTrade, setShowTrade] = useState(false);
   const [showSend, setShowSend] = useState(false);
+  const [levelClicked, setLevelClicked] = useState(null);
 
   const fetchArtist = async (id) => {
     try {
@@ -32,11 +36,17 @@ export const Artist = (props) => {
     }
   };
 
+  const setShowTradeAndGetLevel = (level) => {
+    setShowTrade(true);
+    setLevelClicked(level);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      const artistId = routeParams.artistId || 'tk'; // TODO: remove the default
+      const artistId = routeParams.artistId || "tk"; // TODO: remove the default
       const _artist = await fetchArtist(artistId);
-      const _image = (await import(`../../images/artists/${_artist.image}`)).default;
+      const _image = (await import(`../../images/artists/${_artist.image}`))
+        .default;
       setArtist(_artist);
       setImage(_image);
     };
@@ -46,7 +56,7 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, []);
+  }, [routeParams]);
 
   function onSelectLevel(level) {
     startTransition(() => {
@@ -65,14 +75,20 @@ export const Artist = (props) => {
       <div className="flex flex-col items-center md:ml-20">
         <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
           <div className="game-header-level">LEVEL: 3 </div>
-          <div className="game-header-title">TK’S GAME_</div>
+          <div className="game-header-title">
+            {artist?.name?.toUpperCase()}'s GAME_
+          </div>
           <div className="game-header-counter">COLLECTABLES: 42</div>
         </div>
         <div className="flex flex-row md:flex-col justify-center my-5">
           <GameTabs levels={levels} currentLevel={1} />
         </div>
         <div className="w-full flex flex-col justify-center">
-          <GameCards levels={levels} currentLevel={1} />
+          <GameCards
+            setShowTrade={setShowTradeAndGetLevel}
+            levels={levels}
+            currentLevel={1}
+          />
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12">
           <div className="flex flex-col justify-center items-center  mb-24 relative">

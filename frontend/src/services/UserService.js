@@ -10,11 +10,15 @@ const UserService = {
   },
 
   getGameByUserId: async function (userId, jwt) {
-    return NetworkService.getResourceWithAuth("/v1/game/" + userId, jwt);
+    return NetworkService.getResourceWithAuth("/v1/games/" + userId, jwt);
   },
 
   createGame: async function (gameObject, jwt) {
     return NetworkService.postResourceWithAuth("/v1/game/", gameObject, jwt);
+  },
+
+  updateGame: async function (gameObject, jwt) {
+    return NetworkService.putResourceWithAuth("/v1/game/", gameObject, jwt);
   },
 
   loginUser: async function (userEmail) {

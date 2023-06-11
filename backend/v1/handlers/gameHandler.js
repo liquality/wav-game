@@ -28,6 +28,29 @@ gameHandler.read = function (req, res) {
   }
 };
 
+gameHandler.readGamesByUserId = function (req, res) {
+  const userid = Number(req.params.userid);
+  const userIdFromSession = req.user.id;
+  //var userid = req.apiSession.userid;
+  if (userid) {
+    if (userid === userIdFromSession) {
+      var game = new Game();
+      game.readGameByUserId(userid).then(
+        (game) => {
+          res.status(200).send(game);
+        },
+        (reason) => {
+          res.status(400).send(new ApiError(400, reason));
+        }
+      );
+    } else {
+      res
+        .status(403)
+        .send(new ApiError(403, "Access denied, gameid does not match"));
+    }
+  }
+};
+
 gameHandler.create = function (req, res) {
   var game = new Game();
   game.set(req.body); // should be a game object
@@ -45,13 +68,12 @@ gameHandler.create = function (req, res) {
 };
 
 gameHandler.update = function (req, res) {
-  var id = req.params.id;
   var game = new Game();
   game.set(req.body);
-  //TODO: do we need apiSession and userid?
-  //game.id = req.apiSession.userid;
+  const userid = Number(req.params.userid);
+  const userIdFromSession = req.user.id;
 
-  if (id == id) {
+  if (userid == userIdFromSession) {
     game.update().then(
       (game) => {
         res.status(200).send(game);

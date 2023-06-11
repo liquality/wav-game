@@ -1,15 +1,11 @@
 import { DataContext } from "./DataContext";
-import { useEffect, useState } from "react";
 import "./App.css";
-
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
-
 import { Route, Routes } from "react-router-dom";
 import { Balances } from "./pages/Balances";
-
-import { fetchSession, setupSDK } from "./utils";
+import { setupSDK } from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
 

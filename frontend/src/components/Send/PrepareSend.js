@@ -22,15 +22,19 @@ export const PrepareSend = ({
       receiver: addressInput,
       tokenIDs: [selectedNft.id],
     };
+
     let pk = getPrivateKey();
     setContent("processingSend");
-    //let txHash = await NftService.transferNft(transferRequest, 137, pk, true);
-    //setTxHash(txHash);
+
+    let txHash = await NftService.transferNft(transferRequest, 80001, pk, true);
+    setTxHash(txHash);
   };
 
   const handleSendInput = (e) => {
     setAddressInput(e.target.value);
   };
+
+  console.log(process.env.REACT_APP_GELATO_API_KEY, "api key", selectedNft);
 
   return (
     <div className="contentView flex justify-center">

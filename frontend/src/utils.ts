@@ -1,10 +1,12 @@
 import { setup } from "@liquality/wallet-sdk";
+import StaticDataService from "./services/StaticDataService";
 
 export function setupSDK() {
     setup({
-        alchemyApiKey: 'JmoTKlpUIjzd1y5-8h-La50OewZULyL0',
+        alchemyApiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
         etherscanApiKey: '-',
         infuraProjectId: '-',
+        gelatoApiKey: process.env.REACT_APP_GELATO_API_KEY,
         pocketNetworkApplicationID: '-',
         quorum: 1,
         slowGasPriceMultiplier: 1,
@@ -30,6 +32,10 @@ export const logOut = () => {
 
 export function getPrivateKey(): string {
     return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.privateKey;
+}
+
+export function getPublicKey(): string {
+    return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.publicAddress;
 }
 
 export function seeIfUserCanLogIn() {
@@ -60,5 +66,16 @@ export const fetchSession = () => {
         return session
     }
     else return null
+
+}
+
+export const getGameIdBasedOnHref = async () => {
+
+    // Get the last part of the window location href
+    const hrefParts = window.location.href.split('/');
+    const lastPart = hrefParts[hrefParts.length - 1];
+    //based on window location, return artist
+    const artist = await StaticDataService.findArtistById(lastPart)
+    return artist
 
 }

@@ -35,3 +35,6 @@ CREATE TABLE `game` (
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
+
+ALTER TABLE `game`
+ADD COLUMN `game_symbol_id` INT(11) AFTER `claimable_prize_count`;

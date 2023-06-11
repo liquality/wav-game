@@ -8,6 +8,7 @@ export default function ProcessingTx({ txHash }) {
       setTimeout(() => setPercentageFilled((prev) => (prev += 2)), 180);
     }
   }, [percentageFilled, isRunning]);
+
   return (
     <div>
       <p className="webfont text-2xl">{txHash ? "Complete" : "Processing"}</p>
@@ -22,6 +23,7 @@ export default function ProcessingTx({ txHash }) {
           }}
         ></div>
       </div>
+      <a href={`https://mumbai.polygonscan.com/address/${txHash}`}></a>
     </div>
   );
 }

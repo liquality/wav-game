@@ -5,30 +5,16 @@ import { ReactComponent as GreenCheckmark } from "../../images/green_checkmark.s
 import ProcessingTx from "../ProcessingTx";
 
 export const ProcessingTrade = (props) => {
-  const { setContent } = props;
-  const [txHash, setTxHash] = useState("xx");
-
-  const startTrade = async (data) => {
-    //Trade here from liq sdk
-    //const txHash = await sendNft(nftData)
-    const txHash = "";
-    //wavGameContract.approval(privateKey, )
-    //wavNftContract.levelUp()
-    //call database to add level here as well
-    setTxHash(txHash);
-    setContent("processingTrade");
-  };
+  const { setContent, txHash } = props;
 
   //Psuedo code for now
   useEffect(() => {
-    const fetchData = async () => {
-      await startTrade("nftData");
-    };
+    const fetchData = async () => {};
 
     fetchData();
 
     return () => {};
-  }, [txHash, setTxHash, startTrade]);
+  }, []);
 
   return (
     <div className="contentView flex">

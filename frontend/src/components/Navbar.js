@@ -3,12 +3,16 @@ import { LoginModal } from "./Onboarding/LoginModal";
 import { fetchSession } from "../utils";
 import UserMenu from "../pages/Artist/UserMenu";
 import UserService from "../services/UserService";
+import { PickArtist } from "./Onboarding/PickArtist";
+import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
 
 const Navbar = () => {
   const [address, setAddress] = React.useState("Sign in");
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const [user, setUser] = React.useState({});
+  const [showPickArtistModal, setShowPickArtistModal] = React.useState(false);
+
   const fetchUser = async () => {
     if (fetchSession()?.id) {
       try {
@@ -66,7 +70,17 @@ const Navbar = () => {
   return (
     <div>
       {userMenuOpen ? (
-        <UserMenu isOpen={userMenuOpen} onClose={closeModal} />
+        <UserMenu
+          isOpen={userMenuOpen}
+          onClose={closeModal}
+          setShowPickArtistModal={setShowPickArtistModal}
+        />
+      ) : null}
+      {showPickArtistModal ? (
+        <ChooseNewArtistModal
+          show={showPickArtistModal}
+          setShow={setShowPickArtistModal}
+        />
       ) : null}
       <nav className=" sticky top-0  mt-1 z-10">
         <div className="container flex flex-wrap justify-between ">
