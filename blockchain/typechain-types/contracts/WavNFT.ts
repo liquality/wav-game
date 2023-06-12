@@ -480,7 +480,7 @@ export interface WavNFT extends BaseContract {
     ): Promise<ContractTransaction>;
 
     uri(
-      arg0: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
   };
@@ -601,7 +601,7 @@ export interface WavNFT extends BaseContract {
   ): Promise<ContractTransaction>;
 
   uri(
-    arg0: PromiseOrValue<BigNumberish>,
+    _id: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -716,7 +716,7 @@ export interface WavNFT extends BaseContract {
     unpause(overrides?: CallOverrides): Promise<void>;
 
     uri(
-      arg0: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
   };
@@ -902,7 +902,7 @@ export interface WavNFT extends BaseContract {
     ): Promise<BigNumber>;
 
     uri(
-      arg0: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -1026,7 +1026,7 @@ export interface WavNFT extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     uri(
-      arg0: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

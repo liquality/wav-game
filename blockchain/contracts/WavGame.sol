@@ -34,6 +34,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
     event PaymentForwarded(uint256 indexed gameID, address indexed to, uint256 indexed amount);
     event GameSet(uint256 indexed gameID, uint256 indexed islandID);
     event FeeSet(uint256 indexed oldFee, uint256 indexed newFee);
+    event WavNFTSet(address old, address wavNFT);
 
     error InsufficientPayment(uint256 requiredAmt, uint256 ammountSent); 
     error InvalidTreasury(address treasury);
@@ -84,7 +85,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         }
 
         wavNFT.mint(_recipient, island.mintable, _amount, bytes(" "));
-
+        
         availablePayments[_gameID] += msg.value;
         _syncMint(_gameID, ENTRY_LEVEL, _recipient, _amount);
 
@@ -92,10 +93,10 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
     }
 
     function levelUp(uint256 _gameID, uint256 _newIslandID) external override  whenNotPaused nonReentrant onlyValidIsland(_gameID, _newIslandID) {
+        IWavGame.Island memory newIsland = wavGames[_gameID].islands[Helper.getIslandIndex(_newIslandID)];
         if(_newIslandID <= ENTRY_LEVEL) {
             revert InvalidNextLevel();
         }
-        IWavGame.Island memory newIsland = wavGames[_gameID].islands[Helper.getIslandIndex(_newIslandID)];
         if (wavNFT.balanceOf(_msgSender(), newIsland.burnable) < newIsland.requiredBurn) {
             revert RequiredBurnNotMet(newIsland.requiredBurn);
         }
@@ -182,6 +183,11 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
     }
     function setTrustedForwarder(address _trustedForwarder) public onlyOwner {
         _setTrustedForwarder(_trustedForwarder);
+    }
+    function setWavNFT(IWavNFT _wavNft) public onlyOwner {
+        IWavNFT old = wavNFT;
+        wavNFT = _wavNft;
+        emit WavNFTSet(address(old), address(wavNFT));
     }
     // This creates a game if not exist, then populates the islands, or updates the game by adding new islands.
     //This function always adds a new island to the specified game, only call this function when adding new islands to an given game
