@@ -26,6 +26,7 @@ export const Artist = (props) => {
   const [showTrade, setShowTrade] = useState(false);
   const [showSend, setShowSend] = useState(false);
   const [levelClicked, setLevelClicked] = useState(null);
+  const { setShowPickArtistModal } = props;
 
   const fetchArtist = async (id) => {
     try {
@@ -36,8 +37,10 @@ export const Artist = (props) => {
     }
   };
 
-  const setShowTradeAndGetLevel = (level) => {
+  const onLevelSelected = (level) => {
+    console.log('onLevelSelected', level)
     setShowTrade(true);
+    setSelectedLevel(level);
     setLevelClicked(level);
   };
 
@@ -58,12 +61,6 @@ export const Artist = (props) => {
     };
   }, [routeParams]);
 
-  function onSelectLevel(level) {
-    startTransition(() => {
-      setSelectedLevel(level);
-    });
-  }
-
   return (
     <div className="container flex">
       <Sidebar
@@ -71,6 +68,7 @@ export const Artist = (props) => {
         setOpen={setSidebarOpen}
         artist={artist}
         image={image}
+        setShowPickArtistModal={setShowPickArtistModal}
       />
       <div className="flex flex-col items-center md:ml-20">
         <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
@@ -85,7 +83,7 @@ export const Artist = (props) => {
         </div>
         <div className="w-full flex flex-col justify-center">
           <GameCards
-            setShowTrade={setShowTradeAndGetLevel}
+            onLevelSelected={onLevelSelected}
             levels={levels}
             currentLevel={1}
           />

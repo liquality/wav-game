@@ -1,6 +1,3 @@
-import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
-
-import { useState, useEffect } from "react";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";

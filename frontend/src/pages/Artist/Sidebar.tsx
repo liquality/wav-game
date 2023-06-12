@@ -56,9 +56,10 @@ type Props = {
   setOpen(open: boolean): void;
   artist: any;
   image: any;
+  setShowPickArtistModal: (show: boolean) => void
 };
 
-export const Sidebar = ({ open, setOpen, artist, image }: Props) => {
+export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, (e) => {
     setOpen(false);
@@ -79,10 +80,11 @@ export const Sidebar = ({ open, setOpen, artist, image }: Props) => {
         <div className="flex flex-col px-5 gap-4 mt-5">
           <div className="artist-name">{artist.name}</div>
           <div className="artist-desc">{artist.description}</div>
-          <a className="artist-link flex items-center" href="/#">
+          <button className="artist-link flex items-center" 
+          onClick={()=>setShowPickArtistModal(true)}>
             CHANGE ARTIST
             <ArrowRight className="ml-3" />
-          </a>
+          </button>
         </div>
         <div className="flex flex-col gap-5 pt-5 side-bar-secondary h-full w-full text-white">
           <WaveGraphic className="artist-wave-graphic" />

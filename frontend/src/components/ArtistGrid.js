@@ -50,7 +50,7 @@ export const ArtistGrid = (props) => {
     if (artistData.length > 0) {
       return artistData.slice(startHere, endHere)
             .map((item, index) => {
-        const isDisabled = games.some((game) => game.artist_name === item.id);
+        const isDisabled = games?.some((game) => game.artist_name === item.id);
 
         let buttonStyle;
         if (isDisabled) {

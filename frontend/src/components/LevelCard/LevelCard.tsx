@@ -68,7 +68,6 @@ interface CardProps {
    * Set the current level temporary
    */
   setLevel?: (level?: number) => void;
-  setShowTrade: (level: number) => void;
 }
 
 /**
@@ -78,15 +77,18 @@ export const LevelCard = ({
   status = "locked",
   current = 3, // default active card level
   actions = [],
-  setShowTrade,
   ...props
 }: CardProps) => {
   const {
     setLevel,
-    onActionClick,
     level: { edition, title, instructions, id },
   } = props;
   const active = current === id;
+  const handleActionClick = (action: LevelActionProps) => {
+    if(action.onActionClick) {
+      action.onActionClick(id);
+    }
+  };
   return (
     <div
       onMouseOver={() => (setLevel ? setLevel(id) : () => {})}
@@ -115,18 +117,6 @@ export const LevelCard = ({
           {instructions}
         </div>
         <div className="flex justify-between">
-          <CustomButton
-            white
-            type="small"
-            onClick={() => setShowTrade(id)}
-            disabled={false}
-            mt="10px"
-            mb=""
-            ml=""
-            mr=""
-          >
-            TRADE NOW
-          </CustomButton>
           {actions.map((action) => {
             return (
               <Button
@@ -134,7 +124,7 @@ export const LevelCard = ({
                 key={action.label}
                 mode={action.mode}
                 link={action.link}
-                onClick={() => (onActionClick ? onActionClick(id) : () => {})}
+                onClick={()=>handleActionClick(action)}
               >
                 <>
                   {action.useIcon ? (

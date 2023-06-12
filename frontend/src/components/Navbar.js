@@ -6,13 +6,13 @@ import UserService from "../services/UserService";
 import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
 import { useParams } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = (props) => {
   let { artistId } = useParams();
   const [address, setAddress] = useState("Sign in");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [user, setUser] = useState({});
-  const [showPickArtistModal, setShowPickArtistModal] = useState(false);
+  const { showPickArtistModal, setShowPickArtistModal } = props;
 
   const fetchUser = async () => {
     if (fetchSession()?.id) {
@@ -31,7 +31,7 @@ const Navbar = () => {
   const AvatarComponent = ({ avatar }) => {
     return (
       <div className="userAvatar p-2 flex items-center justify-center"
-      style={{ backgroundImage: `url(${avatar})`}}>
+        style={{ backgroundImage: `url(${avatar})` }}>
       </div>
     );
   };
@@ -44,7 +44,7 @@ const Navbar = () => {
 
     fetchData();
     return () => {
-      
+
     };
   }, []);
   const openModal = () => {
