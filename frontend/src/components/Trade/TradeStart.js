@@ -8,6 +8,7 @@ import CustomButton from "../Button";
 import { WAV_NFT_ADDRESS, WAV_PROXY_ADDRESS } from "../../data/contract_data";
 import { getGameIdBasedOnHref, getPrivateKey, getPublicKey } from "../../utils";
 import { ethers } from "ethers";
+import { TransactionService } from '@liquality/wallet-sdk';
 
 export const TradeStart = (props) => {
   const { setContent, gameContract, nftContract, setTxHash } = props;
@@ -25,8 +26,10 @@ export const TradeStart = (props) => {
       const provider = new ethers.providers.JsonRpcProvider(
         "https://polygon-mumbai.g.alchemy.com/v2/Vnr65MaW03LZ6ri9KBKrOEZjjcmMGSQ3"
       );
+  
       const artist = await getArtist();
-      const signer = new ethers.Wallet(getPrivateKey(), provider);
+      const privateKey = getPrivateKey();
+      const signer = new ethers.Wallet(privateKey, provider);
 
       //TODO: based on artist.number_id & user_id, you have to get the game_level from userdb
       console.log(
@@ -58,9 +61,12 @@ export const TradeStart = (props) => {
 
       //TODO use SDK and gelato to call levelUp() gaslessly
       //TODO gameID should come from db
-      let txHashLevelUp = await gameContract
+      let levelUpTx = await gameContract
         .connect(signer)
-        .levelUp(artist.number_id, 2);
+        .populateTransaction.levelUp(artist.number_id, 2);
+
+      let txHashLevelUp = TransactionService.sendGaslessly(WAV_PROXY_ADDRESS, levelUpTx.data, privateKey, 80001);
+      
       //TODO: add level up to db here
 
       setTxHash(txHashLevelUp);
