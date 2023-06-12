@@ -28,22 +28,10 @@ const Navbar = () => {
     } else return {};
   };
 
-  const AvatarComponent = ({ avatarData }) => {
-    // Convert the binary data to a base64-encoded string
-    const base64Image = Buffer.from(avatarData).toString("base64");
-
-    // Create the data URL with the base64 image data
-    const imageUrl = `data:image/png;base64,${base64Image}`;
-
+  const AvatarComponent = ({ avatar }) => {
     return (
-      <div className="userAvatar p-2">
-        <img
-          src={imageUrl}
-          height={36}
-          width={36}
-          className="rounded-full "
-          alt="avatar"
-        />
+      <div className="userAvatar p-2 flex items-center justify-center"
+      style={{ backgroundImage: `url(${avatar})`}}>
       </div>
     );
   };
@@ -97,7 +85,7 @@ const Navbar = () => {
               {fetchSession()?.token ? (
                 <button onClick={() => setUserMenuOpen(!userMenuOpen)}>
                   {user?.avatar ? (
-                    <AvatarComponent avatarData={user.avatar} />
+                    <AvatarComponent avatar={user.avatar} />
                   ) : null}
                 </button>
               ) : (

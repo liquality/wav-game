@@ -1,7 +1,6 @@
 const MySQL = require("../../MySQL");
 const ApiError = require("./ApiError");
 const jwt = require("jsonwebtoken");
-const expressJwt = require("express-jwt");
 
 class User {
   constructor(user) {
@@ -13,7 +12,7 @@ class User {
       this.id = user.id;
       this.serviceprovider_name = user.serviceprovider_name;
       this.username = user.username;
-      this.avatar = user.avatar;
+      this.avatar = user.avatar ? Buffer.from(user.avatar).toString('utf8') : null;
       this.public_address = user.public_address;
     }
   }

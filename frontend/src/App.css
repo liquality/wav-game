@@ -590,10 +590,17 @@ div.background {
 }
 
 .userAvatar {
-  border: none;
   padding: 10;
-  box-shadow: 0 0 0 1px #f251bc;
+  height: 3rem;
+  width: 3rem;
   border-radius: 50%;
+  border: 1px solid #F5F5F5;
+  background-color: transparent;
+  outline: 1px solid #BC2B8B;
+  outline-offset: 0.313rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .userMenuText {
