@@ -21,6 +21,13 @@ const UserService = {
     return NetworkService.putResourceWithAuth("/v1/game/", gameObject, jwt);
   },
 
+  getLeaderboardData: async function (gameID, jwt) {
+    return NetworkService.getResourceWithAuth(
+      "/v1/game/leaderboard/" + gameID,
+      jwt
+    );
+  },
+
   loginUser: async function (userEmail) {
     return NetworkService.getResourceWithAuth("/v1/user/login/" + userEmail);
   },

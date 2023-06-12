@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import { getPublicKey } from "../../utils";
 import { NftService } from "@liquality/wallet-sdk";
 import { WAV_NFT_ADDRESS } from "../../data/contract_data";
+import UserService from "../../services/UserService";
 
 export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
@@ -67,6 +68,7 @@ export const Artist = (props) => {
       const _image = (await import(`../../images/artists/${_artist.image}`))
         .default;
       const _wavNfts = await fetchNftCollection();
+
       setWavNfts(_wavNfts);
       setArtist(_artist);
       setImage(_image);
@@ -116,7 +118,7 @@ export const Artist = (props) => {
               </span>
             </div>
           </div>
-          <Leaderboard setShowSendModal={setShowSend} />
+          <Leaderboard setShowSendModal={setShowSend} artist={artist} />
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12"></div>
       </div>

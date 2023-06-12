@@ -1,12 +1,38 @@
 import React from "react";
 import "../../App.css";
+import { useState, useEffect, useTransition } from "react";
 
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
+import UserService from "../../services/UserService";
 
-const Leaderboard = ({ setShowSendModal }) => {
+const Leaderboard = ({ setShowSendModal, artist }) => {
   const [user, setUser] = React.useState({});
   const [showNfts, setShowNfts] = React.useState(false);
+  const [leaderboardData, setLeaderboardData] = useState(null);
+
+  console.log(artist, "artist?", leaderboardData);
+  const getLeaderboardData = async () => {
+    try {
+      const leaderboard = await UserService.getLeaderboardData(
+        artist?.number_id
+      );
+      return leaderboard;
+    } catch (err) {
+      console.log(err, "Error fetching the leaderboard");
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const _leaderboardData = await getLeaderboardData();
+      setLeaderboardData(_leaderboardData);
+    };
+    fetchData();
+    return () => {
+      //any cleanup
+    };
+  }, []);
 
   const activeToggleStyle = {
     borderBottom: "1px solid #f251bc",
@@ -17,24 +43,6 @@ const Leaderboard = ({ setShowSendModal }) => {
     setShowSendModal(true);
     console.log("open send modal here");
   };
-
-  const fetchUser = async () => {
-    try {
-      // const user = await UserService.getUserByUserId();
-
-      return user;
-    } catch (err) {
-      console.log(err, "Error fetching user");
-    }
-  };
-
-  React.useEffect(() => {
-    const fetchData = async () => {};
-    fetchData();
-    return () => {
-      //any cleanup
-    };
-  }, []);
 
   const renderNFTsToggled = () => {
     return (
@@ -101,12 +109,24 @@ const Leaderboard = ({ setShowSendModal }) => {
               >
                 Players
               </th>
-              <td className="px-6 py-4">54</td>
-              <td className="px-6 py-4">66</td>
-              <td className="px-6 py-4">9</td>
-              <td className="px-6 py-4">14</td>
-              <td className="px-6 py-4">110</td>
-              <td className="px-6 py-4">4</td>
+              <td className="px-6 py-4">
+                {leaderboardData.level1 ? leaderboardData.level1 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {leaderboardData.level2 ? leaderboardData.level2 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {leaderboardData.level3 ? leaderboardData.level3 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {leaderboardData.level4 ? leaderboardData.level4 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {leaderboardData.level5 ? leaderboardData.level5 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {leaderboardData.level6 ? leaderboardData.level6 : "--"}
+              </td>
             </tr>
           </tbody>
         </table>
