@@ -68,6 +68,14 @@ endpoints.readGameByUserId = {
   description: "read game by user id ",
 };
 
+endpoints.getLeaderboardData = {
+  url: "/v1/game/leaderboard/:game_symbol_id",
+  method: "get",
+  middleware: [],
+  handler: gameHandler.getLeaderboardData,
+  description: "read leaderboard data based on game symbol id ",
+};
+
 endpoints.updateGame = {
   url: "/v1/game/:userid",
   method: "put",
@@ -84,4 +92,13 @@ endpoints.deleteGame = {
   description: "delete game",
 };
 
+/*WEBHOOK EVENTS FROM CROSSMINT*/
+
+endpoints.createGame = {
+  url: "/v1/webhook",
+  method: "post",
+  middleware: [],
+  handler: userHandler.webhook,
+  description: "listen to crossmint webhook",
+};
 module.exports = endpoints;

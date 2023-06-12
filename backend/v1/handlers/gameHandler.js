@@ -51,6 +51,26 @@ gameHandler.readGamesByUserId = function (req, res) {
   }
 };
 
+gameHandler.getLeaderboardData = function (req, res) {
+  const gameId = Number(req.params.game_symbol_id);
+  console.log("leaderboard", gameId);
+  if (gameId) {
+    var game = new Game();
+    game.getLeaderboardData(gameId).then(
+      (game) => {
+        res.status(200).send(game);
+      },
+      (reason) => {
+        res.status(400).send(new ApiError(400, reason));
+      }
+    );
+  } else {
+    res
+      .status(403)
+      .send(new ApiError(403, "Access denied, gameid does not match"));
+  }
+};
+
 gameHandler.create = function (req, res) {
   var game = new Game();
   game.set(req.body); // should be a game object

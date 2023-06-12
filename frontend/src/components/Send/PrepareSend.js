@@ -19,17 +19,38 @@ export const PrepareSend = ({
   const [addressInput, setAddressInput] = useState("");
 
   const sendNft = async (address, chainId) => {
-    const transferRequest = {
-      contractAddress: selectedNft.contract.address,
-      receiver: addressInput,
-      tokenIDs: [selectedNft.id],
-    };
+    try {
+      const transferRequest = {
+        contractAddress: selectedNft.contract.address,
+        receiver: addressInput,
+        tokenIDs: [selectedNft.id],
+      };
 
-    let pk = getPrivateKey();
-    setContent("processingSend");
+      let pk = getPrivateKey();
+      setContent("processingSend");
 
-    let txHash = await NftService.transferNft(transferRequest, 80001, pk, true);
-    setTxHash(txHash);
+      console.log(transferRequest, "transferreq?");
+      let txHash = await NftService.transferNft(
+        transferRequest,
+        80001,
+        pk,
+        true
+      );
+      setTxHash(txHash);
+    } catch (err) {
+      console.log(err, "whats erer=?");
+    }
+  };
+
+  const handleCopyClick = (text) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log("Text copied to clipboard: ", text);
+      })
+      .catch((error) => {
+        console.error("Failed to copy text: ", error);
+      });
   };
 
   const handleSendInput = (e) => {
@@ -96,10 +117,13 @@ export const PrepareSend = ({
         <p className="mt-5 mb-2 greyUpperCaseText">
           SEND FROM YOUR POLYGON ACCOUNT
         </p>
-        <p className=" pb-5 userMenuAddressText flexDirectionRow">
+        <button
+          onClick={() => handleCopyClick(getPublicKey())}
+          className=" pb-5 userMenuAddressText flexDirectionRow"
+        >
           <Polygon className="mr-3" />
           {shortenAddress(getPublicKey())} <CopyIcon className="ml-2 mt-1" />
-        </p>
+        </button>
         <input
           style={{ width: "50%" }}
           className="passwordInputBox"

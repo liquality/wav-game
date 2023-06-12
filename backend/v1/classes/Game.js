@@ -175,6 +175,30 @@ class Game {
     });
     return promise;
   };
+  getLeaderboardData = async (gameId) => {
+    const promise = new Promise((resolve, reject) => {
+      MySQL.pool.getConnection((err, db) => {
+        db.execute(
+          "SELECT level, COUNT(DISTINCT user_id) AS userCount FROM `game` WHERE game_symbol_id = ? GROUP BY level",
+          [gameId],
+          (err, results, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else {
+              const leaderboardData = {};
+              results.forEach((row) => {
+                leaderboardData[`level${row.level}`] = row.userCount;
+              });
+              console.log(leaderboardData, "leaderboarddata");
+              resolve(leaderboardData);
+            }
+            db.release();
+          }
+        );
+      });
+    });
+    return promise;
+  };
 }
 
 module.exports = Game;
