@@ -42,6 +42,7 @@ export const GameCards = ({
       {levels.map((l) => {
         return (
           <LevelCard
+            key={l.id}
             setShowTrade={setShowTrade}
             status={l.status as LevelStatus}
             setLevel={onSetLevel}

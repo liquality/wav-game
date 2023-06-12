@@ -3,9 +3,47 @@ import classNames from "classnames";
 import { useOnClickOutside } from "usehooks-ts";
 import { ReactComponent as WaveGraphic } from "../../images/wave_graphic.svg";
 import { ReactComponent as ArrowRight } from "../../images/arrow_right.svg";
-import { ReactComponent as DiscordIcon } from "../../images/discord.svg";
-import { ReactComponent as TelegramIcon } from "../../images/telegram.svg";
 import { ReactComponent as TwitterIcon } from "../../images/twitter.svg";
+import { ReactComponent as InstagramIcon } from "../../images/instagram.svg";
+import { ReactComponent as TikTokIcon } from "../../images/tiktok.svg";
+import { ReactComponent as LensIcon } from "../../images/lens.svg";
+
+const SocialLink = (
+  props: {
+    network: string,
+    url: string
+  }
+) => {
+  const { network, url } = props;
+  if (!url) {
+    return null;
+  }
+
+  let SocialIcon = null;
+  switch (network) {
+    case "twitter":
+      SocialIcon = TwitterIcon;
+      break;
+    case "instagram":
+      SocialIcon = InstagramIcon;
+      break;
+    case "tiktok":
+      SocialIcon = TikTokIcon;
+      break;
+    case "lens":
+      SocialIcon = LensIcon;
+      break;
+  }
+
+  return <a
+    className="hover:text-white-700 mr-2"
+    href={url}
+    target="_blank"
+    rel="noreferrer"
+  >
+    <SocialIcon />
+  </a>
+};
 
 export type NavItem = {
   label: string;
@@ -53,9 +91,13 @@ export const Sidebar = ({ open, setOpen, artist, image }: Props) => {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
             </div>
             <div className="flex flex-row items-center">
-              <TwitterIcon className="mr-2" />
-              <DiscordIcon className="m-2" />
-              <TelegramIcon className="m-2" />
+              {artist && artist.socials ? Object.keys(artist.socials).map((network) => {
+                return (
+                  <SocialLink key={network}
+                              network={network} 
+                              url={artist.socials[network]} />
+                );
+              }) : null}
             </div>
             <img className="mt-" src={image} alt="" />
           </div>

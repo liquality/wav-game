@@ -1,10 +1,19 @@
 let ARTISTS = null;
 let LEVELS = null;
+let ARTIST_IMAGES = null;
 
 const StaticDataService = {
-  fetchData: async function (path) {
-    const content = await import(path);
-    return content.default;
+  getArtistImages: async function () {
+    if (!ARTIST_IMAGES) {
+      const artists = await this.getArtists();
+      ARTIST_IMAGES = await artists.map(({ id, image }) => ({ id, image }))
+        .reduce(async (prev, current) => {
+          const content = await import(`../images/artists/${current.image}`);
+          const accum = await prev;
+          return {...accum, [current.id] : content.default}
+        }, Promise.resolve({}))
+    }
+    return ARTIST_IMAGES;
   },
   getArtists: async function () {
     if (!ARTISTS) {

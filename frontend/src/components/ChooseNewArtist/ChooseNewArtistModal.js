@@ -6,20 +6,22 @@ import { CustomModal } from "../Modal";
 import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
 import { GameIncentives } from "./GameIncentives";
 
+
 export const ChooseNewArtistModal = (props) => {
-  const { show, setShow } = props;
+  const { show, setShow, selectedArtistId } = props;
   const [content, setContent] = useState("chooseArtistStart");
   const [headerText, setHeaderText] = useState("Choose an artist");
   const [selectedNft, setSelectedNft] = useState(null);
-
-  const [selectedArtist, setSelectedArtist] = useState(null);
+  const [selectedArtist, setSelectedArtist] = useState(selectedArtistId);
   const [txHash, setTxHash] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    const init = async () => {};
+    const init = async () => {
+    
+    };
 
     init();
   }, [content]);
