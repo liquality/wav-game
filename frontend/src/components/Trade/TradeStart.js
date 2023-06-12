@@ -82,6 +82,8 @@ export const TradeStart = (props) => {
               <p className="webfont coral text-2xl">Level 2</p>
               <p className=" mb-3">Trade 2 top live songs</p>
               <div className="flexDirectionRow">
+                {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
+
                 <NftPreview className="mr-1 " />
                 <NftPreview />
               </div>
@@ -106,6 +108,7 @@ export const TradeStart = (props) => {
             <div className=" pr-5 flexDirectionColumn ">
               <p className="webfont coral text-2xl">Level 3</p>
               <p className=" mb-3">Trade 2 top live songs</p>
+              {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               <NftBigPreview />
             </div>
           </div>
