@@ -27,17 +27,7 @@ module.exports = function override(config) {
   config.module.rules.push(
     {
       test: /\.(png|jpe?g|gif)$/i,
-      use: [
-        {
-          loader: "url-loader",
-          options: {
-            limit: 8192, // Specify the maximum size (in bytes) for embedding images as Data URLs
-            name: "[name].[ext]",
-            outputPath: "images/", // The output directory for the images
-            publicPath: "/images/", // The public URL path for the images
-          },
-        },
-      ],
+      type: 'asset/resource',
     }
     // Add more loader configurations if needed
   );

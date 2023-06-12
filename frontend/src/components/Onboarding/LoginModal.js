@@ -24,7 +24,7 @@ const verifierMap = {
 // 1. Setup Service Provider
 const directParams = {
   baseUrl:
-    window.location.href === "http://localhost:3005/"
+    window.location.href.startsWith('http://localhost:3005')
       ? `http://localhost:3005/serviceworker`
       : `https://wav-game-staging-public.liquality.io/serviceworker`,
   enableLogging: true,

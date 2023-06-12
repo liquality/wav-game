@@ -8,6 +8,7 @@ import UserService from "../services/UserService";
 export const ArtistGrid = (props) => {
   const { selectedId, handleClick } = props;
   const [artistData, setArtistData] = useState([]);
+  const [artistImages, setArtistImages] = useState({});
   const [games, setGames] = useState([]);
 
   const fetchArtist = async (id) => {
@@ -34,25 +35,27 @@ export const ArtistGrid = (props) => {
 
   useEffect(() => {
     const init = async () => {
-      let artistArray = await fetchArtist();
+      const artists = await fetchArtist();
       let gamesArray = await fetchGamesByUserId();
+      const images = await StaticDataService.getArtistImages();
+      setArtistImages(images);
       setGames(gamesArray);
-      setArtistData(artistArray);
+      setArtistData(artists);
     };
 
     init();
   }, []);
 
   const renderButtons = (startHere, endHere) => {
-    let rows = [];
     if (artistData.length > 0) {
-      rows = artistData.slice(startHere, endHere).map((item, index) => {
-        const isDisabled = games.some((game) => game.artist_name === item.id);
+      return artistData.slice(startHere, endHere)
+            .map((item, index) => {
+        const isDisabled = games?.some((game) => game.artist_name === item.id);
 
         let buttonStyle;
         if (isDisabled) {
           buttonStyle = { backgroundColor: "#3D2A38", borderColor: "#4F4F4F" };
-        } else if (selectedId.number_id === item.number_id) {
+        } else if (selectedId?.number_id === item.number_id) {
           buttonStyle = { backgroundColor: "#E61EA3" };
         }
 
@@ -65,7 +68,7 @@ export const ArtistGrid = (props) => {
               style={buttonStyle}
             >
               <img
-                src={require(`../images/artists/${item.image}`).default}
+                src={artistImages[item.id]}
                 className="avatarImage ml-2"
                 alt="Artist Avatar"
               />
@@ -78,8 +81,6 @@ export const ArtistGrid = (props) => {
     } else {
       return <p colSpan="3">No data available</p>;
     }
-
-    return rows;
   };
 
   return (
@@ -93,7 +94,6 @@ export const ArtistGrid = (props) => {
       <div className="flexDirectionRow justify-center mb-3">
         {renderButtons(6, 8)}
       </div>
-      <blackDave />
     </div>
   );
 };

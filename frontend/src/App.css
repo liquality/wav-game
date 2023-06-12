@@ -62,38 +62,35 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #f5f5f5;
 }
 
-.navBarText {
-  font-family: "Sora";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
 
-  color: #f5f5f5;
-
-  text-align: center;
-  letter-spacing: -0.08px;
-
-  color: white;
-}
-
-.navBarLogoText {
+.logo-text {
+  display: flex;
+  align-items: start;
   font-family: "000 webfont";
   font-style: normal;
   font-weight: 400;
-  font-size: 45px;
-
+  font-size: 2.813rem;
   text-align: center;
   letter-spacing: -0.08px;
   color: white;
 }
 
+.logo-addon {
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.563rem !important;
+  color: #BDBDBD;
+  margin-left: 0.459rem;
+  line-height: 3.875rem;
+}
 .navBold {
   font-family: "000 webfont";
   font-weight: 700;
 }
 
-.navBarText:hover {
+.navBarText:hover,
+.logo-text:hover {
   text-decoration: none;
   color: white;
 }
@@ -293,11 +290,12 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .footer {
   flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-
+  align-items: center;
   background-color: #272222;
+}
+
+.footer > div {
+  height: 6.125rem;
 }
 
 .alignTextToRight {
@@ -592,10 +590,17 @@ div.background {
 }
 
 .userAvatar {
-  border: none;
   padding: 10;
-  box-shadow: 0 0 0 1px #f251bc;
+  height: 3rem;
+  width: 3rem;
   border-radius: 50%;
+  border: 1px solid #F5F5F5;
+  background-color: transparent;
+  outline: 1px solid #BC2B8B;
+  outline-offset: 0.313rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .userMenuText {

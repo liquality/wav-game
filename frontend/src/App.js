@@ -8,25 +8,29 @@ import { Balances } from "./pages/Balances";
 import { setupSDK } from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
+import { useState } from 'react';
 
 function App() {
   setupSDK();
-
+  const [showPickArtistModal, setShowPickArtistModal] = useState(false);
+  
   return (
     <div className="stretched device-xl no-transition">
       <DataContext.Provider
         value={{
           loginResponse: "",
           setLoginResponse: "",
+          showPickArtistModal,
+          setShowPickArtistModal
         }}
       >
         {" "}
-        <Navbar />
+        <Navbar showPickArtistModal={showPickArtistModal} setShowPickArtistModal={setShowPickArtistModal} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/balances" element={<Balances />} />
-          <Route path="/artist/:artistId" element={<Artist />} />
+          <Route path="/artist/:artistId" element={<Artist showPickArtistModal={showPickArtistModal} setShowPickArtistModal={setShowPickArtistModal} />} />
         </Routes>
         <Footer />
       </DataContext.Provider>{" "}

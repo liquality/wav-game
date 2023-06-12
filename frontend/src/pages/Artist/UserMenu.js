@@ -60,7 +60,8 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
     if (games) {
       rows = games.map((game, index) => {
         return (
-          <div className="pr-5 mt-3">
+          <div key={index}
+               className="pr-5 mt-3">
             <button
               className="pl-3 pb-3 userMenuText"
               onClick={() => navigate(`/artist/${game.artist_name}`)}

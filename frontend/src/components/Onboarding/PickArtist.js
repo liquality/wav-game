@@ -1,6 +1,3 @@
-import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
-
-import { useState, useEffect } from "react";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
@@ -20,8 +17,8 @@ export const PickArtist = (props) => {
       const gameObject = await UserService.createGame(
         {
           user_id: fetchSession().id,
-          artist_name: selectedId.id,
-          game_symbol_id: selectedId.number_id,
+          artist_name: selectedId?.id,
+          game_symbol_id: selectedId?.number_id,
         },
         fetchSession()?.token
       );

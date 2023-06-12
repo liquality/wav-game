@@ -1,17 +1,18 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { LoginModal } from "./Onboarding/LoginModal";
 import { fetchSession } from "../utils";
 import UserMenu from "../pages/Artist/UserMenu";
 import UserService from "../services/UserService";
-import { PickArtist } from "./Onboarding/PickArtist";
 import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
+import { useParams } from 'react-router-dom';
 
-const Navbar = () => {
-  const [address, setAddress] = React.useState("Sign in");
-  const [userMenuOpen, setUserMenuOpen] = React.useState(false);
-  const [show, setShow] = React.useState(false);
-  const [user, setUser] = React.useState({});
-  const [showPickArtistModal, setShowPickArtistModal] = React.useState(false);
+const Navbar = (props) => {
+  let { artistId } = useParams();
+  const [address, setAddress] = useState("Sign in");
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [show, setShow] = useState(false);
+  const [user, setUser] = useState({});
+  const { showPickArtistModal, setShowPickArtistModal } = props;
 
   const fetchUser = async () => {
     if (fetchSession()?.id) {
@@ -27,36 +28,23 @@ const Navbar = () => {
     } else return {};
   };
 
-  const AvatarComponent = ({ avatarData }) => {
-    // Convert the binary data to a base64-encoded string
-    const base64Image = Buffer.from(avatarData).toString("base64");
-
-    // Create the data URL with the base64 image data
-    const imageUrl = `data:image/png;base64,${base64Image}`;
-
+  const AvatarComponent = ({ avatar }) => {
     return (
-      <div className="userAvatar p-2">
-        <img
-          src={imageUrl}
-          height={36}
-          width={36}
-          className="rounded-full "
-          alt="avatar"
-        />
+      <div className="userAvatar p-2 flex items-center justify-center"
+        style={{ backgroundImage: `url(${avatar})` }}>
       </div>
     );
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const user = await fetchUser();
       setUser(user);
     };
 
     fetchData();
-
     return () => {
-      //any cleanup
+
     };
   }, []);
   const openModal = () => {
@@ -79,14 +67,15 @@ const Navbar = () => {
       {showPickArtistModal ? (
         <ChooseNewArtistModal
           show={showPickArtistModal}
+          selectedArtistId={artistId}
           setShow={setShowPickArtistModal}
         />
       ) : null}
       <nav className=" sticky top-0  mt-1 z-10">
-        <div className="container flex flex-wrap justify-between ">
-          <p className="block py-2 navBarLogoText" aria-current="page">
-            wavGame
-          </p>
+        <div className="container flex flex-wrap justify-between">
+          <div className="block py-2 logo-text" aria-current="page">
+            WavGame <div className="logo-addon">Beta</div>
+          </div>
 
           <div
             className="hidden w-full md:block md:w-auto"
@@ -96,7 +85,7 @@ const Navbar = () => {
               {fetchSession()?.token ? (
                 <button onClick={() => setUserMenuOpen(!userMenuOpen)}>
                   {user?.avatar ? (
-                    <AvatarComponent avatarData={user.avatar} />
+                    <AvatarComponent avatar={user.avatar} />
                   ) : null}
                 </button>
               ) : (

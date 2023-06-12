@@ -12,10 +12,9 @@ interface GameCardsProps {
   /**
    * Click handler for each level
    */
-  onLevelSelected?: (level: number) => void;
+  onLevelSelected: (level: number) => void;
 
   levels: any[];
-  setShowTrade: (level: number) => void;
 }
 
 /**
@@ -24,7 +23,7 @@ interface GameCardsProps {
 export const GameCards = ({
   currentLevel = 1, // default active card level
   levels = [],
-  setShowTrade,
+  onLevelSelected,
   ...props
 }: GameCardsProps) => {
   const [level, setLevel] = useState(currentLevel);
@@ -42,11 +41,15 @@ export const GameCards = ({
       {levels.map((l) => {
         return (
           <LevelCard
-            setShowTrade={setShowTrade}
+            key={l.id}
             status={l.status as LevelStatus}
             setLevel={onSetLevel}
             current={level}
-            actions={[]}
+            actions={[{
+              onActionClick: (level)=> onLevelSelected(level),
+              label: 'Trade Now',
+              mode: 'default'
+            }]}
             level={l}
           />
         );
