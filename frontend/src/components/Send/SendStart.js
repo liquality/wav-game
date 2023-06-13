@@ -4,6 +4,7 @@ import CustomButton from "../Button";
 import { NftImages } from "./NftImages";
 import { SpinningLoader } from "../SpinningLoader";
 import { getPublicKey } from "../../utils";
+import { CHAIN_ID } from "../../data/contract_data";
 
 export const SendStart = ({
   selectedNft,
@@ -16,7 +17,7 @@ export const SendStart = ({
 
   const fetchNfts = async (address, chainId) => {
     //TODO: fetch your own public address from localstorage instead
-    const nfts = await NftService.getNfts(getPublicKey(), 80001);
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
     return nfts;
   };
 

@@ -4,6 +4,7 @@ import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { ReactComponent as Polygon } from "../../images/polygon.svg";
 import { useState } from "react";
 import CustomButton from "../Button";
+import { CHAIN_ID } from "../../data/contract_data";
 
 const imagePlaceholder =
   "https://flowbite.com/docs/images/examples/image-4@2x.jpg";
@@ -26,7 +27,7 @@ export const PrepareSend = ({
     let pk = getPrivateKey();
     setContent("processingSend");
 
-    let txHash = await NftService.transferNft(transferRequest, 80001, pk, true);
+    let txHash = await NftService.transferNft(transferRequest, CHAIN_ID, pk, true);
     setTxHash(txHash);
   };
 

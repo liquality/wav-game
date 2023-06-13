@@ -7,6 +7,7 @@ import { TradeStart } from "./TradeStart";
 import { ProcessingTrade } from "./ProcessingTrade";
 import { ethers } from "ethers";
 import {
+  CHAIN_ID,
   WAV_NFT_ABI,
   WAV_NFT_ADDRESS,
   WAV_PROXY_ABI,
@@ -52,7 +53,7 @@ export const TradeModal = (props) => {
 
         const nfts = await NftService.getNftsForContract(
           WAV_NFT_ADDRESS,
-          80001
+          CHAIN_ID
         );
         setWavNfts(nfts);
       } catch (error) {

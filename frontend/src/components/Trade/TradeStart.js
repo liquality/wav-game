@@ -5,10 +5,10 @@ import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import CustomButton from "../Button";
-import { WAV_NFT_ADDRESS, WAV_PROXY_ADDRESS } from "../../data/contract_data";
+import { CHAIN_ID, WAV_NFT_ADDRESS, WAV_PROXY_ADDRESS } from "../../data/contract_data";
 import { getGameIdBasedOnHref, getPrivateKey, getPublicKey } from "../../utils";
 import { ethers } from "ethers";
-import { TransactionService } from '@liquality/wallet-sdk';
+import { NftService, TransactionService } from '@liquality/wallet-sdk';
 
 export const TradeStart = (props) => {
   const { setContent, gameContract, nftContract, setTxHash } = props;
@@ -48,24 +48,23 @@ export const TradeStart = (props) => {
         });  */
 
       // Check approval
-      const approved = await nftContract.isApprovedForAll(
+      const approved = await NftService.isApprovedForAll(
+        WAV_NFT_ADDRESS,
         getPublicKey(),
         WAV_PROXY_ADDRESS
       );
 
       if (!approved) {
-        const getApprovalHash = await nftContract
-          .connect(signer)
-          .setApprovalForAll(WAV_PROXY_ADDRESS, true);
+        const approvalTx = await nftContract.populateTransaction.setApprovalForAll(WAV_PROXY_ADDRESS, true);
+        let txHashApproval = TransactionService.sendGaslessly(WAV_NFT_ADDRESS, approvalTx.data, privateKey, CHAIN_ID);
+
       }
 
       //TODO use SDK and gelato to call levelUp() gaslessly
       //TODO gameID should come from db
-      let levelUpTx = await gameContract
-        .connect(signer)
-        .populateTransaction.levelUp(artist.number_id, 2);
+      let levelUpTx = await gameContract.populateTransaction.levelUp(artist.number_id, 2);
 
-      let txHashLevelUp = TransactionService.sendGaslessly(WAV_PROXY_ADDRESS, levelUpTx.data, privateKey, 80001);
+      let txHashLevelUp = TransactionService.sendGaslessly(WAV_PROXY_ADDRESS, levelUpTx.data, privateKey, CHAIN_ID);
       
       //TODO: add level up to db here
 
