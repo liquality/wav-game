@@ -51,7 +51,8 @@ export const TradeStart = (props) => {
       const approved = await NftService.isApprovedForAll(
         WAV_NFT_ADDRESS,
         getPublicKey(),
-        WAV_PROXY_ADDRESS
+        WAV_PROXY_ADDRESS,
+        CHAIN_ID
       );
 
       if (!approved) {
