@@ -5,34 +5,38 @@ import { useState, useEffect, useTransition } from "react";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 import UserService from "../../services/UserService";
+import { getPublicKey } from "../../utils";
 
 const Leaderboard = ({ setShowSendModal, artist }) => {
   const [user, setUser] = React.useState({});
   const [showNfts, setShowNfts] = React.useState(false);
   const [leaderboardData, setLeaderboardData] = useState(null);
 
-  console.log(artist, "artist?", leaderboardData);
   const getLeaderboardData = async () => {
-    try {
-      const leaderboard = await UserService.getLeaderboardData(
-        artist?.number_id
-      );
-      return leaderboard;
-    } catch (err) {
-      console.log(err, "Error fetching the leaderboard");
+    if (artist.number_id) {
+      try {
+        const leaderboard = await UserService.getLeaderboardData(
+          artist?.number_id
+        );
+        return leaderboard;
+      } catch (err) {
+        console.log(err, "Error fetching the leaderboard");
+      }
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const _leaderboardData = await getLeaderboardData();
-      setLeaderboardData(_leaderboardData);
+      if (!leaderboardData) {
+        const _leaderboardData = await getLeaderboardData();
+        setLeaderboardData(_leaderboardData);
+      }
     };
     fetchData();
     return () => {
       //any cleanup
     };
-  }, []);
+  }, [leaderboardData, artist]);
 
   const activeToggleStyle = {
     borderBottom: "1px solid #f251bc",
@@ -110,22 +114,22 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
                 Players
               </th>
               <td className="px-6 py-4">
-                {leaderboardData.level1 ? leaderboardData.level1 : "--"}
+                {leaderboardData?.level1 ? leaderboardData?.level1 : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData.level2 ? leaderboardData.level2 : "--"}
+                {leaderboardData?.level2 ? leaderboardData?.level2 : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData.level3 ? leaderboardData.level3 : "--"}
+                {leaderboardData?.level3 ? leaderboardData?.level3 : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData.level4 ? leaderboardData.level4 : "--"}
+                {leaderboardData?.level4 ? leaderboardData?.level4 : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData.level5 ? leaderboardData.level5 : "--"}
+                {leaderboardData?.level5 ? leaderboardData?.level5 : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData.level6 ? leaderboardData.level6 : "--"}
+                {leaderboardData?.level6 ? leaderboardData?.level6 : "--"}
               </td>
             </tr>
           </tbody>
@@ -133,6 +137,7 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
       </div>
     );
   };
+
   return (
     <div className="flex flex-col justify-center  items-center leaderboardContainer relative">
       <div
@@ -151,7 +156,7 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
           </p>
           <a
             className="flex hover:no-underline lightPink  hover:text-decoration-none"
-            href="https://opensea.io/"
+            href={`https://testnets.opensea.io/${getPublicKey()}`}
             target="_blank"
             rel="noreferrer"
           >

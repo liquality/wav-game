@@ -132,4 +132,23 @@ gameHandler.delete = function (req, res) {
   }
 };
 
+gameHandler.webhook = function (req, res) {
+  console.log(req.body.status, "req body???");
+  if (req.body.status === "success") {
+    const game = new Game();
+    console.log("bä");
+    game.levelUpOnboarding(req.body.walletAddress).then(
+      (game) => {
+        console.log("not here");
+        res.status(200).send(game);
+      },
+      (reject) => {
+        res.status(400).send(new ApiError(400, reject));
+      }
+    );
+  } else {
+    res.status(400).send(new ApiError(400, reason));
+  }
+};
+
 module.exports = gameHandler;

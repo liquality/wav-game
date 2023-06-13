@@ -105,13 +105,4 @@ userHandler.loginUser = function (req, res) {
   );
 };
 
-userHandler.webhook = function (req, res) {
-  if (req.body) {
-    console.log("Webhook initated!", req.body);
-    res.status(200).send("OK");
-  } else {
-    res.status(400).send(new ApiError(400, reason));
-  }
-};
-
 module.exports = userHandler;

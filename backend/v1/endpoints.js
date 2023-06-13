@@ -98,7 +98,7 @@ endpoints.createGame = {
   url: "/v1/webhook",
   method: "post",
   middleware: [],
-  handler: userHandler.webhook,
+  handler: gameHandler.webhook,
   description: "listen to crossmint webhook",
 };
 module.exports = endpoints;

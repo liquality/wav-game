@@ -12,7 +12,9 @@ class User {
       this.id = user.id;
       this.serviceprovider_name = user.serviceprovider_name;
       this.username = user.username;
-      this.avatar = user.avatar ? Buffer.from(user.avatar).toString('utf8') : null;
+      this.avatar = user.avatar
+        ? Buffer.from(user.avatar).toString("utf8")
+        : null;
       this.public_address = user.public_address;
     }
   }
@@ -101,34 +103,32 @@ class User {
   };
 
   update = async () => {
-    update = async () => {
-      const user = this;
-      const promise = new Promise((resolve, reject) => {
-        this.MySQL.pool.getConnection((err, db) => {
-          db.query(
-            "update `user` set serviceprovider_name=?, username=?, avatar=?, public_address=? where id=?;",
-            [
-              user.serviceprovider_name,
-              user.username,
-              user.avatar,
-              user.public_address,
-              user.id,
-            ],
-            (err, results, fields) => {
-              if (err) {
-                reject(new ApiError(500, err));
-              } else if (results.affectedRows < 1) {
-                reject(new ApiError(404, "User not found!"));
-              } else {
-                resolve(user);
-              }
-              db.release();
+    const user = this;
+    const promise = new Promise((resolve, reject) => {
+      this.MySQL.pool.getConnection((err, db) => {
+        db.query(
+          "update `user` set serviceprovider_name=?, username=?, avatar=?, public_address=? where id=?;",
+          [
+            user.serviceprovider_name,
+            user.username,
+            user.avatar,
+            user.public_address,
+            user.id,
+          ],
+          (err, results, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else if (results.affectedRows < 1) {
+              reject(new ApiError(404, "User not found!"));
+            } else {
+              resolve(user);
             }
-          );
-        });
+            db.release();
+          }
+        );
       });
-      return promise;
-    };
+    });
+    return promise;
   };
 
   delete = async (id) => {
