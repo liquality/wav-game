@@ -6,6 +6,7 @@ import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { ReactComponent as Polygon } from "../../images/polygon.svg";
 import { useState } from "react";
 import CustomButton from "../Button";
+import { CHAIN_ID } from "../../data/contract_data";
 
 const imagePlaceholder =
   "https://flowbite.com/docs/images/examples/image-4@2x.jpg";
@@ -29,17 +30,20 @@ export const PrepareSend = ({
       let pk = getPrivateKey();
       setContent("processingSend");
 
-      console.log(transferRequest, "transferreq?");
       let txHash = await NftService.transferNft(
         transferRequest,
-        80001,
+        CHAIN_ID,
         pk,
         true
       );
       setTxHash(txHash);
     } catch (err) {
-      console.log(err, "whats erer=?");
+      console.log(err, "error transfering nft");
     }
+  };
+
+  const handleSendInput = (e) => {
+    setAddressInput(e.target.value);
   };
 
   const handleCopyClick = (text) => {
@@ -51,10 +55,6 @@ export const PrepareSend = ({
       .catch((error) => {
         console.error("Failed to copy text: ", error);
       });
-  };
-
-  const handleSendInput = (e) => {
-    setAddressInput(e.target.value);
   };
 
   console.log(process.env.REACT_APP_GELATO_API_KEY, "api key", selectedNft);

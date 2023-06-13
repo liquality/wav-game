@@ -5,9 +5,10 @@ import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import CustomButton from "../Button";
-import { WAV_NFT_ADDRESS, WAV_PROXY_ADDRESS } from "../../data/contract_data";
+import { CHAIN_ID, WAV_NFT_ADDRESS, WAV_PROXY_ADDRESS } from "../../data/contract_data";
 import { getGameIdBasedOnHref, getPrivateKey, getPublicKey } from "../../utils";
 import { ethers } from "ethers";
+import { NftService, TransactionService } from '@liquality/wallet-sdk';
 
 export const TradeStart = (props) => {
   const { setContent, gameContract, nftContract, setTxHash } = props;
@@ -22,11 +23,13 @@ export const TradeStart = (props) => {
   const startTrade = async (data) => {
     // Level UP
     try {
-      const provider = new ethers.providers.JsonRpcProvider(
+      const provider = new ethers.JsonRpcProvider(
         "https://polygon-mumbai.g.alchemy.com/v2/Vnr65MaW03LZ6ri9KBKrOEZjjcmMGSQ3"
       );
+  
       const artist = await getArtist();
-      const signer = new ethers.Wallet(getPrivateKey(), provider);
+      const privateKey = getPrivateKey();
+      const signer = new ethers.Wallet(privateKey, provider);
 
       //TODO: based on artist.number_id & user_id, you have to get the game_level from userdb
       console.log(
@@ -45,22 +48,25 @@ export const TradeStart = (props) => {
         });  */
 
       // Check approval
-      const approved = await nftContract.isApprovedForAll(
+      const approved = await NftService.isApprovedForAll(
+        WAV_NFT_ADDRESS,
         getPublicKey(),
-        WAV_PROXY_ADDRESS
+        WAV_PROXY_ADDRESS,
+        CHAIN_ID
       );
 
       if (!approved) {
-        const getApprovalHash = await nftContract
-          .connect(signer)
-          .setApprovalForAll(WAV_PROXY_ADDRESS, true);
+        const approvalTx = await nftContract.setApprovalForAll.populateTransaction(WAV_PROXY_ADDRESS, true);
+        let txHashApproval = TransactionService.sendGaslessly(WAV_NFT_ADDRESS, approvalTx.data, privateKey, CHAIN_ID);
+
       }
 
       //TODO use SDK and gelato to call levelUp() gaslessly
       //TODO gameID should come from db
-      let txHashLevelUp = await gameContract
-        .connect(signer)
-        .levelUp(artist.number_id, 2);
+      let levelUpTx = await gameContract.levelUp.populateTransaction(artist.number_id, 2);
+
+      let txHashLevelUp = TransactionService.sendGaslessly(WAV_PROXY_ADDRESS, levelUpTx.data, privateKey, CHAIN_ID);
+      
       //TODO: add level up to db here
 
       setTxHash(txHashLevelUp);
