@@ -15,6 +15,9 @@ import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
 import { getPublicKey } from "../../utils";
+import { NftService } from "@liquality/wallet-sdk";
+import { WAV_NFT_ADDRESS } from "../../data/contract_data";
+import UserService from "../../services/UserService";
 
 export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);
@@ -26,8 +29,10 @@ export const Artist = (props) => {
   const [showTrade, setShowTrade] = useState(false);
   const [showSend, setShowSend] = useState(false);
   const [levelClicked, setLevelClicked] = useState(null);
-  const { setShowPickArtistModal } = props;
+  const [wavNfts, setWavNfts] = useState(null);
 
+  const { setShowPickArtistModal } = props;
+  console.log(wavNfts, "wavnfts");
   const fetchArtist = async (id) => {
     try {
       const artist = await StaticDataService.findArtistById(id);
@@ -37,8 +42,20 @@ export const Artist = (props) => {
     }
   };
 
+  const fetchNftCollection = async (id) => {
+    try {
+      const wavNfts = await NftService.getNftsForContract(
+        WAV_NFT_ADDRESS,
+        80001
+      );
+      return wavNfts;
+    } catch (err) {
+      console.log(err, "Error fetching the wav nfts");
+    }
+  };
+
   const onLevelSelected = (level) => {
-    console.log('onLevelSelected', level)
+    console.log("onLevelSelected", level);
     setShowTrade(true);
     setSelectedLevel(level);
     setLevelClicked(level);
@@ -50,6 +67,9 @@ export const Artist = (props) => {
       const _artist = await fetchArtist(artistId);
       const _image = (await import(`../../images/artists/${_artist.image}`))
         .default;
+      const _wavNfts = await fetchNftCollection();
+
+      setWavNfts(_wavNfts);
       setArtist(_artist);
       setImage(_image);
     };
@@ -98,7 +118,7 @@ export const Artist = (props) => {
               </span>
             </div>
           </div>
-          <Leaderboard setShowSendModal={setShowSend} />
+          <Leaderboard setShowSendModal={setShowSend} artist={artist} />
         </div>
         <div className="flex flex-col  items-center   pt-24 mt-12"></div>
       </div>
