@@ -228,9 +228,10 @@ class Game {
             const user_id = userResults[0].user_id;
             console.log(userResults[0], "user results");
 
-            // Update the GAME table
+            // TODO: somehow the game_id should be in here as well if we want to use this function for TRADE, but
+            //we dont really have to because as long as we have trade txhash we can level up after we have gotten the txhash
             db.query(
-              "UPDATE `game` SET level = 1 WHERE user_id = ?",
+              "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ?",
               [user_id],
               (err, gameResults, fields) => {
                 if (err) {
