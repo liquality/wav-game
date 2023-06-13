@@ -37,7 +37,7 @@ export const GameCards = ({
   }
 
   return (
-    <div className="flex flex-row mt-5 game-cards">
+    <div className="mt-5 game-cards">
       {levels.map((l) => {
         return (
           <LevelCard

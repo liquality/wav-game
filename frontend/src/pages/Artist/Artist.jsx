@@ -4,7 +4,6 @@ import "./artist.css";
 import { Sidebar } from "./Sidebar";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 
-import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
 import { GameCards } from "../../components/GameCards/GameCards";
 import { GameTabs } from "../../components/GameTabs/GameTabs";
@@ -62,7 +61,9 @@ export const Artist = (props) => {
   }, [routeParams]);
 
   return (
-    <div className="container flex">
+    <div className="container mx-auto">
+      <div className="flex">
+
       <Sidebar
         open={sidebarOpen}
         setOpen={setSidebarOpen}
@@ -70,7 +71,7 @@ export const Artist = (props) => {
         image={image}
         setShowPickArtistModal={setShowPickArtistModal}
       />
-      <div className="flex flex-col items-center md:ml-20">
+      <div className="flex flex-col items-center md:ml-20 grow">
         <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
           <div className="game-header-level">LEVEL: 3 </div>
           <div className="game-header-title">
@@ -78,17 +79,15 @@ export const Artist = (props) => {
           </div>
           <div className="game-header-counter">COLLECTABLES: 42</div>
         </div>
-        <div className="flex flex-row md:flex-col justify-center my-5">
+        <div className="flex flex-col justify-center mt-5">
           <GameTabs levels={levels} currentLevel={1} />
-        </div>
-        <div className="w-full flex flex-col justify-center">
           <GameCards
             onLevelSelected={onLevelSelected}
             levels={levels}
             currentLevel={1}
           />
         </div>
-        <div className="flex flex-col  items-center   pt-24 mt-12">
+        <div className="flex flex-col  items-center pt-24 mt-12">
           <div className="flex flex-col justify-center items-center  mb-24 relative">
             <RewardsTout className="mt-5" />
 
@@ -103,6 +102,7 @@ export const Artist = (props) => {
         <div className="flex flex-col  items-center   pt-24 mt-12"></div>
       </div>
 
+      </div>
       <TradeModal setShow={setShowTrade} show={showTrade} />
 
       <SendModal setShow={setShowSend} show={showSend} />

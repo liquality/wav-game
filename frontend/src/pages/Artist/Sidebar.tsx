@@ -68,11 +68,11 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
   return (
     <div
       className={classNames({
-        "flex flex-col": true, // layout
-        "w-full": true, // positioning md:sticky md:top-16 md:z-0 top-0 z-20 fixed
+        "flex grow-0": true, // layout
+        //"w-full": true, // positioning md:sticky md:top-16 md:z-0 top-0 z-20 fixed
         "h-full md:w-[18.57rem]": true, // for height and width
-        "transition-transform .3s ease-in-out md:-translate-x-0": true, //animations
-        "-translate-x-full": !open, //hide sidebar to the left when closed
+        //"transition-transform .3s ease-in-out md:-translate-x-0": true, //animations
+        //"-translate-x-full": !open, //hide sidebar to the left when closed
       })}
       ref={ref}
     >
