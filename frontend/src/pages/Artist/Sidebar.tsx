@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import classNames from "classnames";
 import { useOnClickOutside } from "usehooks-ts";
 import { ReactComponent as WaveGraphic } from "../../images/wave_graphic.svg";
@@ -7,7 +7,8 @@ import { ReactComponent as TwitterIcon } from "../../images/twitter.svg";
 import { ReactComponent as InstagramIcon } from "../../images/instagram.svg";
 import { ReactComponent as TikTokIcon } from "../../images/tiktok.svg";
 import { ReactComponent as LensIcon } from "../../images/lens.svg";
-
+import { Button } from "../../components/Button/Button";
+import { ArtistBioModal } from './ArtistBioModal'
 const SocialLink = (
   props: {
     network: string,
@@ -60,6 +61,7 @@ type Props = {
 };
 
 export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }: Props) => {
+  const [showArtistBioModal, setShowArtistBioModal] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, (e) => {
     setOpen(false);
@@ -76,12 +78,13 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
       })}
       ref={ref}
     >
+      <ArtistBioModal show={showArtistBioModal} setShow={setShowArtistBioModal} artist={artist}/>
       <div className="flex flex-col place-items-end side-bar">
         <div className="flex flex-col px-5 gap-4 mt-5">
           <div className="artist-name">{artist.name}</div>
           <div className="artist-desc">{artist.description}</div>
-          <button className="artist-link flex items-center" 
-          onClick={()=>setShowPickArtistModal(true)}>
+          <button className="artist-link flex items-center"
+            onClick={() => setShowPickArtistModal(true)}>
             CHANGE ARTIST
             <ArrowRight className="ml-3" />
           </button>
@@ -96,8 +99,8 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
               {artist && artist.socials ? Object.keys(artist.socials).map((network) => {
                 return (
                   <SocialLink key={network}
-                              network={network} 
-                              url={artist.socials[network]} />
+                    network={network}
+                    url={artist.socials[network]} />
                 );
               }) : null}
             </div>
@@ -105,11 +108,18 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>BIO</h2>
-            <p>{artist.bio} ... Read More</p>
+            <p>{artist.bio}..
+              <Button 
+                size="small"
+                onClick={()=> setShowArtistBioModal(true)}
+                link
+                mode="pink">
+                Read More</Button>
+            </p>
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>FUN FACT</h2>
-            <p>{artist.facts} </p>
+            <p>{artist.quote}</p>
           </div>
         </div>
       </div>

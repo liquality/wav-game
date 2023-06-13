@@ -97,6 +97,22 @@
   border-top: 1px solid #bf3948;
 }
 
+.artist-info h2 {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.813rem;
+  line-height: 1.375rem;
+  letter-spacing: 1px;
+}
+.artist-info p {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.875rem;
+  line-height: 1.188rem;
+}
+
 .game-header {
   border-top: 1px solid #bf3948;
 }
