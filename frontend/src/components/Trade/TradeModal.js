@@ -34,7 +34,7 @@ export const TradeModal = (props) => {
     const initializeContract = async () => {
       try {
         //TODO use infura hardcoded url mumbai rpc
-        const provider = new ethers.providers.JsonRpcProvider(
+        const provider = new ethers.JsonRpcProvider(
           "https://polygon-mumbai.g.alchemy.com/v2/cgkNW5QlsKZ8D_64-ggyUUj2aYGJqejc"
         );
         // Create a new instance of the contract using the ABI and address

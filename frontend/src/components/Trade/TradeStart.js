@@ -23,7 +23,7 @@ export const TradeStart = (props) => {
   const startTrade = async (data) => {
     // Level UP
     try {
-      const provider = new ethers.providers.JsonRpcProvider(
+      const provider = new ethers.JsonRpcProvider(
         "https://polygon-mumbai.g.alchemy.com/v2/Vnr65MaW03LZ6ri9KBKrOEZjjcmMGSQ3"
       );
   
@@ -56,14 +56,14 @@ export const TradeStart = (props) => {
       );
 
       if (!approved) {
-        const approvalTx = await nftContract.populateTransaction.setApprovalForAll(WAV_PROXY_ADDRESS, true);
+        const approvalTx = await nftContract.setApprovalForAll.populateTransaction(WAV_PROXY_ADDRESS, true);
         let txHashApproval = TransactionService.sendGaslessly(WAV_NFT_ADDRESS, approvalTx.data, privateKey, CHAIN_ID);
 
       }
 
       //TODO use SDK and gelato to call levelUp() gaslessly
       //TODO gameID should come from db
-      let levelUpTx = await gameContract.populateTransaction.levelUp(artist.number_id, 2);
+      let levelUpTx = await gameContract.levelUp.populateTransaction(artist.number_id, 2);
 
       let txHashLevelUp = TransactionService.sendGaslessly(WAV_PROXY_ADDRESS, levelUpTx.data, privateKey, CHAIN_ID);
       
