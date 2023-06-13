@@ -1,5 +1,5 @@
-import { ReactComponent as NftPreview } from "../../images/nft_preview.svg";
-import { ReactComponent as NftBigPreview } from "../../images/nft_preview_big.svg";
+import NftPreview from "../../images/nft_preview.png";
+import NftBigPreview from "../../images/nft_preview_big.png";
 
 import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
 import * as React from "react";
@@ -73,7 +73,7 @@ export const TradeStart = (props) => {
   console.log(getPublicKey(), "pub key");
 
   return (
-    <div className="contentView flex justify-around">
+    <div className="contentView flex justify-around" >
       <div className="p-4 ml-5 flexDirectionRow ">
         <div>
           {" "}
@@ -84,8 +84,8 @@ export const TradeStart = (props) => {
               <div className="flexDirectionRow">
                 {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
 
-                <NftPreview className="mr-1 " />
-                <NftPreview />
+                <img src={NftPreview} className="mr-1" alt="NFT Preview"/>
+                <img src={NftPreview} alt="NFT Preview"/>
               </div>
             </div>
 
@@ -105,11 +105,11 @@ export const TradeStart = (props) => {
 
               <DoubleArrow className="m-auto" />
             </div>
-            <div className=" pr-5 flexDirectionColumn ">
+            <div className="pr-5 flexDirectionColumn ">
               <p className="webfont coral text-2xl">Level 3</p>
-              <p className=" mb-3">Trade 2 top live songs</p>
+              <p className="mb-3">Trade 2 top live songs</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
-              <NftBigPreview />
+              <img src={NftBigPreview} alt="NFT Preview"/>
             </div>
           </div>
         </div>{" "}

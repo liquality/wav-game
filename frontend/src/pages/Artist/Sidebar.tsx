@@ -78,7 +78,10 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
       })}
       ref={ref}
     >
-      <ArtistBioModal show={showArtistBioModal} setShow={setShowArtistBioModal} artist={artist}/>
+      <ArtistBioModal show={showArtistBioModal} 
+                      setShow={setShowArtistBioModal} 
+                      artist={artist} 
+                      image={image} />
       <div className="flex flex-col place-items-end side-bar">
         <div className="flex flex-col px-5 gap-4 mt-5">
           <div className="artist-name">{artist.name}</div>
@@ -93,7 +96,7 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
           <WaveGraphic className="artist-wave-graphic" />
           <div className="flex flex-col mt-4 px-5 gap-5">
             <div className="mt-3 artist-content">
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+              <p>{artist.quote}</p>
             </div>
             <div className="flex flex-row items-center">
               {artist && artist.socials ? Object.keys(artist.socials).map((network) => {
@@ -108,19 +111,20 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>BIO</h2>
-            <p>{artist.bio}..
-              <Button 
+            <p>
+              {artist.bio?.slice(0, 180)} {artist.bio?.length > 180 ? '...' : ''}
+              <Button
                 size="small"
-                onClick={()=> setShowArtistBioModal(true)}
+                onClick={() => setShowArtistBioModal(true)}
                 link
                 mode="pink">
                 Read More</Button>
             </p>
           </div>
-          <div className="flex flex-col p-5 gap-1 artist-info">
+          {artist.funFact ? <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>FUN FACT</h2>
-            <p>{artist.quote}</p>
-          </div>
+            <p>{artist.funFact?.slice(0, 120)} {artist.funFact?.length > 120 ? '...' : ''}</p>
+          </div> : null}
         </div>
       </div>
     </div>
