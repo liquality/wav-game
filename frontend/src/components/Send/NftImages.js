@@ -33,9 +33,7 @@ export const NftImages = (props) => {
             </button>
 
             <div className="pt-1">
-              <p style={{ fontSize: 11 }}> LVL {index + 1}</p>
-              <p style={{ fontSize: 11 }}> {nft.contract.name}</p>
-              <p style={{ fontSize: 11 }}>{nft.contract.name}</p>
+              <p style={{ fontSize: 11 }}>{nft.metadata?.name}</p>
             </div>
           </div>
         );
@@ -109,9 +107,9 @@ export const NftImages = (props) => {
   };
 
   let imageSizeToRender;
-  if (nfts.length === 1) {
+  if (nfts?.length === 1) {
     imageSizeToRender = renderOneImage();
-  } else if (nfts.length === 2 || nfts.length === 3) {
+  } else if (nfts?.length === 2 || nfts?.length === 3) {
     imageSizeToRender = renderTwoOrThreeImages();
   } else {
     imageSizeToRender = renderMoreThanThreeImages();

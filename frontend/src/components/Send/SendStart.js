@@ -12,14 +12,19 @@ export const SendStart = ({
   setContent,
   handleClose,
 }) => {
-  const [nfts, setNfts] = useState([]);
+  const [nfts, setNfts] = useState(null);
   const [loadingNfts, setLoadingNfts] = useState(false);
 
   const fetchNfts = async (address, chainId) => {
     //TODO: fetch your own public address from localstorage instead
-    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+    const nfts = await NftService.getNfts(
+      getPublicKey(),
+      process.env.REACT_APP_CHAIN_ID
+    );
     return nfts;
   };
+
+  console.log(process.env.REACT_APP_CHAIN_ID, "chaindid,", getPublicKey());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +37,7 @@ export const SendStart = ({
     };
 
     fetchData();
-  }, [selectedNft]);
+  }, [selectedNft, nfts]);
 
   console.log(nfts, "nft data");
 
@@ -49,7 +54,7 @@ export const SendStart = ({
             ) : (
               <>
                 <p>
-                  WavGame Collection - {nfts.length === 1 ? <br></br> : null}
+                  WavGame Collection - {nfts?.length === 1 ? <br></br> : null}
                   Season 1 | 2
                 </p>
 
@@ -65,7 +70,10 @@ export const SendStart = ({
           <div className="flexDirectionCol">
             <br></br>
             <br></br>
-            <div className="flexDirectionRow m-auto">
+            <div
+              style={{ left: "40%" }}
+              className="flexDirectionRow m-auto absolute bottom-40 "
+            >
               <CustomButton
                 disabled={selectedNft === null ? true : false}
                 pink
