@@ -10,7 +10,7 @@ export const WAV_PROXY_ABI = [
   },
   {
     "inputs": [],
-    "name": "BurnBatchFailed",
+    "name": "AmountCannotBeZero",
     "type": "error"
   },
   {
@@ -32,9 +32,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "gameID",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "name": "InvalidGameID",
@@ -59,22 +59,6 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [],
     "name": "IslandNotFound",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "invalidNFT",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "islandID",
-        "type": "uint256"
-      }
-    ],
-    "name": "NFTNotInMintableSet",
     "type": "error"
   },
   {
@@ -108,9 +92,9 @@ export const WAV_PROXY_ABI = [
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "gameID",
+        "type": "uint256"
       },
       {
         "indexed": true,
@@ -158,9 +142,9 @@ export const WAV_PROXY_ABI = [
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "indexed": true,
@@ -190,9 +174,9 @@ export const WAV_PROXY_ABI = [
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "indexed": true,
@@ -209,9 +193,9 @@ export const WAV_PROXY_ABI = [
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "gameID",
+        "type": "uint256"
       },
       {
         "indexed": true,
@@ -222,7 +206,7 @@ export const WAV_PROXY_ABI = [
       {
         "indexed": true,
         "internalType": "uint256",
-        "name": "nextIslandID",
+        "name": "newIslandID",
         "type": "uint256"
       },
       {
@@ -272,6 +256,12 @@ export const WAV_PROXY_ABI = [
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "gameID",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "to",
         "type": "address"
@@ -291,6 +281,12 @@ export const WAV_PROXY_ABI = [
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "gameID",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "collector",
         "type": "address"
@@ -302,7 +298,7 @@ export const WAV_PROXY_ABI = [
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
@@ -316,9 +312,9 @@ export const WAV_PROXY_ABI = [
     "inputs": [
       {
         "indexed": true,
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "indexed": true,
@@ -341,6 +337,25 @@ export const WAV_PROXY_ABI = [
       }
     ],
     "name": "Unpaused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "old",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "wavNFT",
+        "type": "address"
+      }
+    ],
+    "name": "WavNFTSet",
     "type": "event"
   },
   {
@@ -369,9 +384,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "internalType": "address",
@@ -379,14 +394,9 @@ export const WAV_PROXY_ABI = [
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "_mintableNFTs",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_mintableAmountPerNFTs",
-        "type": "uint256[]"
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
       }
     ],
     "name": "collect",
@@ -410,9 +420,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -434,9 +444,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "name": "fetchGame",
@@ -457,6 +467,16 @@ export const WAV_PROXY_ABI = [
             "internalType": "uint32",
             "name": "earlyBirdCutOff",
             "type": "uint32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "mintable",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "burnable",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -492,9 +512,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "name": "getBalance",
@@ -524,9 +544,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -555,6 +575,16 @@ export const WAV_PROXY_ABI = [
           },
           {
             "internalType": "uint256",
+            "name": "mintable",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "burnable",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "burnCount",
             "type": "uint256"
           },
@@ -567,16 +597,6 @@ export const WAV_PROXY_ABI = [
         "internalType": "struct IWavGame.Island",
         "name": "",
         "type": "tuple"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
@@ -585,9 +605,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "name": "getTreasury",
@@ -640,9 +660,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -683,24 +703,14 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_gameID",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
-        "name": "_islandID",
+        "name": "_gameID",
         "type": "uint256"
       },
       {
-        "internalType": "uint256[]",
-        "name": "_burnableNFTs",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_burnableAmountPerNFTs",
-        "type": "uint256[]"
+        "internalType": "uint256",
+        "name": "_newIslandID",
+        "type": "uint256"
       }
     ],
     "name": "levelUp",
@@ -787,9 +797,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "components": [
@@ -809,38 +819,14 @@ export const WAV_PROXY_ABI = [
             "type": "uint32"
           },
           {
-            "components": [
-              {
-                "internalType": "bool",
-                "name": "status",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct IWavGame.SetParam[]",
-            "name": "burnableSet",
-            "type": "tuple[]"
+            "internalType": "uint256",
+            "name": "mintable",
+            "type": "uint256"
           },
           {
-            "components": [
-              {
-                "internalType": "bool",
-                "name": "status",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct IWavGame.SetParam[]",
-            "name": "mintableSet",
-            "type": "tuple[]"
+            "internalType": "uint256",
+            "name": "burnable",
+            "type": "uint256"
           }
         ],
         "internalType": "struct IWavGame.IslandParam[]",
@@ -856,9 +842,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address[]",
+        "internalType": "uint256[]",
         "name": "_gameIDs",
-        "type": "address[]"
+        "type": "uint256[]"
       },
       {
         "internalType": "address payable[]",
@@ -880,6 +866,19 @@ export const WAV_PROXY_ABI = [
       }
     ],
     "name": "setTrustedForwarder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IWavNFT",
+        "name": "_wavNft",
+        "type": "address"
+      }
+    ],
+    "name": "setWavNFT",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -939,9 +938,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -966,38 +965,14 @@ export const WAV_PROXY_ABI = [
             "type": "uint32"
           },
           {
-            "components": [
-              {
-                "internalType": "bool",
-                "name": "status",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct IWavGame.SetParam[]",
-            "name": "burnableSet",
-            "type": "tuple[]"
+            "internalType": "uint256",
+            "name": "mintable",
+            "type": "uint256"
           },
           {
-            "components": [
-              {
-                "internalType": "bool",
-                "name": "status",
-                "type": "bool"
-              },
-              {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct IWavGame.SetParam[]",
-            "name": "mintableSet",
-            "type": "tuple[]"
+            "internalType": "uint256",
+            "name": "burnable",
+            "type": "uint256"
           }
         ],
         "internalType": "struct IWavGame.IslandParam",
@@ -1013,14 +988,9 @@ export const WAV_PROXY_ABI = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_recipient",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "_gameID",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -1028,9 +998,9 @@ export const WAV_PROXY_ABI = [
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
       },
       {
         "internalType": "uint256",
@@ -1062,7 +1032,7 @@ export const WAV_NFT_ABI = [
     "inputs": [
       {
         "internalType": "string",
-        "name": "uri",
+        "name": "_uri",
         "type": "string"
       }
     ],
@@ -1631,7 +1601,7 @@ export const WAV_NFT_ABI = [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "_id",
         "type": "uint256"
       }
     ],
@@ -1647,3 +1617,5 @@ export const WAV_NFT_ABI = [
     "type": "function"
   }
 ];
+
+
