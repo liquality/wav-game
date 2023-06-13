@@ -69,13 +69,15 @@ export const PickAvatar = (props) => {
           ) : (
             <AvatarPlaceholder />
           )}
-          <input
-            id="avatarInput"
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-            style={{ display: "none" }}
-          />
+          <button>
+            <input
+              id="avatarInput"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              style={{ display: "none" }}
+            />
+          </button>
         </label>
       </div>
 
