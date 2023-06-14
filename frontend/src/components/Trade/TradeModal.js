@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import { PickArtist } from "../Onboarding/PickArtist";
-import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
-import { CompletedPayment } from "../Onboarding/CompletedPayment";
+
 import { CustomModal } from "../Modal";
 import { TradeStart } from "./TradeStart";
 import { ProcessingTrade } from "./ProcessingTrade";
@@ -21,14 +19,9 @@ export const TradeModal = (props) => {
   const [headerText, setHeaderText] = useState("Trade");
   const [nftContract, setNftContract] = useState(null);
   const [gameContract, setGameContract] = useState(null);
-
   const [wavNfts, setWavNfts] = useState(null);
 
-  const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState(null);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const initializeContract = async () => {

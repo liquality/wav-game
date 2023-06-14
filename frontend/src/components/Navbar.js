@@ -46,10 +46,6 @@ const Navbar = (props) => {
     return () => {};
   }, []);
 
-  const openModal = () => {
-    setUserMenuOpen(true);
-  };
-
   const closeModal = () => {
     setUserMenuOpen(false);
   };

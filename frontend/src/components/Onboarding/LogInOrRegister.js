@@ -1,6 +1,3 @@
-import * as React from "react";
-
-import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import { SpinningLoader } from "../SpinningLoader";
 import CustomButton from "../Button";
 

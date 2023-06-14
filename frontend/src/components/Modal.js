@@ -1,12 +1,10 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { ReactComponent as ModalCloseX } from "../images/modal_close_x.svg";
 import { PoweredByLiquality } from "./PoweredByLiquality";
 
 export const CustomModal = (props) => {
   const { content, setShow, show, modalHeaderText } = props;
-  const [tKey, setTKey] = useState({});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
