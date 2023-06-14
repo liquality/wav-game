@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { PickArtist } from "../Onboarding/PickArtist";
-import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
-import { CompletedPayment } from "../Onboarding/CompletedPayment";
+
 import { CustomModal } from "../Modal";
 import { TradeStart } from "./TradeStart";
 import { ProcessingTrade } from "./ProcessingTrade";
 import { ethers } from "ethers";
 import {
+  CHAIN_ID,
   WAV_NFT_ABI,
   WAV_NFT_ADDRESS,
   WAV_PROXY_ABI,
@@ -20,21 +19,16 @@ export const TradeModal = (props) => {
   const [headerText, setHeaderText] = useState("Trade");
   const [nftContract, setNftContract] = useState(null);
   const [gameContract, setGameContract] = useState(null);
-
   const [wavNfts, setWavNfts] = useState(null);
 
-  const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState(null);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const initializeContract = async () => {
       try {
         //TODO use infura hardcoded url mumbai rpc
-        const provider = new ethers.providers.JsonRpcProvider(
-          "https://polygon-mumbai.g.alchemy.com/v2/cgkNW5QlsKZ8D_64-ggyUUj2aYGJqejc"
+        const provider = new ethers.JsonRpcProvider(
+          process.env.REACT_APP_RPC_URL
         );
         // Create a new instance of the contract using the ABI and address
         const nftContract = new ethers.Contract(
@@ -52,7 +46,7 @@ export const TradeModal = (props) => {
 
         const nfts = await NftService.getNftsForContract(
           WAV_NFT_ADDRESS,
-          80001
+          CHAIN_ID
         );
         setWavNfts(nfts);
       } catch (error) {
@@ -62,9 +56,6 @@ export const TradeModal = (props) => {
 
     initializeContract();
   }, []);
-
-  //TODO you need collect() you need to call gameIds array that Oluchi hardcoded
-  //
 
   const whichContentToRender = () => {
     if (content === "tradeStart") {
@@ -76,31 +67,12 @@ export const TradeModal = (props) => {
           setTxHash={setTxHash}
         />
       );
-      //TODO
     } else if (content === "processingTrade") {
       return (
         <ProcessingTrade
           txHash={txHash}
           setHeaderText={setHeaderText}
           setContent={setContent}
-        />
-      );
-    } else if (content === "pickArtist") {
-      return (
-        <PickArtist setHeaderText={setHeaderText} setContent={setContent} />
-      );
-    } else if (content === "creditcardPayment") {
-      return (
-        <CreditcardPayment
-          setHeaderText={setHeaderText}
-          setContent={setContent}
-        />
-      );
-    } else if (content === "completedPayment") {
-      return (
-        <CompletedPayment
-          setHeaderText={setHeaderText}
-          handleClose={handleClose}
         />
       );
     } else return null;

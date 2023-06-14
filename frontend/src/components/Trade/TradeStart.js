@@ -5,72 +5,122 @@ import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import CustomButton from "../Button";
-import { WAV_NFT_ADDRESS, WAV_PROXY_ADDRESS } from "../../data/contract_data";
-import { getGameIdBasedOnHref, getPrivateKey, getPublicKey } from "../../utils";
+import {
+  CHAIN_ID,
+  WAV_NFT_ADDRESS,
+  WAV_PROXY_ADDRESS,
+} from "../../data/contract_data";
+import {
+  fetchSession,
+  getGameIdBasedOnHref,
+  getPrivateKey,
+  getPublicKey,
+} from "../../utils";
 import { ethers } from "ethers";
+import { NftService, TransactionService } from "@liquality/wallet-sdk";
+import UserService from "../../services/UserService";
 
 export const TradeStart = (props) => {
   const { setContent, gameContract, nftContract, setTxHash } = props;
-  const [nftAmount, setNftAmount] = useState(1);
+  const [game, setGame] = useState(null);
+  const [error, setError] = useState(null);
 
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();
     return artist;
   };
 
-  //A trade makes a player level up
-  const startTrade = async (data) => {
-    // Level UP
+  const fetchGameByUserIdAndArtistId = async () => {
+    const artist = await getArtist();
     try {
-      const provider = new ethers.providers.JsonRpcProvider(
-        "https://polygon-mumbai.g.alchemy.com/v2/Vnr65MaW03LZ6ri9KBKrOEZjjcmMGSQ3"
-      );
-      const artist = await getArtist();
-      const signer = new ethers.Wallet(getPrivateKey(), provider);
-
-      //TODO: based on artist.number_id & user_id, you have to get the game_level from userdb
-      console.log(
-        "PK:",
-        getPrivateKey(),
-        "PUBLIC ADDRESS:",
-        getPublicKey(),
-        "SIGNER OBJ:",
-        signer
+      const user = await UserService.getGameByUserId(
+        fetchSession().id, //userid
+        artist.number_id,
+        fetchSession().token
       );
 
-      /*      const mint = await gameContract
-        .connect(signer)
-        .collect(1000, getPublicKey(), 1, {
-          value: ethers.utils.parseEther("0.0005"),
-        });  */
-
-      // Check approval
-      const approved = await nftContract.isApprovedForAll(
-        getPublicKey(),
-        WAV_PROXY_ADDRESS
-      );
-
-      if (!approved) {
-        const getApprovalHash = await nftContract
-          .connect(signer)
-          .setApprovalForAll(WAV_PROXY_ADDRESS, true);
-      }
-
-      //TODO use SDK and gelato to call levelUp() gaslessly
-      //TODO gameID should come from db
-      let txHashLevelUp = await gameContract
-        .connect(signer)
-        .levelUp(artist.number_id, 2);
-      //TODO: add level up to db here
-
-      setTxHash(txHashLevelUp);
-      setContent("processingTrade");
+      return user;
     } catch (err) {
-      console.log("Something with wrong with trade ERROR:", err);
+      console.log(err, "Error fetching user");
     }
   };
 
-  console.log(getPublicKey(), "pub key");
+  useEffect(() => {
+    const init = async () => {
+      if (!game) {
+        const _game = await fetchGameByUserIdAndArtistId();
+        setGame(_game);
+      }
+    };
+
+    init();
+  }, [game]);
+
+  //LVL UP: A trade makes a player level up both in contract & in db
+  const startTrade = async (data) => {
+    try {
+      const provider = new ethers.JsonRpcProvider(
+        process.env.REACT_APP_RPC_URL
+      );
+
+      const artist = await getArtist();
+      const privateKey = getPrivateKey();
+      const signer = new ethers.Wallet(privateKey, provider);
+
+      // Check approval
+      const approved = await NftService.isApprovedForAll(
+        WAV_NFT_ADDRESS,
+        getPublicKey(),
+        WAV_PROXY_ADDRESS,
+        CHAIN_ID
+      );
+
+      if (!approved) {
+        const approvalTx =
+          await nftContract.setApprovalForAll.populateTransaction(
+            WAV_PROXY_ADDRESS,
+            true
+          );
+        let txHashApproval = await TransactionService.sendGaslessly(
+          WAV_NFT_ADDRESS,
+          approvalTx.data,
+          privateKey,
+          CHAIN_ID
+        );
+      }
+
+      let levelUpTx = await gameContract.levelUp.populateTransaction(
+        artist.number_id,
+        game.level
+      );
+
+      let txHashLevelUp = await TransactionService.sendGaslessly(
+        WAV_PROXY_ADDRESS,
+        levelUpTx.data,
+        privateKey,
+        CHAIN_ID
+      );
+
+      if (txHashLevelUp) {
+        //Lvl up in DB
+        await UserService.levelUpTrade(
+          {
+            userId: fetchSession().id,
+            gameId: artist.number_id,
+          },
+          fetchSession().token
+        );
+        setTxHash(txHashLevelUp);
+        setContent("processingTrade");
+      } else {
+        //Set transaction failed error msg
+        setError("Transaction failed, please check the logs");
+      }
+    } catch (err) {
+      console.log(err, "ERROR, Something with wrong with trade:");
+      setError("Transaction failed, please check the logs");
+    }
+  };
 
   return (
     <div className="contentView flex justify-around" >
@@ -111,6 +161,7 @@ export const TradeStart = (props) => {
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               <img src={NftBigPreview} alt="NFT Preview"/>
             </div>
+            <p>{error}</p>
           </div>
         </div>{" "}
       </div>

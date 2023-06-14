@@ -1,15 +1,30 @@
 import React from "react";
-import { fetchSession, logOut, shortenAddress } from "../../utils";
+import {
+  fetchSession,
+  getPublicKey,
+  logOut,
+  shortenAddress,
+} from "../../utils";
 import UserService from "../../services/UserService";
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { useNavigate } from "react-router-dom";
-import StaticDataService from "../../services/StaticDataService";
 
 const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
   const [user, setUser] = React.useState({});
   const [games, setGames] = React.useState([]);
 
   const navigate = useNavigate();
+
+  const handleCopyClick = (text) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log("Text copied to clipboard: ", text);
+      })
+      .catch((error) => {
+        console.error("Failed to copy text: ", error);
+      });
+  };
 
   const fetchUser = async () => {
     try {
@@ -60,8 +75,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
     if (games) {
       rows = games.map((game, index) => {
         return (
-          <div key={index}
-               className="pr-5 mt-3">
+          <div key={index} className="pr-5 mt-3">
             <button
               className="pl-3 pb-3 userMenuText"
               onClick={() => navigate(`/artist/${game.artist_name}`)}
@@ -85,10 +99,12 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
           <b>
             <p className="pl-3 pt-4 userMenuText">Hello {user?.username}</p>
           </b>
-          <p className="pl-3 pb-5 userMenuAddressText flexDirectionRow">
-            {shortenAddress(user?.public_address)}{" "}
-            <CopyIcon className="ml-2 mt-1" />
-          </p>
+          <button
+            onClick={() => handleCopyClick(getPublicKey())}
+            className=" pl-3 mb-3 userMenuAddressText flexDirectionRow"
+          >
+            {shortenAddress(getPublicKey())} <CopyIcon className="ml-2 mt-1" />
+          </button>
           <div style={{ width: "100%" }} className="line"></div>
 
           {renderNumberOfActiveGames()}

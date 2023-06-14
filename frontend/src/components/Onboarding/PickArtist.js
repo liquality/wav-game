@@ -14,7 +14,7 @@ export const PickArtist = (props) => {
 
   async function createGame() {
     try {
-      const gameObject = await UserService.createGame(
+      await UserService.createGame(
         {
           user_id: fetchSession().id,
           artist_name: selectedId?.id,

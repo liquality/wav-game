@@ -2,7 +2,6 @@ import { DataContext } from "./DataContext";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Auth from "./pages/Auth";
 import { Route, Routes } from "react-router-dom";
 import { Balances } from "./pages/Balances";
 import { setupSDK } from "./utils";
@@ -87,7 +86,6 @@ function App() {
           ) :
             (<Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/auth" element={<Auth />} />
               <Route path="/balances" element={<Balances />} />
               <Route path="/artist/:artistId"
                 element={

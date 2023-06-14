@@ -30,12 +30,13 @@ gameHandler.read = function (req, res) {
 
 gameHandler.readGamesByUserId = function (req, res) {
   const userid = Number(req.params.userid);
+  const gameNumberId = Number(req.params.artistNumberId);
   const userIdFromSession = req.user.id;
-  //var userid = req.apiSession.userid;
+
   if (userid) {
     if (userid === userIdFromSession) {
       var game = new Game();
-      game.readGameByUserId(userid).then(
+      game.readGameByUserId(userid, gameNumberId).then(
         (game) => {
           res.status(200).send(game);
         },
@@ -48,6 +49,26 @@ gameHandler.readGamesByUserId = function (req, res) {
         .status(403)
         .send(new ApiError(403, "Access denied, gameid does not match"));
     }
+  }
+};
+
+gameHandler.getLeaderboardData = function (req, res) {
+  const gameId = Number(req.params.game_symbol_id);
+  console.log("leaderboard", gameId);
+  if (gameId) {
+    var game = new Game();
+    game.getLeaderboardData(gameId).then(
+      (game) => {
+        res.status(200).send(game);
+      },
+      (reason) => {
+        res.status(400).send(new ApiError(400, reason));
+      }
+    );
+  } else {
+    res
+      .status(403)
+      .send(new ApiError(403, "Access denied, gameid does not match"));
   }
 };
 
@@ -72,7 +93,7 @@ gameHandler.update = function (req, res) {
   game.set(req.body);
   const userid = Number(req.params.userid);
   const userIdFromSession = req.user.id;
-
+  console.log("why do i come here lol??");
   if (userid == userIdFromSession) {
     game.update().then(
       (game) => {
@@ -83,7 +104,7 @@ gameHandler.update = function (req, res) {
       }
     );
   } else {
-    res.status(403).send(new ApiError(403, "Access denied"));
+    res.status(403).send(new ApiError(403, "Access denied, update"));
   }
 };
 
@@ -108,7 +129,54 @@ gameHandler.delete = function (req, res) {
       }
     );
   } else {
-    res.status(403).send(new ApiError(403, "Access denied"));
+    res.status(403).send(new ApiError(403, "Access denied for delete game"));
+  }
+};
+
+gameHandler.levelUpTrade = function (req, res) {
+  console.log("BÄÄÄ");
+  const gameId = req.body.gameId;
+  const userId = req.body.userId;
+  const userIdFromSession = req.user.id;
+
+  console.log(userId, "userids", userIdFromSession);
+  if (userId && gameId) {
+    if (userId === userIdFromSession) {
+      const game = new Game();
+      console.log("bä");
+      game.levelUpTrade(userId, gameId).then(
+        (game) => {
+          console.log("not here");
+          res.status(200).send(game);
+        },
+        (reject) => {
+          res.status(400).send(new ApiError(400, reject));
+        }
+      );
+    } else {
+      res.status(400).send(new ApiError(400, reason));
+    }
+  } else {
+    res.status(403).send(new ApiError(403, "Access denied for level up"));
+  }
+};
+
+gameHandler.webhook = function (req, res) {
+  console.log(req.body.status, "req body???");
+  if (req.body.status === "success") {
+    const game = new Game();
+    console.log("bä");
+    game.levelUpOnboarding(req.body.walletAddress).then(
+      (game) => {
+        console.log("not here");
+        res.status(200).send(game);
+      },
+      (reject) => {
+        res.status(400).send(new ApiError(400, reject));
+      }
+    );
+  } else {
+    res.status(400).send(new ApiError(400, reason));
   }
 };
 

@@ -11,9 +11,7 @@ Create a .config file similar to the config-sample.json file and substitute with
 "password": "YOUR_DB_PASSWORD"
 },
 
-"rpc_urls": {
-"mainnet_eth": "YOUR_RPC_URL_TO_ETH_MAINNET"
-}
+
 }
 ```
 

@@ -1,6 +1,3 @@
-import * as React from "react";
-
-import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import { SpinningLoader } from "../SpinningLoader";
 import CustomButton from "../Button";
 
@@ -32,32 +29,6 @@ export const LoginOrRegister = (props) => {
                 GOOGLE
               </CustomButton>
               <br></br>
-              <CustomButton
-                mb="10px"
-                type="big"
-                onClick={() => createNewWallet()}
-                pink
-              >
-                DISCORD
-              </CustomButton>
-              <br></br>
-              <CustomButton
-                mb="10px"
-                type="big"
-                onClick={() => createNewWallet()}
-                pink
-              >
-                FACEBOOK
-              </CustomButton>
-              <br></br>
-              <CustomButton
-                mb="10px"
-                type="big"
-                onClick={() => createNewWallet()}
-                pink
-              >
-                TWITCH
-              </CustomButton>
             </div>
             <br />
             <br />

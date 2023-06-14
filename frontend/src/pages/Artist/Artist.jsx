@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "../../App.css";
 import "./artist.css";
 import { Sidebar } from "./Sidebar";
-import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 import { TradeModal } from "../../components/Trade/TradeModal";
 import { GameCards } from "../../components/GameCards/GameCards";
 import { GameTabs } from "../../components/GameTabs/GameTabs";
@@ -11,8 +10,9 @@ import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import levels from "../../data/levels.json";
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
-import { getPublicKey } from "../../utils";
 import { useParams } from "react-router-dom";
+import { NftService } from "@liquality/wallet-sdk";
+import { WAV_NFT_ADDRESS } from "../../data/contract_data";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -25,7 +25,8 @@ export const Artist = (props) => {
   const [levelClicked, setLevelClicked] = useState(null);
   const [currentGame, setCurrentGame] = useState(null);
   const { setShowPickArtistModal, userGames } = props;
-
+  const [wavNfts, setWavNfts] = useState(null);
+  console.log(wavNfts, "wavnfts");
   const fetchArtist = async (id) => {
     try {
       const artist = await StaticDataService.findArtistById(id);
@@ -35,8 +36,20 @@ export const Artist = (props) => {
     }
   };
 
+  const fetchNftCollection = async (id) => {
+    try {
+      const wavNfts = await NftService.getNftsForContract(
+        WAV_NFT_ADDRESS,
+        80001
+      );
+      return wavNfts;
+    } catch (err) {
+      console.log(err, "Error fetching the wav nfts");
+    }
+  };
+
   const onLevelSelected = (level) => {
-    console.log('onLevelSelected', level)
+    console.log("onLevelSelected", level);
     setShowTrade(true);
     setSelectedLevel(level);
     setLevelClicked(level);
@@ -47,6 +60,9 @@ export const Artist = (props) => {
       const _artist = await fetchArtist(artistId);
       const _image = (await import(`../../images/artists/${_artist.image}`))
         .default;
+      const _wavNfts = await fetchNftCollection();
+
+      setWavNfts(_wavNfts);
       setArtist(_artist);
       setImage(_image);
       const currentGame = userGames.find(g => g.game_symbol_id === _artist?.number_id)
@@ -96,7 +112,7 @@ export const Artist = (props) => {
                 </span>
               </div>
             </div>
-            <Leaderboard setShowSendModal={setShowSend} />
+            <Leaderboard setShowSendModal={setShowSend} artist={artist} />
           </div>
           <div className="flex flex-col  items-center   pt-24 mt-12"></div>
         </div>

@@ -5,20 +5,17 @@ import UserMenu from "../pages/Artist/UserMenu";
 import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
 
 const Navbar = (props) => {
-  const [address, setAddress] = useState("Sign in");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
   const { showPickArtistModal, setShowPickArtistModal, game, user } = props;
 
   const AvatarComponent = ({ avatar }) => {
     return (
-      <div className="userAvatar p-2 flex items-center justify-center"
-        style={{ backgroundImage: `url(${avatar})` }}>
-      </div>
+      <div
+        className="userAvatar p-2 flex items-center justify-center"
+        style={{ backgroundImage: `url(${avatar})` }}
+      ></div>
     );
-  };
-  const openModal = () => {
-    setUserMenuOpen(true);
   };
 
   const closeModal = () => {

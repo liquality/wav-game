@@ -20,8 +20,6 @@ async function setup() {
   const wavGameProxy = await upgrades.deployProxy(WavGame, [wavNFT.address, trustedForwarder, feePerMint]);
   await wavGameProxy.deployed();
   wavGame = wavGameProxy;
-  console.log("wavGame > ", wavGame.address, "wavGameProxy >> ", wavGameProxy.address)
-
   await wavNFT.setTrustedForwarder(trustedForwarder);
   await wavNFT.transferOwnership(wavGame.address);
 }
@@ -46,7 +44,7 @@ describe("WavGame Contract", async function () {
       const artist2 = accounts[5].address;
       const artist3 = accounts[6].address;
       const artist1L1 = [0, 0, 0, 1, 0]; //[requiredBurn,requiredMint,earlyBirdCutOff,mintable,burnable]
-      const artist1L2 = [2, 1, 2, 1, 2];
+      const artist1L2 = [2, 1, 2, 2, 1];
       const artist2L1 = [0, 0, 0, 3, 0];
       const artist2L2 = [2, 1, 2, 4, 3];
       const artist3L1 = [0, 0, 0, 5, 0];
@@ -75,7 +73,6 @@ describe("WavGame Contract", async function () {
 
       expect(artist1GameL1.requiredBurn).to.equal(artist1L1[0]);
       expect(artist1GameL1.mintable).to.equal(artist1L1[3]);
-      expect(artist1GameL1.mintable).to.equal(artist1L2[3]);
       expect(artist2GameL2.requiredBurn).to.equal(artist2L2[0]);
       expect(artist2GameL2.mintable).to.equal(artist2L2[3]);
     });
@@ -173,27 +170,30 @@ describe("WavGame Contract", async function () {
   });
 
   describe("Prized collectors", async () => {
-    // it("Should only count unique collectors per island per artist/game", async () => {
-    //   const accounts = await ethers.getSigners();
-    //   const player2 = accounts[8].address;
-    //   const nextIsland = 2;
-    //   const prevCollectorCount = (
-    //     await wavGame.fetchEarlyBirdCollectors(artist1GameID, ENTRY_LEVEL)
-    //   ).length;
+    it("Should only count unique collectors per island per artist/game", async () => {
+      const accounts = await ethers.getSigners();
+      const player2 = accounts[8].address;
+      const nextIsland = 2;
+      const prevCollectorCount = (
+        await wavGame.fetchEarlyBirdCollectors(artist1GameID, ENTRY_LEVEL)
+      ).length;
 
-    //   await wavGame.connect(accounts[8]).collect(artist1GameID, player2, 4, {
-    //     value: feePerMint.mul(ethers.BigNumber.from(4)),
-    //   });
+      await wavGame.connect(accounts[8]).collect(artist1GameID, player2, 6, {
+        value: feePerMint.mul(ethers.BigNumber.from(6)),
+      });
 
-    //   await wavGame.connect(accounts[8]).levelUp(artist1GameID, nextIsland);
-    //   await wavGame.connect(accounts[8]).levelUp(artist1GameID, nextIsland);
-    //   console.log("Got here !!! ")
+      await wavNFT
+        .connect(accounts[8])
+        .setApprovalForAll(wavGame.address, true);
 
-    //   expect(
-    //     (await wavGame.fetchEarlyBirdCollectors(artist1GameID, nextIsland)).length -
-    //     prevCollectorCount
-    //   ).to.equal(1); // Expect prizedCollector count to increase by 1 only, Since same user, entered same island (2) twice
-    // });
+      await wavGame.connect(accounts[8]).levelUp(artist1GameID, nextIsland);
+      await wavGame.connect(accounts[8]).levelUp(artist1GameID, nextIsland);
+
+      expect(
+        (await wavGame.fetchEarlyBirdCollectors(artist1GameID, nextIsland)).length -
+        prevCollectorCount
+      ).to.equal(1); // Expect prizedCollector count to increase by 1 only, Since same user, entered same island (2) twice
+    });
     it("Should not increase prizedCollectors count after prizeCutoff", async () => {
       const accounts = await ethers.getSigners();
       const player1 = accounts[7].address;
