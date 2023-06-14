@@ -60,7 +60,7 @@ export const TradeStart = (props) => {
   const startTrade = async (data) => {
     try {
       const provider = new ethers.JsonRpcProvider(
-        "https://polygon-mumbai.g.alchemy.com/v2/Vnr65MaW03LZ6ri9KBKrOEZjjcmMGSQ3"
+        process.env.REACT_APP_RPC_URL
       );
 
       const artist = await getArtist();
@@ -81,7 +81,7 @@ export const TradeStart = (props) => {
             WAV_PROXY_ADDRESS,
             true
           );
-        let txHashApproval = TransactionService.sendGaslessly(
+        let txHashApproval = await TransactionService.sendGaslessly(
           WAV_NFT_ADDRESS,
           approvalTx.data,
           privateKey,
@@ -94,7 +94,7 @@ export const TradeStart = (props) => {
         game.level
       );
 
-      let txHashLevelUp = TransactionService.sendGaslessly(
+      let txHashLevelUp = await TransactionService.sendGaslessly(
         WAV_PROXY_ADDRESS,
         levelUpTx.data,
         privateKey,
