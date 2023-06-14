@@ -9,8 +9,11 @@ const UserService = {
     return NetworkService.getResourceWithAuth("/v1/user/" + userId, jwt);
   },
 
-  getGameByUserId: async function (userId, jwt) {
-    return NetworkService.getResourceWithAuth("/v1/games/" + userId, jwt);
+  getGameByUserId: async function (userId, artist_number_id, jwt) {
+    return NetworkService.getResourceWithAuth(
+      "/v1/games/" + userId + "/" + artist_number_id,
+      jwt
+    );
   },
 
   createGame: async function (gameObject, jwt) {
@@ -19,6 +22,14 @@ const UserService = {
 
   updateGame: async function (gameObject, jwt) {
     return NetworkService.putResourceWithAuth("/v1/game/", gameObject, jwt);
+  },
+
+  levelUpTrade: async function (gameObject, jwt) {
+    return NetworkService.putResourceWithAuth(
+      "/v1/gamelevelup",
+      gameObject,
+      jwt
+    );
   },
 
   getLeaderboardData: async function (gameID, jwt) {
