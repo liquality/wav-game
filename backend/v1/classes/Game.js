@@ -146,26 +146,44 @@ class Game {
     return promise;
   };
 
-  readGameByUserId = async (userId) => {
+  readGameByUserId = async (userId, gameNumberId) => {
     const game = this;
     const promise = new Promise((resolve, reject) => {
       if (userId) {
         MySQL.pool.getConnection((err, db) => {
-          db.execute(
-            "select * from `game` where user_id = ?",
-            [userId],
-            (err, results, fields) => {
-              if (err) {
-                reject(new ApiError(500, err));
-              } else if (results.length < 1) {
-                reject(new ApiError(404, "Game not found"));
-              } else {
-                game.set(results[0]);
-                resolve(results);
+          if (gameNumberId) {
+            db.execute(
+              "SELECT * FROM `game` WHERE user_id = ? AND game_symbol_id = ?",
+              [userId, gameNumberId],
+              (err, results, fields) => {
+                if (err) {
+                  reject(new ApiError(500, err));
+                } else if (results.length < 1) {
+                  reject(new ApiError(404, "Game not found"));
+                } else {
+                  game.set(results[0]);
+                  resolve(results[0]);
+                }
+                db.release();
               }
-              db.release();
-            }
-          );
+            );
+          } else {
+            db.execute(
+              "select * from `game` where user_id = ?",
+              [userId],
+              (err, results, fields) => {
+                if (err) {
+                  reject(new ApiError(500, err));
+                } else if (results.length < 1) {
+                  reject(new ApiError(404, "Game not found"));
+                } else {
+                  game.set(results[0]);
+                  resolve(results);
+                }
+                db.release();
+              }
+            );
+          }
         });
       } else {
         reject(new ApiError(500, "Missing user id"));
@@ -198,6 +216,28 @@ class Game {
     return promise;
   };
 
+  levelUpTrade = async (userId, gameNumberId) => {
+    const promise = new Promise((resolve, reject) => {
+      MySQL.pool.getConnection((err, db) => {
+        db.query(
+          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ?",
+          [userId, gameNumberId],
+          (err, gameResults, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else if (gameResults.affectedRows < 1) {
+              reject(new ApiError(404, "Game with given user_id not found!"));
+            } else {
+              resolve(gameResults);
+            }
+            db.release();
+          }
+        );
+      });
+    });
+    return promise;
+  };
+
   levelUpOnboarding = async (address) => {
     const game = this;
     const promise = new Promise((resolve, reject) => {
@@ -206,7 +246,6 @@ class Game {
           reject(new ApiError(500, err));
           return;
         }
-        console.log(address, "address?");
 
         // Query the USER table
         db.query(

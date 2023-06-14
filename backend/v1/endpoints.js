@@ -61,7 +61,7 @@ endpoints.readGame = {
 };
 
 endpoints.readGameByUserId = {
-  url: "/v1/games/:userid",
+  url: "/v1/games/:userid/:artistNumberId",
   method: "get",
   middleware: [middleware.authenticateJWT],
   handler: gameHandler.readGamesByUserId,
@@ -90,6 +90,14 @@ endpoints.deleteGame = {
   middleware: [],
   handler: gameHandler.delete,
   description: "delete game",
+};
+
+endpoints.levelUpTrade = {
+  url: "/v1/gamelevelup",
+  method: "put",
+  middleware: [middleware.authenticateJWT],
+  handler: gameHandler.levelUpTrade,
+  description: "level up game based on userid + gameid",
 };
 
 /*WEBHOOK EVENTS FROM CROSSMINT*/
