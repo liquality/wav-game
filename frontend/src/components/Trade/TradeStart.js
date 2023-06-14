@@ -57,7 +57,7 @@ export const TradeStart = (props) => {
 
       if (!approved) {
         const approvalTx = await nftContract.setApprovalForAll.populateTransaction(WAV_PROXY_ADDRESS, true);
-        let txHashApproval = TransactionService.sendGaslessly(WAV_NFT_ADDRESS, approvalTx.data, privateKey, CHAIN_ID);
+        let txHashApproval = await TransactionService.sendGaslessly(WAV_NFT_ADDRESS, approvalTx.data, privateKey, CHAIN_ID);
 
       }
 
@@ -65,7 +65,7 @@ export const TradeStart = (props) => {
       //TODO gameID should come from db
       let levelUpTx = await gameContract.levelUp.populateTransaction(artist.number_id, 2);
 
-      let txHashLevelUp = TransactionService.sendGaslessly(WAV_PROXY_ADDRESS, levelUpTx.data, privateKey, CHAIN_ID);
+      let txHashLevelUp = await TransactionService.sendGaslessly(WAV_PROXY_ADDRESS, levelUpTx.data, privateKey, CHAIN_ID);
       
       //TODO: add level up to db here
 
