@@ -7,11 +7,13 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@opengsn/contracts/src/ERC2771Recipient.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 
 contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable  {
+    using Strings for uint256;
 
-    constructor(string memory uri) ERC1155(uri){
+    constructor(string memory _uri) ERC1155(_uri){
 
     }
 
@@ -59,5 +61,9 @@ contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable
 
     function _msgData() internal view virtual override(Context, ERC2771Recipient) returns (bytes calldata) {
         return ERC2771Recipient._msgData();
+    }
+
+    function uri(uint256 _id) public view override returns (string memory) {
+        return string(abi.encodePacked(super.uri(_id), _id.toString(), ".json"));
     }
 }

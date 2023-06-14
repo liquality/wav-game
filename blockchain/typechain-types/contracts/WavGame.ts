@@ -106,6 +106,7 @@ export interface WavGameInterface extends utils.Interface {
     "setGame(uint256,(uint8,uint8,uint32,uint256,uint256)[])": FunctionFragment;
     "setTreasuries(uint256[],address[])": FunctionFragment;
     "setTrustedForwarder(address)": FunctionFragment;
+    "setWavNFT(address)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "transferWavNftOwnership(address)": FunctionFragment;
@@ -141,6 +142,7 @@ export interface WavGameInterface extends utils.Interface {
       | "setGame"
       | "setTreasuries"
       | "setTrustedForwarder"
+      | "setWavNFT"
       | "supportsInterface"
       | "transferOwnership"
       | "transferWavNftOwnership"
@@ -254,6 +256,10 @@ export interface WavGameInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setWavNFT",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [PromiseOrValue<BytesLike>]
   ): string;
@@ -342,6 +348,7 @@ export interface WavGameInterface extends utils.Interface {
     functionFragment: "setTrustedForwarder",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "setWavNFT", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
@@ -375,6 +382,7 @@ export interface WavGameInterface extends utils.Interface {
     "SpecialMint(uint256,address,uint256,uint256)": EventFragment;
     "TreasurySet(uint256,address)": EventFragment;
     "Unpaused(address)": EventFragment;
+    "WavNFTSet(address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Collected"): EventFragment;
@@ -389,6 +397,7 @@ export interface WavGameInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "SpecialMint"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TreasurySet"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "WavNFTSet"): EventFragment;
 }
 
 export interface CollectedEventObject {
@@ -516,6 +525,14 @@ export interface UnpausedEventObject {
 export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
+
+export interface WavNFTSetEventObject {
+  old: string;
+  wavNFT: string;
+}
+export type WavNFTSetEvent = TypedEvent<[string, string], WavNFTSetEventObject>;
+
+export type WavNFTSetEventFilter = TypedEventFilter<WavNFTSetEvent>;
 
 export interface WavGame extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -659,6 +676,11 @@ export interface WavGame extends BaseContract {
 
     setTrustedForwarder(
       _trustedForwarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setWavNFT(
+      _wavNft: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -815,6 +837,11 @@ export interface WavGame extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setWavNFT(
+    _wavNft: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   supportsInterface(
     interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
@@ -962,6 +989,11 @@ export interface WavGame extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setWavNFT(
+      _wavNft: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -1101,6 +1133,12 @@ export interface WavGame extends BaseContract {
 
     "Unpaused(address)"(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
+
+    "WavNFTSet(address,address)"(
+      old?: null,
+      wavNFT?: null
+    ): WavNFTSetEventFilter;
+    WavNFTSet(old?: null, wavNFT?: null): WavNFTSetEventFilter;
   };
 
   estimateGas: {
@@ -1217,6 +1255,11 @@ export interface WavGame extends BaseContract {
 
     setTrustedForwarder(
       _trustedForwarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setWavNFT(
+      _wavNft: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1373,6 +1416,11 @@ export interface WavGame extends BaseContract {
 
     setTrustedForwarder(
       _trustedForwarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setWavNFT(
+      _wavNft: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
