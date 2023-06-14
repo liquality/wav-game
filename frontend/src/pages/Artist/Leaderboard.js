@@ -3,11 +3,48 @@ import { useState, useEffect } from "react";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 import UserService from "../../services/UserService";
-import { getPublicKey } from "../../utils";
+import {
+  calculateNumberOfNftsInEachLvl,
+  countNFTsByLevel,
+  getPublicKey,
+} from "../../utils";
+import { NftService } from "@liquality/wallet-sdk";
+import { CHAIN_ID } from "../../data/contract_data";
 
 const Leaderboard = ({ setShowSendModal, artist }) => {
   const [showNfts, setShowNfts] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState(null);
+
+  const [nfts, setNfts] = useState(null);
+  const [numberOfNfts, setNumberOfNfts] = useState(null);
+
+  const [loadingNfts, setLoadingNfts] = useState(false);
+
+  const fetchNfts = async (address, chainId) => {
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+    return nfts;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!nfts) {
+        setLoadingNfts(true);
+        const nftData = await fetchNfts();
+        setNfts(nftData);
+        setLoadingNfts(false);
+      }
+
+      if (artist.number_id && nfts) {
+        console.log("BT inside");
+        let _numberOfNfts = await countNFTsByLevel(nfts, artist.number_id);
+        setNumberOfNfts(_numberOfNfts);
+      }
+    };
+
+    fetchData();
+  }, [nfts, artist]);
+
+  console.log(numberOfNfts, "BT nr of nfts", artist.number_id);
 
   const getLeaderboardData = async () => {
     if (artist.number_id) {
@@ -71,12 +108,24 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
               >
                 NFTs
               </th>
-              <td className="px-6 py-4">20</td>
-              <td className="px-6 py-4">6</td>
-              <td className="px-6 py-4">--</td>
-              <td className="px-6 py-4">--</td>
-              <td className="px-6 py-4">--</td>
-              <td className="px-6 py-4">--</td>
+              <td className="px-6 py-4">
+                {numberOfNfts.level1 ? numberOfNfts.level1 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {numberOfNfts.level2 ? numberOfNfts.level2 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {numberOfNfts.level3 ? numberOfNfts.level3 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {numberOfNfts.level4 ? numberOfNfts.level4 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {numberOfNfts.level5 ? numberOfNfts.level5 : "--"}
+              </td>
+              <td className="px-6 py-4">
+                {numberOfNfts.level6 ? numberOfNfts.level6 : "--"}
+              </td>
             </tr>
           </tbody>
         </table>

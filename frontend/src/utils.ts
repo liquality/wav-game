@@ -79,3 +79,31 @@ export const getGameIdBasedOnHref = async () => {
     return artist
 
 }
+
+export const countNFTsByLevel = async (nfts, artistNumberId) => {
+
+    const artistNFTs = nfts.filter(nft => {
+        let artistNrString = artistNumberId.toString()
+        return nft.id[0] === artistNrString[0]
+    });
+
+
+    console.log(artistNFTs, 'ARTIST NFT BÄ')
+    const levels = {};
+
+    artistNFTs.forEach(nft => {
+        const level = parseInt(nft.id.slice(-1));
+        console.log(level, 'LEVEL BÄ')
+
+        if (levels[`level${level}`]) {
+            levels[`level${level}`]++;
+        } else {
+            levels[`level${level}`] = 1;
+        }
+    });
+
+    if (Object.keys(levels).length > 0) {
+        return levels;
+    }
+
+}
