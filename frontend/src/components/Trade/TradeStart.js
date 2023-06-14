@@ -24,7 +24,7 @@ export const TradeStart = (props) => {
     // Level UP
     try {
       const provider = new ethers.JsonRpcProvider(
-        "https://polygon-mumbai.g.alchemy.com/v2/Vnr65MaW03LZ6ri9KBKrOEZjjcmMGSQ3"
+        process.env.REACT_APP_RPC_URL
       );
   
       const artist = await getArtist();
