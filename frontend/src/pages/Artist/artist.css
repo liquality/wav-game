@@ -45,7 +45,7 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-
+.bio-artist-name,
 .artist-name {
   font-family: "Sora";
   font-style: normal;
@@ -53,10 +53,18 @@
   font-size: 1.75rem;
   line-height: 2.188rem;
   letter-spacing: 0.02em;
+}
+
+.bio-artist-name {
+  color: #E0E0E0;
+}
+
+.artist-name {
   color: #ff9fa9;
 }
 
-.artist-desc {
+.artist-desc,
+.bio-artist-desc {
   font-family: "Sora";
   font-style: normal;
   font-weight: 400;
@@ -64,8 +72,13 @@
   line-height: 1.125rem;
   letter-spacing: 0.02em;
   text-transform: capitalize;
+}
+.bio-artist-desc { 
+  color: #BDBDBD;  
+}
 
-  color: #ff9fa9;
+.artist-desc { 
+  color: #ff9fa9;  
 }
 
 .artist-link {
