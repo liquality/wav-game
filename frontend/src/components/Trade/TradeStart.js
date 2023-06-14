@@ -51,25 +51,13 @@ export const TradeStart = (props) => {
         const _game = await fetchGameByUserIdAndArtistId();
         setGame(_game);
       }
-      const artist = await getArtist();
-
-      const hej = await UserService.levelUpTrade(
-        {
-          userId: fetchSession().id,
-          gameId: artist.number_id,
-        },
-        fetchSession().token
-      );
-      console.log(hej, "LEVELDED UP");
     };
 
     init();
   }, [game]);
-  console.log(game, "what game?");
 
-  //A trade makes a player level up both in contract & in db
+  //LVL UP: A trade makes a player level up both in contract & in db
   const startTrade = async (data) => {
-    // Level UP
     try {
       const provider = new ethers.JsonRpcProvider(
         "https://polygon-mumbai.g.alchemy.com/v2/Vnr65MaW03LZ6ri9KBKrOEZjjcmMGSQ3"
@@ -78,8 +66,6 @@ export const TradeStart = (props) => {
       const artist = await getArtist();
       const privateKey = getPrivateKey();
       const signer = new ethers.Wallet(privateKey, provider);
-
-      //TODO: based on artist.number_id & user_id, you have to get the game_level from userdb
 
       // Check approval
       const approved = await NftService.isApprovedForAll(
@@ -103,8 +89,6 @@ export const TradeStart = (props) => {
         );
       }
 
-      //TODO use SDK and gelato to call levelUp() gaslessly
-      //TODO gameID should come from db
       let levelUpTx = await gameContract.levelUp.populateTransaction(
         artist.number_id,
         game.level
@@ -118,7 +102,14 @@ export const TradeStart = (props) => {
       );
 
       if (txHashLevelUp) {
-        //add a level in DB
+        //Lvl up in DB
+        await UserService.levelUpTrade(
+          {
+            userId: fetchSession().id,
+            gameId: artist.number_id,
+          },
+          fetchSession().token
+        );
         setTxHash(txHashLevelUp);
         setContent("processingTrade");
       } else {
@@ -130,8 +121,6 @@ export const TradeStart = (props) => {
       setError("Transaction failed, please check the logs");
     }
   };
-
-  console.log(getPublicKey(), "pub key");
 
   return (
     <div className="contentView flex justify-around">
