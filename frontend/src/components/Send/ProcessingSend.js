@@ -1,6 +1,3 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { ReactComponent as GreenDots } from "../../images/green_dots.svg";
 import { ReactComponent as GreenCheckmark } from "../../images/green_checkmark.svg";
 import ProcessingTx from "../ProcessingTx";
 import CustomButton from "../Button";

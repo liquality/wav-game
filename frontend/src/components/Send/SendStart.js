@@ -17,14 +17,9 @@ export const SendStart = ({
 
   const fetchNfts = async (address, chainId) => {
     //TODO: fetch your own public address from localstorage instead
-    const nfts = await NftService.getNfts(
-      getPublicKey(),
-      process.env.REACT_APP_CHAIN_ID
-    );
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
     return nfts;
   };
-
-  console.log(process.env.REACT_APP_CHAIN_ID, "chaindid,", getPublicKey());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,8 +33,6 @@ export const SendStart = ({
 
     fetchData();
   }, [selectedNft, nfts]);
-
-  console.log(nfts, "nft data");
 
   return (
     <div className="contentView flex justify-center">

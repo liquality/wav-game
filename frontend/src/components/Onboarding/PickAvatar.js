@@ -1,11 +1,6 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { TextField } from "@mui/material";
-
+import { useState } from "react";
 import { ReactComponent as AvatarPlaceholder } from "../../images/avatar_placeholder.svg";
-import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import UserService from "../../services/UserService";
-import { fetchSession } from "../../utils";
 import CustomButton from "../Button";
 
 export const PickAvatar = (props) => {

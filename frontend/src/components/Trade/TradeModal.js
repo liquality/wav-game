@@ -64,9 +64,6 @@ export const TradeModal = (props) => {
     initializeContract();
   }, []);
 
-  //TODO you need collect() you need to call gameIds array that Oluchi hardcoded
-  //
-
   const whichContentToRender = () => {
     if (content === "tradeStart") {
       return (
@@ -77,31 +74,12 @@ export const TradeModal = (props) => {
           setTxHash={setTxHash}
         />
       );
-      //TODO
     } else if (content === "processingTrade") {
       return (
         <ProcessingTrade
           txHash={txHash}
           setHeaderText={setHeaderText}
           setContent={setContent}
-        />
-      );
-    } else if (content === "pickArtist") {
-      return (
-        <PickArtist setHeaderText={setHeaderText} setContent={setContent} />
-      );
-    } else if (content === "creditcardPayment") {
-      return (
-        <CreditcardPayment
-          setHeaderText={setHeaderText}
-          setContent={setContent}
-        />
-      );
-    } else if (content === "completedPayment") {
-      return (
-        <CompletedPayment
-          setHeaderText={setHeaderText}
-          handleClose={handleClose}
         />
       );
     } else return null;
