@@ -1,22 +1,7 @@
-import { useState, useEffect } from "react";
 import CustomButton from "../Button";
 import { ReactComponent as NftTiles } from "../../images/nft_tiles.svg";
 
-export const GameIncentives = ({ selectedArtist, setContent, handleClose }) => {
-  const [nfts, setNfts] = useState([]);
-  const [loadingNfts, setLoadingNfts] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoadingNfts(true);
-      //const nftData = await fetchNfts();
-      //setNfts(nftData);
-      setLoadingNfts(false);
-    };
-
-    fetchData();
-  }, []);
-
+export const GameIncentives = ({ selectedArtist, setContent }) => {
   return (
     <div className=" contentView flex">
       <div className="p-4 w-1/2 flex justify-center items-center margin-auto">

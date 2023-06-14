@@ -11,6 +11,10 @@ module.exports = function override(config) {
     return prev;
   }, {});
 
+  // Handle undefined env variables during build
+  const definePlugin = new webpack.DefinePlugin(envKeys);
+  config.plugins = [...config.plugins, definePlugin];
+
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
     crypto: require.resolve("crypto-browserify"),
@@ -27,7 +31,7 @@ module.exports = function override(config) {
   config.module.rules.push(
     {
       test: /\.(png|jpe?g|gif)$/i,
-      type: 'asset/resource',
+      type: "asset/resource",
     }
     // Add more loader configurations if needed
   );

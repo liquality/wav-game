@@ -1,15 +1,12 @@
-import React from "react";
 import "../../App.css";
-import { useState, useEffect, useTransition } from "react";
-
+import { useState, useEffect } from "react";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 import UserService from "../../services/UserService";
 import { getPublicKey } from "../../utils";
 
 const Leaderboard = ({ setShowSendModal, artist }) => {
-  const [user, setUser] = React.useState({});
-  const [showNfts, setShowNfts] = React.useState(false);
+  const [showNfts, setShowNfts] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState(null);
 
   const getLeaderboardData = async () => {

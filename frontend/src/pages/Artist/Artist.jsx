@@ -2,9 +2,7 @@ import { useState, useEffect, useTransition } from "react";
 import "../../App.css";
 import "./artist.css";
 import { Sidebar } from "./Sidebar";
-import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 
-import classNames from "classnames";
 import { TradeModal } from "../../components/Trade/TradeModal";
 import { GameCards } from "../../components/GameCards/GameCards";
 import { GameTabs } from "../../components/GameTabs/GameTabs";
@@ -14,10 +12,8 @@ import levels from "../../data/levels.json";
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
-import { getPublicKey } from "../../utils";
 import { NftService } from "@liquality/wallet-sdk";
 import { WAV_NFT_ADDRESS } from "../../data/contract_data";
-import UserService from "../../services/UserService";
 
 export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(3);

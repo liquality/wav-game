@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useState, useEffect } from "react";
 
 import { AuthService, tryRegisterSW } from "@liquality/wallet-sdk";
@@ -8,7 +7,7 @@ import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
-import { fetchSession, seeIfUserCanLogIn } from "../../utils";
+import { seeIfUserCanLogIn } from "../../utils";
 import UserService from "../../services/UserService";
 
 const verifierMap = {
@@ -23,10 +22,9 @@ const verifierMap = {
 
 // 1. Setup Service Provider
 const directParams = {
-  baseUrl:
-    window.location.href.startsWith('http://localhost:3005')
-      ? `http://localhost:3005/serviceworker`
-      : `https://wav-game-staging-public.liquality.io/serviceworker`,
+  baseUrl: window.location.href.startsWith("http://localhost:3005")
+    ? `http://localhost:3005/serviceworker`
+    : `https://wav-game-staging-public.liquality.io/serviceworker`,
   enableLogging: true,
   networkUrl: "https://goerli.infura.io/v3/a8684b771e9e4997a567bbd7189e0b27",
   network: "testnet",

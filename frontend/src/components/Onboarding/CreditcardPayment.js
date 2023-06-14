@@ -1,10 +1,7 @@
 import { ReactComponent as NftTiles } from "../../images/nft_tiles.svg";
-import { ReactComponent as MysteryBox } from "../../images/mystery_box.svg";
-import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
-import { fetchSession, getPublicKey } from "../../utils";
-import StaticDataService from "../../services/StaticDataService";
+import { getPublicKey } from "../../utils";
 import { useNavigate } from "react-router-dom";
 
 export const CreditcardPayment = (props) => {

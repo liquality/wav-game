@@ -4,11 +4,10 @@ import { fetchSession } from "../utils";
 import UserMenu from "../pages/Artist/UserMenu";
 import UserService from "../services/UserService";
 import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const Navbar = (props) => {
   let { artistId } = useParams();
-  const [address, setAddress] = useState("Sign in");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [user, setUser] = useState({});
@@ -30,9 +29,10 @@ const Navbar = (props) => {
 
   const AvatarComponent = ({ avatar }) => {
     return (
-      <div className="userAvatar p-2 flex items-center justify-center"
-        style={{ backgroundImage: `url(${avatar})` }}>
-      </div>
+      <div
+        className="userAvatar p-2 flex items-center justify-center"
+        style={{ backgroundImage: `url(${avatar})` }}
+      ></div>
     );
   };
 
@@ -43,10 +43,9 @@ const Navbar = (props) => {
     };
 
     fetchData();
-    return () => {
-
-    };
+    return () => {};
   }, []);
+
   const openModal = () => {
     setUserMenuOpen(true);
   };

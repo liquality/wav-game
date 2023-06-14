@@ -4,7 +4,6 @@ import { Button } from "../Button/Button";
 import { ReactComponent as LockIcon } from "../../images/lock_icon.svg";
 import { ButtonMode } from "../../types/ButtonMode";
 import { LevelStatus } from "../../types/LevelStatus";
-import CustomButton from "../Button";
 
 export interface LevelActionProps {
   label: string;
@@ -85,7 +84,7 @@ export const LevelCard = ({
   } = props;
   const active = current === id;
   const handleActionClick = (action: LevelActionProps) => {
-    if(action.onActionClick) {
+    if (action.onActionClick) {
       action.onActionClick(id);
     }
   };
@@ -124,7 +123,7 @@ export const LevelCard = ({
                 key={action.label}
                 mode={action.mode}
                 link={action.link}
-                onClick={()=>handleActionClick(action)}
+                onClick={() => handleActionClick(action)}
               >
                 <>
                   {action.useIcon ? (

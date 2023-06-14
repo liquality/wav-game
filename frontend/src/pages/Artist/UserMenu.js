@@ -8,7 +8,6 @@ import {
 import UserService from "../../services/UserService";
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { useNavigate } from "react-router-dom";
-import StaticDataService from "../../services/StaticDataService";
 
 const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
   const [user, setUser] = React.useState({});
