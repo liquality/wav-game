@@ -4,7 +4,6 @@ const dotenv = require("dotenv");
 module.exports = function override(config) {
   // call dotenv and it will return an Object with a parsed key
   const env = dotenv.config().parsed;
-  console.log(dotenv.config(), "what is parsed env???");
 
   // reduce it to a nice object, the same as before
   if (env) {
@@ -12,7 +11,6 @@ module.exports = function override(config) {
       prev[`process.env.${next}`] = JSON.stringify(env[next]);
       return prev;
     }, {});
-    console.log(envKeys, "env KEYS");
   }
 
   // Handle undefined env variables during build
@@ -45,9 +43,11 @@ module.exports = function override(config) {
     }),
     console.log(JSON.stringify(dotenv.config().parsed), "json stringifyyyy?"),
 
-    new webpack.DefinePlugin({
-      "process.env": JSON.stringify(dotenv.config().parsed),
-    }),
+    env
+      ? new webpack.DefinePlugin({
+          "process.env": JSON.stringify(dotenv.config().parsed),
+        })
+      : null,
   ]);
   return config;
 };
