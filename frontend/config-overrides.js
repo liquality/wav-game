@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 module.exports = function override(config) {
   // call dotenv and it will return an Object with a parsed key
   const env = dotenv.config().parsed;
-  console.log(env, "what is parsed env???");
+  console.log(dotenv.config(), "what is parsed env???");
 
   // reduce it to a nice object, the same as before
   if (env) {
@@ -43,6 +43,7 @@ module.exports = function override(config) {
       process: "process/browser",
       Buffer: ["buffer", "Buffer"],
     }),
+    console.log(JSON.stringify(dotenv.config().parsed), "json stringifyyyy?"),
 
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(dotenv.config().parsed),
