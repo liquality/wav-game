@@ -60,7 +60,7 @@ function App() {
         }}
       >
         {" "}
-        <Navbar showPickArtistModal={showPickArtistModal} setShowPickArtistModal={setShowPickArtistModal} />
+        <Navbar user={user} showPickArtistModal={showPickArtistModal} setShowPickArtistModal={setShowPickArtistModal} />
         {
           loading ? (
             <div className="contentView m-5 p-5 flex justify-center items-center ">

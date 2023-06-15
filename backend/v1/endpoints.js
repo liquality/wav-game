@@ -61,7 +61,7 @@ endpoints.readGame = {
 };
 
 endpoints.readGameByUserId = {
-  url: "/v1/games/:userid/:artistNumberId",
+  url: "/v1/games/:userid/:artistNumberId?",
   method: "get",
   middleware: [middleware.authenticateJWT],
   handler: gameHandler.readGamesByUserId,
