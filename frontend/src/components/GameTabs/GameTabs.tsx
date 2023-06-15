@@ -71,6 +71,8 @@ export const GameTabs = (props: GameTabsProps) => {
             key={l}
             status={levelStatus[l] as LevelStatus}
             level={parseInt(l)}
+            selectedLevel={selectedLevel}
+            onLevelSelected={onLevelSelected}
           />
         );
       })}

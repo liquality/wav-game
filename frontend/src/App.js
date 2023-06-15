@@ -17,19 +17,7 @@ function App() {
   const [showPickArtistModal, setShowPickArtistModal] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
-  const [userGames, setUserGames] = useState([]);
 
-  const fetchUserGames = async () => {
-    try {
-      return await UserService.getGameByUserId(
-        fetchSession().id, //userid
-        fetchSession().token
-      );
-    } catch (err) {
-      console.log(err, "Error fetching user");
-      return [];
-    }
-  };
 
   const fetchUser = async () => {
     if (fetchSession()?.id) {
@@ -51,8 +39,6 @@ function App() {
       setLoading(true);
       const user = await fetchUser();
       setUser(user);
-      const userGames = await fetchUserGames();
-      setUserGames(userGames);
       setLoading(false);
     };
 
@@ -70,8 +56,7 @@ function App() {
           setLoginResponse: "",
           showPickArtistModal,
           setShowPickArtistModal,
-          user,
-          userGames
+          user
         }}
       >
         {" "}
@@ -91,7 +76,6 @@ function App() {
                 element={
                   <Artist
                     user={user}
-                    userGames={userGames}
                     showPickArtistModal={showPickArtistModal}
                     setShowPickArtistModal={setShowPickArtistModal}
                   />
