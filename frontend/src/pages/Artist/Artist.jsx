@@ -7,7 +7,6 @@ import { GameCards } from "../../components/GameCards/GameCards";
 import { GameTabs } from "../../components/GameTabs/GameTabs";
 import Leaderboard from "./Leaderboard";
 import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
-import levels from "../../data/levels.json";
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
@@ -16,13 +15,14 @@ import { WAV_NFT_ADDRESS } from "../../data/contract_data";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
-  const [selectedLevel, setSelectedLevel] = useState(3);
   const [artist, setArtist] = useState({});
   const [image, setImage] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showTrade, setShowTrade] = useState(false);
   const [showSend, setShowSend] = useState(false);
   const [currentGame, setCurrentGame] = useState(null);
+
+  const [selectedLevel, setSelectedLevel] = useState(currentGame?.level || 1);
   const { setShowPickArtistModal, userGames } = props;
   const [wavNfts, setWavNfts] = useState(null);
   console.log(wavNfts, "wavnfts");
@@ -47,11 +47,20 @@ export const Artist = (props) => {
     }
   };
 
-  const onLevelSelected = (level) => {
-    console.log("onLevelSelected", level);
+  const onTradeClick = (level) => {
+    console.log("onTradeClick", level);
     setShowTrade(true);
     setSelectedLevel(level);
   };
+
+  const onGetMoreClick = (level) => {
+    console.log("onGetMoreClick", level);
+  };
+
+  const onLevelSelected = (level) => {
+    console.log('onLevelSelected', level)
+    setSelectedLevel(level || currentGame?.level || 1);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,18 +95,20 @@ export const Artist = (props) => {
         />
         <div className="flex flex-col items-center md:ml-20 grow">
           <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
-            <div className="game-header-level">LEVEL: {currentGame?.level || '?'} </div>
+            <div className="game-header-level">LEVEL: {currentGame?.level || '0'} </div>
             <div className="game-header-title">
               {artist?.name?.toUpperCase()}'s GAME_
             </div>
             <div className="game-header-counter">COLLECTABLES: 42</div>
           </div>
           <div className="flex flex-col justify-center mt-5">
-            <GameTabs levels={levels} currentLevel={1} />
+            <GameTabs selectedLevel={selectedLevel} currentGame={currentGame} onLevelSelected={onLevelSelected} />
             <GameCards
+              onTradeClick={onTradeClick}
+              onGetMoreClick={onGetMoreClick}
               onLevelSelected={onLevelSelected}
-              levels={levels}
-              currentLevel={1}
+              selectedLevel={selectedLevel}
+              currentGame={currentGame}
             />
           </div>
           <div className="flex flex-col  items-center pt-24 mt-12">

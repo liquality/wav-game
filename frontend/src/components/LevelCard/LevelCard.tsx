@@ -59,11 +59,6 @@ interface CardProps {
   current?: number;
 
   /**
-   * Optional click handler for the card action
-   */
-  onActionClick?: (level: number) => void;
-
-  /**
    * Set the current level temporary
    */
   setLevel?: (level?: number) => void;
@@ -74,12 +69,12 @@ interface CardProps {
  */
 export const LevelCard = ({
   status = "locked",
-  current = 3, // default active card level
   actions = [],
   ...props
 }: CardProps) => {
   const {
     setLevel,
+    current,
     level: { edition, title, instructions, id },
   } = props;
   const active = current === id;
