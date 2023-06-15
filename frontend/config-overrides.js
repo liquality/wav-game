@@ -47,7 +47,7 @@ module.exports = function override(config) {
       ? new webpack.DefinePlugin({
           "process.env": JSON.stringify(dotenv.config().parsed),
         })
-      : {},
+      : new webpack.DefinePlugin({}),
   ]);
   return config;
 };
