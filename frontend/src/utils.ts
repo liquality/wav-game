@@ -91,3 +91,48 @@ export const countNFTsByLevel = async (nfts, artistNumberId) => {
     });
     return levels;
 }
+
+
+export const getLevelsStatuses = (currentLevel: number) => {
+    return {
+        1: currentLevel > 1 ? "completed" : "active",
+        2:
+            currentLevel > 2
+                ? "completed"
+                : currentLevel === 2
+                    ? "active"
+                    : currentLevel === 1
+                        ? "next"
+                        : "upcomming",
+        3:
+            currentLevel > 3
+                ? "completed"
+                : currentLevel === 3
+                    ? "active"
+                    : currentLevel === 2
+                        ? "next"
+                        : "upcomming",
+        4:
+            currentLevel > 4
+                ? "completed"
+                : currentLevel === 4
+                    ? "active"
+                    : currentLevel === 3
+                        ? "next"
+                        : "upcomming",
+        5:
+            currentLevel > 5
+                ? "completed"
+                : currentLevel === 5
+                    ? "active"
+                    : currentLevel === 4
+                        ? "next"
+                        : "upcomming",
+        6:
+            currentLevel === 6
+                ? "active"
+                : currentLevel === 5
+                    ? "next"
+                    : "upcomming",
+    };
+};

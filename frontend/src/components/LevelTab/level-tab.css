@@ -74,6 +74,7 @@
     border: 1px solid #828282;
 }
 
+.level-tab-control--next,
 .level-tab-control--upcomming {
     border: 1px solid #F251BC;
     background-color: #333333;
@@ -83,6 +84,8 @@
     opacity: 0.6;
 }
 
+.level-tab-control--next:hover,
+.level-tab-control--next.active,
 .level-tab-control--upcomming:hover,
 .level-tab-control--upcomming.active {
     opacity: 1;
