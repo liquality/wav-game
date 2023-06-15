@@ -18,7 +18,7 @@ interface LevelTabProps {
  * Level tab control
  */
 export const LevelTab = (props: LevelTabProps) => {
-  const { level, selectedLevel, status, onLevelSelected } = props;
+  const { level, status } = props;
 
   return (
     <div className="flex flex-col justify-between">
