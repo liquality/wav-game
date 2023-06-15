@@ -14,7 +14,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_gameID",
+        name: "_artistID",
         type: "uint256",
       },
       {
@@ -44,12 +44,12 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_gameID",
+        name: "_artistID",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "_newIslandID",
+        name: "_newLevelID",
         type: "uint256",
       },
     ],
@@ -62,20 +62,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_feePerMint",
-        type: "uint256",
-      },
-    ],
-    name: "setFeePerMint",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_gameID",
+        name: "_artistID",
         type: "uint256",
       },
       {
@@ -97,21 +84,34 @@ const _abi = [
           },
           {
             internalType: "uint256",
-            name: "mintable",
+            name: "mintID",
             type: "uint256",
           },
           {
             internalType: "uint256",
-            name: "burnable",
+            name: "burnID",
             type: "uint256",
           },
         ],
-        internalType: "struct IWavGame.IslandParam[]",
-        name: "_islands",
+        internalType: "struct IWavGame.LevelParam[]",
+        name: "_levels",
         type: "tuple[]",
       },
     ],
-    name: "setGame",
+    name: "setArtistGame",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_feePerMint",
+        type: "uint256",
+      },
+    ],
+    name: "setFeePerMint",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -120,7 +120,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256[]",
-        name: "_gameIDs",
+        name: "_artistIDs",
         type: "uint256[]",
       },
       {
@@ -151,12 +151,12 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_gameID",
+        name: "_artistID",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "_islandID",
+        name: "_levelID",
         type: "uint256",
       },
       {
@@ -178,21 +178,21 @@ const _abi = [
           },
           {
             internalType: "uint256",
-            name: "mintable",
+            name: "mintID",
             type: "uint256",
           },
           {
             internalType: "uint256",
-            name: "burnable",
+            name: "burnID",
             type: "uint256",
           },
         ],
-        internalType: "struct IWavGame.IslandParam",
-        name: "_islandParam",
+        internalType: "struct IWavGame.LevelParam",
+        name: "_levelParam",
         type: "tuple",
       },
     ],
-    name: "updateIsland",
+    name: "updateLevel",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -201,12 +201,12 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_gameID",
+        name: "_artistID",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "_islandID",
+        name: "_levelID",
         type: "uint256",
       },
       {

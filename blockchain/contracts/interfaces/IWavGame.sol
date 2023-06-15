@@ -11,44 +11,44 @@ struct SetParam {
     uint id;
 }
 
-struct IslandParam {
+struct LevelParam {
     uint8 requiredBurn;
     uint8 requiredMint;
     uint32 earlyBirdCutOff;
-    uint256 mintable;
-    uint256 burnable;
+    uint256 mintID;
+    uint256 burnID;
 }
 
 /// @title A title that should describe the contract/interface
 /// @author Liquality
-/// @notice Data structure for individual islands
+/// @notice Data structure for individual levels
 /// @param maxSupply Maximum supply of island mintable NFT set in circulation
 /// @param requiredBurn Number of burnable NFT to burn to get current island mintable NFT 
 /// @dev Explain to a developer any extra details
-struct Island {
+struct Level {
     uint8 requiredBurn;
     uint8 requiredMint;
     uint32 earlyBirdCutOff;
-    uint256 mintable;
-    uint256 burnable;
+    uint256 mintID;
+    uint256 burnID;
     uint256 burnCount;
     uint256 mintCount;
 }
 
-struct Game {
-    Island[] islands;
+struct ArtistGame {
+    Level[] levels;
     address payable treasury;
 }
 
-function collect(uint256 _gameID, address _recipient, uint _amount) external payable;
+function collect(uint256 _artistID, address _recipient, uint256 _amount) external payable;
 
-function levelUp(uint256 _gameID, uint256 _newIslandID) external;
+function levelUp(uint256 _artistID, uint256 _newLevelID) external;
 
-function setGame(uint256 _gameID, IWavGame.IslandParam[] calldata _islands) external;
+function setArtistGame(uint256 _artistID, IWavGame.LevelParam[] calldata _levels) external;
 
-function setTreasuries(uint256[] calldata _gameIDs, address payable[] calldata _treasuries) external;
+function setTreasuries(uint256[] calldata _artistIDs, address payable[] calldata _treasuries) external;
 
-function updateIsland(uint256 _gameID, uint256 _islandID, IWavGame.IslandParam calldata _islandParam) external;
+function updateLevel(uint256 _artistID, uint256 _levelID, IWavGame.LevelParam calldata _levelParam) external;
 
 function transferWavNftOwnership(address newOwner) external;
 
@@ -56,6 +56,6 @@ function setFeePerMint(uint256  _feePerMint) external;
 
 function forwardValue() external;
 
-function wavMint(uint256 _gameID, uint256 _islandID, address _recipient, uint256  _amount) external;
+function wavMint(uint256 _artistID, uint256 _levelID, address _recipient, uint256  _amount) external;
 
 }

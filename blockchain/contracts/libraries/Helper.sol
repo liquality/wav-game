@@ -10,11 +10,11 @@ library Helper {
         return a > b ? a : b;
     }
 
-    function getIslandIndex(uint256 islandID) internal pure returns (uint256) {
-        return islandID - 1; // Game islands are stored in a 0-based index array => island 1 = 0 index position
+    function getLevelIndex(uint256 levelID) internal pure returns (uint256) {
+        unchecked { return levelID - 1;} // Artist Game levels are stored in a 0-based index array => island 1 = 0 index position
     }
 
-    function getIslandID(uint256 index) internal pure returns (uint256) {
-        return index + 1; // Game islands are stored in a 0-based index array => island 1 = 0 index position
+    function getLevelID(uint256 index) internal pure returns (uint256) {
+        unchecked { return index + 1;} // Artist Game levels are stored in a 0-based index array => island 1 = 0 index position
     }
 }

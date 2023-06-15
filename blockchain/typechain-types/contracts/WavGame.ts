@@ -29,17 +29,17 @@ import type {
 } from "../common";
 
 export declare namespace IWavGame {
-  export type IslandStruct = {
+  export type LevelStruct = {
     requiredBurn: PromiseOrValue<BigNumberish>;
     requiredMint: PromiseOrValue<BigNumberish>;
     earlyBirdCutOff: PromiseOrValue<BigNumberish>;
-    mintable: PromiseOrValue<BigNumberish>;
-    burnable: PromiseOrValue<BigNumberish>;
+    mintID: PromiseOrValue<BigNumberish>;
+    burnID: PromiseOrValue<BigNumberish>;
     burnCount: PromiseOrValue<BigNumberish>;
     mintCount: PromiseOrValue<BigNumberish>;
   };
 
-  export type IslandStructOutput = [
+  export type LevelStructOutput = [
     number,
     number,
     number,
@@ -51,21 +51,21 @@ export declare namespace IWavGame {
     requiredBurn: number;
     requiredMint: number;
     earlyBirdCutOff: number;
-    mintable: BigNumber;
-    burnable: BigNumber;
+    mintID: BigNumber;
+    burnID: BigNumber;
     burnCount: BigNumber;
     mintCount: BigNumber;
   };
 
-  export type IslandParamStruct = {
+  export type LevelParamStruct = {
     requiredBurn: PromiseOrValue<BigNumberish>;
     requiredMint: PromiseOrValue<BigNumberish>;
     earlyBirdCutOff: PromiseOrValue<BigNumberish>;
-    mintable: PromiseOrValue<BigNumberish>;
-    burnable: PromiseOrValue<BigNumberish>;
+    mintID: PromiseOrValue<BigNumberish>;
+    burnID: PromiseOrValue<BigNumberish>;
   };
 
-  export type IslandParamStructOutput = [
+  export type LevelParamStructOutput = [
     number,
     number,
     number,
@@ -75,8 +75,8 @@ export declare namespace IWavGame {
     requiredBurn: number;
     requiredMint: number;
     earlyBirdCutOff: number;
-    mintable: BigNumber;
-    burnable: BigNumber;
+    mintID: BigNumber;
+    burnID: BigNumber;
   };
 }
 
@@ -90,7 +90,7 @@ export interface WavGameInterface extends utils.Interface {
     "forwardValue()": FunctionFragment;
     "getBalance(uint256)": FunctionFragment;
     "getFeePerMint()": FunctionFragment;
-    "getIsland(uint256,uint256)": FunctionFragment;
+    "getLevel(uint256,uint256)": FunctionFragment;
     "getTreasury(uint256)": FunctionFragment;
     "getTrustedForwarder()": FunctionFragment;
     "initialize(address,address,uint256)": FunctionFragment;
@@ -102,8 +102,8 @@ export interface WavGameInterface extends utils.Interface {
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "setArtistGame(uint256,(uint8,uint8,uint32,uint256,uint256)[])": FunctionFragment;
     "setFeePerMint(uint256)": FunctionFragment;
-    "setGame(uint256,(uint8,uint8,uint32,uint256,uint256)[])": FunctionFragment;
     "setTreasuries(uint256[],address[])": FunctionFragment;
     "setTrustedForwarder(address)": FunctionFragment;
     "setWavNFT(address)": FunctionFragment;
@@ -111,7 +111,7 @@ export interface WavGameInterface extends utils.Interface {
     "transferOwnership(address)": FunctionFragment;
     "transferWavNftOwnership(address)": FunctionFragment;
     "unpause()": FunctionFragment;
-    "updateIsland(uint256,uint256,(uint8,uint8,uint32,uint256,uint256))": FunctionFragment;
+    "updateLevel(uint256,uint256,(uint8,uint8,uint32,uint256,uint256))": FunctionFragment;
     "wavMint(uint256,uint256,address,uint256)": FunctionFragment;
     "wavNFT()": FunctionFragment;
   };
@@ -126,7 +126,7 @@ export interface WavGameInterface extends utils.Interface {
       | "forwardValue"
       | "getBalance"
       | "getFeePerMint"
-      | "getIsland"
+      | "getLevel"
       | "getTreasury"
       | "getTrustedForwarder"
       | "initialize"
@@ -138,8 +138,8 @@ export interface WavGameInterface extends utils.Interface {
       | "pause"
       | "paused"
       | "renounceOwnership"
+      | "setArtistGame"
       | "setFeePerMint"
-      | "setGame"
       | "setTreasuries"
       | "setTrustedForwarder"
       | "setWavNFT"
@@ -147,7 +147,7 @@ export interface WavGameInterface extends utils.Interface {
       | "transferOwnership"
       | "transferWavNftOwnership"
       | "unpause"
-      | "updateIsland"
+      | "updateLevel"
       | "wavMint"
       | "wavNFT"
   ): FunctionFragment;
@@ -193,7 +193,7 @@ export interface WavGameInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getIsland",
+    functionFragment: "getLevel",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -240,12 +240,12 @@ export interface WavGameInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "setFeePerMint",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: "setArtistGame",
+    values: [PromiseOrValue<BigNumberish>, IWavGame.LevelParamStruct[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "setGame",
-    values: [PromiseOrValue<BigNumberish>, IWavGame.IslandParamStruct[]]
+    functionFragment: "setFeePerMint",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "setTreasuries",
@@ -273,11 +273,11 @@ export interface WavGameInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "updateIsland",
+    functionFragment: "updateLevel",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
-      IWavGame.IslandParamStruct
+      IWavGame.LevelParamStruct
     ]
   ): string;
   encodeFunctionData(
@@ -308,7 +308,7 @@ export interface WavGameInterface extends utils.Interface {
     functionFragment: "getFeePerMint",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "getIsland", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getLevel", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getTreasury",
     data: BytesLike
@@ -336,10 +336,13 @@ export interface WavGameInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setArtistGame",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setFeePerMint",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "setGame", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setTreasuries",
     data: BytesLike
@@ -363,18 +366,18 @@ export interface WavGameInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "updateIsland",
+    functionFragment: "updateLevel",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "wavMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "wavNFT", data: BytesLike): Result;
 
   events: {
+    "ArtistGameSet(uint256,uint256)": EventFragment;
     "Collected(uint256,address,uint256,uint256)": EventFragment;
     "FeeSet(uint256,uint256)": EventFragment;
-    "GameSet(uint256,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "IslandUpdated(uint256,uint256)": EventFragment;
+    "LevelUpdated(uint256,uint256)": EventFragment;
     "LeveledUp(uint256,address,uint256,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
@@ -385,11 +388,11 @@ export interface WavGameInterface extends utils.Interface {
     "WavNFTSet(address,address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "ArtistGameSet"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Collected"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "FeeSet"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "GameSet"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "IslandUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "LevelUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "LeveledUp"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
@@ -400,8 +403,19 @@ export interface WavGameInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "WavNFTSet"): EventFragment;
 }
 
+export interface ArtistGameSetEventObject {
+  artistID: BigNumber;
+  levelID: BigNumber;
+}
+export type ArtistGameSetEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  ArtistGameSetEventObject
+>;
+
+export type ArtistGameSetEventFilter = TypedEventFilter<ArtistGameSetEvent>;
+
 export interface CollectedEventObject {
-  gameID: BigNumber;
+  artistID: BigNumber;
   to: string;
   amountSent: BigNumber;
   totalMinted: BigNumber;
@@ -421,17 +435,6 @@ export type FeeSetEvent = TypedEvent<[BigNumber, BigNumber], FeeSetEventObject>;
 
 export type FeeSetEventFilter = TypedEventFilter<FeeSetEvent>;
 
-export interface GameSetEventObject {
-  gameID: BigNumber;
-  islandID: BigNumber;
-}
-export type GameSetEvent = TypedEvent<
-  [BigNumber, BigNumber],
-  GameSetEventObject
->;
-
-export type GameSetEventFilter = TypedEventFilter<GameSetEvent>;
-
 export interface InitializedEventObject {
   version: number;
 }
@@ -439,21 +442,21 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface IslandUpdatedEventObject {
-  gameID: BigNumber;
-  islandID: BigNumber;
+export interface LevelUpdatedEventObject {
+  artistID: BigNumber;
+  levelID: BigNumber;
 }
-export type IslandUpdatedEvent = TypedEvent<
+export type LevelUpdatedEvent = TypedEvent<
   [BigNumber, BigNumber],
-  IslandUpdatedEventObject
+  LevelUpdatedEventObject
 >;
 
-export type IslandUpdatedEventFilter = TypedEventFilter<IslandUpdatedEvent>;
+export type LevelUpdatedEventFilter = TypedEventFilter<LevelUpdatedEvent>;
 
 export interface LeveledUpEventObject {
-  gameID: BigNumber;
+  artistID: BigNumber;
   collector: string;
-  newIslandID: BigNumber;
+  newLevelID: BigNumber;
   totalMinted: BigNumber;
 }
 export type LeveledUpEvent = TypedEvent<
@@ -483,7 +486,7 @@ export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
 export interface PaymentForwardedEventObject {
-  gameID: BigNumber;
+  artistID: BigNumber;
   to: string;
   amount: BigNumber;
 }
@@ -496,7 +499,7 @@ export type PaymentForwardedEventFilter =
   TypedEventFilter<PaymentForwardedEvent>;
 
 export interface SpecialMintEventObject {
-  gameID: BigNumber;
+  artistID: BigNumber;
   collector: string;
   id: BigNumber;
   amount: BigNumber;
@@ -509,7 +512,7 @@ export type SpecialMintEvent = TypedEvent<
 export type SpecialMintEventFilter = TypedEventFilter<SpecialMintEvent>;
 
 export interface TreasurySetEventObject {
-  gameID: BigNumber;
+  artistID: BigNumber;
   treasury: string;
 }
 export type TreasurySetEvent = TypedEvent<
@@ -569,7 +572,7 @@ export interface WavGame extends BaseContract {
     ): Promise<ContractTransaction>;
 
     collect(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -578,35 +581,35 @@ export interface WavGame extends BaseContract {
     feePerMint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     fetchEarlyBirdCollectors(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string[]]>;
 
     fetchGame(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[IWavGame.IslandStructOutput[], string]>;
+    ): Promise<[IWavGame.LevelStructOutput[], string]>;
 
     forwardValue(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getBalance(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getFeePerMint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getIsland(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+    getLevel(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[IWavGame.IslandStructOutput]>;
+    ): Promise<[IWavGame.LevelStructOutput]>;
 
     getTreasury(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
@@ -622,8 +625,8 @@ export interface WavGame extends BaseContract {
     ): Promise<ContractTransaction>;
 
     isEarlyBirdCollector(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -633,8 +636,8 @@ export interface WavGame extends BaseContract {
     ): Promise<[boolean]>;
 
     levelUp(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _newIslandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _newLevelID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -657,19 +660,19 @@ export interface WavGame extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setArtistGame(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levels: IWavGame.LevelParamStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setFeePerMint(
       _feePerMint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    setGame(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islands: IWavGame.IslandParamStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     setTreasuries(
-      _gameIDs: PromiseOrValue<BigNumberish>[],
+      _artistIDs: PromiseOrValue<BigNumberish>[],
       _treasuries: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -703,16 +706,16 @@ export interface WavGame extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateIsland(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
-      _islandParam: IWavGame.IslandParamStruct,
+    updateLevel(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
+      _levelParam: IWavGame.LevelParamStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     wavMint(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -729,7 +732,7 @@ export interface WavGame extends BaseContract {
   ): Promise<ContractTransaction>;
 
   collect(
-    _gameID: PromiseOrValue<BigNumberish>,
+    _artistID: PromiseOrValue<BigNumberish>,
     _recipient: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -738,35 +741,35 @@ export interface WavGame extends BaseContract {
   feePerMint(overrides?: CallOverrides): Promise<BigNumber>;
 
   fetchEarlyBirdCollectors(
-    _gameID: PromiseOrValue<BigNumberish>,
-    _islandID: PromiseOrValue<BigNumberish>,
+    _artistID: PromiseOrValue<BigNumberish>,
+    _levelID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string[]>;
 
   fetchGame(
-    _gameID: PromiseOrValue<BigNumberish>,
+    _artistID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<[IWavGame.IslandStructOutput[], string]>;
+  ): Promise<[IWavGame.LevelStructOutput[], string]>;
 
   forwardValue(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getBalance(
-    _gameID: PromiseOrValue<BigNumberish>,
+    _artistID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getFeePerMint(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getIsland(
-    _gameID: PromiseOrValue<BigNumberish>,
-    _islandID: PromiseOrValue<BigNumberish>,
+  getLevel(
+    _artistID: PromiseOrValue<BigNumberish>,
+    _levelID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<IWavGame.IslandStructOutput>;
+  ): Promise<IWavGame.LevelStructOutput>;
 
   getTreasury(
-    _gameID: PromiseOrValue<BigNumberish>,
+    _artistID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -780,8 +783,8 @@ export interface WavGame extends BaseContract {
   ): Promise<ContractTransaction>;
 
   isEarlyBirdCollector(
-    _gameID: PromiseOrValue<BigNumberish>,
-    _islandID: PromiseOrValue<BigNumberish>,
+    _artistID: PromiseOrValue<BigNumberish>,
+    _levelID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -791,8 +794,8 @@ export interface WavGame extends BaseContract {
   ): Promise<boolean>;
 
   levelUp(
-    _gameID: PromiseOrValue<BigNumberish>,
-    _newIslandID: PromiseOrValue<BigNumberish>,
+    _artistID: PromiseOrValue<BigNumberish>,
+    _newLevelID: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -815,19 +818,19 @@ export interface WavGame extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setArtistGame(
+    _artistID: PromiseOrValue<BigNumberish>,
+    _levels: IWavGame.LevelParamStruct[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setFeePerMint(
     _feePerMint: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  setGame(
-    _gameID: PromiseOrValue<BigNumberish>,
-    _islands: IWavGame.IslandParamStruct[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   setTreasuries(
-    _gameIDs: PromiseOrValue<BigNumberish>[],
+    _artistIDs: PromiseOrValue<BigNumberish>[],
     _treasuries: PromiseOrValue<string>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -861,16 +864,16 @@ export interface WavGame extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateIsland(
-    _gameID: PromiseOrValue<BigNumberish>,
-    _islandID: PromiseOrValue<BigNumberish>,
-    _islandParam: IWavGame.IslandParamStruct,
+  updateLevel(
+    _artistID: PromiseOrValue<BigNumberish>,
+    _levelID: PromiseOrValue<BigNumberish>,
+    _levelParam: IWavGame.LevelParamStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   wavMint(
-    _gameID: PromiseOrValue<BigNumberish>,
-    _islandID: PromiseOrValue<BigNumberish>,
+    _artistID: PromiseOrValue<BigNumberish>,
+    _levelID: PromiseOrValue<BigNumberish>,
     _recipient: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -887,7 +890,7 @@ export interface WavGame extends BaseContract {
     ): Promise<void>;
 
     collect(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -896,33 +899,33 @@ export interface WavGame extends BaseContract {
     feePerMint(overrides?: CallOverrides): Promise<BigNumber>;
 
     fetchEarlyBirdCollectors(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string[]>;
 
     fetchGame(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[IWavGame.IslandStructOutput[], string]>;
+    ): Promise<[IWavGame.LevelStructOutput[], string]>;
 
     forwardValue(overrides?: CallOverrides): Promise<void>;
 
     getBalance(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getFeePerMint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getIsland(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+    getLevel(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<IWavGame.IslandStructOutput>;
+    ): Promise<IWavGame.LevelStructOutput>;
 
     getTreasury(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -936,8 +939,8 @@ export interface WavGame extends BaseContract {
     ): Promise<void>;
 
     isEarlyBirdCollector(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -947,8 +950,8 @@ export interface WavGame extends BaseContract {
     ): Promise<boolean>;
 
     levelUp(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _newIslandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _newLevelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -967,19 +970,19 @@ export interface WavGame extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
+    setArtistGame(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levels: IWavGame.LevelParamStruct[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setFeePerMint(
       _feePerMint: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    setGame(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islands: IWavGame.IslandParamStruct[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     setTreasuries(
-      _gameIDs: PromiseOrValue<BigNumberish>[],
+      _artistIDs: PromiseOrValue<BigNumberish>[],
       _treasuries: PromiseOrValue<string>[],
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1011,16 +1014,16 @@ export interface WavGame extends BaseContract {
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    updateIsland(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
-      _islandParam: IWavGame.IslandParamStruct,
+    updateLevel(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
+      _levelParam: IWavGame.LevelParamStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
     wavMint(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1030,14 +1033,23 @@ export interface WavGame extends BaseContract {
   };
 
   filters: {
+    "ArtistGameSet(uint256,uint256)"(
+      artistID?: PromiseOrValue<BigNumberish> | null,
+      levelID?: PromiseOrValue<BigNumberish> | null
+    ): ArtistGameSetEventFilter;
+    ArtistGameSet(
+      artistID?: PromiseOrValue<BigNumberish> | null,
+      levelID?: PromiseOrValue<BigNumberish> | null
+    ): ArtistGameSetEventFilter;
+
     "Collected(uint256,address,uint256,uint256)"(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       to?: PromiseOrValue<string> | null,
       amountSent?: PromiseOrValue<BigNumberish> | null,
       totalMinted?: null
     ): CollectedEventFilter;
     Collected(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       to?: PromiseOrValue<string> | null,
       amountSent?: PromiseOrValue<BigNumberish> | null,
       totalMinted?: null
@@ -1052,37 +1064,28 @@ export interface WavGame extends BaseContract {
       newFee?: PromiseOrValue<BigNumberish> | null
     ): FeeSetEventFilter;
 
-    "GameSet(uint256,uint256)"(
-      gameID?: PromiseOrValue<BigNumberish> | null,
-      islandID?: PromiseOrValue<BigNumberish> | null
-    ): GameSetEventFilter;
-    GameSet(
-      gameID?: PromiseOrValue<BigNumberish> | null,
-      islandID?: PromiseOrValue<BigNumberish> | null
-    ): GameSetEventFilter;
-
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "IslandUpdated(uint256,uint256)"(
-      gameID?: PromiseOrValue<BigNumberish> | null,
-      islandID?: PromiseOrValue<BigNumberish> | null
-    ): IslandUpdatedEventFilter;
-    IslandUpdated(
-      gameID?: PromiseOrValue<BigNumberish> | null,
-      islandID?: PromiseOrValue<BigNumberish> | null
-    ): IslandUpdatedEventFilter;
+    "LevelUpdated(uint256,uint256)"(
+      artistID?: PromiseOrValue<BigNumberish> | null,
+      levelID?: PromiseOrValue<BigNumberish> | null
+    ): LevelUpdatedEventFilter;
+    LevelUpdated(
+      artistID?: PromiseOrValue<BigNumberish> | null,
+      levelID?: PromiseOrValue<BigNumberish> | null
+    ): LevelUpdatedEventFilter;
 
     "LeveledUp(uint256,address,uint256,uint256)"(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       collector?: PromiseOrValue<string> | null,
-      newIslandID?: PromiseOrValue<BigNumberish> | null,
+      newLevelID?: PromiseOrValue<BigNumberish> | null,
       totalMinted?: null
     ): LeveledUpEventFilter;
     LeveledUp(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       collector?: PromiseOrValue<string> | null,
-      newIslandID?: PromiseOrValue<BigNumberish> | null,
+      newLevelID?: PromiseOrValue<BigNumberish> | null,
       totalMinted?: null
     ): LeveledUpEventFilter;
 
@@ -1099,35 +1102,35 @@ export interface WavGame extends BaseContract {
     Paused(account?: null): PausedEventFilter;
 
     "PaymentForwarded(uint256,address,uint256)"(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       to?: PromiseOrValue<string> | null,
       amount?: PromiseOrValue<BigNumberish> | null
     ): PaymentForwardedEventFilter;
     PaymentForwarded(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       to?: PromiseOrValue<string> | null,
       amount?: PromiseOrValue<BigNumberish> | null
     ): PaymentForwardedEventFilter;
 
     "SpecialMint(uint256,address,uint256,uint256)"(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       collector?: PromiseOrValue<string> | null,
       id?: PromiseOrValue<BigNumberish> | null,
       amount?: null
     ): SpecialMintEventFilter;
     SpecialMint(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       collector?: PromiseOrValue<string> | null,
       id?: PromiseOrValue<BigNumberish> | null,
       amount?: null
     ): SpecialMintEventFilter;
 
     "TreasurySet(uint256,address)"(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       treasury?: PromiseOrValue<string> | null
     ): TreasurySetEventFilter;
     TreasurySet(
-      gameID?: PromiseOrValue<BigNumberish> | null,
+      artistID?: PromiseOrValue<BigNumberish> | null,
       treasury?: PromiseOrValue<string> | null
     ): TreasurySetEventFilter;
 
@@ -1150,7 +1153,7 @@ export interface WavGame extends BaseContract {
     ): Promise<BigNumber>;
 
     collect(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -1159,13 +1162,13 @@ export interface WavGame extends BaseContract {
     feePerMint(overrides?: CallOverrides): Promise<BigNumber>;
 
     fetchEarlyBirdCollectors(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     fetchGame(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1174,20 +1177,20 @@ export interface WavGame extends BaseContract {
     ): Promise<BigNumber>;
 
     getBalance(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getFeePerMint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getIsland(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+    getLevel(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTreasury(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1201,8 +1204,8 @@ export interface WavGame extends BaseContract {
     ): Promise<BigNumber>;
 
     isEarlyBirdCollector(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1212,8 +1215,8 @@ export interface WavGame extends BaseContract {
     ): Promise<BigNumber>;
 
     levelUp(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _newIslandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _newLevelID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1236,19 +1239,19 @@ export interface WavGame extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setArtistGame(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levels: IWavGame.LevelParamStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setFeePerMint(
       _feePerMint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    setGame(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islands: IWavGame.IslandParamStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     setTreasuries(
-      _gameIDs: PromiseOrValue<BigNumberish>[],
+      _artistIDs: PromiseOrValue<BigNumberish>[],
       _treasuries: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1282,16 +1285,16 @@ export interface WavGame extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateIsland(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
-      _islandParam: IWavGame.IslandParamStruct,
+    updateLevel(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
+      _levelParam: IWavGame.LevelParamStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     wavMint(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1309,7 +1312,7 @@ export interface WavGame extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     collect(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
@@ -1318,13 +1321,13 @@ export interface WavGame extends BaseContract {
     feePerMint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     fetchEarlyBirdCollectors(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     fetchGame(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1333,20 +1336,20 @@ export interface WavGame extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getBalance(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getFeePerMint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getIsland(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+    getLevel(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getTreasury(
-      _gameID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1362,8 +1365,8 @@ export interface WavGame extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     isEarlyBirdCollector(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1373,8 +1376,8 @@ export interface WavGame extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     levelUp(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _newIslandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _newLevelID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1397,19 +1400,19 @@ export interface WavGame extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setArtistGame(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levels: IWavGame.LevelParamStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setFeePerMint(
       _feePerMint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    setGame(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islands: IWavGame.IslandParamStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     setTreasuries(
-      _gameIDs: PromiseOrValue<BigNumberish>[],
+      _artistIDs: PromiseOrValue<BigNumberish>[],
       _treasuries: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -1443,16 +1446,16 @@ export interface WavGame extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateIsland(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
-      _islandParam: IWavGame.IslandParamStruct,
+    updateLevel(
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
+      _levelParam: IWavGame.LevelParamStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     wavMint(
-      _gameID: PromiseOrValue<BigNumberish>,
-      _islandID: PromiseOrValue<BigNumberish>,
+      _artistID: PromiseOrValue<BigNumberish>,
+      _levelID: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }

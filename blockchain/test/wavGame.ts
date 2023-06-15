@@ -36,28 +36,28 @@ describe("WavGame Contract", async function () {
     });
   });
   // Game init:
-  // Create all artist game;and populate islands
+  // Create all artist game;and populate levels
   describe("Game Init", async function () {
     it("Should set all artist game successfully", async function () {
       const accounts = await ethers.getSigners();
       const artist1 = accounts[4].address;
       const artist2 = accounts[5].address;
       const artist3 = accounts[6].address;
-      const artist1L1 = [0, 0, 0, 1, 0]; //[requiredBurn,requiredMint,earlyBirdCutOff,mintable,burnable]
-      const artist1L2 = [2, 1, 2, 2, 1];
+      const artist1L1 = [0, 0, 0, 1, 0]; //[requiredBurn,requiredMint,earlyBirdCutOff,mintID,burnID]
+      const artist1L2 = [2, 1, 2, 1, 2];
       const artist2L1 = [0, 0, 0, 3, 0];
       const artist2L2 = [2, 1, 2, 4, 3];
       const artist3L1 = [0, 0, 0, 5, 0];
       const artist3L2 = [2, 1, 2, 6, 5];
-      expect(await wavGame.setGame(artist1GameID, [artist1L1, artist1L2])).to.emit(
+      expect(await wavGame.setArtistGame(artist1GameID, [artist1L1, artist1L2])).to.emit(
         wavGame,
         "GameSet"
       );
-      expect(await wavGame.setGame(artist2GameID, [artist2L1, artist2L2])).to.emit(
+      expect(await wavGame.setArtistGame(artist2GameID, [artist2L1, artist2L2])).to.emit(
         wavGame,
         "GameSet"
       );
-      expect(await wavGame.setGame(artist3GameID, [artist3L1, artist3L2])).to.emit(
+      expect(await wavGame.setArtistGame(artist3GameID, [artist3L1, artist3L2])).to.emit(
         wavGame,
         "GameSet"
       );
@@ -68,17 +68,18 @@ describe("WavGame Contract", async function () {
         )
       ).to.emit(wavGame, "TreasurySet"); // For test, using gameId as a Treasury too
 
-      const artist1GameL1 = await wavGame.getIsland(artist1GameID, 1);
-      const artist2GameL2 = await wavGame.getIsland(artist2GameID, 2);
+      const artist1GameL1 = await wavGame.getLevel(artist1GameID, 1);
+      const artist2GameL2 = await wavGame.getLevel(artist2GameID, 2);
 
       expect(artist1GameL1.requiredBurn).to.equal(artist1L1[0]);
-      expect(artist1GameL1.mintable).to.equal(artist1L1[3]);
+      expect(artist1GameL1.mintID).to.equal(artist1L1[3]);
+      expect(artist1GameL1.mintID).to.equal(artist1L2[3]);
       expect(artist2GameL2.requiredBurn).to.equal(artist2L2[0]);
-      expect(artist2GameL2.mintable).to.equal(artist2L2[3]);
+      expect(artist2GameL2.mintID).to.equal(artist2L2[3]);
     });
   });
 
-  describe("Collect: Enter game island 1 ", async function () {
+  describe("Collect: Enter game level 1 ", async function () {
     it("Should revert if insufficient value sent", async () => {
       const accounts = await ethers.getSigners();
       const player1 = accounts[7].address;
@@ -117,32 +118,32 @@ describe("WavGame Contract", async function () {
 
       expect(await wavNFT.balanceOf(player1, 3)).to.equal(3); // Level 1 NFT ID for artist2 is 3
       expect(
-        (await wavGame.getIsland(artist2GameID, ENTRY_LEVEL)).mintCount
-      ).to.equal(3); // MintCount for level 1 (first game island) should increase
+        (await wavGame.getLevel(artist2GameID, ENTRY_LEVEL)).mintCount
+      ).to.equal(3); // MintCount for level 1 (first game level) should increase
     });
   });
 
   describe("LevelUp Game", async () => {
-    it("Should revert if island does exist", async () => {
-      const nextIsland = 3; // island 3 has not been created for artist 1
+    it("Should revert if level does exist", async () => {
+      const nextLevel = 3; // level 3 has not been created for artist 1
       await expect(
-        wavGame.levelUp(artist1GameID, nextIsland)
-      ).to.be.revertedWithCustomError(wavGame, "IslandNotFound");
+        wavGame.levelUp(artist1GameID, nextLevel)
+      ).to.be.revertedWithCustomError(wavGame, "LevelNotFound");
     });
-    it("Should revert if required burn condition not met for next island", async () => {
+    it("Should revert if required burn condition not met for next level", async () => {
       const accounts = await ethers.getSigners();
-      const nextIsland = 2; // Island 3 has not been created for artist 1
+      const nextLevel = 2; // level 3 has not been created for artist 1
       await expect(
-        wavGame.connect(accounts[9]).levelUp(artist1GameID, nextIsland) // Sending only one burnable id
+        wavGame.connect(accounts[9]).levelUp(artist1GameID, nextLevel) // Sending only one burnID
       ).to.be.revertedWithCustomError(wavGame, "RequiredBurnNotMet").withArgs(2);
       await expect(
-        wavGame.connect(accounts[9]).levelUp(artist1GameID, nextIsland)
+        wavGame.connect(accounts[9]).levelUp(artist1GameID, nextLevel)
       ).to.be.revertedWithCustomError(wavGame, "RequiredBurnNotMet").withArgs(2);
     });
     it("Should levelup successfully, if required burn condition is met", async () => {
       const accounts = await ethers.getSigners();
       const player1 = accounts[7].address;
-      const nextIsland = 2;
+      const nextLevel = 2;
       await wavNFT
         .connect(accounts[7])
         .setApprovalForAll(wavGame.address, true);
@@ -153,19 +154,19 @@ describe("WavGame Contract", async function () {
       const prevbal1 = await wavNFT.balanceOf(player1, 3); // prevbal1 should equal 3, already collected in prev test
 
       await expect(
-        wavGame.connect(accounts[7]).levelUp(artist2GameID, nextIsland)
+        wavGame.connect(accounts[7]).levelUp(artist2GameID, nextLevel)
       ).to.emit(wavGame, "LeveledUp");
 
       expect(prevbal1.sub(await wavNFT.balanceOf(player1, 3))).to.equal(2); // It should have burnt 2 NFTs
-      expect(await wavNFT.balanceOf(player1, 4)).to.equal(1); // It should mint new island 2 NFT for artist2; id 4 is the mintable for island 2
+      expect(await wavNFT.balanceOf(player1, 4)).to.equal(1); // It should mint new level 2 NFT for artist2; id 4 is the mintID for level 2
       expect(
-        (await wavGame.getIsland(artist2GameID, nextIsland)).mintCount
+        (await wavGame.getLevel(artist2GameID, nextLevel)).mintCount
       ).to.equal(1); // MintCount for level 1 should increase
       expect(
-        (await wavGame.getIsland(artist2GameID, nextIsland - 1)).burnCount
+        (await wavGame.getLevel(artist2GameID, nextLevel - 1)).burnCount
       ).to.equal(2); // burn count for level 1 should increase by 2, since 2 level1 NFTs were burnt for level2's
       expect(
-        (await wavGame.fetchEarlyBirdCollectors(artist2GameID, nextIsland)).length).to.equal(1); // Expect prizedCollector count to increase
+        (await wavGame.fetchEarlyBirdCollectors(artist2GameID, nextLevel)).length).to.equal(1); // Expect prizedCollector count to increase
     });
   });
 
@@ -200,7 +201,7 @@ describe("WavGame Contract", async function () {
       const player2 = accounts[8].address;
       const player3 = accounts[9].address;
       const prizeCutoff = 2;
-      const nextIsland = 2;
+      const nextLevel = 2;
 
       await wavNFT
         .connect(accounts[7])
@@ -222,13 +223,13 @@ describe("WavGame Contract", async function () {
         value: feePerMint.mul(ethers.BigNumber.from(2)),
       });
 
-      await wavGame.connect(accounts[7]).levelUp(artist3GameID, nextIsland);
-      await wavGame.connect(accounts[8]).levelUp(artist3GameID, nextIsland);
-      await wavGame.connect(accounts[9]).levelUp(artist3GameID, nextIsland);
+      await wavGame.connect(accounts[7]).levelUp(artist3GameID, nextLevel);
+      await wavGame.connect(accounts[8]).levelUp(artist3GameID, nextLevel);
+      await wavGame.connect(accounts[9]).levelUp(artist3GameID, nextLevel);
 
       expect(
-        (await wavGame.fetchEarlyBirdCollectors(artist3GameID, nextIsland)).length
-      ).to.equal(prizeCutoff); // prizeCutoff is 2, 3 unique players are leving up to island 2 of artist 3, prizedCollectors can only be 2 and not more
+        (await wavGame.fetchEarlyBirdCollectors(artist3GameID, nextLevel)).length
+      ).to.equal(prizeCutoff); // prizeCutoff is 2, 3 unique players are leving up to level 2 of artist 3, prizedCollectors can only be 2 and not more
     });
   });
 
@@ -250,12 +251,12 @@ describe("WavGame Contract", async function () {
         wavGame.connect(accounts[5]).setTrustedForwarder(trustedForwarder)
       ).to.be.revertedWith("Ownable: caller is not the owner");
       await expect(
-        wavGame.connect(accounts[5]).setGame(artist1, [artist1L1])
+        wavGame.connect(accounts[5]).setArtistGame(artist1, [artist1L1])
       ).to.be.revertedWith("Ownable: caller is not the owner");
       await expect(
         wavGame
           .connect(accounts[5])
-          .updateIsland(artist1, ENTRY_LEVEL, artist1L1)
+          .updateLevel(artist1, ENTRY_LEVEL, artist1L1)
       ).to.be.revertedWith("Ownable: caller is not the owner");
       await expect(
         wavGame
@@ -303,13 +304,13 @@ describe("WavGame Contract", async function () {
       );
     });
 
-    it("should update game island info correctly per artist ", async () => {
+    it("should update game level info correctly per artist ", async () => {
       const artist1L1 = [1, 0, 0, 1, 0];
       await expect(
-        wavGame.updateIsland(artist1GameID, ENTRY_LEVEL, artist1L1)
-      ).to.emit(wavGame, "IslandUpdated");
+        wavGame.updateLevel(artist1GameID, ENTRY_LEVEL, artist1L1)
+      ).to.emit(wavGame, "LevelUpdated");
       expect(
-        (await wavGame.getIsland(artist1GameID, ENTRY_LEVEL)).requiredBurn
+        (await wavGame.getLevel(artist1GameID, ENTRY_LEVEL)).requiredBurn
       ).to.equal(1); // Updated requiredBurn to 1 above
     });
     it("should special mint successfully", async () => {

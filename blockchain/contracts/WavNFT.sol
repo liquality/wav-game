@@ -2,12 +2,15 @@
 pragma solidity ^0.8.0;
 
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
-import "@opengsn/contracts/src/ERC2771Recipient.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+import {ERC1155} from "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import {IERC1155} from "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {ERC1155Burnable} from "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
+import {ERC2771Recipient} from "@opengsn/contracts/src/ERC2771Recipient.sol";
+import {IERC2771Recipient} from "@opengsn/contracts/src/interfaces/IERC2771Recipient.sol";
+import {Context} from "@openzeppelin/contracts/utils/Context.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
 
 contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable  {
@@ -15,6 +18,12 @@ contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable
 
     constructor(string memory _uri) ERC1155(_uri){
 
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view override returns (bool) {
+        return interfaceId == type(IERC1155).interfaceId || 
+        interfaceId == type(IERC2771Recipient).interfaceId || 
+        super.supportsInterface(interfaceId);
     }
 
     function setURI(string memory newURI) public onlyOwner {
