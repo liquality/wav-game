@@ -3,21 +3,15 @@ import { useState, useEffect } from "react";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 import UserService from "../../services/UserService";
-import {
-  calculateNumberOfNftsInEachLvl,
-  countNFTsByLevel,
-  getPublicKey,
-} from "../../utils";
+import { countNFTsByLevel, getPublicKey } from "../../utils";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "../../data/contract_data";
 
 const Leaderboard = ({ setShowSendModal, artist }) => {
   const [showNfts, setShowNfts] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState(null);
-
   const [nfts, setNfts] = useState(null);
   const [numberOfNfts, setNumberOfNfts] = useState(null);
-
   const [loadingNfts, setLoadingNfts] = useState(false);
 
   const fetchNfts = async (address, chainId) => {
@@ -35,7 +29,6 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
       }
 
       if (artist.number_id && nfts) {
-        console.log("BT inside");
         let _numberOfNfts = await countNFTsByLevel(nfts, artist.number_id);
         setNumberOfNfts(_numberOfNfts);
       }
@@ -43,8 +36,6 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
 
     fetchData();
   }, [nfts, artist]);
-
-  console.log(numberOfNfts, "BT nr of nfts", artist.number_id);
 
   const getLeaderboardData = async () => {
     if (artist.number_id) {
