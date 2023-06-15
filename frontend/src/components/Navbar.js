@@ -1,31 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LoginModal } from "./Onboarding/LoginModal";
 import { fetchSession } from "../utils";
 import UserMenu from "../pages/Artist/UserMenu";
-import UserService from "../services/UserService";
 import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
-import { useParams } from "react-router-dom";
 
 const Navbar = (props) => {
-  let { artistId } = useParams();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
-  const [user, setUser] = useState({});
-  const { showPickArtistModal, setShowPickArtistModal } = props;
-
-  const fetchUser = async () => {
-    if (fetchSession()?.id) {
-      try {
-        const user = await UserService.getUserByUserId(
-          fetchSession().id, //userid
-          fetchSession().token
-        );
-        return user;
-      } catch (err) {
-        console.log(err, "Error fetching user");
-      }
-    } else return {};
-  };
+  const { showPickArtistModal, setShowPickArtistModal, game, user } = props;
 
   const AvatarComponent = ({ avatar }) => {
     return (
@@ -35,16 +17,6 @@ const Navbar = (props) => {
       ></div>
     );
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const user = await fetchUser();
-      setUser(user);
-    };
-
-    fetchData();
-    return () => {};
-  }, []);
 
   const closeModal = () => {
     setUserMenuOpen(false);
@@ -62,7 +34,7 @@ const Navbar = (props) => {
       {showPickArtistModal ? (
         <ChooseNewArtistModal
           show={showPickArtistModal}
-          selectedArtistId={artistId}
+          selectedArtistId={game?.artist_name}
           setShow={setShowPickArtistModal}
         />
       ) : null}
