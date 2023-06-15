@@ -4,16 +4,18 @@ const dotenv = require("dotenv");
 module.exports = function override(config) {
   // call dotenv and it will return an Object with a parsed key
   const env = dotenv.config().parsed;
+  console.log(env, "what is parsed env???");
 
   // reduce it to a nice object, the same as before
-  const envKeys = Object.keys(env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(env[next]);
-    return prev;
-  }, {});
+  if (env) {
+    const envKeys = Object.keys(env).reduce((prev, next) => {
+      prev[`process.env.${next}`] = JSON.stringify(env[next]);
+      return prev;
+    }, {});
+    console.log(envKeys, "env KEYS");
+  }
 
   // Handle undefined env variables during build
-  const definePlugin = new webpack.DefinePlugin(envKeys);
-  config.plugins = [...config.plugins, definePlugin];
 
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
@@ -41,7 +43,10 @@ module.exports = function override(config) {
       process: "process/browser",
       Buffer: ["buffer", "Buffer"],
     }),
-    new webpack.DefinePlugin(envKeys),
+
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(dotenv.config().parsed),
+    }),
   ]);
   return config;
 };
