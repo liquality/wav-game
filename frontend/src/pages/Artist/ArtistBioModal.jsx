@@ -7,14 +7,14 @@ export const ArtistBioModal = (props) => {
         return (
             <div className="container contentView">
                 <div className="flex flex-row mt-5">
-                    <div className="flex h-full items-center flex-col w-[15.25rem]">
-                        <div className="flex flex-col px-5 gap-4 mt-5">
-                            <img className="" src={image} alt="" />
+                    <div className="flex h-full items-center flex-col">
+                        <div className="flex flex-col px-5 gap-4">
+                            <div className="artist-image-bio" style={{backgroundImage: `url(${image})`}} />
                             <div className="bio-artist-name">{artist.name}</div>
                             <div className="bio-artist-desc">{artist.description}</div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap flex-row">
+                    <div className="flex flex-col gap-4 pr-5">
                         <p>
                             {artist.bio}
                         </p>
@@ -22,7 +22,9 @@ export const ArtistBioModal = (props) => {
                             {artist.quote}
                         </p>
                     </div>
-                </div></div>);
+                </div>
+            </div>
+        );
     };
     return (
         <CustomModal
