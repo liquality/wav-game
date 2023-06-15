@@ -107,7 +107,7 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
                 );
               }) : null}
             </div>
-            <img className="mt-" src={image} alt="" />
+            <div className="artist-image mt-3 mb-5" style={{backgroundImage: `url(${image})`}} />
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>BIO</h2>

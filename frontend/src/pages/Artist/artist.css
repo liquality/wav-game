@@ -110,6 +110,25 @@
   border-top: 1px solid #bf3948;
 }
 
+
+.artist-image {
+  width: 14.875rem;
+  height: 14.875rem;
+  border-radius: 3.063rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.artist-image-bio {
+  width: 10.438rem;
+  height: 10.438rem;
+  border-radius: 3.063rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid #828282;
+}
+
+
 .artist-content h2, 
 .artist-info h2 {
   text-transform: uppercase;

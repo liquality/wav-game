@@ -22,7 +22,6 @@ export const Artist = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showTrade, setShowTrade] = useState(false);
   const [showSend, setShowSend] = useState(false);
-  const [levelClicked, setLevelClicked] = useState(null);
   const [currentGame, setCurrentGame] = useState(null);
   const { setShowPickArtistModal, userGames } = props;
   const [wavNfts, setWavNfts] = useState(null);
@@ -52,7 +51,6 @@ export const Artist = (props) => {
     console.log("onLevelSelected", level);
     setShowTrade(true);
     setSelectedLevel(level);
-    setLevelClicked(level);
   };
 
   useEffect(() => {
