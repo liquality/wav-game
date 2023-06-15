@@ -41,13 +41,14 @@ module.exports = function override(config) {
       process: "process/browser",
       Buffer: ["buffer", "Buffer"],
     }),
-    console.log(JSON.stringify(dotenv.config().parsed), "json stringifyyyy?"),
-
-    env
-      ? new webpack.DefinePlugin({
-          "process.env": JSON.stringify(dotenv.config().parsed),
-        })
-      : new webpack.DefinePlugin({}),
   ]);
+
+  if (env) {
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        "process.env": JSON.stringify(dotenv.config().parsed),
+      })
+    );
+  }
   return config;
 };
