@@ -43,6 +43,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
     try {
       const user = await UserService.getGameByUserId(
         fetchSession().id, //userid
+        "",
         fetchSession().token
       );
 

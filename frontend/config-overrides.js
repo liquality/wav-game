@@ -6,14 +6,14 @@ module.exports = function override(config) {
   const env = dotenv.config().parsed;
 
   // reduce it to a nice object, the same as before
-  const envKeys = Object.keys(env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(env[next]);
-    return prev;
-  }, {});
+  if (env) {
+    const envKeys = Object.keys(env).reduce((prev, next) => {
+      prev[`process.env.${next}`] = JSON.stringify(env[next]);
+      return prev;
+    }, {});
+  }
 
   // Handle undefined env variables during build
-  const definePlugin = new webpack.DefinePlugin(envKeys);
-  config.plugins = [...config.plugins, definePlugin];
 
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
@@ -41,7 +41,14 @@ module.exports = function override(config) {
       process: "process/browser",
       Buffer: ["buffer", "Buffer"],
     }),
-    new webpack.DefinePlugin(envKeys),
   ]);
+
+  if (env) {
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        "process.env": JSON.stringify(dotenv.config().parsed),
+      })
+    );
+  }
   return config;
 };

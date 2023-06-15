@@ -24,6 +24,7 @@ export const ArtistGrid = (props) => {
     try {
       const user = await UserService.getGameByUserId(
         fetchSession().id, //userid
+        "",
         fetchSession().token
       );
 
@@ -48,8 +49,7 @@ export const ArtistGrid = (props) => {
 
   const renderButtons = (startHere, endHere) => {
     if (artistData.length > 0) {
-      return artistData.slice(startHere, endHere)
-            .map((item, index) => {
+      return artistData.slice(startHere, endHere).map((item, index) => {
         const isDisabled = games?.some((game) => game.artist_name === item.id);
 
         let buttonStyle;

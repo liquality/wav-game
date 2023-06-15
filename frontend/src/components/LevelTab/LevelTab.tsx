@@ -1,9 +1,8 @@
-import './level-tab.css';
-import { LevelStatus } from '../../types/LevelStatus';
-import classNames from 'classnames';
+import "./level-tab.css";
+import { LevelStatus } from "../../types/LevelStatus";
+import classNames from "classnames";
 
 interface LevelTabProps {
-
   /**
    * Level number
    */
@@ -12,8 +11,7 @@ interface LevelTabProps {
   /**
    * Level status
    */
-  status: LevelStatus
-
+  status: LevelStatus;
 }
 
 /**
@@ -24,14 +22,20 @@ export const LevelTab = (props: LevelTabProps) => {
 
   return (
     <div className="flex flex-col justify-between">
-      <div className={classNames({
-        'level-tab-title': true,
-        [`level-tab-title--${status}`]: true
-      })}>Level {level}</div>
-      <div className={classNames({
-        'level-tab-control': true,
-        [`level-tab-control--${status}`]: true
-      })}></div>
+      <div
+        className={classNames({
+          "level-tab-title": true,
+          [`level-tab-title--${status}`]: true,
+        })}
+      >
+        Level {level}
+      </div>
+      <div
+        className={classNames({
+          "level-tab-control": true,
+          [`level-tab-control--${status}`]: true,
+        })}
+      ></div>
     </div>
   );
 };
