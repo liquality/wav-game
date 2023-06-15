@@ -1,59 +1,80 @@
-import { useState, useTransition } from "react";
 import "./game-cards.css";
-import { LevelCard } from "../LevelCard/LevelCard";
-import { LevelStatus } from "../../types/LevelStatus";
+import { Level1 } from "./Level1";
+import { Level2 } from "./Level2";
+import { Level3 } from "./Level3";
+import { Level4 } from "./Level4";
+import { Level5 } from "./Level5";
+import { Level6 } from "./Level6";
 
 interface GameCardsProps {
   /**
-    The current level 
+    The current game 
    */
-  currentLevel?: number;
+  currentGame?: any;
+
+  selectedLevel: number;
 
   /**
    * Click handler for each level
    */
+  onTradeClick: (level: number) => void;
+  onGetMoreClick: (level: number) => void;
   onLevelSelected: (level: number) => void;
-
-  levels: any[];
 }
 
 /**
  * The collection or Card Levels with animation
  */
-export const GameCards = ({
-  currentLevel = 1, // default active card level
-  levels = [],
-  onLevelSelected,
-  ...props
-}: GameCardsProps) => {
-  const [level, setLevel] = useState(currentLevel);
-  const [isPending, startTransition] = useTransition();
+export const GameCards = (props: GameCardsProps) => {
+  const { currentGame, selectedLevel, onTradeClick, onGetMoreClick, onLevelSelected } = props;
   function onSetLevel(levelId?: number) {
-    startTransition(() => {
-      if (!isPending) {
-        setLevel(levelId || currentLevel);
-      }
-    });
+    onLevelSelected(levelId);
   }
 
   return (
-    <div className="flex flex-row mt-5 game-cards">
-      {levels.map((l) => {
-        return (
-          <LevelCard
-            key={l.id}
-            status={l.status as LevelStatus}
-            setLevel={onSetLevel}
-            current={level}
-            actions={[{
-              onActionClick: (level)=> onLevelSelected(level),
-              label: 'Trade Now',
-              mode: 'default'
-            }]}
-            level={l}
-          />
-        );
-      })}
+    <div className="mt-5 game-cards">
+      <Level1
+        selectedLevel={selectedLevel}
+        currentGame={currentGame}
+        onSetLevel={onSetLevel}
+        onTradeClick={onTradeClick}
+        onGetMoreClick={onGetMoreClick}
+      />
+      <Level2
+        selectedLevel={selectedLevel}
+        currentGame={currentGame}
+        onSetLevel={onSetLevel}
+        onTradeClick={onTradeClick}
+        onGetMoreClick={onGetMoreClick}
+      />
+      <Level3
+        selectedLevel={selectedLevel}
+        currentGame={currentGame}
+        onSetLevel={onSetLevel}
+        onTradeClick={onTradeClick}
+        onGetMoreClick={onGetMoreClick}
+      />
+      <Level4
+        selectedLevel={selectedLevel}
+        currentGame={currentGame}
+        onSetLevel={onSetLevel}
+        onTradeClick={onTradeClick}
+        onGetMoreClick={onGetMoreClick}
+      />
+      <Level5
+        selectedLevel={selectedLevel}
+        currentGame={currentGame}
+        onSetLevel={onSetLevel}
+        onTradeClick={onTradeClick}
+        onGetMoreClick={onGetMoreClick}
+      />
+      <Level6
+        selectedLevel={selectedLevel}
+        currentGame={currentGame}
+        onSetLevel={onSetLevel}
+        onTradeClick={onTradeClick}
+        onGetMoreClick={onGetMoreClick}
+      />
     </div>
   );
 };

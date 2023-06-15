@@ -1,5 +1,4 @@
 let ARTISTS = null;
-let LEVELS = null;
 let ARTIST_IMAGES = null;
 
 const StaticDataService = {
@@ -21,13 +20,6 @@ const StaticDataService = {
       ARTISTS = content.default;
     }
     return ARTISTS;
-  },
-  getLevels: async function () {
-    if (!LEVELS) {
-      const content = await import("../data/levels.json");
-      LEVELS = content.default;
-    }
-    return LEVELS;
   },
   findArtistById: async function (id) {
     const artists = await this.getArtists();
