@@ -12,6 +12,8 @@ import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
 import { NftService } from "@liquality/wallet-sdk";
 import { WAV_NFT_ADDRESS } from "../../data/contract_data";
+import { fetchSession } from "../../utils";
+import UserService from "../../services/UserService";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -26,12 +28,27 @@ export const Artist = (props) => {
   const { setShowPickArtistModal, userGames } = props;
   const [wavNfts, setWavNfts] = useState(null);
   console.log(wavNfts, "wavnfts");
+
   const fetchArtist = async (id) => {
     try {
       const artist = await StaticDataService.findArtistById(id);
       return artist;
     } catch (err) {
       console.log(err, "Error fetching the artist");
+    }
+  };
+
+  const fetchCurrentGame = async (artistNumberId) => {
+    try {
+      const game = await UserService.getGameByUserId(
+        fetchSession().id, //userid
+        artistNumberId,
+        fetchSession().token
+      );
+      return game;
+    } catch (err) {
+      console.log(err, "Error fetching user");
+      return null;
     }
   };
 
@@ -68,11 +85,11 @@ export const Artist = (props) => {
       const _image = (await import(`../../images/artists/${_artist.image}`))
         .default;
       const _wavNfts = await fetchNftCollection();
+      const currentGame = await fetchCurrentGame(_artist?.number_id);
 
       setWavNfts(_wavNfts);
       setArtist(_artist);
       setImage(_image);
-      const currentGame = userGames.find(g => g.game_symbol_id === _artist?.number_id)
       setCurrentGame(currentGame);
     };
 

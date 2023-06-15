@@ -38,6 +38,7 @@ export const ArtistGrid = (props) => {
     const init = async () => {
       const artists = await fetchArtist();
       let gamesArray = await fetchGamesByUserId();
+      console.log('gamesArray', gamesArray)
       const images = await StaticDataService.getArtistImages();
       setArtistImages(images);
       setGames(gamesArray);

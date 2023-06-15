@@ -152,7 +152,6 @@ div:has(> .level-card) {
   background-color: #333333;
   outline: 2px solid #C154F3;
   outline-offset: 0.313rem;
-  position: relative;
 }
 
 
