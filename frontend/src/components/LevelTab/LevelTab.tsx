@@ -12,30 +12,34 @@ interface LevelTabProps {
    * Level status
    */
   status: LevelStatus;
+
+
+  selectedLevel: number;
+
+  /**
+ * Click handler for each level
+ */
+  onLevelSelected: (level: number) => void;
 }
 
 /**
  * Level tab control
  */
 export const LevelTab = (props: LevelTabProps) => {
-  const { level, status } = props;
+  const { level, selectedLevel, status, onLevelSelected } = props;
 
   return (
     <div className="flex flex-col justify-between">
-      <div
+      <div className={classNames({
+        'level-tab-title': true,
+        [`level-tab-title--${status}`]: true
+      })}>Level {level}</div>
+      <div onClick={() => onLevelSelected(level)}
         className={classNames({
-          "level-tab-title": true,
-          [`level-tab-title--${status}`]: true,
-        })}
-      >
-        Level {level}
-      </div>
-      <div
-        className={classNames({
-          "level-tab-control": true,
+          'level-tab-control': true,
           [`level-tab-control--${status}`]: true,
-        })}
-      ></div>
+          'active': selectedLevel === level
+        })}></div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 
 import { LevelCard } from "../LevelCard/LevelCard";
-import { LevelStatus } from "../../types/LevelStatus";
+import { getLevelsStatuses } from "../../utils";
 
 const DEFAULT_CONTENT = {
     id: 4,
@@ -10,7 +10,7 @@ const DEFAULT_CONTENT = {
 };
 export const Level4 = (props) => {
     const { selectedLevel, game, onSetLevel, onTradeClick, onGetMoreClick } = props;
-    const status = 'active';
+    const status = getLevelsStatuses(game?.level || 1)[4];
     const actions = [{
         onActionClick: (level) => onTradeClick(level),
         label: 'Trade Now',
