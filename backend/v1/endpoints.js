@@ -102,7 +102,7 @@ endpoints.levelUpTrade = {
 
 /*WEBHOOK EVENTS FROM CROSSMINT*/
 
-endpoints.createGame = {
+endpoints.listenToWebhook = {
   url: "/v1/webhook",
   method: "post",
   middleware: [],
