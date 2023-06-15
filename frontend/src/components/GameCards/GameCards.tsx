@@ -14,6 +14,8 @@ interface GameCardsProps {
 
   selectedLevel: number;
 
+  nftCount: any;
+
   /**
    * Click handler for each level
    */
@@ -26,7 +28,7 @@ interface GameCardsProps {
  * The collection or Card Levels with animation
  */
 export const GameCards = (props: GameCardsProps) => {
-  const { currentGame, selectedLevel, onTradeClick, onGetMoreClick, onLevelSelected } = props;
+  const { currentGame, selectedLevel, onTradeClick, onGetMoreClick, onLevelSelected, nftCount } = props;
   function onSetLevel(levelId?: number) {
     onLevelSelected(levelId);
   }
@@ -39,6 +41,7 @@ export const GameCards = (props: GameCardsProps) => {
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
+        nftCount={nftCount}
       />
       <Level2
         selectedLevel={selectedLevel}
@@ -46,6 +49,7 @@ export const GameCards = (props: GameCardsProps) => {
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
+        nftCount={nftCount}
       />
       <Level3
         selectedLevel={selectedLevel}
@@ -53,6 +57,7 @@ export const GameCards = (props: GameCardsProps) => {
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
+        nftCount={nftCount}
       />
       <Level4
         selectedLevel={selectedLevel}
@@ -60,6 +65,7 @@ export const GameCards = (props: GameCardsProps) => {
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
+        nftCount={nftCount}
       />
       <Level5
         selectedLevel={selectedLevel}
@@ -67,6 +73,7 @@ export const GameCards = (props: GameCardsProps) => {
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
+        nftCount={nftCount}
       />
       <Level6
         selectedLevel={selectedLevel}
@@ -74,6 +81,7 @@ export const GameCards = (props: GameCardsProps) => {
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
+        nftCount={nftCount}
       />
     </div>
   );

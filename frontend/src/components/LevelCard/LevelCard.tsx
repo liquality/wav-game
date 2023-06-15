@@ -14,6 +14,7 @@ export interface LevelActionProps {
   mode: ButtonMode;
   useIcon?: boolean;
   link?: boolean;
+  disabled?: boolean;
 }
 
 interface Level {
@@ -114,7 +115,7 @@ export const LevelCard = ({
           {actions.map((action) => {
             return (
               <Button
-                disabled={!active}
+                disabled={!active || action.disabled}
                 key={action.label}
                 mode={action.mode}
                 link={action.link}
