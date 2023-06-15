@@ -11,3 +11,5 @@
   [redirects.headers]
     Pragma = "no-cache"
     Cache-Control = "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+[build]
+  environment = { CI = "false" }
