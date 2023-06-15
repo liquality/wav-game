@@ -238,8 +238,35 @@ class Game {
     return promise;
   };
 
+  readUserByWalletAddress = async (address) => {
+    const promise = new Promise((resolve, reject) => {
+      if (address) {
+        MySQL.pool.getConnection((err, db) => {
+          db.execute(
+            "SELECT * FROM `user` WHERE public_address = ?",
+            [address],
+            (err, results, fields) => {
+              if (err) {
+                reject(new ApiError(500, err));
+              } else if (results.length < 1) {
+                reject(new ApiError(404, "User with wallet address not found"));
+              } else {
+                resolve(results[0]);
+              }
+              db.release();
+            }
+          );
+        });
+      } else {
+        reject(new ApiError(500, "Missing wallet address"));
+      }
+    });
+    return promise;
+  };
+
   levelUpOnboarding = async (address) => {
     const game = this;
+    const user = await this.readUserByWalletAddress(address);
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
         if (err) {
@@ -247,50 +274,19 @@ class Game {
           return;
         }
 
-        // Query the USER table
+        // Update game table
         db.query(
-          "SELECT * FROM `user` WHERE public_address = ?",
-          [address],
-          (err, userResults, fields) => {
+          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ?",
+          [user.id],
+          (err, gameResults, fields) => {
             if (err) {
               reject(new ApiError(500, err));
-              db.release();
-              return;
+            } else if (gameResults.affectedRows < 1) {
+              reject(new ApiError(404, "Game with given user_id not found!"));
+            } else {
+              resolve(game);
             }
-
-            if (userResults.length < 1) {
-              reject(new ApiError(404, "User not found!"));
-              db.release();
-              return;
-            }
-
-            const user_id = userResults[0].user_id;
-            console.log(userResults[0], "user results");
-
-            // TODO: somehow the game_id should be in here as well if we want to use this function for TRADE, but
-            //we dont really have to because as long as we have trade txhash we can level up after we have gotten the txhash
-            db.query(
-              "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ?",
-              [user_id],
-              (err, gameResults, fields) => {
-                if (err) {
-                  reject(new ApiError(500, err));
-                } else if (gameResults.affectedRows < 1) {
-                  reject(
-                    new ApiError(404, "Game with given user_id not found!")
-                  );
-                } else {
-                  console.log(
-                    "resolved, gameresults!",
-                    gameResults,
-                    "AND GAME",
-                    game
-                  );
-                  resolve(game);
-                }
-                db.release();
-              }
-            );
+            db.release();
           }
         );
       });
