@@ -1,6 +1,5 @@
 import { ethers, upgrades } from 'hardhat';
 import { expect } from 'chai';
-// import { it } from "mocha";
 
 let wavNFT: any;
 let wavGame: any;
@@ -17,11 +16,7 @@ async function setup() {
   wavNFT = await WavNFT.deploy('');
 
   const WavGame = await ethers.getContractFactory('WavGame');
-  const wavGameProxy = await upgrades.deployProxy(WavGame, [
-    wavNFT.address,
-    trustedForwarder,
-    feePerMint,
-  ]);
+  const wavGameProxy = await upgrades.deployProxy(WavGame, [wavNFT.address, trustedForwarder, feePerMint]);
   await wavGameProxy.deployed();
   wavGame = wavGameProxy;
   console.log('wavGame > ', wavGame.address, 'wavGameProxy >> ', wavGameProxy.address);
@@ -55,23 +50,11 @@ describe('WavGame Contract', async function () {
       const artist2L2 = [2, 1, 2, 4, 3];
       const artist3L1 = [0, 0, 0, 5, 0];
       const artist3L2 = [2, 1, 2, 6, 5];
-      expect(await wavGame.setArtistGame(artist1GameID, [artist1L1, artist1L2])).to.emit(
-        wavGame,
-        'GameSet'
-      );
-      expect(await wavGame.setArtistGame(artist2GameID, [artist2L1, artist2L2])).to.emit(
-        wavGame,
-        'GameSet'
-      );
-      expect(await wavGame.setArtistGame(artist3GameID, [artist3L1, artist3L2])).to.emit(
-        wavGame,
-        'GameSet'
-      );
+      expect(await wavGame.setArtistGame(artist1GameID, [artist1L1, artist1L2])).to.emit(wavGame, 'GameSet');
+      expect(await wavGame.setArtistGame(artist2GameID, [artist2L1, artist2L2])).to.emit(wavGame, 'GameSet');
+      expect(await wavGame.setArtistGame(artist3GameID, [artist3L1, artist3L2])).to.emit(wavGame, 'GameSet');
       await expect(
-        wavGame.setTreasuries(
-          [artist1GameID, artist2GameID, artist3GameID],
-          [artist1, artist2, artist3]
-        )
+        wavGame.setTreasuries([artist1GameID, artist2GameID, artist3GameID], [artist1, artist2, artist3]),
       ).to.emit(wavGame, 'TreasurySet'); // For test, using gameId as a Treasury too
 
       const artist1GameL1 = await wavGame.getLevel(artist1GameID, 1);
@@ -104,7 +87,7 @@ describe('WavGame Contract', async function () {
       await expect(
         wavGame.connect(accounts[7]).collect(artist3GameID, player1, 0, {
           value: feePerMint,
-        })
+        }),
       ).to.be.revertedWithCustomError(wavGame, 'AmountCannotBeZero');
       expect((await wavNFT.balanceOf(player1, 12)) - prevbal).to.equal(0);
     });
@@ -114,7 +97,7 @@ describe('WavGame Contract', async function () {
       await expect(
         wavGame.connect(accounts[7]).collect(artist2GameID, player1, 3, {
           value: feePerMint.mul(ethers.BigNumber.from(3)),
-        })
+        }),
       ).to.emit(wavGame, 'Collected');
 
       expect(await wavNFT.balanceOf(player1, 3)).to.equal(3); // Level 1 NFT ID for artist2 is 3
@@ -163,9 +146,7 @@ describe('WavGame Contract', async function () {
       const accounts = await ethers.getSigners();
       const player2 = accounts[8].address;
       const nextLevel = 2;
-      const prevCollectorCount = (
-        await wavGame.fetchEarlyBirdCollectors(artist1GameID, ENTRY_LEVEL)
-      ).length;
+      const prevCollectorCount = (await wavGame.fetchEarlyBirdCollectors(artist1GameID, ENTRY_LEVEL)).length;
 
       await wavGame.connect(accounts[8]).collect(artist1GameID, player2, 4, {
         value: feePerMint.mul(ethers.BigNumber.from(4)),
@@ -174,18 +155,15 @@ describe('WavGame Contract', async function () {
         value: feePerMint.mul(ethers.BigNumber.from(6)),
       });
 
-      await wavNFT
-        .connect(accounts[8])
-        .setApprovalForAll(wavGame.address, true);
+      await wavNFT.connect(accounts[8]).setApprovalForAll(wavGame.address, true);
 
       await wavGame.connect(accounts[8]).levelUp(artist1GameID, nextLevel);
       await wavGame.connect(accounts[8]).levelUp(artist1GameID, nextLevel);
       console.log('Got here !!! ');
 
-      expect(
-        (await wavGame.fetchEarlyBirdCollectors(artist1GameID, nextLevel)).length -
-        prevCollectorCount
-      ).to.equal(1); // Expect prizedCollector count to increase by 1 only, Since same user, entered same level (2) twice
+      expect((await wavGame.fetchEarlyBirdCollectors(artist1GameID, nextLevel)).length - prevCollectorCount).to.equal(
+        1,
+      ); // Expect prizedCollector count to increase by 1 only, Since same user, entered same level (2) twice
     });
     it('Should not increase prizedCollectors count after prizeCutoff', async () => {
       const accounts = await ethers.getSigners();
@@ -213,9 +191,7 @@ describe('WavGame Contract', async function () {
       await wavGame.connect(accounts[8]).levelUp(artist3GameID, nextLevel);
       await wavGame.connect(accounts[9]).levelUp(artist3GameID, nextLevel);
 
-      expect((await wavGame.fetchEarlyBirdCollectors(artist3GameID, nextLevel)).length).to.equal(
-        prizeCutoff
-      ); // prizeCutoff is 2, 3 unique players are leving up to level 2 of artist 3, prizedCollectors can only be 2 and not more
+      expect((await wavGame.fetchEarlyBirdCollectors(artist3GameID, nextLevel)).length).to.equal(prizeCutoff); // prizeCutoff is 2, 3 unique players are leving up to level 2 of artist 3, prizedCollectors can only be 2 and not more
     });
   });
 
@@ -227,26 +203,26 @@ describe('WavGame Contract', async function () {
       const artist1L1 = [1, 0, 0, 1, 0];
       await expect(
         wavGame.connect(accounts[7]).setFeePerMint(ethers.utils.parseEther('2.0')), // owner is accounts[0]
-      ).to.rejectedWith('Ownable: caller is not the owner');
-      await expect(
-        wavGame.connect(accounts[5]).setTreasuries([artist1GameID], [artist1])
-      ).to.be.rejectedWith('Ownable: caller is not the owner');
-      await expect(
-        wavGame.connect(accounts[5]).setTrustedForwarder(trustedForwarder)
-      ).to.be.rejectedWith('Ownable: caller is not the owner');
-      await expect(
-        wavGame.connect(accounts[5]).setArtistGame(artist1, [artist1L1])
-      ).to.be.rejectedWith('Ownable: caller is not the owner');
-      await expect(
-        wavGame.connect(accounts[5]).updateLevel(artist1, ENTRY_LEVEL, artist1L1)
-      ).to.be.rejectedWith('Ownable: caller is not the owner');
-      await expect(
-        wavGame.connect(accounts[5]).wavMint(player1, ENTRY_LEVEL, artist1, 2)
-      ).to.be.rejectedWith('Ownable: caller is not the owner');
-      await expect(wavGame.connect(accounts[5]).mint(player1, 1, 2)).to.be.rejectedWith(
+      ).to.reverted('Ownable: caller is not the owner');
+      await expect(wavGame.connect(accounts[5]).setTreasuries([artist1GameID], [artist1])).to.be.reverted(
         'Ownable: caller is not the owner',
       );
-      await expect(wavGame.connect(accounts[5]).batchMint(player1, [1], [2])).to.be.rejectedWith(
+      await expect(wavGame.connect(accounts[5]).setTrustedForwarder(trustedForwarder)).to.be.reverted(
+        'Ownable: caller is not the owner',
+      );
+      await expect(wavGame.connect(accounts[5]).setArtistGame(artist1, [artist1L1])).to.be.reverted(
+        'Ownable: caller is not the owner',
+      );
+      await expect(wavGame.connect(accounts[5]).updateLevel(artist1, ENTRY_LEVEL, artist1L1)).to.be.reverted(
+        'Ownable: caller is not the owner',
+      );
+      await expect(wavGame.connect(accounts[5]).wavMint(player1, ENTRY_LEVEL, artist1, 2)).to.be.reverted(
+        'Ownable: caller is not the owner',
+      );
+      await expect(wavGame.connect(accounts[5]).mint(player1, 1, 2)).to.be.revertedWith(
+        'Ownable: caller is not the owner',
+      );
+      await expect(wavGame.connect(accounts[5]).batchMint(player1, [1], [2])).to.be.reverted(
         'Ownable: caller is not the owner',
       );
     });
@@ -280,20 +256,14 @@ describe('WavGame Contract', async function () {
 
     it('should update game level info correctly per artist ', async () => {
       const artist1L1 = [1, 0, 0, 1, 0];
-      await expect(wavGame.updateLevel(artist1GameID, ENTRY_LEVEL, artist1L1)).to.emit(
-        wavGame,
-        'LevelUpdated'
-      );
+      await expect(wavGame.updateLevel(artist1GameID, ENTRY_LEVEL, artist1L1)).to.emit(wavGame, 'LevelUpdated');
       expect((await wavGame.getLevel(artist1GameID, ENTRY_LEVEL)).requiredBurn).to.equal(1); // Updated requiredBurn to 1 above
     });
     it('should special mint successfully', async () => {
       const accounts = await ethers.getSigners();
       const player1 = accounts[7].address;
       const prevbal = await wavNFT.balanceOf(player1, 1);
-      await expect(wavGame.wavMint(artist1GameID, ENTRY_LEVEL, player1, 2)).to.emit(
-        wavGame,
-        'SpecialMint'
-      );
+      await expect(wavGame.wavMint(artist1GameID, ENTRY_LEVEL, player1, 2)).to.emit(wavGame, 'SpecialMint');
       expect((await wavNFT.balanceOf(player1, 1)) - prevbal).to.equal(2);
     });
   });
