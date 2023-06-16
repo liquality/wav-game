@@ -53,6 +53,11 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
     }
   };
 
+  const logOutAndNavigate = () => {
+    navigate("/");
+    logOut();
+  };
+
   React.useEffect(() => {
     const fetchData = async () => {
       const user = await fetchUser();
@@ -118,7 +123,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
           </button>
 
           <p
-            onClick={logOut}
+            onClick={() => logOutAndNavigate()}
             className="cursor-pointer pl-3 pt-4 pb-3 userMenuText lightPink"
           >
             Log out
