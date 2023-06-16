@@ -45,7 +45,7 @@ describe('WavGame Contract', async function () {
       const artist2 = accounts[5].address;
       const artist3 = accounts[6].address;
       const artist1L1 = [0, 0, 0, 1, 0]; //[requiredBurn,requiredMint,earlyBirdCutOff,mintID,burnID]
-      const artist1L2 = [2, 1, 2, 1, 2];
+      const artist1L2 = [2, 1, 2, 2, 1];
       const artist2L1 = [0, 0, 0, 3, 0];
       const artist2L2 = [2, 1, 2, 4, 3];
       const artist3L1 = [0, 0, 0, 5, 0];
@@ -62,7 +62,6 @@ describe('WavGame Contract', async function () {
 
       expect(artist1GameL1.requiredBurn).to.equal(artist1L1[0]);
       expect(artist1GameL1.mintID).to.equal(artist1L1[3]);
-      expect(artist1GameL1.mintID).to.equal(artist1L2[3]);
       expect(artist2GameL2.requiredBurn).to.equal(artist2L2[0]);
       expect(artist2GameL2.mintID).to.equal(artist2L2[3]);
     });
@@ -159,7 +158,6 @@ describe('WavGame Contract', async function () {
 
       await wavGame.connect(accounts[8]).levelUp(artist1GameID, nextLevel);
       await wavGame.connect(accounts[8]).levelUp(artist1GameID, nextLevel);
-      console.log('Got here !!! ');
 
       expect((await wavGame.fetchEarlyBirdCollectors(artist1GameID, nextLevel)).length - prevCollectorCount).to.equal(
         1,
@@ -203,26 +201,26 @@ describe('WavGame Contract', async function () {
       const artist1L1 = [1, 0, 0, 1, 0];
       await expect(
         wavGame.connect(accounts[7]).setFeePerMint(ethers.utils.parseEther('2.0')), // owner is accounts[0]
-      ).to.reverted('Ownable: caller is not the owner');
-      await expect(wavGame.connect(accounts[5]).setTreasuries([artist1GameID], [artist1])).to.be.reverted(
+      ).to.revertedWith('Ownable: caller is not the owner');
+      await expect(wavGame.connect(accounts[5]).setTreasuries([artist1GameID], [artist1])).to.be.revertedWith(
         'Ownable: caller is not the owner',
       );
-      await expect(wavGame.connect(accounts[5]).setTrustedForwarder(trustedForwarder)).to.be.reverted(
+      await expect(wavGame.connect(accounts[5]).setTrustedForwarder(trustedForwarder)).to.be.revertedWith(
         'Ownable: caller is not the owner',
       );
-      await expect(wavGame.connect(accounts[5]).setArtistGame(artist1, [artist1L1])).to.be.reverted(
+      await expect(wavGame.connect(accounts[5]).setArtistGame(artist1, [artist1L1])).to.be.revertedWith(
         'Ownable: caller is not the owner',
       );
-      await expect(wavGame.connect(accounts[5]).updateLevel(artist1, ENTRY_LEVEL, artist1L1)).to.be.reverted(
+      await expect(wavGame.connect(accounts[5]).updateLevel(artist1, ENTRY_LEVEL, artist1L1)).to.be.revertedWith(
         'Ownable: caller is not the owner',
       );
-      await expect(wavGame.connect(accounts[5]).wavMint(player1, ENTRY_LEVEL, artist1, 2)).to.be.reverted(
+      await expect(wavGame.connect(accounts[5]).wavMint(player1, ENTRY_LEVEL, artist1, 2)).to.be.revertedWith(
         'Ownable: caller is not the owner',
       );
       await expect(wavGame.connect(accounts[5]).mint(player1, 1, 2)).to.be.revertedWith(
         'Ownable: caller is not the owner',
       );
-      await expect(wavGame.connect(accounts[5]).batchMint(player1, [1], [2])).to.be.reverted(
+      await expect(wavGame.connect(accounts[5]).batchMint(player1, [1], [2])).to.be.revertedWith(
         'Ownable: caller is not the owner',
       );
     });
