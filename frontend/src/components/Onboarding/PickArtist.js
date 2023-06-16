@@ -4,6 +4,7 @@ import { ArtistGrid } from "../ArtistGrid";
 import CustomButton from "../Button";
 import StaticDataService from "../../services/StaticDataService";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 export const PickArtist = (props) => {
   const {
     type,
@@ -16,6 +17,9 @@ export const PickArtist = (props) => {
   const [artistData, setArtistData] = useState([]);
   const [artistImages, setArtistImages] = useState({});
   const [games, setGames] = useState([]);
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  const navigate = useNavigate();
+
   async function createGame() {
     try {
       await UserService.createGame(
@@ -54,6 +58,8 @@ export const PickArtist = (props) => {
     }
   };
 
+  console.log(shouldNavigate, "should navigate?");
+
   useEffect(() => {
     const init = async () => {
       const artists = await fetchArtist();
@@ -67,15 +73,21 @@ export const PickArtist = (props) => {
     init();
   }, []);
 
+  const handleClick = (selected, navigate) => {
+    setSelectedId(selected);
+    setShouldNavigate(navigate);
+  };
+
   function renderArtistGrid() {
     return (
       <div className="mt-5">
         <ArtistGrid
+          handleClose={handleClose}
           artistData={artistData}
           artistImages={artistImages}
           games={games}
           selectedId={selectedId}
-          handleClick={setSelectedId}
+          handleClick={handleClick}
         />
       </div>
     );
@@ -87,9 +99,12 @@ export const PickArtist = (props) => {
         if (game.artist_name === selectedId.id) return game.level;
       });
       //if game already exists dont create it again
-      if (gameAlreadyStarted) {
+      if (gameAlreadyStarted && !shouldNavigate) {
         setHeaderText("Game Incentives");
         setContent("gameIncentives");
+      } else if (shouldNavigate) {
+        navigate(`/artist/${selectedId?.id}`);
+        handleClose();
       } else {
         await createGame();
         setContent("gameIncentives");

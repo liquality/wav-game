@@ -69,6 +69,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
     return () => {
       //any cleanup
     };
+    //todo rerender session here
   }, []);
 
   const handleChooseNewArtist = () => {
@@ -86,7 +87,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
               className="pl-3 pb-3 userMenuText"
               onClick={() => navigate(`/artist/${game.artist_name}`)}
             >
-              Game {game.game_symbol_id / 1000}
+              Game: {game.artist_name}
             </button>
           </div>
         );

@@ -1,5 +1,22 @@
+import { useEffect, useState } from "react";
+import { getGameIdBasedOnHref } from "../utils";
+
 export const ArtistGrid = (props) => {
   const { selectedId, handleClick, artistData, artistImages, games } = props;
+
+  const [artistFromHref, setArtistFromHref] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const currentGameBasedOnHref = await getGameIdBasedOnHref();
+      setArtistFromHref(currentGameBasedOnHref);
+    };
+    fetchData();
+    return () => {
+      //any cleanup
+    };
+    //todo rerender session here
+  }, []);
 
   const renderButtons = (startHere, endHere) => {
     if (artistData?.length > 0 && artistData) {
@@ -7,12 +24,15 @@ export const ArtistGrid = (props) => {
         const level = games?.find((game) => {
           if (game.artist_name === item.id) return game.level;
         });
+        const userIsOnHrefArtist = item.id === artistFromHref.id;
 
         //I am sorry for this convoluted and messy logic,
         //will refactor one day maybe lmao
         let buttonStyle;
-        if (selectedId?.number_id === item.number_id) {
+        if (selectedId?.number_id === item.number_id && !userIsOnHrefArtist) {
           buttonStyle = { color: "white", backgroundColor: "#E61EA3" };
+        } else if (userIsOnHrefArtist) {
+          buttonStyle = { borderColor: "#FF5DC8" };
         }
         const finished = games?.find((game) => {
           if (game.artist_name === item.id)
@@ -36,7 +56,9 @@ export const ArtistGrid = (props) => {
         return (
           <div className="flexDirectionRow  mb-3" key={index}>
             <button
-              onClick={() => handleClick(item)}
+              onClick={() =>
+                handleClick(item, userIsOnHrefArtist || level?.level)
+              }
               className="defaultArtistBtn"
               disabled={isDisabled}
               style={buttonStyle}
