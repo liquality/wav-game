@@ -37,7 +37,7 @@ export const GameCards = (props: GameCardsProps) => {
     <div className="mt-5 game-cards">
       <Level1
         selectedLevel={selectedLevel}
-        currentGame={currentGame}
+        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
@@ -45,7 +45,7 @@ export const GameCards = (props: GameCardsProps) => {
       />
       <Level2
         selectedLevel={selectedLevel}
-        currentGame={currentGame}
+        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
@@ -53,7 +53,7 @@ export const GameCards = (props: GameCardsProps) => {
       />
       <Level3
         selectedLevel={selectedLevel}
-        currentGame={currentGame}
+        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
@@ -61,7 +61,7 @@ export const GameCards = (props: GameCardsProps) => {
       />
       <Level4
         selectedLevel={selectedLevel}
-        currentGame={currentGame}
+        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
@@ -69,7 +69,7 @@ export const GameCards = (props: GameCardsProps) => {
       />
       <Level5
         selectedLevel={selectedLevel}
-        currentGame={currentGame}
+        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
@@ -77,7 +77,7 @@ export const GameCards = (props: GameCardsProps) => {
       />
       <Level6
         selectedLevel={selectedLevel}
-        currentGame={currentGame}
+        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}

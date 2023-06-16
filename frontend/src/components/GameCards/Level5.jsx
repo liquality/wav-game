@@ -1,6 +1,6 @@
 
 import { LevelCard } from "../LevelCard/LevelCard";
-import { getLevelsStatuses } from "../../utils";
+import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
 
 export const Level5 = (props) => {
     const { selectedLevel, game, onSetLevel, onTradeClick, nftCount } = props;
@@ -9,42 +9,60 @@ export const Level5 = (props) => {
     const status = getLevelsStatuses(game?.level || 1)[5];
     let instructions = '';
     let tradeActionText = '';
-    let actionDisbled = false;
     let edition = '';
+    let actionDisabled = false;
+    let noActions = false;
+    let title = 'Get 1 custom-made song';
 
     if (level4Count <= 0) {
         instructions = 'You need 2 physical items to trade for this.';
         tradeActionText = 'Level locked';
-        actionDisbled = true;
+        actionDisabled = true;
     } else if (level4Count === 1) {
         instructions = 'Get 1 more from past level to trade.';
         tradeActionText = 'Level locked';
-        actionDisbled = true;
+        actionDisabled = true;
     } else {
-        actionDisbled = false;
-        instructions = `You have ${level5Count === -1 ? 0 : level5Count} NFTs.`;
-        switch (level5Count) {
-            case -1:
-                tradeActionText = 'Trade Now';
-                break;
-            case 0:
-                tradeActionText = 'Trade Now';
-                break;
-            case 1:
-                tradeActionText = 'Trade More';
-                break;
-            default:
-                tradeActionText = 'Trade More';
-                break;
-        }
+         // count down
+         const unlockDate = new Date(game?.created_at);
+         unlockDate.setDate(unlockDate.getDate() + 5);
+         const today = new Date();
+         if (unlockDate > today) {
+             // show the timer
+             noActions = true;
+             const difference = getDifferenceBetweenDates(today, unlockDate);
+             actionDisabled = true;
+             tradeActionText = 'Level locked';
+             title = 'Countdown to unlock';
+             instructions = `${difference.days}DAYS:${difference.hours}HRS:${difference.minutes}MIN`;
+         } else {
+            actionDisabled = false;
+            instructions = `You have ${level5Count === -1 ? 0 : level5Count} NFTs.`;
+            switch (level5Count) {
+                case -1:
+                    tradeActionText = 'Trade Now';
+                    break;
+                case 0:
+                    tradeActionText = 'Trade Now';
+                    break;
+                case 1:
+                    tradeActionText = 'Trade More';
+                    break;
+                default:
+                    tradeActionText = 'Trade More';
+                    break;
+            }
+         }
+       
     }
 
-    const actions = [{
+
+    const actions = noActions ? [] : [{
         onActionClick: (level) => onTradeClick(level),
         label: tradeActionText,
         mode: 'default',
-        disabled: actionDisbled,
-        useIcon: actionDisbled
+        disabled: actionDisabled,
+        useIcon: actionDisabled
     }];
 
     return (
@@ -55,7 +73,7 @@ export const Level5 = (props) => {
             actions={actions}
             level={{
                 id: 5,
-                title: 'Get 1 custom-made song',
+                title,
                 edition,
                 instructions
             }}
