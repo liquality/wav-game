@@ -205,7 +205,6 @@ class Game {
               results.forEach((row) => {
                 leaderboardData[`level${row.level}`] = row.userCount;
               });
-              console.log(leaderboardData, "leaderboarddata");
               resolve(leaderboardData);
             }
             db.release();

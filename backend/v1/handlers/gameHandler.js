@@ -55,7 +55,6 @@ gameHandler.readGamesByUserId = function (req, res) {
 
 gameHandler.getLeaderboardData = function (req, res) {
   const gameId = Number(req.params.game_symbol_id);
-  console.log("leaderboard", gameId);
   if (gameId) {
     var game = new Game();
     game.getLeaderboardData(gameId).then(
@@ -94,7 +93,6 @@ gameHandler.update = function (req, res) {
   game.set(req.body);
   const userid = Number(req.params.userid);
   const userIdFromSession = req.user.id;
-  console.log("why do i come here lol??");
   if (userid == userIdFromSession) {
     game.update().then(
       (game) => {
@@ -135,19 +133,15 @@ gameHandler.delete = function (req, res) {
 };
 
 gameHandler.levelUpTrade = function (req, res) {
-  console.log("BÄÄÄ");
   const gameId = req.body.gameId;
   const userId = req.body.userId;
   const userIdFromSession = req.user.id;
 
-  console.log(userId, "userids", userIdFromSession);
   if (userId && gameId) {
     if (userId === userIdFromSession) {
       const game = new Game();
-      console.log("bä");
       game.levelUpTrade(userId, gameId).then(
         (game) => {
-          console.log("not here");
           res.status(200).send(game);
         },
         (reject) => {

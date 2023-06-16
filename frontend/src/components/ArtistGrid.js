@@ -12,7 +12,6 @@ export const ArtistGrid = (props) => {
         //will refactor one day maybe lmao
         let buttonStyle;
         if (selectedId?.number_id === item.number_id) {
-          console.log("In here?");
           buttonStyle = { color: "white", backgroundColor: "#E61EA3" };
         }
         const finished = games?.find((game) => {

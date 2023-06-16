@@ -27,7 +27,6 @@ export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(currentGame?.level || 1);
   const { setShowPickArtistModal, userGames } = props;
   const [wavNfts, setWavNfts] = useState(null);
-  console.log(wavNfts, "wavnfts");
 
   const fetchArtist = async (id) => {
     try {
@@ -75,9 +74,9 @@ export const Artist = (props) => {
   };
 
   const onLevelSelected = (level) => {
-    console.log('onLevelSelected', level)
+    console.log("onLevelSelected", level);
     setSelectedLevel(level || currentGame?.level || 1);
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,7 +101,6 @@ export const Artist = (props) => {
   return (
     <div className="container mx-auto">
       <div className="flex">
-
         <Sidebar
           open={sidebarOpen}
           setOpen={setSidebarOpen}
@@ -112,14 +110,20 @@ export const Artist = (props) => {
         />
         <div className="flex flex-col items-center md:ml-20 grow">
           <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
-            <div className="game-header-level">LEVEL: {currentGame?.level || '0'} </div>
+            <div className="game-header-level">
+              LEVEL: {currentGame?.level || "0"}{" "}
+            </div>
             <div className="game-header-title">
               {artist?.name?.toUpperCase()}'s GAME_
             </div>
             <div className="game-header-counter">COLLECTABLES: 42</div>
           </div>
           <div className="flex flex-col justify-center mt-5">
-            <GameTabs selectedLevel={selectedLevel} currentGame={currentGame} onLevelSelected={onLevelSelected} />
+            <GameTabs
+              selectedLevel={selectedLevel}
+              currentGame={currentGame}
+              onLevelSelected={onLevelSelected}
+            />
             <GameCards
               onTradeClick={onTradeClick}
               onGetMoreClick={onGetMoreClick}
@@ -142,7 +146,6 @@ export const Artist = (props) => {
           </div>
           <div className="flex flex-col  items-center   pt-24 mt-12"></div>
         </div>
-
       </div>
       <TradeModal setShow={setShowTrade} show={showTrade} />
 
