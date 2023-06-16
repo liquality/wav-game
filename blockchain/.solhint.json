@@ -13,9 +13,9 @@
     "func-name-mixedcase": "error",
     "func-param-name-mixedcase": "error",
     "modifier-name-mixedcase": "error",
-    "private-vars-leading-underscore": "error",
     "var-name-mixedcase": "error",
-    "imports-on-top": "error"
+    "imports-on-top": "error",
+    "compiler-version": ["error","^0.8.0"]
   },
   "plugins": ["prettier"]
 }

@@ -29,8 +29,8 @@ contract WavGame is
     uint256 internal constant ENTRY_LEVEL = 1;
     IWavNFT public wavNFT;
 
-    uint256[] artistIDs;
-    mapping(uint256 => uint256) availablePayments;
+    uint256[] public artistIDs;
+    mapping(uint256 => uint256) public availablePayments;
     mapping(uint256 => ArtistGame) internal wavGames;
     mapping(uint256 => mapping(uint256 => EnumerableSetUpgradeable.AddressSet)) internal collectors; // Collectors per levels per game
 
