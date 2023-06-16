@@ -80,6 +80,7 @@ export const Artist = (props) => {
 
   const onGetMoreClick = (level) => {
     console.log("onGetMoreClick", level);
+    setShowPickArtistModal(true);
   };
 
   const onLevelSelected = (level) => {
@@ -90,26 +91,28 @@ export const Artist = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const _artist = await fetchArtist(artistId);
-      const _image = (await import(`../../images/artists/${_artist?.image}`))
-        .default;
-      const _wavNfts = await fetchNftCollection();
-      const currentGame = await fetchCurrentGame(_artist?.number_id);
-
-      if (!nfts) {
-        const nftData = await fetchNfts();
-        setNfts(nftData);
+      if(_artist) {
+          setArtist(_artist);
+          const _image = (await import(`../../images/artists/${_artist.image}`))
+          .default;
+        const _wavNfts = await fetchNftCollection();
+        const currentGame = await fetchCurrentGame(_artist?.number_id);
+  
+        if (!nfts) {
+          const nftData = await fetchNfts();
+          setNfts(nftData);
+        }
+  
+        if (_artist.number_id && nfts) {
+          const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
+          console.log("countNFTsByLevel", _nftCount);
+          setNftCount(_nftCount);
+        }
+  
+        setWavNfts(_wavNfts);
+        setImage(_image);
+        setCurrentGame(currentGame);
       }
-
-      if (_artist.number_id && nfts) {
-        const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
-        console.log("countNFTsByLevel", _nftCount);
-        setNftCount(_nftCount);
-      }
-
-      setWavNfts(_wavNfts);
-      setArtist(_artist);
-      setImage(_image);
-      setCurrentGame(currentGame);
     };
 
     fetchData();
