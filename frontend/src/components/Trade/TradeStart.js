@@ -35,7 +35,7 @@ export const TradeStart = (props) => {
     try {
       const user = await UserService.getGameByUserId(
         fetchSession().id, //userid
-        artist.number_id,
+        artist?.number_id,
         fetchSession().token
       );
 
@@ -90,7 +90,7 @@ export const TradeStart = (props) => {
       }
 
       let levelUpTx = await gameContract.levelUp.populateTransaction(
-        artist.number_id,
+        artist?.number_id,
         game.level
       );
 
@@ -106,7 +106,7 @@ export const TradeStart = (props) => {
         await UserService.levelUpTrade(
           {
             userId: fetchSession().id,
-            gameId: artist.number_id,
+            gameId: artist?.number_id,
           },
           fetchSession().token
         );
@@ -123,7 +123,7 @@ export const TradeStart = (props) => {
   };
 
   return (
-    <div className="contentView flex justify-around" >
+    <div className="contentView flex justify-around">
       <div className="p-4 ml-5 flexDirectionRow ">
         <div>
           {" "}
@@ -134,8 +134,8 @@ export const TradeStart = (props) => {
               <div className="flexDirectionRow">
                 {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
 
-                <img src={NftPreview} className="mr-1" alt="NFT Preview"/>
-                <img src={NftPreview} alt="NFT Preview"/>
+                <img src={NftPreview} className="mr-1" alt="NFT Preview" />
+                <img src={NftPreview} alt="NFT Preview" />
               </div>
             </div>
 
@@ -159,12 +159,12 @@ export const TradeStart = (props) => {
               <p className="webfont coral text-2xl">Level 3</p>
               <p className="mb-3">Trade 2 top live songs</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
-              <img src={NftBigPreview} alt="NFT Preview"/>
+              <img src={NftBigPreview} alt="NFT Preview" />
             </div>
-            <p>{error}</p>
           </div>
         </div>{" "}
       </div>
+      <p>{error}</p>
     </div>
   );
 };
