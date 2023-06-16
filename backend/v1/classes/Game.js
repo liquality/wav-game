@@ -283,13 +283,8 @@ class Game {
         );
         // Update game table
         db.query(
-<<<<<<< Updated upstream
-          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ?",
-          [user.id, artistNumberId],
-=======
           "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ? AND level IS NULL",
           [user.id],
->>>>>>> Stashed changes
           (err, gameResults, fields) => {
             if (err) {
               reject(new ApiError(500, err));
