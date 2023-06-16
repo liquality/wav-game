@@ -7,8 +7,8 @@ import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
 import { GameIncentives } from "./GameIncentives";
 
 export const ChooseNewArtistModal = (props) => {
-  const { show, setShow, selectedArtistId } = props;
-  const [content, setContent] = useState("chooseArtistStart");
+  const { show, setShow, selectedArtistId, defaultContent = "chooseArtistStart" } = props;
+  const [content, setContent] = useState(defaultContent);
   const [headerText, setHeaderText] = useState("Choose an artist");
   const [selectedNft, setSelectedNft] = useState(null);
   const [selectedArtist, setSelectedArtist] = useState(selectedArtistId);

@@ -1,17 +1,25 @@
 
 import { LevelCard } from "../LevelCard/LevelCard";
-import { getLevelsStatuses } from "../../utils";
+import { getLevelsStatuses, getDifferenceBetweenDates} from "../../utils";
 
 export const Level4 = (props) => {
     const { selectedLevel, game, onSetLevel, onTradeClick, nftCount } = props;
     const level3Count = nftCount['level3'] || -1;
     const level4Count = nftCount['level4'] || -1;
-    const status = getLevelsStatuses(game?.level || 1)[4];
+    let status = getLevelsStatuses(game?.level || 1)[4];
     let instructions = '';
     let tradeActionText = '';
     let actionDisbled = false;
     let edition = '100/100 CLAIMED';
 
+    // count down
+    const createdAt = new Date(game?.created_at);
+    const unlockDate = new Date(game?.created_at);
+    unlockDate.setDate(unlockDate.getDate() + 3); 
+    const today = new Date();
+    const difference = getDifferenceBetweenDates(today, createdAt);
+
+    
     if (level3Count <= 0) {
         instructions = 'You need 2 unreleased songs to trade for this.';
         tradeActionText = 'Level locked';

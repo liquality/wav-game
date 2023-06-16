@@ -80,6 +80,7 @@ export const Artist = (props) => {
 
   const onGetMoreClick = (level) => {
     console.log("onGetMoreClick", level);
+    setShowPickArtistModal(true);
   };
 
   const onLevelSelected = (level) => {

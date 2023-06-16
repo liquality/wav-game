@@ -8,9 +8,13 @@ import { ReactComponent as InstagramIcon } from "../../images/instagram.svg";
 import { ReactComponent as TikTokIcon } from "../../images/tiktok.svg";
 import { ReactComponent as LensIcon } from "../../images/lens.svg";
 import { Button } from "../../components/Button/Button";
-import { ArtistBioModal } from "./ArtistBioModal";
-
-const SocialLink = (props: { network: string; url: string }) => {
+import { ArtistBioModal } from './ArtistBioModal'
+const SocialLink = (
+  props: {
+    network: string,
+    url: string
+  }
+) => {
   const { network, url } = props;
   if (!url) {
     return null;
@@ -32,16 +36,14 @@ const SocialLink = (props: { network: string; url: string }) => {
       break;
   }
 
-  return (
-    <a
-      className="hover:text-white-700 mr-2"
-      href={url}
-      target="_blank"
-      rel="noreferrer"
-    >
-      <SocialIcon />
-    </a>
-  );
+  return <a
+    className="hover:text-white-700 mr-2"
+    href={url}
+    target="_blank"
+    rel="noreferrer"
+  >
+    <SocialIcon />
+  </a>
 };
 
 export type NavItem = {
@@ -55,16 +57,10 @@ type Props = {
   setOpen(open: boolean): void;
   artist: any;
   image: any;
-  setShowPickArtistModal: (show: boolean) => void;
+  setShowPickArtistModal: (show: boolean) => void
 };
 
-export const Sidebar = ({
-  open,
-  setOpen,
-  artist,
-  image,
-  setShowPickArtistModal,
-}: Props) => {
+export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }: Props) => {
   const [showArtistBioModal, setShowArtistBioModal] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, (e) => {
@@ -82,20 +78,16 @@ export const Sidebar = ({
       })}
       ref={ref}
     >
-      <ArtistBioModal
-        show={showArtistBioModal}
-        setShow={setShowArtistBioModal}
-        artist={artist}
-        image={image}
-      />
+      <ArtistBioModal show={showArtistBioModal} 
+                      setShow={setShowArtistBioModal} 
+                      artist={artist} 
+                      image={image} />
       <div className="flex flex-col place-items-end side-bar">
         <div className="flex flex-col px-5 gap-4 mt-5">
           <div className="artist-name">{artist.name}</div>
           <div className="artist-desc">{artist.description}</div>
-          <button
-            className="artist-link flex items-center"
-            onClick={() => setShowPickArtistModal(true)}
-          >
+          <button className="artist-link flex items-center"
+            onClick={() => setShowPickArtistModal(true)}>
             CHANGE ARTIST
             <ArrowRight className="ml-3" />
           </button>
@@ -107,47 +99,32 @@ export const Sidebar = ({
               <p>{artist.quote}</p>
             </div>
             <div className="flex flex-row items-center">
-              {artist && artist.socials
-                ? Object.keys(artist.socials).map((network) => {
-                    return (
-                      <SocialLink
-                        key={network}
-                        network={network}
-                        url={artist.socials[network]}
-                      />
-                    );
-                  })
-                : null}
+              {artist && artist.socials ? Object.keys(artist.socials).map((network) => {
+                return (
+                  <SocialLink key={network}
+                    network={network}
+                    url={artist.socials[network]} />
+                );
+              }) : null}
             </div>
-            <div
-              className="artist-image mt-3 mb-5"
-              style={{ backgroundImage: `url(${image})` }}
-            />
+            <div className="artist-image mt-3 mb-5" style={{backgroundImage: `url(${image})`}} />
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>BIO</h2>
             <p>
-              {artist.bio?.slice(0, 180)}{" "}
-              {artist.bio?.length > 180 ? "..." : ""}
+              {artist.bio?.slice(0, 180)} {artist.bio?.length > 180 ? '...' : ''}
               <Button
                 size="small"
                 onClick={() => setShowArtistBioModal(true)}
                 link
-                mode="pink"
-              >
-                Read More
-              </Button>
+                mode="pink">
+                Read More</Button>
             </p>
           </div>
-          {artist.funFact ? (
-            <div className="flex flex-col p-5 gap-1 artist-info">
-              <h2>FUN FACT</h2>
-              <p>
-                {artist.funFact?.slice(0, 120)}{" "}
-                {artist.funFact?.length > 120 ? "..." : ""}
-              </p>
-            </div>
-          ) : null}
+          {artist.funFact ? <div className="flex flex-col p-5 gap-1 artist-info">
+            <h2>FUN FACT</h2>
+            <p>{artist.funFact?.slice(0, 120)} {artist.funFact?.length > 120 ? '...' : ''}</p>
+          </div> : null}
         </div>
       </div>
     </div>
