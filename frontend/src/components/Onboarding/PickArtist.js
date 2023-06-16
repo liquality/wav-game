@@ -86,7 +86,7 @@ export const PickArtist = (props) => {
       const gameAlreadyStarted = games?.find((game) => {
         if (game.artist_name === selectedId.id) return game.level;
       });
-      //if game already exists dont create it again obv
+      //if game already exists dont create it again
       if (gameAlreadyStarted) {
         setHeaderText("Game Incentives");
         setContent("gameIncentives");

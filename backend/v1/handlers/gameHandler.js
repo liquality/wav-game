@@ -2,6 +2,7 @@
 
 var Game = require("../classes/Game");
 var ApiError = require("../classes/ApiError");
+const { helperFindArtistNumberIdByTokenId } = require("../helper");
 
 var gameHandler = {};
 
@@ -161,14 +162,16 @@ gameHandler.levelUpTrade = function (req, res) {
   }
 };
 
-gameHandler.webhook = function (req, res) {
-  console.log(req.body.status, "req body???");
-  if (req.body.status === "success") {
+gameHandler.webhook = async function (req, res) {
+  console.log(req.body, "req body???");
+  const { status, tokenIds } = req.body;
+  if (status === "success") {
+    const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
+    console.log(artistNumberId, "artist nr id");
     const game = new Game();
-    console.log("bä");
-    game.levelUpOnboarding(req.body.walletAddress).then(
+    game.levelUpOnboarding(req.body.walletAddress, artistNumberId).then(
       (game) => {
-        console.log("not here");
+        console.log("webhook successfull");
         res.status(200).send(game);
       },
       (reject) => {

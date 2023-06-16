@@ -264,7 +264,7 @@ class Game {
     return promise;
   };
 
-  levelUpOnboarding = async (address) => {
+  levelUpOnboarding = async (address, artistNumberId) => {
     const game = this;
     const user = await this.readUserByWalletAddress(address);
     const promise = new Promise((resolve, reject) => {
@@ -274,15 +274,28 @@ class Game {
           return;
         }
 
+        console.log(
+          address,
+          "address",
+          artistNumberId,
+          "artistnr id",
+          "USERID:",
+          user.id
+        );
         // Update game table
         db.query(
-          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ?",
-          [user.id],
+          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ?",
+          [user.id, artistNumberId],
           (err, gameResults, fields) => {
             if (err) {
               reject(new ApiError(500, err));
             } else if (gameResults.affectedRows < 1) {
-              reject(new ApiError(404, "Game with given user_id not found!"));
+              reject(
+                new ApiError(
+                  404,
+                  "Game with given user_id and game_symbol_id not found!"
+                )
+              );
             } else {
               resolve(game);
             }
