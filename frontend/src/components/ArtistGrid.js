@@ -22,9 +22,9 @@ export const ArtistGrid = (props) => {
     if (artistData?.length > 0 && artistData) {
       return artistData.slice(startHere, endHere).map((item, index) => {
         const level = games?.find((game) => {
-          if (game.artist_name === item.id) return game.level;
+          if (game.artist_name === item?.id) return game.level;
         });
-        const userIsOnHrefArtist = item.id === artistFromHref.id;
+        const userIsOnHrefArtist = item?.id === artistFromHref?.id;
 
         //I am sorry for this convoluted and messy logic,
         //will refactor one day maybe lmao
@@ -35,7 +35,7 @@ export const ArtistGrid = (props) => {
           buttonStyle = { borderColor: "#FF5DC8" };
         }
         const finished = games?.find((game) => {
-          if (game.artist_name === item.id)
+          if (game.artist_name === item?.id)
             return game.level_6_claimed_main_prize;
         });
         let isDisabled;
@@ -64,7 +64,7 @@ export const ArtistGrid = (props) => {
               style={buttonStyle}
             >
               <img
-                src={artistImages[item.id]}
+                src={artistImages[item?.id]}
                 className="avatarImage ml-2 object-cover"
                 alt="Artist Avatar"
               />
