@@ -1,39 +1,38 @@
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
+import { HardhatUserConfig } from 'hardhat/config';
+import '@nomicfoundation/hardhat-toolbox';
 import '@openzeppelin/hardhat-upgrades';
-import "hardhat-deploy";
-import * as dotenv from "dotenv";
+import 'hardhat-deploy';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
-
 
 const config: HardhatUserConfig = {
   defaultNetwork: process.env.DEFAULT_NETWORK,
   solidity: {
-    version: "0.8.18",
+    version: '0.8.18',
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
+        runs: 200,
+      },
+    },
   },
   networks: {
     localhost: {
-      url: "http://localhost:8545",
+      url: 'http://localhost:8545',
     },
     polygonMumbai: {
       url: process.env.MUMBAI_RPC,
       accounts: {
-        mnemonic: process.env.MNEMONIC
-      }
-    }
+        mnemonic: process.env.MNEMONIC,
+      },
+    },
   },
   etherscan: {
     apiKey: {
-      polygonMumbai: process.env.ETHERSCAN_API_KEY!
-    }
-  }
+      polygonMumbai: process.env.ETHERSCAN_API_KEY!,
+    },
+  },
 };
 
 export default config;

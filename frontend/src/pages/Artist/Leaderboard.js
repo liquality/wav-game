@@ -70,7 +70,6 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
 
   const openSendModal = () => {
     setShowSendModal(true);
-    console.log("open send modal here");
   };
 
   const renderNFTsToggled = () => {
@@ -100,22 +99,22 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
                 NFTs
               </th>
               <td className="px-6 py-4">
-                {numberOfNfts.level1 ? numberOfNfts.level1 : "--"}
+                {numberOfNfts?.level1 ? numberOfNfts?.level1 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts.level2 ? numberOfNfts.level2 : "--"}
+                {numberOfNfts?.level2 ? numberOfNfts?.level2 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts.level3 ? numberOfNfts.level3 : "--"}
+                {numberOfNfts?.level3 ? numberOfNfts?.level3 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts.level4 ? numberOfNfts.level4 : "--"}
+                {numberOfNfts?.level4 ? numberOfNfts?.level4 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts.level5 ? numberOfNfts.level5 : "--"}
+                {numberOfNfts?.level5 ? numberOfNfts?.level5 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts.level6 ? numberOfNfts.level6 : "--"}
+                {numberOfNfts?.level6 ? numberOfNfts?.level6 : "--"}
               </td>
             </tr>
           </tbody>

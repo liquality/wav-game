@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const CreditcardPayment = (props) => {
   const { setContent, selectedId } = props;
   const [nftAmount, setNftAmount] = useState(1);
-  const [session, setSession] = useState(false);
+
   const navigate = useNavigate();
 
   const handleDoneWithCheckout = () => {
@@ -81,6 +81,7 @@ export const CreditcardPayment = (props) => {
             <b>TOTAL:</b> ${0.5 * nftAmount}{" "}
           </p>
         </div>
+        {console.log(selectedId.number_id, "selected nr id")}
 
         <CrossmintPayButton
           onClick={handleDoneWithCheckout}
