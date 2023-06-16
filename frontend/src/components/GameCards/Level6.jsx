@@ -6,7 +6,7 @@ export const Level6 = (props) => {
     const { selectedLevel, game, onSetLevel, onTradeClick, nftCount } = props;
     const level5Count = nftCount['level5'] || -1;
     const level6Count = nftCount['level6'] || -1;
-    const status = getLevelsStatuses(game?.level || 1)[5];
+    let status = getLevelsStatuses(game?.level || 1)[6];
     let instructions = '';
     let tradeActionText = '';
     let edition = '';
@@ -36,21 +36,28 @@ export const Level6 = (props) => {
             title = 'Countdown to unlock';
             instructions = `${difference.days}DAYS:${difference.hours}HRS:${difference.minutes}MIN`;
         } else {
-            actionDisabled = false;
-            instructions = `You have ${level6Count === -1 ? 0 : level6Count} NFTs.`;
-            switch (level6Count) {
-                case -1:
-                    tradeActionText = 'Trade Now';
-                    break;
-                case 0:
-                    tradeActionText = 'Trade Now';
-                    break;
-                case 1:
-                    tradeActionText = 'Trade More';
-                    break;
-                default:
-                    tradeActionText = 'Trade More';
-                    break;
+            if (level6Count >= 2) {
+                noActions = true;
+                tradeActionText = '';
+                instructions = '';
+                status = 'won'
+            } else {
+                actionDisabled = false;
+                instructions = `You have ${level6Count === -1 ? 0 : level6Count} NFTs.`;
+                switch (level6Count) {
+                    case -1:
+                        tradeActionText = 'Trade Now';
+                        break;
+                    case 0:
+                        tradeActionText = 'Trade Now';
+                        break;
+                    case 1:
+                        tradeActionText = 'Trade More';
+                        break;
+                    default:
+                        tradeActionText = 'Trade More';
+                        break;
+                }   
             }
         }
     }
