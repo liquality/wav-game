@@ -14,6 +14,8 @@ import { NftService } from "@liquality/wallet-sdk";
 import { WAV_NFT_ADDRESS } from "../../data/contract_data";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
+import { countNFTsByLevel, getPublicKey } from "../../utils";
+import { CHAIN_ID } from "../../data/contract_data";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -27,6 +29,13 @@ export const Artist = (props) => {
   const [selectedLevel, setSelectedLevel] = useState(currentGame?.level || 1);
   const { setShowPickArtistModal, userGames } = props;
   const [wavNfts, setWavNfts] = useState(null);
+  const [nfts, setNfts] = useState(null);
+  const [nftCount, setNftCount] = useState({});
+
+  const fetchNfts = async (address, chainId) => {
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+    return nfts;
+  };
 
   const fetchArtist = async (id) => {
     try {
@@ -86,6 +95,17 @@ export const Artist = (props) => {
       const _wavNfts = await fetchNftCollection();
       const currentGame = await fetchCurrentGame(_artist?.number_id);
 
+      if (!nfts) {
+        const nftData = await fetchNfts();
+        setNfts(nftData);
+      }
+
+      if (_artist.number_id && nfts) {
+        const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
+        console.log("countNFTsByLevel", _nftCount);
+        setNftCount(_nftCount);
+      }
+
       setWavNfts(_wavNfts);
       setArtist(_artist);
       setImage(_image);
@@ -96,7 +116,7 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, [artistId, userGames]);
+  }, [artistId, userGames, nfts]);
 
   return (
     <div className="container mx-auto">
@@ -130,6 +150,7 @@ export const Artist = (props) => {
               onLevelSelected={onLevelSelected}
               selectedLevel={selectedLevel}
               currentGame={currentGame}
+              nftCount={nftCount}
             />
           </div>
           <div className="flex flex-col  items-center pt-24 mt-12">
