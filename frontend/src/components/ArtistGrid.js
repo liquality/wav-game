@@ -38,7 +38,7 @@ export const ArtistGrid = (props) => {
     const init = async () => {
       const artists = await fetchArtist();
       let gamesArray = await fetchGamesByUserId();
-      console.log('gamesArray', gamesArray)
+      console.log("gamesArray", gamesArray);
       const images = await StaticDataService.getArtistImages();
       setArtistImages(images);
       setGames(gamesArray);
@@ -52,16 +52,39 @@ export const ArtistGrid = (props) => {
     if (artistData.length > 0) {
       return artistData.slice(startHere, endHere).map((item, index) => {
         const isDisabled = games?.some((game) => game.artist_name === item.id);
+        const level = games?.find((game) => {
+          if (game.artist_name === item.id) return game.level;
+        });
 
         let buttonStyle;
-        if (isDisabled) {
-          buttonStyle = { backgroundColor: "#3D2A38", borderColor: "#4F4F4F" };
-        } else if (selectedId?.number_id === item.number_id) {
+        if (selectedId?.number_id === item.number_id) {
           buttonStyle = { backgroundColor: "#E61EA3" };
+        }
+        const finished = games?.find((game) => {
+          if (game.artist_name === item.id)
+            console.log(game, game.level_6_claimed_main_prize, "main prixee?");
+          return game.level_6_claimed_main_prize;
+        });
+
+        console.log(
+          level?.level === 6 && finished.level_6_claimed_main_prize,
+          "TRUE?"
+        );
+        let renderLevel;
+        if (level?.level && !finished.level_6_claimed_main_prize) {
+          renderLevel = `Level ${level?.level}`;
+        } else if (level?.level === 6 && finished.level_6_claimed_main_prize) {
+          renderLevel = "Game finished";
+          buttonStyle = {
+            backgroundColor: "#3D2A38",
+            borderColor: "#4F4F4F",
+          };
+        } else {
+          renderLevel = "Start game";
         }
 
         return (
-          <div className="flexDirectionRow justify-center mb-3" key={index}>
+          <div className="flexDirectionRow  mb-3" key={index}>
             <button
               onClick={() => handleClick(item)}
               className="defaultArtistBtn"
@@ -73,8 +96,15 @@ export const ArtistGrid = (props) => {
                 className="avatarImage ml-2"
                 alt="Artist Avatar"
               />
-              <span className="artistName">{item.name + " "}</span>
-              <NextBtn className="mr-3" />
+              <div
+                style={{
+                  alignItems: "flex-start",
+                }}
+                className="flexDirectionCol"
+              >
+                <span className="webfont coral">{renderLevel}</span>
+                <span className="artistName">{item.name + " "}</span>
+              </div>
             </button>
           </div>
         );
