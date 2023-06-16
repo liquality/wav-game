@@ -38,7 +38,6 @@ export const ArtistGrid = (props) => {
     const init = async () => {
       const artists = await fetchArtist();
       let gamesArray = await fetchGamesByUserId();
-      console.log("gamesArray", gamesArray);
       const images = await StaticDataService.getArtistImages();
       setArtistImages(images);
       setGames(gamesArray);
@@ -62,19 +61,14 @@ export const ArtistGrid = (props) => {
         }
         const finished = games?.find((game) => {
           if (game.artist_name === item.id)
-            console.log(game, game.level_6_claimed_main_prize, "main prixee?");
-          return game.level_6_claimed_main_prize;
+            return game.level_6_claimed_main_prize;
         });
 
-        console.log(
-          level?.level === 6 && finished.level_6_claimed_main_prize,
-          "TRUE?"
-        );
         let renderLevel;
-        if (level?.level && !finished.level_6_claimed_main_prize) {
+        if (level?.level && !finished?.level_6_claimed_main_prize) {
           renderLevel = `Level ${level?.level}`;
         } else if (level?.level === 6 && finished.level_6_claimed_main_prize) {
-          renderLevel = "Game finished";
+          renderLevel = "Game ended";
           buttonStyle = {
             backgroundColor: "#3D2A38",
             borderColor: "#4F4F4F",
@@ -93,7 +87,7 @@ export const ArtistGrid = (props) => {
             >
               <img
                 src={artistImages[item.id]}
-                className="avatarImage ml-2"
+                className="avatarImage ml-2 object-cover"
                 alt="Artist Avatar"
               />
               <div
