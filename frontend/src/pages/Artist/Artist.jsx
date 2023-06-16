@@ -90,7 +90,7 @@ export const Artist = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const _artist = await fetchArtist(artistId);
-      const _image = (await import(`../../images/artists/${_artist.image}`))
+      const _image = (await import(`../../images/artists/${_artist?.image}`))
         .default;
       const _wavNfts = await fetchNftCollection();
       const currentGame = await fetchCurrentGame(_artist?.number_id);

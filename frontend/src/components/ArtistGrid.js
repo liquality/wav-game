@@ -2,7 +2,7 @@ export const ArtistGrid = (props) => {
   const { selectedId, handleClick, artistData, artistImages, games } = props;
 
   const renderButtons = (startHere, endHere) => {
-    if (artistData?.length > 0) {
+    if (artistData?.length > 0 && artistData) {
       return artistData.slice(startHere, endHere).map((item, index) => {
         const level = games?.find((game) => {
           if (game.artist_name === item.id) return game.level;
