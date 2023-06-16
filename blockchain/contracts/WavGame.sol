@@ -10,9 +10,9 @@ import {EnumerableSetUpgradeable} from "@openzeppelin/contracts-upgradeable/util
 import {ERC2771Recipient} from "@opengsn/contracts/src/ERC2771Recipient.sol";
 import {IERC2771Recipient} from "@opengsn/contracts/src/interfaces/IERC2771Recipient.sol";
 import {ContextUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
-import "./interfaces/IWavGame.sol";
-import "./interfaces/IWavNFT.sol";
-import "./libraries/Helper.sol";
+import { IWavGame } from "./interfaces/IWavGame.sol";
+import { IWavNFT } from "./interfaces/IWavNFT.sol";
+import { Helper } from "./libraries/Helper.sol";
 
 contract WavGame is
     Initializable,
