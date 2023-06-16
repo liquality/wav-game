@@ -2,6 +2,8 @@ import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
 import CustomButton from "../Button";
+import StaticDataService from "../../services/StaticDataService";
+import { useEffect, useState } from "react";
 export const PickArtist = (props) => {
   const {
     type,
@@ -11,7 +13,9 @@ export const PickArtist = (props) => {
     selectedId,
     handleClose,
   } = props;
-
+  const [artistData, setArtistData] = useState([]);
+  const [artistImages, setArtistImages] = useState({});
+  const [games, setGames] = useState([]);
   async function createGame() {
     try {
       await UserService.createGame(
@@ -27,19 +31,70 @@ export const PickArtist = (props) => {
     }
   }
 
+  const fetchArtist = async (id) => {
+    try {
+      const artist = await StaticDataService.getArtists();
+      return artist;
+    } catch (err) {
+      console.log(err, "Error fetching the artist");
+    }
+  };
+
+  const fetchGamesByUserId = async () => {
+    try {
+      const user = await UserService.getGameByUserId(
+        fetchSession().id, //userid
+        "",
+        fetchSession().token
+      );
+
+      return user;
+    } catch (err) {
+      console.log(err, "Error fetching user");
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      const artists = await fetchArtist();
+      let gamesArray = await fetchGamesByUserId();
+      const images = await StaticDataService.getArtistImages();
+      setArtistImages(images);
+      setGames(gamesArray);
+      setArtistData(artists);
+    };
+
+    init();
+  }, []);
+
   function renderArtistGrid() {
     return (
       <div className="mt-5">
-        <ArtistGrid selectedId={selectedId} handleClick={setSelectedId} />
+        <ArtistGrid
+          artistData={artistData}
+          artistImages={artistImages}
+          games={games}
+          selectedId={selectedId}
+          handleClick={setSelectedId}
+        />
       </div>
     );
   }
 
   const handleSetNewPage = async () => {
     if (type !== "onboarding") {
-      await createGame();
-      setContent("gameIncentives");
-      setHeaderText("Game Incentives");
+      const gameAlreadyStarted = games?.find((game) => {
+        if (game.artist_name === selectedId.id) return game.level;
+      });
+      //if game already exists dont create it again
+      if (gameAlreadyStarted) {
+        setHeaderText("Game Incentives");
+        setContent("gameIncentives");
+      } else {
+        await createGame();
+        setContent("gameIncentives");
+        setHeaderText("Game Incentives");
+      }
     } else {
       await createGame();
       setContent("creditcardPayment");

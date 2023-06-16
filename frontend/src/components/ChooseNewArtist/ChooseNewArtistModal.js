@@ -6,7 +6,6 @@ import { CustomModal } from "../Modal";
 import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
 import { GameIncentives } from "./GameIncentives";
 
-
 export const ChooseNewArtistModal = (props) => {
   const { show, setShow, selectedArtistId } = props;
   const [content, setContent] = useState("chooseArtistStart");
@@ -19,14 +18,10 @@ export const ChooseNewArtistModal = (props) => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    const init = async () => {
-    
-    };
+    const init = async () => {};
 
     init();
   }, [content]);
-
-  console.log("are we haere?", content);
 
   const whichContentToRender = () => {
     if (content === "chooseArtistStart") {

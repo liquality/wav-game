@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const CreditcardPayment = (props) => {
   const { setContent, selectedId } = props;
   const [nftAmount, setNftAmount] = useState(1);
-  const [session, setSession] = useState(false);
+
   const navigate = useNavigate();
 
   const handleDoneWithCheckout = () => {

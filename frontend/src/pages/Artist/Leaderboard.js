@@ -70,7 +70,6 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
 
   const openSendModal = () => {
     setShowSendModal(true);
-    console.log("open send modal here");
   };
 
   const renderNFTsToggled = () => {

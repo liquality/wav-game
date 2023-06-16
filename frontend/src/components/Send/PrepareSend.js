@@ -57,8 +57,6 @@ export const PrepareSend = ({
       });
   };
 
-  console.log(process.env.REACT_APP_GELATO_API_KEY, "api key", selectedNft);
-
   return (
     <div className="contentView flex justify-center">
       {" "}

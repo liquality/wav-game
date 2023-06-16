@@ -1,67 +1,40 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { ReactComponent as NextBtn } from "../images/next_btn.svg";
-import StaticDataService from "../services/StaticDataService";
-import { fetchSession } from "../utils";
-import UserService from "../services/UserService";
-
 export const ArtistGrid = (props) => {
-  const { selectedId, handleClick } = props;
-  const [artistData, setArtistData] = useState([]);
-  const [artistImages, setArtistImages] = useState({});
-  const [games, setGames] = useState([]);
-
-  const fetchArtist = async (id) => {
-    try {
-      const artist = await StaticDataService.getArtists();
-      return artist;
-    } catch (err) {
-      console.log(err, "Error fetching the artist");
-    }
-  };
-
-  const fetchGamesByUserId = async () => {
-    try {
-      const user = await UserService.getGameByUserId(
-        fetchSession().id, //userid
-        "",
-        fetchSession().token
-      );
-
-      return user;
-    } catch (err) {
-      console.log(err, "Error fetching user");
-    }
-  };
-
-  useEffect(() => {
-    const init = async () => {
-      const artists = await fetchArtist();
-      let gamesArray = await fetchGamesByUserId();
-      console.log('gamesArray', gamesArray)
-      const images = await StaticDataService.getArtistImages();
-      setArtistImages(images);
-      setGames(gamesArray);
-      setArtistData(artists);
-    };
-
-    init();
-  }, []);
+  const { selectedId, handleClick, artistData, artistImages, games } = props;
 
   const renderButtons = (startHere, endHere) => {
     if (artistData.length > 0) {
       return artistData.slice(startHere, endHere).map((item, index) => {
-        const isDisabled = games?.some((game) => game.artist_name === item.id);
+        const level = games?.find((game) => {
+          if (game.artist_name === item.id) return game.level;
+        });
 
+        //I am sorry for this convoluted and messy logic,
+        //will refactor one day maybe lmao
         let buttonStyle;
-        if (isDisabled) {
-          buttonStyle = { backgroundColor: "#3D2A38", borderColor: "#4F4F4F" };
-        } else if (selectedId?.number_id === item.number_id) {
-          buttonStyle = { backgroundColor: "#E61EA3" };
+        if (selectedId?.number_id === item.number_id) {
+          buttonStyle = { color: "white", backgroundColor: "#E61EA3" };
+        }
+        const finished = games?.find((game) => {
+          if (game.artist_name === item.id)
+            return game.level_6_claimed_main_prize;
+        });
+        let isDisabled;
+        let renderLevel;
+        if (level?.level && !finished?.level_6_claimed_main_prize) {
+          renderLevel = `Level ${level?.level}`;
+        } else if (level?.level === 6 && finished.level_6_claimed_main_prize) {
+          isDisabled = true;
+          renderLevel = "Game ended";
+          buttonStyle = {
+            backgroundColor: "#3D2A38",
+            borderColor: "#4F4F4F",
+          };
+        } else {
+          renderLevel = "Start game";
         }
 
         return (
-          <div className="flexDirectionRow justify-center mb-3" key={index}>
+          <div className="flexDirectionRow  mb-3" key={index}>
             <button
               onClick={() => handleClick(item)}
               className="defaultArtistBtn"
@@ -70,11 +43,27 @@ export const ArtistGrid = (props) => {
             >
               <img
                 src={artistImages[item.id]}
-                className="avatarImage ml-2"
+                className="avatarImage ml-2 object-cover"
                 alt="Artist Avatar"
               />
-              <span className="artistName">{item.name + " "}</span>
-              <NextBtn className="mr-3" />
+              <div
+                style={{
+                  alignItems: "flex-start",
+                }}
+                className="flexDirectionCol"
+              >
+                <span
+                  style={
+                    selectedId?.number_id === item.number_id
+                      ? { color: "white" }
+                      : {}
+                  }
+                  className="webfont coral"
+                >
+                  {renderLevel}
+                </span>
+                <span className="artistName">{item.name + " "}</span>
+              </div>
             </button>
           </div>
         );

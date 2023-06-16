@@ -31,7 +31,6 @@ export const Artist = (props) => {
   const [wavNfts, setWavNfts] = useState(null);
   const [nfts, setNfts] = useState(null);
   const [nftCount, setNftCount] = useState({});
-  console.log(wavNfts, "wavnfts");
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
@@ -84,9 +83,9 @@ export const Artist = (props) => {
   };
 
   const onLevelSelected = (level) => {
-    console.log('onLevelSelected', level)
+    console.log("onLevelSelected", level);
     setSelectedLevel(level || currentGame?.level || 1);
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,7 +102,7 @@ export const Artist = (props) => {
 
       if (_artist.number_id && nfts) {
         const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
-        console.log('countNFTsByLevel', _nftCount)
+        console.log("countNFTsByLevel", _nftCount);
         setNftCount(_nftCount);
       }
 
@@ -122,7 +121,6 @@ export const Artist = (props) => {
   return (
     <div className="container mx-auto">
       <div className="flex">
-
         <Sidebar
           open={sidebarOpen}
           setOpen={setSidebarOpen}
@@ -132,14 +130,20 @@ export const Artist = (props) => {
         />
         <div className="flex flex-col items-center md:ml-20 grow">
           <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
-            <div className="game-header-level">LEVEL: {currentGame?.level || '0'} </div>
+            <div className="game-header-level">
+              LEVEL: {currentGame?.level || "0"}{" "}
+            </div>
             <div className="game-header-title">
               {artist?.name?.toUpperCase()}'s GAME_
             </div>
             <div className="game-header-counter">COLLECTABLES: 42</div>
           </div>
           <div className="flex flex-col justify-center mt-5">
-            <GameTabs selectedLevel={selectedLevel} currentGame={currentGame} onLevelSelected={onLevelSelected} />
+            <GameTabs
+              selectedLevel={selectedLevel}
+              currentGame={currentGame}
+              onLevelSelected={onLevelSelected}
+            />
             <GameCards
               onTradeClick={onTradeClick}
               onGetMoreClick={onGetMoreClick}
@@ -163,7 +167,6 @@ export const Artist = (props) => {
           </div>
           <div className="flex flex-col  items-center   pt-24 mt-12"></div>
         </div>
-
       </div>
       <TradeModal setShow={setShowTrade} show={showTrade} />
 
