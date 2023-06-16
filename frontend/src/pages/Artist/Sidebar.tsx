@@ -9,6 +9,7 @@ import { ReactComponent as TikTokIcon } from "../../images/tiktok.svg";
 import { ReactComponent as LensIcon } from "../../images/lens.svg";
 import { Button } from "../../components/Button/Button";
 import { ArtistBioModal } from "./ArtistBioModal";
+
 const SocialLink = (props: { network: string; url: string }) => {
   const { network, url } = props;
   if (!url) {
