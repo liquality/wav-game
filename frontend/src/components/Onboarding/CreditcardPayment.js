@@ -81,6 +81,7 @@ export const CreditcardPayment = (props) => {
             <b>TOTAL:</b> ${0.5 * nftAmount}{" "}
           </p>
         </div>
+        {console.log(selectedId.number_id, "selected nr id")}
 
         <CrossmintPayButton
           onClick={handleDoneWithCheckout}

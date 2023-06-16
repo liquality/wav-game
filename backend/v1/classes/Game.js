@@ -284,7 +284,7 @@ class Game {
         // Update game table
         db.query(
           "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ? AND level IS NULL",
-          [user.id],
+          [user.id, artistNumberId],
           (err, gameResults, fields) => {
             if (err) {
               reject(new ApiError(500, err));
@@ -292,7 +292,7 @@ class Game {
               reject(
                 new ApiError(
                   404,
-                  "Game with given user_id and game_symbol_id not found!"
+                  "Game with given user_id and game_symbol_id not found!, if this game level is not NULL, you can ignore this error"
                 )
               );
             } else {
