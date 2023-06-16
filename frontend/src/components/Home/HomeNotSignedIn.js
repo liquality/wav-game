@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { ReactComponent as HowToPlay } from "../../images/how_to_play.svg";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
@@ -23,9 +23,35 @@ import { ReactComponent as Github } from "../../images/github.svg";
 
 import { ArtistGrid } from "../ArtistGrid";
 import { LoginModal } from "../Onboarding/LoginModal";
+import StaticDataService from "../../services/StaticDataService";
+import { fetchSession } from "../../utils";
+import UserService from "../../services/UserService";
 
 export default function HomeWhenNotSignedIn() {
   const [show, setShow] = React.useState(false);
+
+  const [artistData, setArtistData] = useState([]);
+  const [artistImages, setArtistImages] = useState({});
+
+  const fetchArtist = async (id) => {
+    try {
+      const artist = await StaticDataService.getArtists();
+      return artist;
+    } catch (err) {
+      console.log(err, "Error fetching the artist");
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      const artists = await fetchArtist();
+      const images = await StaticDataService.getArtistImages();
+      setArtistImages(images);
+      setArtistData(artists);
+    };
+
+    init();
+  }, []);
 
   const handleArtistClick = () => {};
   return (
@@ -60,7 +86,12 @@ export default function HomeWhenNotSignedIn() {
       </p>
 
       {/* Artist grid */}
-      <ArtistGrid handleClick={handleArtistClick} />
+      <ArtistGrid
+        artistData={artistData}
+        artistImages={artistImages}
+        games={[]}
+        handleClick={handleArtistClick}
+      />
       <br></br>
       <br></br>
       <div className="mt-2 mb-24 flex justify-center items-center">
