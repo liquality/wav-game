@@ -50,24 +50,25 @@ export const ArtistGrid = (props) => {
   const renderButtons = (startHere, endHere) => {
     if (artistData.length > 0) {
       return artistData.slice(startHere, endHere).map((item, index) => {
-        const isDisabled = games?.some((game) => game.artist_name === item.id);
         const level = games?.find((game) => {
           if (game.artist_name === item.id) return game.level;
         });
 
         let buttonStyle;
         if (selectedId?.number_id === item.number_id) {
+          console.log("In here?");
           buttonStyle = { backgroundColor: "#E61EA3" };
         }
         const finished = games?.find((game) => {
           if (game.artist_name === item.id)
             return game.level_6_claimed_main_prize;
         });
-
+        let isDisabled;
         let renderLevel;
         if (level?.level && !finished?.level_6_claimed_main_prize) {
           renderLevel = `Level ${level?.level}`;
         } else if (level?.level === 6 && finished.level_6_claimed_main_prize) {
+          isDisabled = true;
           renderLevel = "Game ended";
           buttonStyle = {
             backgroundColor: "#3D2A38",
