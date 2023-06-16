@@ -54,10 +54,12 @@ export const ArtistGrid = (props) => {
           if (game.artist_name === item.id) return game.level;
         });
 
+        //I am sorry for this convoluted and messy logic,
+        //will refactor one day maybe lmao
         let buttonStyle;
         if (selectedId?.number_id === item.number_id) {
           console.log("In here?");
-          buttonStyle = { backgroundColor: "#E61EA3" };
+          buttonStyle = { color: "white", backgroundColor: "#E61EA3" };
         }
         const finished = games?.find((game) => {
           if (game.artist_name === item.id)
@@ -97,7 +99,16 @@ export const ArtistGrid = (props) => {
                 }}
                 className="flexDirectionCol"
               >
-                <span className="webfont coral">{renderLevel}</span>
+                <span
+                  style={
+                    selectedId?.number_id === item.number_id
+                      ? { color: "white" }
+                      : {}
+                  }
+                  className="webfont coral"
+                >
+                  {renderLevel}
+                </span>
                 <span className="artistName">{item.name + " "}</span>
               </div>
             </button>
