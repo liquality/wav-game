@@ -27,7 +27,7 @@ export const Level1 = (props) => {
         mode: 'default'
     }];
 
-    if(level1Count > 2) {
+    if(level1Count > 0) {
         actions.push({
             onActionClick: (level) => onGetMoreClick(level),
             label: 'Get More',

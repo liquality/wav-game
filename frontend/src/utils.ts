@@ -136,3 +136,12 @@ export const getLevelsStatuses = (currentLevel: number) => {
                     : "upcomming",
     };
 };
+
+
+export const getDifferenceBetweenDates = (startDate: any, endDate: any) => {
+    const seconds = Math.floor((endDate - startDate) / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    return { seconds: seconds - (60 * minutes), minutes: minutes - (60 * hours), hours: hours - (24 * days), days };
+};

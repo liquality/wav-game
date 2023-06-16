@@ -61,6 +61,14 @@ div:has(> .level-card) {
 .level-card-instructions-empty-actions {
   margin-bottom: 0;
   margin-top: 2.5rem;
+  font-family: '000 webfont';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 31px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #F2F2F2;
 }
 
 

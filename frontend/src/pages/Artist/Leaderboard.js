@@ -61,7 +61,7 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
     return () => {
       //any cleanup
     };
-  }, [leaderboardData, artist]);
+  }, [getLeaderboardData]);
 
   const activeToggleStyle = {
     borderBottom: "1px solid #f251bc",
