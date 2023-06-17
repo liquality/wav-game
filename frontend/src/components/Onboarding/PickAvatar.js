@@ -13,22 +13,21 @@ export const PickAvatar = (props) => {
     setUsername(e.target.value);
   };
 
-  const handleSetNewPage = () => {
+  const handleSetNewPage = async () => {
     // Call UserService.createUser() and pass the avatar image data along with other necessary data
     if (username && avatarImage && publicAddress) {
       try {
-        UserService.createUser({
+        const response = await UserService.createUser({
           serviceprovider_name: serviceproviderName,
           username,
           avatar: avatarImage,
           public_address: publicAddress,
-        }).then((response) => {
-          //Set session
-          localStorage.setItem("session", JSON.stringify(response));
-
-          setContent("pickArtist");
-          setHeaderText("Choose an artist");
         });
+        //Set session
+        localStorage.setItem("session", JSON.stringify(response));
+
+        setContent("pickArtist");
+        setHeaderText("Choose an artist");
       } catch (err) {
         console.log("Error creating user");
       }

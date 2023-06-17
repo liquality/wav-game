@@ -23,13 +23,13 @@ export const CustomModal = (props) => {
           <ModalCloseX />
         </button>
 
-        <p className="modal-header-text">
+        <div className="modal-header-text">
           {modalHeaderText ? (
             modalHeaderText
           ) : (
             <div className="modal-header-notext"></div>
           )}
-        </p>
+        </div>
         <div className="line"></div>
         {content()}
 

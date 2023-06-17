@@ -19,59 +19,116 @@ class User {
     }
   }
 
+  async getUserByServiceProviderName(name) {
+    return new Promise((resolve, reject) => {
+      MySQL.pool.getConnection((error, db) => {
+        if (!error) {
+          db.execute(
+            "select * from `user` where id = ?",
+            [name],
+            (err, results) => {
+              if (err) {
+                reject(new ApiError(500, err));
+              } else if (results.length < 1) {
+                resolve(null);
+              } else {
+                resolve(results[0]);
+              }
+              db.release();
+            }
+          );
+        } else {
+          reject(new ApiError(500, error));
+        }
+      });
+    })
+  }
+
   /*                  */
   /* CRUD OPERATIONS  */
   /*                  */
   create = async () => {
     const user = this;
-    const promise = new Promise((resolve, reject) => {
-      MySQL.pool.getConnection((err, db) => {
-        db.query(
-          "insert into `user` (serviceprovider_name,username,avatar,public_address) values (?,?,?,?);",
-          [
-            user.serviceprovider_name,
-            user.username,
-            user.avatar,
-            user.public_address,
-          ],
-          (err, insertResult, fields) => {
-            if (err) {
-              reject(new ApiError(500, err));
-            } else if (insertResult.affectedRows < 1) {
-              reject(new ApiError(500, "User not saved!"));
-            } else {
-              db.query(
-                "SELECT LAST_INSERT_ID() AS id",
-                (err, selectResult, fields) => {
-                  if (err) {
-                    reject(new ApiError(500, err));
-                  } else {
-                    const {
-                      serviceprovider_name,
-                      avatar,
-                      username,
-                      public_address,
-                    } = user;
-                    const id = selectResult[0].id;
-                    const token = jwt.sign({ id, public_address }, "my-secret");
-                    resolve({
-                      id,
-                      serviceprovider_name,
-                      avatar,
-                      username,
-                      public_address,
-                      token,
-                    });
+    return new Promise((resolve, reject) => {
+      this.getUserByServiceProviderName(user.serviceprovider_name)
+        .then((existingUser) => {
+
+          MySQL.pool.getConnection((error, db) => {
+            if (!error) {
+              if (existingUser) {
+                db.query(
+                  "update `user` set username=?, avatar=?, public_address=? where id=?;",
+                  [
+                    user.username,
+                    user.avatar,
+                    user.public_address,
+                    existingUser.id,
+                  ],
+                  (err, results) => {
+                    if (err) {
+                      reject(new ApiError(500, err));
+                    } else if (results.affectedRows < 1) {
+                      reject(new ApiError(404, "User not found!"));
+                    } else {
+                      resolve(user);
+                    }
+                    db.release();
                   }
-                }
-              );
+                );
+              } else {
+                db.query(
+                  "insert into `user` (serviceprovider_name,username,avatar,public_address) values (?,?,?,?);",
+                  [
+                    user.serviceprovider_name,
+                    user.username,
+                    user.avatar,
+                    user.public_address,
+                  ],
+                  (err, insertResult) => {
+                    if (err) {
+                      reject(new ApiError(500, err));
+                    } else if (insertResult.affectedRows < 1) {
+                      reject(new ApiError(500, "User not saved!"));
+                    } else {
+                      db.query(
+                        "SELECT LAST_INSERT_ID() AS id",
+                        (err, selectResult) => {
+                          if (err) {
+                            reject(new ApiError(500, err));
+                          } else {
+                            const {
+                              serviceprovider_name,
+                              avatar,
+                              username,
+                              public_address,
+                            } = user;
+                            const id = selectResult[0].id;
+                            const token = jwt.sign({ id, public_address }, "my-secret");
+                            resolve({
+                              id,
+                              serviceprovider_name,
+                              avatar,
+                              username,
+                              public_address,
+                              token,
+                            });
+                          }
+                        }
+                      );
+                    }
+                    db.release();
+                  }
+                );
+              }
+            } else {
+              reject(new ApiError(500, error));
             }
-            db.release();
-          }
-        );
-      });
+          });
+        })
+        .catch((err) => {
+          reject(new ApiError(500, err));
+        });
     });
-    return promise;
   };
 
   read = async (id) => {
