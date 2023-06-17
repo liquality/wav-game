@@ -42,3 +42,6 @@ ADD COLUMN `game_symbol_id` INT(11) AFTER `claimable_prize_count`;
 ALTER TABLE `game`
 ADD COLUMN `created_at` DATETIME NOT NULL DEFAULT (UTC_TIMESTAMP()) AFTER `game_symbol_id`;
 
+ALTER TABLE `user`
+ADD COLUMN `created_at` DATETIME NOT NULL DEFAULT (UTC_TIMESTAMP()) AFTER `public_address`;
+
