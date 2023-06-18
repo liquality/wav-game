@@ -77,6 +77,11 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
     onClose();
   };
 
+  const handleGameSelected = (game) => {
+    navigate(`/artist/${game.artist_name}`)
+    onClose();
+  };
+
   const renderNumberOfActiveGames = () => {
     let rows = [];
     if (games) {
@@ -85,7 +90,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
           <div key={index} className="pr-5 mt-3">
             <button
               className="pl-3 pb-3 userMenuText"
-              onClick={() => navigate(`/artist/${game.artist_name}`)}
+              onClick={() => handleGameSelected(game)}
             >
               Game: {game.artist_name}
             </button>
