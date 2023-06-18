@@ -1,4 +1,4 @@
-import React from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   fetchSession,
   getPublicKey,
@@ -9,9 +9,20 @@ import UserService from "../../services/UserService";
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { useNavigate } from "react-router-dom";
 
-const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
-  const [user, setUser] = React.useState({});
-  const [games, setGames] = React.useState([]);
+const AvatarComponent = ({ avatar }) => {
+  return (
+    <div
+      className="userAvatar p-2 flex items-center justify-center"
+      style={{ backgroundImage: `url(${avatar})` }}
+    ></div>
+  );
+};
+
+const UserMenu = ({ isOpen, onClose, setShowPickArtistModal, setUserMenuOpen }) => {
+  const wrapperRef = useRef(null);
+
+  const [user, setUser] = useState({});
+  const [games, setGames] = useState([]);
 
   const navigate = useNavigate();
 
@@ -58,7 +69,13 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
     logOut();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const handleMouseOutside = (event) => {
+      if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
     const fetchData = async () => {
       const user = await fetchUser();
       setUser(user);
@@ -66,11 +83,18 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
       setGames(games);
     };
     fetchData();
+
+
+    document.addEventListener("mouseover", handleMouseOutside);
+    document.addEventListener("mousedown", handleMouseOutside);
     return () => {
       //any cleanup
+
+      document.removeEventListener("mouseover", handleMouseOutside);
+      document.removeEventListener("mousedown", handleMouseOutside);
     };
     //todo rerender session here
-  }, []);
+  }, [wrapperRef, onClose]);
 
   const handleChooseNewArtist = () => {
     setShowPickArtistModal();
@@ -105,9 +129,14 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
   };
 
   return (
-    <>
+    <ul ref={wrapperRef} className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
+      <button onClick={() => setUserMenuOpen(!isOpen)}>
+        {user?.avatar ? (
+          <AvatarComponent avatar={user.avatar} />
+        ) : null}
+      </button>
       {isOpen && (
-        <div className="fixed  top-24 right-24 w-64 h-418   z-50 userMenuDiv">
+        <div className="absolute right-24 w-64 h-418  z-50 userMenuDiv">
           <b>
             <p className="pl-3 pt-4 userMenuText">Hello {user?.username}</p>
           </b>
@@ -136,7 +165,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
           </p>
         </div>
       )}
-    </>
+    </ul>
   );
 };
 

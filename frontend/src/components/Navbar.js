@@ -9,31 +9,17 @@ const Navbar = (props) => {
   const [show, setShow] = useState(false);
   const { showPickArtistModal, setShowPickArtistModal, chooseArtistView, setChooseArtistView, selectedArtist, setSelectedArtist, user } = props;
 
-  const AvatarComponent = ({ avatar }) => {
-    return (
-      <div
-        className="userAvatar p-2 flex items-center justify-center"
-        style={{ backgroundImage: `url(${avatar})` }}
-      ></div>
-    );
-  };
+
   const handleChangeArtistClick = () => {
     setChooseArtistView('chooseArtistStart');
     setShowPickArtistModal(true);
-   };
+  };
   const closeModal = () => {
     setUserMenuOpen(false);
   };
 
   return (
     <div>
-      {userMenuOpen ? (
-        <UserMenu
-          isOpen={userMenuOpen}
-          onClose={closeModal}
-          setShowPickArtistModal={handleChangeArtistClick}
-        />
-      ) : null}
       {showPickArtistModal ? (
         <ChooseNewArtistModal
           show={showPickArtistModal}
@@ -54,14 +40,15 @@ const Navbar = (props) => {
             className="hidden w-full md:block md:w-auto"
             id="navbar-multi-level"
           >
-            <ul className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
-              {fetchSession()?.token ? (
-                <button onClick={() => setUserMenuOpen(!userMenuOpen)}>
-                  {user?.avatar ? (
-                    <AvatarComponent avatar={user.avatar} />
-                  ) : null}
-                </button>
-              ) : (
+            {fetchSession()?.token ? (
+              <UserMenu
+                isOpen={userMenuOpen}
+                setUserMenuOpen={setUserMenuOpen}
+                onClose={closeModal}
+                setShowPickArtistModal={handleChangeArtistClick}
+              />
+            ) : (
+              <ul>
                 <li onClick={() => setShow(true)}>
                   <button
                     type="button"
@@ -71,8 +58,8 @@ const Navbar = (props) => {
                     LOGIN
                   </button>
                 </li>
-              )}
-            </ul>
+              </ul>
+            )}
           </div>
         </div>
       </nav>

@@ -83,6 +83,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: 0.459rem;
   line-height: 3.875rem;
 }
+
 .navBold {
   font-family: "000 webfont";
   font-weight: 700;
@@ -110,6 +111,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background: #e61ea3;
   border-radius: 100px;
 }
+
 .headerBtn {
   font-family: "Sora";
   font-size: 15px;
@@ -246,10 +248,12 @@ input[type="number"]::-webkit-outer-spin-button {
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
 .custom-modal .modal-content {
   background-color: #1e1e1e;
   color: #fff;
 }
+
 .modal-content {
   max-width: 100%;
   min-width: 97vw;
@@ -288,12 +292,13 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .footer {
-  flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  flex-shrink: 0;
+  /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
   align-items: center;
   background-color: #272222;
 }
 
-.footer > div {
+.footer>div {
   height: 6.125rem;
 }
 
@@ -487,6 +492,7 @@ div.background {
   width: 20%;
   height: 224px;
 }
+
 #block {
   background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
   filter: alpha(opacity=60);
@@ -610,10 +616,12 @@ div.background {
 }
 
 .userMenuDiv {
+  top: 6rem;
   background-color: #262020;
   letter-spacing: 1px;
   border: 1px solid #4f4f4f;
   border-radius: 20px;
+
 }
 
 .userMenuAddressText {
