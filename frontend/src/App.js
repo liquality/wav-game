@@ -17,7 +17,8 @@ function App() {
   const [showPickArtistModal, setShowPickArtistModal] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const [chooseArtistView, setChooseArtistView] = useState('chooseArtistStart');
+  const [selectedArtist, setSelectedArtist] = useState(null);
 
   const fetchUser = async () => {
     if (fetchSession()?.id) {
@@ -56,11 +57,20 @@ function App() {
           setLoginResponse: "",
           showPickArtistModal,
           setShowPickArtistModal,
+          chooseArtistView, 
+          setChooseArtistView,
           user
         }}
       >
         {" "}
-        <Navbar user={user} showPickArtistModal={showPickArtistModal} setShowPickArtistModal={setShowPickArtistModal} />
+        <Navbar user={user} 
+                showPickArtistModal={showPickArtistModal} 
+                setShowPickArtistModal={setShowPickArtistModal} 
+                chooseArtistView={chooseArtistView}
+                setChooseArtistView={setChooseArtistView}
+                selectedArtist={selectedArtist} 
+                setSelectedArtist={setSelectedArtist}
+                />
         {
           loading ? (
             <div className="contentView m-5 p-5 flex justify-center items-center ">
@@ -78,6 +88,9 @@ function App() {
                     user={user}
                     showPickArtistModal={showPickArtistModal}
                     setShowPickArtistModal={setShowPickArtistModal}
+                    setChooseArtistView={setChooseArtistView}
+                    selectedArtist={selectedArtist} 
+                    setSelectedArtist={setSelectedArtist}
                   />
                 }
               />

@@ -27,7 +27,7 @@ export const Artist = (props) => {
   const [currentGame, setCurrentGame] = useState(null);
 
   const [selectedLevel, setSelectedLevel] = useState(currentGame?.level || 1);
-  const { setShowPickArtistModal, userGames } = props;
+  const { setShowPickArtistModal, setChooseArtistView, setSelectedArtist, userGames } = props;
   const [wavNfts, setWavNfts] = useState(null);
   const [nfts, setNfts] = useState(null);
   const [nftCount, setNftCount] = useState({});
@@ -79,7 +79,9 @@ export const Artist = (props) => {
   };
 
   const onGetMoreClick = (level) => {
-    console.log("onGetMoreClick", level);
+    console.log("onGetMoreClick", level, artist);
+    setSelectedArtist(artist);
+    setChooseArtistView('gameIncentives');
     setShowPickArtistModal(true);
   };
 
@@ -129,6 +131,7 @@ export const Artist = (props) => {
           setOpen={setSidebarOpen}
           artist={artist}
           image={image}
+          setChooseArtistView={setChooseArtistView}
           setShowPickArtistModal={setShowPickArtistModal}
         />
         <div className="flex flex-col items-center md:ml-20 grow">

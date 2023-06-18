@@ -73,7 +73,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal }) => {
   }, []);
 
   const handleChooseNewArtist = () => {
-    setShowPickArtistModal(true);
+    setShowPickArtistModal();
     onClose();
   };
 

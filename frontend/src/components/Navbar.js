@@ -7,7 +7,7 @@ import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
 const Navbar = (props) => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
-  const { showPickArtistModal, setShowPickArtistModal, game, user } = props;
+  const { showPickArtistModal, setShowPickArtistModal, chooseArtistView, setChooseArtistView, selectedArtist, user } = props;
 
   const AvatarComponent = ({ avatar }) => {
     return (
@@ -17,7 +17,10 @@ const Navbar = (props) => {
       ></div>
     );
   };
-
+  const handleChangeArtistClick = () => {
+    setChooseArtistView('chooseArtistStart');
+    setShowPickArtistModal(true);
+   };
   const closeModal = () => {
     setUserMenuOpen(false);
   };
@@ -28,13 +31,15 @@ const Navbar = (props) => {
         <UserMenu
           isOpen={userMenuOpen}
           onClose={closeModal}
-          setShowPickArtistModal={setShowPickArtistModal}
+          setShowPickArtistModal={handleChangeArtistClick}
         />
       ) : null}
       {showPickArtistModal ? (
         <ChooseNewArtistModal
           show={showPickArtistModal}
-          selectedArtistId={game?.artist_name}
+          chooseArtistView={chooseArtistView}
+          setChooseArtistView={setChooseArtistView}
+          selectedArtist={selectedArtist}
           setShow={setShowPickArtistModal}
         />
       ) : null}

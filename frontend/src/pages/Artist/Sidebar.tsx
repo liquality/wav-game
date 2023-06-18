@@ -57,16 +57,20 @@ type Props = {
   setOpen(open: boolean): void;
   artist: any;
   image: any;
-  setShowPickArtistModal: (show: boolean) => void
+  setShowPickArtistModal: (show: boolean) => void;
+  setChooseArtistView: (view: string) => void;
 };
 
-export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }: Props) => {
+export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal, setChooseArtistView }: Props) => {
   const [showArtistBioModal, setShowArtistBioModal] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, (e) => {
     setOpen(false);
   });
-
+ const handleChangeArtistClick = () => {
+  setChooseArtistView('chooseArtistStart');
+  setShowPickArtistModal(true);
+ };
   return (
     <div
       className={classNames({
@@ -115,7 +119,7 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal }
               {artist.bio?.slice(0, 180)} {artist.bio?.length > 180 ? '...' : ''}
               <Button
                 size="small"
-                onClick={() => setShowArtistBioModal(true)}
+                onClick={() => handleChangeArtistClick()}
                 link
                 mode="pink">
                 Read More</Button>

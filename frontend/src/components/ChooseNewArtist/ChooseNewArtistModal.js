@@ -7,47 +7,48 @@ import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
 import { GameIncentives } from "./GameIncentives";
 
 export const ChooseNewArtistModal = (props) => {
-  const { show, setShow, selectedArtistId, defaultContent = "chooseArtistStart" } = props;
-  const [content, setContent] = useState(defaultContent);
+  const { show, setShow, selectedArtist, setSelectedArtist, chooseArtistView, setChooseArtistView } = props;
+
   const [headerText, setHeaderText] = useState("Choose an artist");
   const [selectedNft, setSelectedNft] = useState(null);
-  const [selectedArtist, setSelectedArtist] = useState(selectedArtistId);
   const [txHash, setTxHash] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setChooseArtistView('chooseArtistStart');
+  };
 
   useEffect(() => {
-    const init = async () => {};
+    const init = async () => { };
 
     init();
-  }, [content]);
+  }, []);
 
   const whichContentToRender = () => {
-    if (content === "chooseArtistStart") {
+    if (chooseArtistView === "chooseArtistStart") {
       return (
         <PickArtist
           selectedId={selectedArtist}
           setSelectedId={setSelectedArtist}
-          setContent={setContent}
+          setContent={setChooseArtistView}
           setHeaderText={setHeaderText}
           handleClose={handleClose}
         />
       );
       //TODO
-    } else if (content === "gameIncentives") {
+    } else if (chooseArtistView === "gameIncentives") {
       return (
         <GameIncentives
           selectedArtist={selectedArtist}
-          setContent={setContent}
+          setContent={setChooseArtistView}
         />
       );
-    } else if (content === "creditCardPayment") {
+    } else if (chooseArtistView === "creditCardPayment") {
       return (
         <CreditcardPayment
           selectedId={selectedArtist}
           setHeaderText={setHeaderText}
-          setContent={setContent}
+          setContent={setChooseArtistView}
         />
       );
     } else return null;

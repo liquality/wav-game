@@ -29,7 +29,7 @@ export const GameIncentives = ({ selectedArtist, setContent }) => {
           <img
             className="avatarImage ml-2"
             src={
-              require(`../../images/artists/${selectedArtist.image}`).default
+              require(`../../images/artists/${selectedArtist.image}`)
             }
             alt="Artist Avatar"
           />{" "}

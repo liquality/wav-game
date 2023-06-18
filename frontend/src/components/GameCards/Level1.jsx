@@ -6,7 +6,7 @@ export const Level1 = (props) => {
     const { selectedLevel, game, onSetLevel, onTradeClick, onGetMoreClick, nftCount} = props;
     const status = getLevelsStatuses(game?.level || 1)[1];
     const level1Count = nftCount['level1'] || -1;
-    const instructions = `You have ${level1Count === -1 ? 0 : nftCount} NFTs.`;
+    const instructions = `You have ${level1Count === -1 ? 0 : level1Count} NFTs.`;
     let tradeActionText = '';
 
     switch (level1Count) {

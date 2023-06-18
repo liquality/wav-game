@@ -47,8 +47,10 @@ export const CreditcardPayment = (props) => {
         <div className="flexDirectionRow">
           {" "}
           <img
-            className="avatarImage ml-2"
-            src="https://avatars.githubusercontent.com/u/34882183?v=4"
+           className="avatarImage ml-2"
+            src={
+              require(`../../images/artists/${selectedId?.image}`)
+            }
             alt="Artist Avatar"
           />{" "}
           <p className="mt-2">{selectedId.name}</p>
