@@ -45,9 +45,9 @@ const Navbar = (props) => {
       ) : null}
       <nav className=" sticky top-0  mt-1 z-10">
         <div className="container flex flex-wrap justify-between">
-          <div className="block py-2 logo-text" aria-current="page">
+          <a href="/" className="block py-2 logo-text" aria-current="page">
             WavGame <div className="logo-addon">Beta</div>
-          </div>
+          </a>
 
           <div
             className="hidden w-full md:block md:w-auto"

@@ -118,7 +118,7 @@ export default function Home() {
           <div id="container">
             <div id="blockOne"></div>
             <div id="text">Level 1</div>
-            <p className="levelCardText">From 1 artist, buy 32 collectables </p>
+            <p className="levelCardText">Buy 32 artist collectibles toward winning the main prize </p>
             <Union className="levelCardUnion" />
             <Arrow
               className="levelCardSvg"
@@ -128,7 +128,7 @@ export default function Home() {
               className="levelCardSvg lightCoral text-xs"
               style={{ left: "10%", bottom: "0%", top: "120%" }}
             >
-              TRADE 1
+              TRADE 2
             </p>
           </div>
           <div className="ml-3" id="container">
@@ -160,13 +160,13 @@ export default function Home() {
               className="levelCardSvg lightCoral text-xs"
               style={{ left: "10%", bottom: "0%", top: "120%" }}
             >
-              TRADE 3
+              TRADE 2
             </p>
           </div>
           <div className="ml-3" id="container">
             <div id="blockFour"></div>
-            <div id="text">Level 3</div>
-            <p className="levelCardText">Get a limited physical item </p>
+            <div id="text">Level 4</div>
+            <p className="levelCardText">Play to reveal </p>
             <Microphone className="levelCardSvg" />
             <Union className="levelCardUnion" style={{ left: "90%" }} />{" "}
             <Arrow
@@ -177,14 +177,14 @@ export default function Home() {
               className="levelCardSvg lightCoral text-xs"
               style={{ left: "10%", bottom: "0%", top: "120%" }}
             >
-              TRADE 4
+              TRADE 2
             </p>
           </div>
           <div className="ml-3" id="container">
             <div id="blockFive"></div>
             <div id="text">Level 5</div>
             <p className="levelCardText">
-              Get a limited unreleased track performance
+            Play to reveal
             </p>
             <Arrow
               className="levelCardSvg"
@@ -195,14 +195,14 @@ export default function Home() {
               className="levelCardSvg lightCoral text-xs"
               style={{ left: "10%", bottom: "0%", top: "120%" }}
             >
-              TRADE 5
+              TRADE 2
             </p>
           </div>
 
           <div className="ml-3" id="container">
             <div id="blockSix"></div>
             <div id="text">Level 6</div>
-            <p className="levelCardText">1 WINNER gets THE ULTIMATE REWARD!</p>
+            <p className="levelCardText">1 WINNER gets A 1-ON- 1 TRIP & CONCERT</p>
             <GlitterOne
               className="levelCardSvg"
               style={{ left: "10%", top: "60%" }}
