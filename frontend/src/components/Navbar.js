@@ -7,7 +7,7 @@ import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
 const Navbar = (props) => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
-  const { showPickArtistModal, setShowPickArtistModal, chooseArtistView, setChooseArtistView, selectedArtist, user } = props;
+  const { showPickArtistModal, setShowPickArtistModal, chooseArtistView, setChooseArtistView, selectedArtist, setSelectedArtist, user } = props;
 
   const AvatarComponent = ({ avatar }) => {
     return (
@@ -40,6 +40,7 @@ const Navbar = (props) => {
           chooseArtistView={chooseArtistView}
           setChooseArtistView={setChooseArtistView}
           selectedArtist={selectedArtist}
+          setSelectedArtist={setSelectedArtist}
           setShow={setShowPickArtistModal}
         />
       ) : null}

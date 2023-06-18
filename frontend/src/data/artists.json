@@ -1,5 +1,22 @@
 [
   {
+    "number_id": 1000,
+    "id": "tk",
+    "name": "TK",
+    "description": "Artist, Producer, Singer, Songwriter",
+    "bio": "Pop-fusion artist TK's unique life journey is reflected in his music as he masterfully blends R&B, alternative & rock sounds, influenced by the African rhythmic undertones of his heritage.Providence-born, Nigerian-bred, London-raised, DMV-hardened, and LA-based, TK takes listeners on an unparalleled journey of genre-bending music through vivid soundscapes & brilliant storytelling.",
+    "readMore": "An innovator and disruptor in the web3 space, TK has been featured on top NFT platforms such as Sound.xyz, OpenSea, Zora and Catalog, selling out multiple NFT collections related to his music. Most recently, he ranked as the third all-time trending artist based on primary sales on Sound.xyz for his audio-visual NFT collection Eternal Garden, raising $50,000 of revenue in one week and receiving recognition from Billboard for his accomplishments. With years of experience as a singer-songwriter, multi-instrumentalist and producer, TK’s work with the world’s biggest musicians like Rihanna, The Weeknd, Usher, and Jaden & Willow Smith has shaped him into one of the most prolific artists of this generation.",
+    "favoriteGames": "3-way tie between The Legend of Zelda, Kingdom Hearts, and Super Smash Bros.",
+    "quote": "The wavROOM was a special experience that was great for honoring my collectors with a private showcase for their early support. The performance was recorded and minted, which made it a memory to last forever.",
+    "socials": {
+      "twitter": "https://twitter.com/TKtheLegend",
+      "lens": "https://lenster.xyz/u/tkthelegend",
+      "instagram": "https://www.instagram.com/tkthelegend"
+    },
+    "image": "tk.jpg",
+    "image_url": "https://imgur.com/C8dodbz"
+  },
+  {
     "number_id": 2000,
     "id": "tarot",
     "name": "TAROT",
