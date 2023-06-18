@@ -17,7 +17,10 @@ const Navbar = (props) => {
       ></div>
     );
   };
-
+  const handleChangeArtistClick = () => {
+    setChooseArtistView('chooseArtistStart');
+    setShowPickArtistModal(true);
+   };
   const closeModal = () => {
     setUserMenuOpen(false);
   };
@@ -28,7 +31,7 @@ const Navbar = (props) => {
         <UserMenu
           isOpen={userMenuOpen}
           onClose={closeModal}
-          setShowPickArtistModal={setShowPickArtistModal}
+          setShowPickArtistModal={handleChangeArtistClick}
         />
       ) : null}
       {showPickArtistModal ? (

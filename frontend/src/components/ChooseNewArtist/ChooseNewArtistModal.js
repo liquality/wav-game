@@ -13,8 +13,10 @@ export const ChooseNewArtistModal = (props) => {
   const [selectedNft, setSelectedNft] = useState(null);
   const [txHash, setTxHash] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setChooseArtistView('chooseArtistStart');
+  };
 
   useEffect(() => {
     const init = async () => { };

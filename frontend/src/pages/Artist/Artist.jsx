@@ -131,6 +131,7 @@ export const Artist = (props) => {
           setOpen={setSidebarOpen}
           artist={artist}
           image={image}
+          setChooseArtistView={setChooseArtistView}
           setShowPickArtistModal={setShowPickArtistModal}
         />
         <div className="flex flex-col items-center md:ml-20 grow">
