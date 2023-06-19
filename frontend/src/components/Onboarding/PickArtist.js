@@ -82,6 +82,7 @@ export const PickArtist = (props) => {
     return (
       <div className="mt-5">
         <ArtistGrid
+          type={type}
           handleClose={handleClose}
           artistData={artistData}
           artistImages={artistImages}

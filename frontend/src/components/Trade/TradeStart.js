@@ -21,9 +21,11 @@ import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import UserService from "../../services/UserService";
 
 export const TradeStart = (props) => {
-  const { setContent, gameContract, nftContract, setTxHash } = props;
+  const { setContent, gameContract, nftContract, setTxHash, userNfts } = props;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
+
+  console.log(userNfts, "USER NFTS?");
 
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();

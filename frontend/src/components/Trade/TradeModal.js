@@ -12,6 +12,7 @@ import {
   WAV_PROXY_ADDRESS,
 } from "../../data/contract_data";
 import { NftService } from "@liquality/wallet-sdk";
+import { getPublicKey } from "../../utils";
 
 export const TradeModal = (props) => {
   const { show, setShow } = props;
@@ -19,7 +20,8 @@ export const TradeModal = (props) => {
   const [headerText, setHeaderText] = useState("Trade");
   const [nftContract, setNftContract] = useState(null);
   const [gameContract, setGameContract] = useState(null);
-  const [wavNfts, setWavNfts] = useState(null);
+  const [wavContractNfts, setWavContractNfts] = useState(null);
+  const [userNfts, setUserNfts] = useState(null);
 
   const [txHash, setTxHash] = useState(null);
 
@@ -44,11 +46,13 @@ export const TradeModal = (props) => {
         setNftContract(nftContract);
         setGameContract(gameContract);
 
-        const nfts = await NftService.getNftsForContract(
+        const contractNfts = await NftService.getNftsForContract(
           WAV_NFT_ADDRESS,
           CHAIN_ID
         );
-        setWavNfts(nfts);
+        const userNfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+        setUserNfts(userNfts);
+        setWavContractNfts(contractNfts);
       } catch (error) {
         console.error("Error initializing contract:", error);
       }
@@ -61,6 +65,7 @@ export const TradeModal = (props) => {
     if (content === "tradeStart") {
       return (
         <TradeStart
+          userNfts={userNfts}
           setContent={setContent}
           gameContract={gameContract}
           nftContract={nftContract}

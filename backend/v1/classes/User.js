@@ -24,7 +24,7 @@ class User {
       MySQL.pool.getConnection((error, db) => {
         if (!error) {
           db.execute(
-            "select * from `user` where id = ?",
+            "select * from `user` where serviceprovider_name = ?",
             [name],
             (err, results) => {
               if (err) {
@@ -41,7 +41,7 @@ class User {
           reject(new ApiError(500, error));
         }
       });
-    })
+    });
   }
 
   /*                  */
@@ -52,6 +52,7 @@ class User {
     return new Promise((resolve, reject) => {
       this.getUserByServiceProviderName(user.serviceprovider_name)
         .then((existingUser) => {
+          console.log("EXISTING USER!", existingUser.serviceprovider_name);
 
           MySQL.pool.getConnection((error, db) => {
             if (!error) {
@@ -103,7 +104,10 @@ class User {
                               public_address,
                             } = user;
                             const id = selectResult[0].id;
-                            const token = jwt.sign({ id, public_address }, "my-secret");
+                            const token = jwt.sign(
+                              { id, public_address },
+                              "my-secret"
+                            );
                             resolve({
                               id,
                               serviceprovider_name,
