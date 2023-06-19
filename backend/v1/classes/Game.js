@@ -43,7 +43,16 @@ class Game {
             game_symbol_id,
             created_at
           ) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP());`,
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP())  ON DUPLICATE KEY UPDATE
+          status = VALUES(status),
+          level = VALUES(level),
+          artist_name = VALUES(artist_name),
+          level_4_claimed_prizes = VALUES(level_4_claimed_prizes),
+          level_5_claimed_prizes = VALUES(level_5_claimed_prizes),
+          level_6_claimed_main_prize = VALUES(level_6_claimed_prizes)
+          claimable_prize_count = VALUES(claimable_prize_count)
+          game_symbol_id = VALUES(game_symbol_id)
+          created_at = VALUES(created_at)`,
           [
             "not_started", //status default is not started when game is created
             game.user_id,
