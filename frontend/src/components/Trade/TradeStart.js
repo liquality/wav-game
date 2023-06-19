@@ -12,6 +12,7 @@ import {
 } from "../../data/contract_data";
 import {
   fetchSession,
+  filterArrayByIdStartingWith,
   getGameIdBasedOnHref,
   getPrivateKey,
   getPublicKey,
@@ -24,8 +25,7 @@ export const TradeStart = (props) => {
   const { setContent, gameContract, nftContract, setTxHash, userNfts } = props;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
-
-  console.log(userNfts, "USER NFTS?");
+  const [parsedNfts, setParsedNfts] = useState(null);
 
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();
@@ -47,8 +47,28 @@ export const TradeStart = (props) => {
     }
   };
 
+  const parseNfts = async () => {
+    const artist = await getArtist();
+    console.log(userNfts, artist.number_id, "nr id");
+
+    try {
+      const nftsResult = await filterArrayByIdStartingWith(
+        userNfts,
+        artist.number_id
+      );
+      return nftsResult;
+    } catch (err) {
+      console.log(err, "Error fetching user");
+    }
+  };
+
   useEffect(() => {
     const init = async () => {
+      if (userNfts) {
+        const _parsedNfts = await parseNfts();
+        console.log(_parsedNfts, "PARSED?");
+        setParsedNfts(_parsedNfts);
+      }
       if (!game) {
         const _game = await fetchGameByUserIdAndArtistId();
         setGame(_game);
@@ -56,7 +76,9 @@ export const TradeStart = (props) => {
     };
 
     init();
-  }, [game]);
+  }, [game, userNfts]);
+
+  console.log(parsedNfts, "parsednft");
 
   //LVL UP: A trade makes a player level up both in contract & in db
   const startTrade = async (data) => {

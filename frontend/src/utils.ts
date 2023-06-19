@@ -74,6 +74,25 @@ export const getGameIdBasedOnHref = async () => {
     return artist
 }
 
+
+
+export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId) => {
+    let firstChar = artistNumberId.toString()[0];
+    console.log(nftsArray, artistNumberId, '???')
+
+    const result = [];
+
+    for (let i = 0; i < nftsArray.length; i++) {
+        const obj = nftsArray[i];
+        if (obj.id && obj.id.toString().startsWith(firstChar.toString())) {
+            result.push(obj);
+        }
+    }
+
+    return result;
+}
+
+
 export const countNFTsByLevel = async (nfts, artistNumberId) => {
     const artistNFTs = nfts.filter(nft => {
         let artistNrString = artistNumberId.toString()
