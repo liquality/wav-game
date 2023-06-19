@@ -66,12 +66,10 @@ export const TradeStart = (props) => {
 
   const getWhichTokenIdForLevel = async () => {
     const artist = await getArtist();
-    console.log(userNfts, artist.number_id, "nr id");
     let firstChar = artist.number_id.toString()[0];
     const levelUp = game?.level + 1;
     return firstChar + 0 + levelUp;
   };
-  console.log(getWhichTokenIdForLevel(), "first char?");
 
   useEffect(() => {
     const init = async () => {
@@ -165,7 +163,7 @@ export const TradeStart = (props) => {
           {" "}
           <div className="flexDirectionRow">
             <div className="flexDirectionColumn">
-              <p className="webfont coral text-2xl">Level 2</p>
+              <p className="webfont coral text-2xl">Level {game?.level}</p>
               <p className=" mb-3">Trade 2 top live songs</p>
 
               {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
@@ -203,7 +201,7 @@ export const TradeStart = (props) => {
               <DoubleArrow className="m-auto" />
             </div>
             <div className="pr-5 flexDirectionColumn ">
-              <p className="webfont coral text-2xl">Level 3</p>
+              <p className="webfont coral text-2xl">Level {game?.level + 1}</p>
               <p className="mb-3">Trade 2 top live songs</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               {tokenIdForNewLevel ? (
