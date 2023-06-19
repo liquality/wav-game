@@ -71,7 +71,25 @@ class User {
                     } else if (results.affectedRows < 1) {
                       reject(new ApiError(404, "User not found!"));
                     } else {
-                      resolve(user);
+                      const {
+                        serviceprovider_name,
+                        avatar,
+                        username,
+                        public_address,
+                      } = user;
+                      const id = existingUser.id;
+                      const token = jwt.sign(
+                        { id, public_address },
+                        "my-secret"
+                      );
+                      resolve({
+                        id,
+                        serviceprovider_name,
+                        avatar,
+                        username,
+                        public_address,
+                        token,
+                      });
                     }
                     db.release();
                   }
