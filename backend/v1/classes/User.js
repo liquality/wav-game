@@ -50,7 +50,7 @@ class User {
   create = async () => {
     const user = this;
     return new Promise((resolve, reject) => {
-      this.getUserByServiceProviderName(user.serviceprovider_name)
+      this.getUserByServiceProviderName(user ? user.serviceprovider_name : "")
         .then((existingUser) => {
           console.log("EXISTING USER!", existingUser.serviceprovider_name);
 
