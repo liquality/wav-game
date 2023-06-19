@@ -1,5 +1,6 @@
 import { setup } from "@liquality/wallet-sdk";
 import StaticDataService from "./services/StaticDataService";
+import { ethers } from "ethers";
 
 export function setupSDK() {
     setup({
@@ -94,18 +95,14 @@ export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId) => 
 
 
 export const countNFTsByLevel = async (nfts, artistNumberId) => {
-    const artistNFTs = nfts.filter(nft => {
-        let artistNrString = artistNumberId.toString()
-        return nft.id[0] === artistNrString[0]
-    });
     const levels = {};
-    artistNFTs.forEach(nft => {
-        const level = parseInt(nft.id.slice(-1));
-
-        if (levels[`level${level}`]) {
-            levels[`level${level}`]++;
-        } else {
-            levels[`level${level}`] = 1;
+    let artistNrString = artistNumberId.toString()
+    nfts.forEach(nft => {
+        if ( nft.id[0] === artistNrString[0] && 
+            ethers.getAddress(nft.contract.address) === 
+            ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS)) {
+            const level = parseInt(nft.id.slice(-1));
+            levels[`level${level}`] = nft.balance;
         }
     });
     return levels;
