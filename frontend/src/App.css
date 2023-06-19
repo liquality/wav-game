@@ -298,7 +298,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: #272222;
 }
 
-.footer>div {
+.footer > div {
   height: 6.125rem;
 }
 
@@ -621,7 +621,6 @@ div.background {
   letter-spacing: 1px;
   border: 1px solid #4f4f4f;
   border-radius: 20px;
-
 }
 
 .userMenuAddressText {
@@ -787,4 +786,15 @@ div.background {
   /* Gray 3 */
 
   color: #828282;
+}
+
+.nftPreviewTrade {
+  width: 176px;
+  height: 220px;
+  border-radius: 20px;
+}
+.nftBigPreviewTrade {
+  width: 336px;
+  height: 430px;
+  border-radius: 20px;
 }
