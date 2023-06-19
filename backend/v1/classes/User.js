@@ -24,7 +24,7 @@ class User {
       MySQL.pool.getConnection((error, db) => {
         if (!error) {
           db.execute(
-            "select * from `user` where id = ?",
+            "select * from `user` where serviceprovider_name = ?",
             [name],
             (err, results) => {
               if (err) {
@@ -41,7 +41,7 @@ class User {
           reject(new ApiError(500, error));
         }
       });
-    })
+    });
   }
 
   /*                  */
@@ -50,84 +50,66 @@ class User {
   create = async () => {
     const user = this;
     return new Promise((resolve, reject) => {
-      this.getUserByServiceProviderName(user.serviceprovider_name)
-        .then((existingUser) => {
-
-          MySQL.pool.getConnection((error, db) => {
-            if (!error) {
-              if (existingUser) {
-                db.query(
-                  "update `user` set username=?, avatar=?, public_address=? where id=?;",
-                  [
-                    user.username,
-                    user.avatar,
-                    user.public_address,
-                    existingUser.id,
-                  ],
-                  (err, results) => {
-                    if (err) {
-                      reject(new ApiError(500, err));
-                    } else if (results.affectedRows < 1) {
-                      reject(new ApiError(404, "User not found!"));
-                    } else {
-                      resolve(user);
-                    }
-                    db.release();
-                  }
-                );
+      MySQL.pool.getConnection((error, db) => {
+        if (!error) {
+          db.query(
+            `INSERT INTO user (serviceprovider_name, username, avatar, public_address)
+                  VALUES (?, ?, ?, ?)
+                  ON DUPLICATE KEY UPDATE
+                      serviceprovider_name = VALUES(serviceprovider_name),
+                      username = VALUES(username),
+                      avatar = VALUES(avatar),
+                      public_address = VALUES(public_address);
+                      `,
+            [
+              user.serviceprovider_name,
+              user.username,
+              user.avatar,
+              user.public_address,
+            ],
+            (err, insertResult) => {
+              console.log(err, "insertres?");
+              if (err) {
+                reject(new ApiError(500, err));
+              } else if (insertResult.affectedRows < 1) {
+                reject(new ApiError(500, "User not saved!"));
               } else {
                 db.query(
-                  "insert into `user` (serviceprovider_name,username,avatar,public_address) values (?,?,?,?);",
-                  [
-                    user.serviceprovider_name,
-                    user.username,
-                    user.avatar,
-                    user.public_address,
-                  ],
-                  (err, insertResult) => {
+                  "SELECT LAST_INSERT_ID() AS id",
+                  (err, selectResult) => {
                     if (err) {
                       reject(new ApiError(500, err));
-                    } else if (insertResult.affectedRows < 1) {
-                      reject(new ApiError(500, "User not saved!"));
                     } else {
-                      db.query(
-                        "SELECT LAST_INSERT_ID() AS id",
-                        (err, selectResult) => {
-                          if (err) {
-                            reject(new ApiError(500, err));
-                          } else {
-                            const {
-                              serviceprovider_name,
-                              avatar,
-                              username,
-                              public_address,
-                            } = user;
-                            const id = selectResult[0].id;
-                            const token = jwt.sign({ id, public_address }, "my-secret");
-                            resolve({
-                              id,
-                              serviceprovider_name,
-                              avatar,
-                              username,
-                              public_address,
-                              token,
-                            });
-                          }
-                        }
+                      const {
+                        serviceprovider_name,
+                        avatar,
+                        username,
+                        public_address,
+                      } = user;
+                      const id = selectResult[0].id;
+                      const token = jwt.sign(
+                        { id, public_address },
+                        "my-secret"
                       );
+                      resolve({
+                        id,
+                        serviceprovider_name,
+                        avatar,
+                        username,
+                        public_address,
+                        token,
+                      });
                     }
-                    db.release();
                   }
                 );
               }
-            } else {
-              reject(new ApiError(500, error));
+              db.release();
             }
-          });
-        })
-        .catch((err) => {
-          reject(new ApiError(500, err));
-        });
+          );
+        } else {
+          reject(new ApiError(500, error));
+        }
+      });
     });
   };
 

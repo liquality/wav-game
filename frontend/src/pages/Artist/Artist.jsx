@@ -27,7 +27,12 @@ export const Artist = (props) => {
   const [currentGame, setCurrentGame] = useState(null);
 
   const [selectedLevel, setSelectedLevel] = useState(currentGame?.level || 1);
-  const { setShowPickArtistModal, setChooseArtistView, setSelectedArtist, userGames } = props;
+  const {
+    setShowPickArtistModal,
+    setChooseArtistView,
+    setSelectedArtist,
+    userGames,
+  } = props;
   const [wavNfts, setWavNfts] = useState(null);
   const [nfts, setNfts] = useState(null);
   const [nftCount, setNftCount] = useState({});
@@ -81,7 +86,7 @@ export const Artist = (props) => {
   const onGetMoreClick = (level) => {
     console.log("onGetMoreClick", level, artist);
     setSelectedArtist(artist);
-    setChooseArtistView('gameIncentives');
+    setChooseArtistView("gameIncentives");
     setShowPickArtistModal(true);
   };
 
@@ -93,24 +98,23 @@ export const Artist = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const _artist = await fetchArtist(artistId);
-      if(_artist) {
-          setArtist(_artist);
-          const _image = (await import(`../../images/artists/${_artist.image}`))
+      if (_artist) {
+        setArtist(_artist);
+        const _image = (await import(`../../images/artists/${_artist.image}`))
           .default;
         const _wavNfts = await fetchNftCollection();
         const currentGame = await fetchCurrentGame(_artist?.number_id);
-  
+
         if (!nfts) {
           const nftData = await fetchNfts();
           setNfts(nftData);
         }
-  
+
         if (_artist.number_id && nfts) {
           const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
-          console.log("countNFTsByLevel", _nftCount);
           setNftCount(_nftCount);
         }
-  
+
         setWavNfts(_wavNfts);
         setImage(_image);
         setCurrentGame(currentGame);

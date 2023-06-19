@@ -58,8 +58,6 @@ export const PickArtist = (props) => {
     }
   };
 
-  console.log(shouldNavigate, "should navigate?");
-
   useEffect(() => {
     const init = async () => {
       const artists = await fetchArtist();
@@ -82,6 +80,7 @@ export const PickArtist = (props) => {
     return (
       <div className="mt-5">
         <ArtistGrid
+          type={type}
           handleClose={handleClose}
           artistData={artistData}
           artistImages={artistImages}

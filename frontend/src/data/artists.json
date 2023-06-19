@@ -1,6 +1,6 @@
 [
   {
-    "number_id": 1000,
+    "number_id": 3000,
     "id": "tk",
     "name": "TK",
     "description": "Artist, Producer, Singer, Songwriter",
@@ -34,7 +34,7 @@
     "image_url": "https://imgur.com/7dnt7Zx"
   },
   {
-    "number_id": 3000,
+    "number_id": 5000,
     "id": "black-dave",
     "name": "Black Dave",
     "description": "Aspiring Gundam pilot",
@@ -51,7 +51,7 @@
     "image_url": "https://imgur.com/9ZMcxCo"
   },
   {
-    "number_id": 4000,
+    "number_id": 6000,
     "id": "abjo",
     "name": "AbJo",
     "description": "Your friendly neighborhood enigma",
@@ -68,7 +68,7 @@
     "image_url": "https://imgur.com/MBwSKvV"
   },
   {
-    "number_id": 5000,
+    "number_id": 4000,
     "id": "cam-murdoch",
     "name": "Cam Murdoch",
     "description": "aka Anthony BourDAO • Artist • Founder",
@@ -85,7 +85,7 @@
     "image_url": "https://imgur.com/zK5rp2W"
   },
   {
-    "number_id": 6000,
+    "number_id": 8000,
     "id": "karma-violetta",
     "name": "KarmaVioletta",
     "description": "Music duo & couple. Exploring music in web3. Building a better WRLD via wavWRLD",
@@ -119,7 +119,7 @@
     "image_url": "https://imgur.com/2g3Jq24"
   },
   {
-    "number_id": 8000,
+    "number_id": 1000,
     "id": "jadyn-violet",
     "name": "Jadyn Violet",
     "description": "I make music in my bedroom , gunna happen one day",

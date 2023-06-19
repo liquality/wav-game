@@ -18,6 +18,7 @@ class Game {
       this.level_6_claimed_main_prize = game.level_6_claimed_main_prize;
       this.claimable_prize_count = game.claimable_prize_count;
       this.game_symbol_id = game.game_symbol_id;
+      this.created_at = game.created_at;
     }
   }
 
@@ -42,7 +43,16 @@ class Game {
             game_symbol_id,
             created_at
           ) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP())  ON DUPLICATE KEY UPDATE
+          status = VALUES(status),
+          level = VALUES(level),
+          artist_name = VALUES(artist_name),
+          level_4_claimed_prizes = VALUES(level_4_claimed_prizes),
+          level_5_claimed_prizes = VALUES(level_5_claimed_prizes),
+          level_6_claimed_main_prize = VALUES(level_6_claimed_main_prize),
+          claimable_prize_count = VALUES(claimable_prize_count),
+          game_symbol_id = VALUES(game_symbol_id),
+          created_at = VALUES(created_at);`,
           [
             "not_started", //status default is not started when game is created
             game.user_id,
@@ -53,7 +63,6 @@ class Game {
             game.level_6_claimed_main_prize,
             game.claimable_prize_count,
             game.game_symbol_id,
-            new Date().toISOString()
           ],
           (err, results, fields) => {
             if (err) {

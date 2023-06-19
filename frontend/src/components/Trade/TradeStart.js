@@ -1,5 +1,6 @@
 import NftPreview from "../../images/nft_preview.png";
 import NftBigPreview from "../../images/nft_preview_big.png";
+import NoImage from "../../images/noImage.png";
 
 import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
 import * as React from "react";
@@ -12,6 +13,7 @@ import {
 } from "../../data/contract_data";
 import {
   fetchSession,
+  filterArrayByIdStartingWith,
   getGameIdBasedOnHref,
   getPrivateKey,
   getPublicKey,
@@ -21,9 +23,11 @@ import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import UserService from "../../services/UserService";
 
 export const TradeStart = (props) => {
-  const { setContent, gameContract, nftContract, setTxHash } = props;
+  const { setContent, gameContract, nftContract, setTxHash, userNfts } = props;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
+  const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
+  const [parsedNfts, setParsedNfts] = useState(null);
 
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();
@@ -45,8 +49,35 @@ export const TradeStart = (props) => {
     }
   };
 
+  const parseNfts = async () => {
+    const artist = await getArtist();
+
+    try {
+      const nftsResult = await filterArrayByIdStartingWith(
+        userNfts,
+        artist.number_id
+      );
+      return nftsResult;
+    } catch (err) {
+      console.log(err, "Error fetching user");
+    }
+  };
+
+  const getWhichTokenIdForLevel = async () => {
+    const artist = await getArtist();
+    let firstChar = artist.number_id.toString()[0];
+    const levelUp = game?.level + 1;
+    return firstChar + 0 + levelUp;
+  };
+
   useEffect(() => {
     const init = async () => {
+      if (userNfts) {
+        const _parsedNfts = await parseNfts();
+        const _tokenIdForNewLevel = await getWhichTokenIdForLevel();
+        setParsedNfts(_parsedNfts);
+        setTokenIdForNewLevel(_tokenIdForNewLevel);
+      }
       if (!game) {
         const _game = await fetchGameByUserIdAndArtistId();
         setGame(_game);
@@ -54,7 +85,7 @@ export const TradeStart = (props) => {
     };
 
     init();
-  }, [game]);
+  }, [game, userNfts, tokenIdForNewLevel]);
 
   //LVL UP: A trade makes a player level up both in contract & in db
   const startTrade = async (data) => {
@@ -129,14 +160,25 @@ export const TradeStart = (props) => {
           {" "}
           <div className="flexDirectionRow">
             <div className="flexDirectionColumn">
-              <p className="webfont coral text-2xl">Level 2</p>
+              <p className="webfont coral text-2xl">Level {game?.level}</p>
               <p className=" mb-3">Trade 2 top live songs</p>
-              <div className="flexDirectionRow">
-                {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
 
-                <img src={NftPreview} className="mr-1" alt="NFT Preview" />
-                <img src={NftPreview} alt="NFT Preview" />
-              </div>
+              {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
+
+              {userNfts && parsedNfts ? (
+                <div className="flexDirectionRow">
+                  <img
+                    src={parsedNfts[0]?.metadata?.image}
+                    className="mr-1 nftPreviewTrade "
+                    alt="NFT Preview"
+                  />
+                  <img
+                    src={parsedNfts[1]?.metadata?.image || NoImage}
+                    className="mr-1 nftPreviewTrade object-cover"
+                    alt="NFT Preview"
+                  />
+                </div>
+              ) : null}
             </div>
 
             <div className="pr-5 pt-5 mt-4 flexDirectionColumn m-start">
@@ -156,15 +198,23 @@ export const TradeStart = (props) => {
               <DoubleArrow className="m-auto" />
             </div>
             <div className="pr-5 flexDirectionColumn ">
-              <p className="webfont coral text-2xl">Level 3</p>
+              <p className="webfont coral text-2xl">Level {game?.level + 1}</p>
               <p className="mb-3">Trade 2 top live songs</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
-              <img src={NftBigPreview} alt="NFT Preview" />
+              {tokenIdForNewLevel ? (
+                <img
+                  src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
+                  className="nftBigPreviewTrade"
+                  alt="NFT Preview"
+                />
+              ) : null}
             </div>
           </div>
         </div>{" "}
       </div>
-      <p>{error}</p>
+      <div className="flexDirectionCol">
+        <p>{error}</p>
+      </div>
     </div>
   );
 };

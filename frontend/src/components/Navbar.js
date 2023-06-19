@@ -7,11 +7,18 @@ import { ChooseNewArtistModal } from "./ChooseNewArtist/ChooseNewArtistModal";
 const Navbar = (props) => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [show, setShow] = useState(false);
-  const { showPickArtistModal, setShowPickArtistModal, chooseArtistView, setChooseArtistView, selectedArtist, setSelectedArtist, user } = props;
-
+  const {
+    showPickArtistModal,
+    setShowPickArtistModal,
+    chooseArtistView,
+    setChooseArtistView,
+    selectedArtist,
+    setSelectedArtist,
+    user,
+  } = props;
 
   const handleChangeArtistClick = () => {
-    setChooseArtistView('chooseArtistStart');
+    setChooseArtistView("chooseArtistStart");
     setShowPickArtistModal(true);
   };
   const closeModal = () => {

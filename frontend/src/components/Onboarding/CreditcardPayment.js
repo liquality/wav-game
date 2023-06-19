@@ -47,10 +47,8 @@ export const CreditcardPayment = (props) => {
         <div className="flexDirectionRow">
           {" "}
           <img
-           className="avatarImage ml-2"
-            src={
-              require(`../../images/artists/${selectedId?.image}`)
-            }
+            className="avatarImage ml-2"
+            src={require(`../../images/artists/${selectedId?.image}`)}
             alt="Artist Avatar"
           />{" "}
           <p className="mt-2">{selectedId.name}</p>
@@ -80,7 +78,7 @@ export const CreditcardPayment = (props) => {
             required
           />
           <p className="mr-3 mt-2 ml-5">
-            <b>TOTAL:</b> ${0.5 * nftAmount}{" "}
+            <b>TOTAL:</b> ${10 * nftAmount}{" "}
           </p>
         </div>
         {console.log(selectedId.number_id, "selected nr id")}
