@@ -58,8 +58,6 @@ export const PickArtist = (props) => {
     }
   };
 
-  console.log(shouldNavigate, "should navigate?");
-
   useEffect(() => {
     const init = async () => {
       const artists = await fetchArtist();

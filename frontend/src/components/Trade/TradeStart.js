@@ -51,7 +51,6 @@ export const TradeStart = (props) => {
 
   const parseNfts = async () => {
     const artist = await getArtist();
-    console.log(userNfts, artist.number_id, "nr id");
 
     try {
       const nftsResult = await filterArrayByIdStartingWith(
@@ -87,8 +86,6 @@ export const TradeStart = (props) => {
 
     init();
   }, [game, userNfts, tokenIdForNewLevel]);
-
-  console.log(tokenIdForNewLevel, "tokenidforlvl");
 
   //LVL UP: A trade makes a player level up both in contract & in db
   const startTrade = async (data) => {
