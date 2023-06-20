@@ -15,7 +15,7 @@ import { NftService } from "@liquality/wallet-sdk";
 import { getPublicKey } from "../../utils";
 
 export const TradeModal = (props) => {
-  const { show, setShow } = props;
+  const { show, setShow, level, setLevel } = props;
   const [content, setContent] = useState("tradeStart");
   const [headerText, setHeaderText] = useState("Trade");
   const [nftContract, setNftContract] = useState(null);
@@ -24,6 +24,11 @@ export const TradeModal = (props) => {
   const [userNfts, setUserNfts] = useState(null);
 
   const [txHash, setTxHash] = useState(null);
+
+  const showTradeModal = () => {
+    setShow(!show);
+    setLevel(level);
+  };
 
   useEffect(() => {
     const initializeContract = async () => {

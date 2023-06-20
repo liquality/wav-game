@@ -25,11 +25,12 @@ import { LoginModal } from "../components/Onboarding/LoginModal";
 import StaticDataService from "../services/StaticDataService";
 import { fetchSession } from "../utils";
 import UserService from "../services/UserService";
+import CustomButton from "../components/Button";
 
 export default function Home(props) {
   const { setChooseArtistView, setShowPickArtistModal, setSelectedArtist } = props;
   const [show, setShow] = React.useState(false);
-
+  const [selectedId, setSelectedId] = useState(null);
   const [artistData, setArtistData] = useState([]);
   const [games, setGames] = useState([]);
   const [selectedArtistItem, setSelectedArtistItem] = useState(null);
@@ -120,10 +121,14 @@ export default function Home(props) {
       <br></br>
       <br></br>
       <div className="mt-2 mb-24 flex justify-center items-center">
-        <button className="pinkBtn " onClick={handleChooseArtist}>
-          {" "}
+        <CustomButton
+          type="big"
+          pink
+          disabled={selectedArtistItem ? false : true}
+          onClick={handleChooseArtist}
+        >
           CHOOSE ARTIST
-        </button>
+        </CustomButton>
       </div>
 
       {/* How to play */}
@@ -146,7 +151,9 @@ export default function Home(props) {
           <div id="container">
             <div id="blockOne"></div>
             <div id="text">Level 1</div>
-            <p className="levelCardText">Buy 32 artist collectibles toward winning the main prize </p>
+            <p className="levelCardText">
+              Buy 32 artist collectibles toward winning the main prize{" "}
+            </p>
             <Union className="levelCardUnion" />
             <Arrow
               className="levelCardSvg"
@@ -211,9 +218,7 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockFive"></div>
             <div id="text">Level 5</div>
-            <p className="levelCardText">
-              Play to reveal
-            </p>
+            <p className="levelCardText">Play to reveal</p>
             <Arrow
               className="levelCardSvg"
               style={{ left: "10%", bottom: "0%", top: "110%" }}
@@ -230,7 +235,9 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockSix"></div>
             <div id="text">Level 6</div>
-            <p className="levelCardText">1 WINNER gets A 1-ON- 1 TRIP & CONCERT</p>
+            <p className="levelCardText">
+              1 WINNER gets A 1-ON- 1 TRIP & CONCERT
+            </p>
             <GlitterOne
               className="levelCardSvg"
               style={{ left: "10%", top: "60%" }}

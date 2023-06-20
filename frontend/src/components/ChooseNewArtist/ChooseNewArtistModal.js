@@ -7,16 +7,23 @@ import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
 import { GameIncentives } from "./GameIncentives";
 
 export const ChooseNewArtistModal = (props) => {
-  const { show, setShow, selectedArtist, setSelectedArtist, chooseArtistView, setChooseArtistView } = props;
-  const [headerText, setHeaderText] = useState("change artist");
+  const {
+    show,
+    setShow,
+    selectedArtist,
+    setSelectedArtist,
+    chooseArtistView,
+    setChooseArtistView,
+  } = props;
 
+  const [headerText, setHeaderText] = useState("Change an artist");
   const handleClose = () => {
     setShow(false);
-    setChooseArtistView('chooseArtistStart');
+    setChooseArtistView("chooseArtistStart");
   };
 
   useEffect(() => {
-    const init = async () => { };
+    const init = async () => {};
 
     init();
   }, []);
@@ -54,6 +61,7 @@ export const ChooseNewArtistModal = (props) => {
   return (
     <>
       <CustomModal
+        type={chooseArtistView === "creditCardPayment" ? "creditCard" : null}
         show={show}
         setShow={setShow}
         content={whichContentToRender}

@@ -3,11 +3,11 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
-import { Balances } from "./pages/Balances";
+import { Terms } from "./pages/Terms";
 import { setupSDK } from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import UserService from "./services/UserService";
 import { fetchSession } from "./utils";
 import { SpinningLoader } from "./components/SpinningLoader";
@@ -17,7 +17,7 @@ function App() {
   const [showPickArtistModal, setShowPickArtistModal] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
-  const [chooseArtistView, setChooseArtistView] = useState('chooseArtistStart');
+  const [chooseArtistView, setChooseArtistView] = useState("chooseArtistStart");
   const [selectedArtist, setSelectedArtist] = useState(null);
 
   const fetchUser = async () => {
@@ -34,7 +34,6 @@ function App() {
     } else return {};
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -44,9 +43,7 @@ function App() {
     };
 
     fetchData();
-    return () => {
-
-    };
+    return () => {};
   }, []);
 
   return (
@@ -59,11 +56,12 @@ function App() {
           setShowPickArtistModal,
           chooseArtistView,
           setChooseArtistView,
-          user
+          user,
         }}
       >
         {" "}
-        <Navbar user={user}
+        <Navbar
+          user={user}
           showPickArtistModal={showPickArtistModal}
           setShowPickArtistModal={setShowPickArtistModal}
           chooseArtistView={chooseArtistView}
@@ -71,38 +69,38 @@ function App() {
           selectedArtist={selectedArtist}
           setSelectedArtist={setSelectedArtist}
         />
-        {
-          loading ? (
-            <div className="contentView m-5 p-5 flex justify-center items-center ">
-              <div className="m-4 p-4">
-                <SpinningLoader />
-              </div>
+        {loading ? (
+          <div className="contentView m-5 p-5 flex justify-center items-center ">
+            <div className="m-4 p-4">
+              <SpinningLoader />
             </div>
-          ) :
-            (<Routes>
-              <Route path="/" element={
-                <Home 
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={
+              <Home 
+                setShowPickArtistModal={setShowPickArtistModal}
+                setChooseArtistView={setChooseArtistView} 
+                selectedArtist={selectedArtist}
+                setSelectedArtist={setSelectedArtist}
+              />} 
+            />
+            <Route path="/terms" element={<Terms />} />
+            <Route
+              path="/artist/:artistId"
+              element={
+                <Artist
+                  user={user}
+                  showPickArtistModal={showPickArtistModal}
                   setShowPickArtistModal={setShowPickArtistModal}
-                  setChooseArtistView={setChooseArtistView} 
+                  setChooseArtistView={setChooseArtistView}
                   selectedArtist={selectedArtist}
                   setSelectedArtist={setSelectedArtist}
-                />} 
-              />
-              <Route path="/balances" element={<Balances />} />
-              <Route path="/artist/:artistId"
-                element={
-                  <Artist
-                    user={user}
-                    showPickArtistModal={showPickArtistModal}
-                    setShowPickArtistModal={setShowPickArtistModal}
-                    setChooseArtistView={setChooseArtistView}
-                    selectedArtist={selectedArtist}
-                    setSelectedArtist={setSelectedArtist}
-                  />
-                }
-              />
-            </Routes>)
-        }
+                />
+              }
+            />
+          </Routes>
+        )}
         <Footer />
       </DataContext.Provider>{" "}
     </div>
