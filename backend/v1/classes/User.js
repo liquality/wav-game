@@ -68,7 +68,6 @@ class User {
               user.public_address,
             ],
             (err, insertResult) => {
-              console.log(err, "insertres?");
               if (err) {
                 reject(new ApiError(500, err));
               } else if (insertResult.affectedRows < 1) {

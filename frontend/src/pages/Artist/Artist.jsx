@@ -125,7 +125,9 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, [artistId, userGames, nfts]);
+  }, [artistId, userGames, nfts, nftCount]);
+
+  console.log(nftCount, "nft count");
 
   return (
     <div className="container mx-auto">

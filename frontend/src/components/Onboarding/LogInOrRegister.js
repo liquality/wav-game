@@ -1,8 +1,17 @@
 import { SpinningLoader } from "../SpinningLoader";
 import CustomButton from "../Button";
+import { PoweredByLiquality } from "../PoweredByLiquality";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const LoginOrRegister = (props) => {
-  const { createNewWallet, loading } = props;
+  const { createNewWallet, loading, handleClose } = props;
+  const navigate = useNavigate();
+
+  const handleTermsClick = () => {
+    navigate("/terms");
+    handleClose();
+  };
 
   return (
     <>
@@ -36,7 +45,7 @@ export const LoginOrRegister = (props) => {
           <div className="rightModalContainer ">
             {" "}
             <div style={{ width: "18rem" }}>
-              <div className="mt-4 mb-5">
+              <div className="mt-4 mb-48">
                 <p className="eyebrowLg mt-5">
                   <b>WELCOME</b>
                 </p>
@@ -48,6 +57,14 @@ export const LoginOrRegister = (props) => {
                   credentials you registered with.
                 </p>
               </div>
+
+              <PoweredByLiquality notCenter={true} />
+              <button
+                onClick={() => handleTermsClick()}
+                className="modalTerms mt-3"
+              >
+                Terms & Conditions
+              </button>
             </div>
           </div>
         </div>

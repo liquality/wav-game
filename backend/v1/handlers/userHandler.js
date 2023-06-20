@@ -33,7 +33,6 @@ userHandler.read = function (req, res) {
 
 userHandler.create = function (req, res) {
   var user = new User();
-  console.log(req.body, "req body user?");
 
   user.set(req.body); // should be a user object
   // Send the JWT token as a response to save in client localstorage

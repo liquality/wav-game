@@ -23,10 +23,11 @@ import { ReactComponent as Github } from "../images/github.svg";
 import { ArtistGrid } from "../components/ArtistGrid";
 import { LoginModal } from "../components/Onboarding/LoginModal";
 import StaticDataService from "../services/StaticDataService";
+import CustomButton from "../components/Button";
 
 export default function Home() {
   const [show, setShow] = React.useState(false);
-
+  const [selectedId, setSelectedId] = useState(null);
   const [artistData, setArtistData] = useState([]);
   const [artistImages, setArtistImages] = useState({});
 
@@ -50,7 +51,10 @@ export default function Home() {
     init();
   }, []);
 
-  const handleArtistClick = () => { };
+  const handleArtistClick = (selected) => {
+    setSelectedId(selected);
+  };
+
   return (
     <div className="mt-5">
       {/* Welcome to wavgame hero */}
@@ -60,7 +64,7 @@ export default function Home() {
           Welcome to Wavgame
         </span>
         <div
-          style={{ left: "46%", top: "65%", width: '35%'}}
+          style={{ left: "46%", top: "65%", width: "35%" }}
           className="flex flex-wrap absolute p-3"
         >
           <p className="flex">
@@ -87,15 +91,20 @@ export default function Home() {
         artistData={artistData}
         artistImages={artistImages}
         games={[]}
+        selectedId={selectedId}
         handleClick={handleArtistClick}
       />
       <br></br>
       <br></br>
       <div className="mt-2 mb-24 flex justify-center items-center">
-        <button className="pinkBtn " onClick={() => setShow(true)}>
-          {" "}
+        <CustomButton
+          type="big"
+          pink
+          disabled={selectedId ? false : true}
+          onClick={() => setShow(true)}
+        >
           CHOOSE ARTIST
-        </button>
+        </CustomButton>
       </div>
 
       {/* How to play */}
@@ -118,7 +127,9 @@ export default function Home() {
           <div id="container">
             <div id="blockOne"></div>
             <div id="text">Level 1</div>
-            <p className="levelCardText">Buy 32 artist collectibles toward winning the main prize </p>
+            <p className="levelCardText">
+              Buy 32 artist collectibles toward winning the main prize{" "}
+            </p>
             <Union className="levelCardUnion" />
             <Arrow
               className="levelCardSvg"
@@ -183,9 +194,7 @@ export default function Home() {
           <div className="ml-3" id="container">
             <div id="blockFive"></div>
             <div id="text">Level 5</div>
-            <p className="levelCardText">
-            Play to reveal
-            </p>
+            <p className="levelCardText">Play to reveal</p>
             <Arrow
               className="levelCardSvg"
               style={{ left: "10%", bottom: "0%", top: "110%" }}
@@ -202,7 +211,9 @@ export default function Home() {
           <div className="ml-3" id="container">
             <div id="blockSix"></div>
             <div id="text">Level 6</div>
-            <p className="levelCardText">1 WINNER gets A 1-ON- 1 TRIP & CONCERT</p>
+            <p className="levelCardText">
+              1 WINNER gets A 1-ON- 1 TRIP & CONCERT
+            </p>
             <GlitterOne
               className="levelCardSvg"
               style={{ left: "10%", top: "60%" }}
