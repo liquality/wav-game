@@ -21,9 +21,11 @@ export const ArtistGrid = (props) => {
   const renderButtons = (startHere, endHere) => {
     if (artistData?.length > 0 && artistData) {
       return artistData.slice(startHere, endHere).map((item, index) => {
-        const level = games?.find((game) => {
-          if (game.artist_name === item?.id) return game.level;
+        const game = games?.find((game) => {
+          return game.artist_name === item?.id
         });
+
+        const level = games?.level;
         const userIsOnHrefArtist = item?.id === artistFromHref?.id;
 
         //I am sorry for this convoluted and messy logic,
@@ -34,15 +36,12 @@ export const ArtistGrid = (props) => {
         } else if (userIsOnHrefArtist) {
           buttonStyle = { borderColor: "#FF5DC8" };
         }
-        const finished = games?.find((game) => {
-          if (game.artist_name === item?.id)
-            return game.level_6_claimed_main_prize;
-        });
+        const finished = game?.level_6_claimed_main_prize || false;
         let isDisabled;
         let renderLevel;
-        if (level?.level && !finished?.level_6_claimed_main_prize) {
+        if (level && !finished?.level_6_claimed_main_prize) {
           renderLevel = `Level ${level?.level}`;
-        } else if (level?.level === 6 && finished.level_6_claimed_main_prize) {
+        } else if (level === 6 && finished.level_6_claimed_main_prize) {
           isDisabled = true;
           renderLevel = "Game ended";
           buttonStyle = {
@@ -57,7 +56,7 @@ export const ArtistGrid = (props) => {
           <div className="flexDirectionRow  mb-3" key={index}>
             <button
               onClick={() =>
-                handleClick(item, userIsOnHrefArtist || level?.level)
+                handleClick(item, userIsOnHrefArtist || level)
               }
               className="defaultArtistBtn"
               disabled={isDisabled}

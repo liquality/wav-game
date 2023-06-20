@@ -57,20 +57,20 @@ function App() {
           setLoginResponse: "",
           showPickArtistModal,
           setShowPickArtistModal,
-          chooseArtistView, 
+          chooseArtistView,
           setChooseArtistView,
           user
         }}
       >
         {" "}
-        <Navbar user={user} 
-                showPickArtistModal={showPickArtistModal} 
-                setShowPickArtistModal={setShowPickArtistModal} 
-                chooseArtistView={chooseArtistView}
-                setChooseArtistView={setChooseArtistView}
-                selectedArtist={selectedArtist} 
-                setSelectedArtist={setSelectedArtist}
-                />
+        <Navbar user={user}
+          showPickArtistModal={showPickArtistModal}
+          setShowPickArtistModal={setShowPickArtistModal}
+          chooseArtistView={chooseArtistView}
+          setChooseArtistView={setChooseArtistView}
+          selectedArtist={selectedArtist}
+          setSelectedArtist={setSelectedArtist}
+        />
         {
           loading ? (
             <div className="contentView m-5 p-5 flex justify-center items-center ">
@@ -80,7 +80,14 @@ function App() {
             </div>
           ) :
             (<Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={
+                <Home 
+                  setShowPickArtistModal={setShowPickArtistModal}
+                  setChooseArtistView={setChooseArtistView} 
+                  selectedArtist={selectedArtist}
+                  setSelectedArtist={setSelectedArtist}
+                />} 
+              />
               <Route path="/balances" element={<Balances />} />
               <Route path="/artist/:artistId"
                 element={
@@ -89,7 +96,7 @@ function App() {
                     showPickArtistModal={showPickArtistModal}
                     setShowPickArtistModal={setShowPickArtistModal}
                     setChooseArtistView={setChooseArtistView}
-                    selectedArtist={selectedArtist} 
+                    selectedArtist={selectedArtist}
                     setSelectedArtist={setSelectedArtist}
                   />
                 }

@@ -23,19 +23,24 @@ import { ReactComponent as Github } from "../images/github.svg";
 import { ArtistGrid } from "../components/ArtistGrid";
 import { LoginModal } from "../components/Onboarding/LoginModal";
 import StaticDataService from "../services/StaticDataService";
+import { fetchSession } from "../utils";
+import UserService from "../services/UserService";
 
-export default function Home() {
+export default function Home(props) {
+  const { setChooseArtistView, setShowPickArtistModal, setSelectedArtist } = props;
   const [show, setShow] = React.useState(false);
 
   const [artistData, setArtistData] = useState([]);
+  const [games, setGames] = useState([]);
+  const [selectedArtistItem, setSelectedArtistItem] = useState(null);
   const [artistImages, setArtistImages] = useState({});
 
   const fetchArtist = async (id) => {
     try {
-      const artist = await StaticDataService.getArtists();
-      return artist;
+      return await StaticDataService.getArtists();
     } catch (err) {
       console.log(err, "Error fetching the artist");
+      return null;
     }
   };
 
@@ -43,6 +48,13 @@ export default function Home() {
     const init = async () => {
       const artists = await fetchArtist();
       const images = await StaticDataService.getArtistImages();
+      const _games = await UserService.getGameByUserId(
+        fetchSession().id, //userid
+        "",
+        fetchSession().token
+      );
+      setGames(_games);
+
       setArtistImages(images);
       setArtistData(artists);
     };
@@ -50,7 +62,19 @@ export default function Home() {
     init();
   }, []);
 
-  const handleArtistClick = () => { };
+  const handleArtistClick = (artist) => {
+    setSelectedArtistItem(artist);
+  };
+
+  const handleChooseArtist = () => {
+    if (fetchSession()?.token) {
+      setSelectedArtist(selectedArtistItem);
+      setChooseArtistView("gameIncentives");
+      setShowPickArtistModal(true);
+    } else {
+      setShow(true);
+    }
+  }
   return (
     <div className="mt-5">
       {/* Welcome to wavgame hero */}
@@ -60,7 +84,7 @@ export default function Home() {
           Welcome to Wavgame
         </span>
         <div
-          style={{ left: "46%", top: "65%", width: '35%'}}
+          style={{ left: "46%", top: "65%", width: '35%' }}
           className="flex flex-wrap absolute p-3"
         >
           <p className="flex">
@@ -84,15 +108,16 @@ export default function Home() {
 
       {/* Artist grid */}
       <ArtistGrid
+        selectedId={selectedArtistItem}
         artistData={artistData}
         artistImages={artistImages}
-        games={[]}
+        games={games}
         handleClick={handleArtistClick}
       />
       <br></br>
       <br></br>
       <div className="mt-2 mb-24 flex justify-center items-center">
-        <button className="pinkBtn " onClick={() => setShow(true)}>
+        <button className="pinkBtn " onClick={handleChooseArtist}>
           {" "}
           CHOOSE ARTIST
         </button>
@@ -184,7 +209,7 @@ export default function Home() {
             <div id="blockFive"></div>
             <div id="text">Level 5</div>
             <p className="levelCardText">
-            Play to reveal
+              Play to reveal
             </p>
             <Arrow
               className="levelCardSvg"
