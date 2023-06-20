@@ -9,7 +9,7 @@ import { GameIncentives } from "./GameIncentives";
 export const ChooseNewArtistModal = (props) => {
   const { show, setShow, selectedArtist, setSelectedArtist, chooseArtistView, setChooseArtistView } = props;
 
-  const [headerText, setHeaderText] = useState("Choose an artist");
+  const [headerText, setHeaderText] = useState("change artist");
   const [selectedNft, setSelectedNft] = useState(null);
   const [txHash, setTxHash] = useState(false);
 
