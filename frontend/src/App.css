@@ -9,6 +9,10 @@ body {
   font-family: "Sora";
 }
 
+::selection {
+  background-color: #bc2b8ba6;
+}
+
 @font-face {
   font-family: "000 webfont";
   src: url("./fonts/000webfont\ Regular.ttf") format("truetype");
