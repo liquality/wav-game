@@ -67,6 +67,7 @@ export const TradeStart = (props) => {
     const artist = await getArtist();
     let firstChar = artist.number_id.toString()[0];
     const levelUp = game?.level + 1;
+
     return firstChar + 0 + levelUp;
   };
 
@@ -201,7 +202,7 @@ export const TradeStart = (props) => {
               <p className="webfont coral text-2xl">Level {game?.level + 1}</p>
               <p className="mb-3">Trade 2 top live songs</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
-              {tokenIdForNewLevel ? (
+              {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (
                 <img
                   src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
                   className="nftBigPreviewTrade"

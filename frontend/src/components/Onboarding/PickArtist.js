@@ -112,7 +112,7 @@ export const PickArtist = (props) => {
     } else {
       await createGame();
       setContent("creditcardPayment");
-      setHeaderText("Get NFTs to Play");
+      setHeaderText("Get Collectibles to Play");
     }
   };
 
