@@ -5,9 +5,7 @@ import { PoweredByLiquality } from "./PoweredByLiquality";
 
 export const CustomModal = (props) => {
   const { content, setShow, show, modalHeaderText } = props;
-
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => { });
 
