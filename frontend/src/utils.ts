@@ -77,7 +77,7 @@ export const getGameIdBasedOnHref = async () => {
 
 
 
-export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId) => {
+export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId, level) => {
     let firstChar = artistNumberId.toString()[0];
     console.log(nftsArray, artistNumberId, '???')
 
@@ -85,7 +85,9 @@ export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId) => 
 
     for (let i = 0; i < nftsArray.length; i++) {
         const obj = nftsArray[i];
-        if (obj.id && obj.id.toString().startsWith(firstChar.toString())) {
+        if (ethers.getAddress(obj.contract.address) === 
+        ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS) && 
+        obj.id && obj.id.toString().startsWith(firstChar.toString())) {
             result.push(obj);
         }
     }
@@ -96,6 +98,7 @@ export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId) => 
 
 export const countNFTsByLevel = async (nfts, artistNumberId) => {
     const levels = {};
+    let totalCollectibles = 0;
     let artistNrString = artistNumberId.toString()
     nfts.forEach(nft => {
         if ( nft.id[0] === artistNrString[0] && 
@@ -103,9 +106,10 @@ export const countNFTsByLevel = async (nfts, artistNumberId) => {
             ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS)) {
             const level = parseInt(nft.id.slice(-1));
             levels[`level${level}`] = nft.balance;
+            totalCollectibles += nft.balance
         }
     });
-    return levels;
+    return {levels, totalCollectibles};
 }
 
 

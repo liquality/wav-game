@@ -15,15 +15,23 @@ import { NftService } from "@liquality/wallet-sdk";
 import { getPublicKey } from "../../utils";
 
 export const TradeModal = (props) => {
-  const { show, setShow } = props;
+  const { show, setShow, level, setLevel} = props;
   const [content, setContent] = useState("tradeStart");
   const [headerText, setHeaderText] = useState("Trade");
   const [nftContract, setNftContract] = useState(null);
   const [gameContract, setGameContract] = useState(null);
-  const [wavContractNfts, setWavContractNfts] = useState(null);
   const [userNfts, setUserNfts] = useState(null);
 
-  const [txHash, setTxHash] = useState(null);
+  const [tradeStatus, setTradeStatus] = useState({
+    txHash: null,
+    submited: false,
+    approval: false
+  });
+
+  const showTradeModal = () => {
+    setShow(!show)
+    setLevel(level)
+  }
 
   useEffect(() => {
     const initializeContract = async () => {
@@ -52,7 +60,6 @@ export const TradeModal = (props) => {
         );
         const userNfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
         setUserNfts(userNfts);
-        setWavContractNfts(contractNfts);
       } catch (error) {
         console.error("Error initializing contract:", error);
       }
@@ -69,13 +76,14 @@ export const TradeModal = (props) => {
           setContent={setContent}
           gameContract={gameContract}
           nftContract={nftContract}
-          setTxHash={setTxHash}
+          setTradeStatus={setTradeStatus}
+          level={level}
         />
       );
     } else if (content === "processingTrade") {
       return (
         <ProcessingTrade
-          txHash={txHash}
+          tradeStatus={tradeStatus}
           setHeaderText={setHeaderText}
           setContent={setContent}
         />
@@ -87,7 +95,7 @@ export const TradeModal = (props) => {
     <>
       <CustomModal
         show={show}
-        setShow={setShow}
+        setShow={showTradeModal}
         content={whichContentToRender}
         modalHeaderText={headerText}
       >

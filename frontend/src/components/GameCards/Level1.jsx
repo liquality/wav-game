@@ -2,32 +2,36 @@
 import { LevelCard } from "../LevelCard/LevelCard";
 import { getLevelsStatuses } from "../../utils";
 
-export const Level1 = (props) => {
-    const { selectedLevel, game, onSetLevel, onTradeClick, onGetMoreClick, nftCount} = props;
+
+export const Level1 =  (props) => {
+    const { selectedLevel, game, onSetLevel, onTradeClick, onGetMoreClick, nftCount, burnStatus} = props;
     const status = getLevelsStatuses(game?.level || 1)[1];
-    const level1Count = nftCount['level1'] || -1;
+    const level1Count = nftCount['level1'] || 0;
     const instructions = `You have ${level1Count === -1 ? 0 : level1Count} NFTs.`;
     let tradeActionText = '';
 
-    switch (level1Count) {
-        case -1:
-            tradeActionText =  'Get Artist Collectibles';
-        break;
-        case 0:
-            tradeActionText =  'Start Trading';
-        break;
-        default:
-            tradeActionText =  'Trade More';        
-        break;
-    }
-    
-    const actions = [{
-        onActionClick: (level) => onTradeClick(level),
-        label: tradeActionText,
-        mode: 'default'
-    }];
 
-    if(level1Count > 0) {
+    if (level1Count >= 2) {
+        if (burnStatus ) {
+            tradeActionText =  'Trade More';
+        }  else {
+            tradeActionText =  'Start Trading';
+        }
+    } 
+    if (level1Count < 2 && !burnStatus ) {
+        tradeActionText =  'Get Artist Collectibles';
+    } 
+    let actions = []
+    if (level1Count >= 2 || (level1Count <= 2 && !burnStatus)) {
+
+      
+        actions.push({
+            onActionClick: (level) => onTradeClick(level),
+            label: tradeActionText,
+            mode: 'default'
+        });
+    } 
+    if(burnStatus) {
         actions.push({
             onActionClick: (level) => onGetMoreClick(level),
             label: 'Get More',
