@@ -40,9 +40,9 @@ export const ArtistGrid = (props) => {
         const finished = game?.level_6_claimed_main_prize || false;
         let isDisabled;
         let renderLevel;
-        if (level && !finished?.level_6_claimed_main_prize) {
+        if (level && !finished) {
           renderLevel = `Level ${level}`;
-        } else if (level === 6 && finished.level_6_claimed_main_prize) {
+        } else if (level === 6 && finished) {
           isDisabled = true;
           renderLevel = "Game ended";
           buttonStyle = {
