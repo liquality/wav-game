@@ -25,7 +25,8 @@ export const ArtistGrid = (props) => {
           return game.artist_name === item?.id
         });
 
-        const level = games?.level;
+        const level = game?.level;
+        console.log('game', game)
         const userIsOnHrefArtist = item?.id === artistFromHref?.id;
 
         //I am sorry for this convoluted and messy logic,
@@ -40,7 +41,7 @@ export const ArtistGrid = (props) => {
         let isDisabled;
         let renderLevel;
         if (level && !finished?.level_6_claimed_main_prize) {
-          renderLevel = `Level ${level?.level}`;
+          renderLevel = `Level ${level}`;
         } else if (level === 6 && finished.level_6_claimed_main_prize) {
           isDisabled = true;
           renderLevel = "Game ended";
