@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { AuthService, tryRegisterSW } from "@liquality/wallet-sdk";
 import { LoginOrRegister } from "./LogInOrRegister";
 import { PickAvatar } from "./PickAvatar";
@@ -7,7 +7,7 @@ import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
-import { seeIfUserCanLogIn } from "../../utils";
+import { fetchSession, seeIfUserCanLogIn } from "../../utils";
 import UserService from "../../services/UserService";
 
 const verifierMap = {
@@ -41,9 +41,8 @@ export const LoginModal = (props) => {
   const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
   const [selectedId, setSelectedId] = useState(null);
-
+  const navigate = useNavigate();
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const init = async () => {
@@ -61,12 +60,28 @@ export const LoginModal = (props) => {
 
   const loginUser = async (serviceprovider_name) => {
     try {
-      UserService.loginUser(serviceprovider_name).then((response) => {
-        localStorage.setItem("session", JSON.stringify(response));
-      });
+      const response = await UserService.loginUser(serviceprovider_name);
+      localStorage.setItem("session", JSON.stringify(response));
     } catch (err) {
       console.log("Error logging in user");
     }
+  };
+
+  const fetchGamesByUserId = async () => {
+    try {
+      const token = fetchSession()?.token;
+      if (token) {
+        return await UserService.getGameByUserId(
+          fetchSession()?.id, //userid
+          "",
+          token
+        );
+      }
+
+    } catch (err) {
+      console.log(err, "Error fetching user");
+    }
+    return null;
   };
 
   const createNewWallet = async () => {
@@ -77,11 +92,25 @@ export const LoginModal = (props) => {
       localStorage.setItem("loginResponse", JSON.stringify(response));
       await loginUser(response.loginResponse?.userInfo?.email);
       setLoginResponse(response);
-      //some ugly code here but works for now lol
-      setTimeout(() => {
-        setLoading(false);
+
+      // get the games and redirect to the latest created 
+      const games = await fetchGamesByUserId();
+      if (games && games.length > 0) {
+        const sortedGames = games.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        const { artist_name } = sortedGames[0];
+        if (artist_name) {
+          setLoading(false);
+          navigate(`/artist/${artist_name}`);
+          setLoading(false);
+          setShow(false);
+        } else {
+          window.location.reload();
+        }
+
+      } else {
         window.location.reload();
-      }, 2000);
+      }
+
     } else {
       setLoading(true);
       const response = await AuthService.createWallet(tKey, verifierMap);

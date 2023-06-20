@@ -95,7 +95,7 @@ export const PickArtist = (props) => {
   const handleSetNewPage = async () => {
     if (type !== "onboarding") {
       const gameAlreadyStarted = games?.find((game) => {
-        if (game.artist_name === selectedId.id) return game.level;
+         return (game.artist_name === selectedId.id);
       });
       //if game already exists dont create it again
       if (gameAlreadyStarted && !shouldNavigate) {

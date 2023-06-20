@@ -48,12 +48,15 @@ export default function Home(props) {
     const init = async () => {
       const artists = await fetchArtist();
       const images = await StaticDataService.getArtistImages();
-      const _games = await UserService.getGameByUserId(
-        fetchSession().id, //userid
-        "",
-        fetchSession().token
-      );
-      setGames(_games);
+      const token = fetchSession()?.token;
+      if (token) {
+        const _games = await UserService.getGameByUserId(
+          fetchSession()?.id, //userid
+          "",
+          token
+        );
+        setGames(_games);
+      }
 
       setArtistImages(images);
       setArtistData(artists);
