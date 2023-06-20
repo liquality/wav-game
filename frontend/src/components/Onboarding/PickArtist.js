@@ -1,7 +1,7 @@
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
-import CustomButton from "../Button";
+import { Button } from "../Button/Button";
 import StaticDataService from "../../services/StaticDataService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -71,9 +71,18 @@ export const PickArtist = (props) => {
     init();
   }, []);
 
-  const handleClick = (selected, navigate) => {
-    setSelectedId(selected);
-    setShouldNavigate(navigate);
+  const handleClick = (artist, navigate) => {
+    // check game status if it not started yet we redirect to the modal, if not just redirecto to the page
+    const game = games?.find((g) => {
+      return g.artist_name === artist?.id
+    });
+
+    if (game && game.level) {
+      navigate(`/artist/${game.artist_name}`);
+    } else {
+      setSelectedId(artist);
+      setShouldNavigate(navigate);
+    }
   };
 
   function renderArtistGrid() {
@@ -95,7 +104,7 @@ export const PickArtist = (props) => {
   const handleSetNewPage = async () => {
     if (type !== "onboarding") {
       const gameAlreadyStarted = games?.find((game) => {
-         return (game.artist_name === selectedId.id);
+        return (game.artist_name === selectedId.id);
       });
       //if game already exists dont create it again
       if (gameAlreadyStarted && !shouldNavigate) {
@@ -125,14 +134,14 @@ export const PickArtist = (props) => {
       </div>
 
       <div className="flexDirectionRow flex justify-center items-center mt-24 ">
-        <CustomButton
-          type="big"
-          pink
+        <Button
+          size={'large'}
           disabled={selectedId ? false : true}
+          mode={'pink'}
           onClick={handleSetNewPage}
         >
           {type === "onboarding" ? "CONTINUE" : "SELECT"}
-        </CustomButton>
+        </Button>
         {type === "onboarding" ? null : (
           <button className="ml-5 mr-5" onClick={handleClose}>
             CANCEL

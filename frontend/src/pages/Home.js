@@ -19,22 +19,22 @@ import { ReactComponent as Twitter } from "../images/twitter.svg";
 import { ReactComponent as Discord } from "../images/discord.svg";
 import { ReactComponent as Telegram } from "../images/telegram.svg";
 import { ReactComponent as Github } from "../images/github.svg";
-
+import { useNavigate } from "react-router-dom";
 import { ArtistGrid } from "../components/ArtistGrid";
 import { LoginModal } from "../components/Onboarding/LoginModal";
 import StaticDataService from "../services/StaticDataService";
 import { fetchSession } from "../utils";
 import UserService from "../services/UserService";
-import CustomButton from "../components/Button";
+import { Button } from "../components/Button/Button";
 
 export default function Home(props) {
   const { setChooseArtistView, setShowPickArtistModal, setSelectedArtist } = props;
   const [show, setShow] = React.useState(false);
-  const [selectedId, setSelectedId] = useState(null);
   const [artistData, setArtistData] = useState([]);
   const [games, setGames] = useState([]);
   const [selectedArtistItem, setSelectedArtistItem] = useState(null);
   const [artistImages, setArtistImages] = useState({});
+  const navigate = useNavigate();
 
   const fetchArtist = async (id) => {
     try {
@@ -72,9 +72,18 @@ export default function Home(props) {
 
   const handleChooseArtist = () => {
     if (fetchSession()?.token) {
-      setSelectedArtist(selectedArtistItem);
-      setChooseArtistView("gameIncentives");
-      setShowPickArtistModal(true);
+      // check game status if it not started yet we redirect to the modal, if not just redirecto to the page
+      const game = games?.find((g) => {
+        return g.artist_name === selectedArtistItem?.id
+      });
+
+      if (game && game.level) {
+        navigate(`/artist/${game.artist_name}`);
+      } else {
+        setSelectedArtist(selectedArtistItem);
+        setChooseArtistView("gameIncentives");
+        setShowPickArtistModal(true);
+      }
     } else {
       setShow(true);
     }
@@ -121,14 +130,15 @@ export default function Home(props) {
       <br></br>
       <br></br>
       <div className="mt-2 mb-24 flex justify-center items-center">
-        <CustomButton
-          type="big"
-          pink
-          disabled={selectedArtistItem ? false : true}
+        <Button
+          size={'large'}
+          disabled={!selectedArtistItem}
+          mode={'pink'}
           onClick={handleChooseArtist}
         >
           CHOOSE ARTIST
-        </CustomButton>
+        </Button>
+
       </div>
 
       {/* How to play */}

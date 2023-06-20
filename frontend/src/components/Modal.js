@@ -45,12 +45,11 @@ export const CustomModal = (props) => {
             <div className="modal-header-notext"></div>
           )}
         </div>
-        <div className="line"></div>
-        <div class="modal-body">
+        <div className="modal-body">
+          <div className="line"></div>
           {content()}
+          <div className="line"></div>
         </div>
-        <div className="line"></div>
-
         {logo}
       </Modal>
     </>

@@ -8,8 +8,7 @@ import { Level3 } from "./Level3";
 import { Level4 } from "./Level4";
 import { Level5 } from "./Level5";
 import { Level6 } from "./Level6";
-import { useEffect, useState } from "react";
-import { bool } from "prop-types";
+import { useState } from "react";
 
 interface GameCardsProps {
   /**
@@ -38,7 +37,7 @@ export const GameCards = (props: GameCardsProps) => {
 
   async function onSetLevel(levelId?: number) {
     console.log("onSetLevel level >>>>~>> ", levelId)
-    onLevelSelected(levelId);
+    onLevelSelected(levelId || currentGame?.level || 1);
     setBurnStatus(await ContractService.getBurnStatus((currentGame)?currentGame.game_symbol_id:1000, getPublicKey(), levelId)) 
   }
   
