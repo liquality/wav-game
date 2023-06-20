@@ -14,7 +14,6 @@ const Navbar = (props) => {
     setChooseArtistView,
     selectedArtist,
     setSelectedArtist,
-    user,
   } = props;
 
   const handleChangeArtistClick = () => {

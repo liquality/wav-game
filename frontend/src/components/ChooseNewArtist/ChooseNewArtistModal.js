@@ -16,10 +16,7 @@ export const ChooseNewArtistModal = (props) => {
     setChooseArtistView,
   } = props;
 
-  const [headerText, setHeaderText] = useState("Choose an artist");
-  const [selectedNft, setSelectedNft] = useState(null);
-  const [txHash, setTxHash] = useState(false);
-
+  const [headerText, setHeaderText] = useState("Change an artist");
   const handleClose = () => {
     setShow(false);
     setChooseArtistView("chooseArtistStart");

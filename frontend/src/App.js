@@ -77,7 +77,14 @@ function App() {
           </div>
         ) : (
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={
+              <Home 
+                setShowPickArtistModal={setShowPickArtistModal}
+                setChooseArtistView={setChooseArtistView} 
+                selectedArtist={selectedArtist}
+                setSelectedArtist={setSelectedArtist}
+              />} 
+            />
             <Route path="/terms" element={<Terms />} />
             <Route
               path="/artist/:artistId"

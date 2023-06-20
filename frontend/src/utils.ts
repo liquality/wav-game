@@ -30,11 +30,11 @@ export const logOut = () => {
 };
 
 export function getPrivateKey(): string {
-    return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.privateKey;
+    return JSON.parse(localStorage.getItem("loginResponse")!)?.loginResponse?.privateKey;
 }
 
 export function getPublicKey(): string {
-    return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.publicAddress;
+    return JSON.parse(localStorage.getItem("loginResponse")!)?.loginResponse?.publicAddress;
 }
 
 export function seeIfUserCanLogIn() {
