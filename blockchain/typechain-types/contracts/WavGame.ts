@@ -82,6 +82,8 @@ export declare namespace IWavGame {
 
 export interface WavGameInterface extends utils.Interface {
   functions: {
+    "artistIDs(uint256)": FunctionFragment;
+    "availablePayments(uint256)": FunctionFragment;
     "batchMint(address,uint256[],uint256[])": FunctionFragment;
     "collect(uint256,address,uint256)": FunctionFragment;
     "feePerMint()": FunctionFragment;
@@ -118,6 +120,8 @@ export interface WavGameInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "artistIDs"
+      | "availablePayments"
       | "batchMint"
       | "collect"
       | "feePerMint"
@@ -152,6 +156,14 @@ export interface WavGameInterface extends utils.Interface {
       | "wavNFT"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "artistIDs",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "availablePayments",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "batchMint",
     values: [
@@ -291,6 +303,11 @@ export interface WavGameInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "wavNFT", values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: "artistIDs", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "availablePayments",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "batchMint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "collect", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "feePerMint", data: BytesLike): Result;
@@ -564,6 +581,16 @@ export interface WavGame extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    artistIDs(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    availablePayments(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     batchMint(
       _recipient: PromiseOrValue<string>,
       _ids: PromiseOrValue<BigNumberish>[],
@@ -724,6 +751,16 @@ export interface WavGame extends BaseContract {
     wavNFT(overrides?: CallOverrides): Promise<[string]>;
   };
 
+  artistIDs(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  availablePayments(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   batchMint(
     _recipient: PromiseOrValue<string>,
     _ids: PromiseOrValue<BigNumberish>[],
@@ -882,6 +919,16 @@ export interface WavGame extends BaseContract {
   wavNFT(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
+    artistIDs(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    availablePayments(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     batchMint(
       _recipient: PromiseOrValue<string>,
       _ids: PromiseOrValue<BigNumberish>[],
@@ -1145,6 +1192,16 @@ export interface WavGame extends BaseContract {
   };
 
   estimateGas: {
+    artistIDs(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    availablePayments(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     batchMint(
       _recipient: PromiseOrValue<string>,
       _ids: PromiseOrValue<BigNumberish>[],
@@ -1304,6 +1361,16 @@ export interface WavGame extends BaseContract {
   };
 
   populateTransaction: {
+    artistIDs(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    availablePayments(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     batchMint(
       _recipient: PromiseOrValue<string>,
       _ids: PromiseOrValue<BigNumberish>[],

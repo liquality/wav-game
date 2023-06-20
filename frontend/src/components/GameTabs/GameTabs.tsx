@@ -20,8 +20,8 @@ interface GameTabsProps {
  * The collection or Tab Levels with animation
  */
 export const GameTabs = (props: GameTabsProps) => {
-  const { selectedLevel, currentGame, onLevelSelected } = props;
-  const levelStatuses = getLevelsStatuses(currentGame?.level || 1);
+  const { selectedLevel, currentGame, onLevelSelected,  } = props;
+  const levelStatuses = getLevelsStatuses(selectedLevel);
 
   return (
     <div className="grid gap-x-2 grid-cols-6">

@@ -9,6 +9,7 @@ import CustomButton from "../Button";
 import {
   CHAIN_ID,
   WAV_NFT_ADDRESS,
+  WAV_PROXY_ABI,
   WAV_PROXY_ADDRESS,
 } from "../../data/contract_data";
 import {
@@ -23,11 +24,11 @@ import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import UserService from "../../services/UserService";
 
 export const TradeStart = (props) => {
-  const { setContent, gameContract, nftContract, setTxHash, userNfts } = props;
+  const { setContent, gameContract, nftContract, setTradeStatus, userNfts, level } = props;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
-  const [parsedNfts, setParsedNfts] = useState(null);
+  const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
 
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();
@@ -49,35 +50,19 @@ export const TradeStart = (props) => {
     }
   };
 
-  const parseNfts = async () => {
-    const artist = await getArtist();
-
-    try {
-      const nftsResult = await filterArrayByIdStartingWith(
-        userNfts,
-        artist.number_id
-      );
-      return nftsResult;
-    } catch (err) {
-      console.log(err, "Error fetching user");
-    }
-  };
-
-  const getWhichTokenIdForLevel = async () => {
+  const getWhichTokenIdForLevel = async (levelUp) => {
     const artist = await getArtist();
     let firstChar = artist.number_id.toString()[0];
-    const levelUp = game?.level + 1;
-
     return firstChar + 0 + levelUp;
   };
-
+  
   useEffect(() => {
     const init = async () => {
       if (userNfts) {
-        const _parsedNfts = await parseNfts();
-        const _tokenIdForNewLevel = await getWhichTokenIdForLevel();
-        setParsedNfts(_parsedNfts);
+        const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(level);
+        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(level+1);
         setTokenIdForNewLevel(_tokenIdForNewLevel);
+        setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
       }
       if (!game) {
         const _game = await fetchGameByUserIdAndArtistId();
@@ -86,11 +71,13 @@ export const TradeStart = (props) => {
     };
 
     init();
-  }, [game, userNfts, tokenIdForNewLevel]);
+  }, [game, userNfts, tokenIdForNewLevel, tokenIdForCurrentLevel]);
 
   //LVL UP: A trade makes a player level up both in contract & in db
   const startTrade = async (data) => {
     try {
+      setContent("processingTrade");
+
       const provider = new ethers.JsonRpcProvider(
         process.env.REACT_APP_RPC_URL
       );
@@ -113,17 +100,22 @@ export const TradeStart = (props) => {
             WAV_PROXY_ADDRESS,
             true
           );
-        let txHashApproval = await TransactionService.sendGaslessly(
-          WAV_NFT_ADDRESS,
-          approvalTx.data,
-          privateKey,
-          CHAIN_ID
-        );
+          await TransactionService.sendGaslessly(
+            WAV_NFT_ADDRESS,
+            approvalTx.data,
+            privateKey,
+            CHAIN_ID
+          );
       }
+      setTradeStatus({
+        txHash: null,
+        submited: false,
+        approval: true
+      });
 
       let levelUpTx = await gameContract.levelUp.populateTransaction(
         artist?.number_id,
-        game.level
+        level+1
       );
 
       let txHashLevelUp = await TransactionService.sendGaslessly(
@@ -132,6 +124,11 @@ export const TradeStart = (props) => {
         privateKey,
         CHAIN_ID
       );
+      setTradeStatus({
+        txHash: null,
+        submited: true,
+        approval: true
+      });
 
       if (txHashLevelUp) {
         //Lvl up in DB
@@ -142,8 +139,11 @@ export const TradeStart = (props) => {
           },
           fetchSession().token
         );
-        setTxHash(txHashLevelUp);
-        setContent("processingTrade");
+        setTradeStatus({
+          txHash: txHashLevelUp,
+          submited: true,
+          approval: true
+        });
       } else {
         //Set transaction failed error msg
         setError("Transaction failed, please check the logs");
@@ -161,20 +161,20 @@ export const TradeStart = (props) => {
           {" "}
           <div className="flexDirectionRow">
             <div className="flexDirectionColumn">
-              <p className="webfont coral text-2xl">Level {game?.level}</p>
+              <p className="webfont coral text-2xl">Level {level}</p>
               <p className=" mb-3">Trade 2 top live songs</p>
 
               {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
 
-              {userNfts && parsedNfts ? (
+              {tokenIdForCurrentLevel ? (
                 <div className="flexDirectionRow">
                   <img
-                    src={parsedNfts[0]?.metadata?.image}
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
                     className="mr-1 nftPreviewTrade "
                     alt="NFT Preview"
                   />
                   <img
-                    src={parsedNfts[1]?.metadata?.image || NoImage}
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
                     className="mr-1 nftPreviewTrade object-cover"
                     alt="NFT Preview"
                   />
@@ -199,7 +199,7 @@ export const TradeStart = (props) => {
               <DoubleArrow className="m-auto" />
             </div>
             <div className="pr-5 flexDirectionColumn ">
-              <p className="webfont coral text-2xl">Level {game?.level + 1}</p>
+              <p className="webfont coral text-2xl">Level {level + 1}</p>
               <p className="mb-3">Trade 2 top live songs</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (

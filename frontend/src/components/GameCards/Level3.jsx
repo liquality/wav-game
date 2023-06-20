@@ -3,40 +3,33 @@ import { LevelCard } from "../LevelCard/LevelCard";
 import { getLevelsStatuses } from "../../utils";
 
 export const Level3 = (props) => {
-    const { selectedLevel, game, onSetLevel, onTradeClick, nftCount } = props;
-    const level2Count = nftCount['level2'] || -1;
-    const level3Count = nftCount['level3'] || -1;
+    const { selectedLevel, game, onSetLevel, onTradeClick, nftCount, burnStatus } = props;
+    const level3Count = nftCount['level3'] || 0;
     const status = getLevelsStatuses(game?.level || 1)[3];
     let instructions = '';
     let tradeActionText = '';
     let actionDisbled = false;
 
-    if (level2Count <= 0) {
-        instructions = 'You need 2 top live songs to trade for this.';
-        tradeActionText = 'Level locked';
-        actionDisbled = true;
-    } else if (level2Count === 1) {
-        instructions = 'Get 1 more from past level to trade.';
-        tradeActionText = 'Level locked';
-        actionDisbled = true;
+    actionDisbled = false;
+    instructions = `You have ${level3Count === -1 ? 0 : level3Count} NFTs.`;
+    if(level3Count < 2){
+        if (level3Count === 0) {
+            instructions = 'You need 2 Artist collectibles to trade for this.';
+            tradeActionText = 'Level locked';
+            actionDisbled = true;
+        } else {
+            instructions = 'Get 1 more to trade for next level.';
+            tradeActionText = 'Start Trading';
+            actionDisbled = true;
+        }
     } else {
-        actionDisbled = false;
-        instructions = `You have ${level3Count === -1 ? 0 : level3Count} NFTs.`;
-        switch (level3Count) {
-            case -1:
-                tradeActionText = 'Trade Now';
-                break;
-            case 0:
-                tradeActionText = 'Trade Now';
-                break;
-            case 1:
-                tradeActionText = 'Trade More';
-                break;
-            default:
-                tradeActionText = 'Trade More';
-                break;
+        if (burnStatus) {
+            tradeActionText =  'Trade More'; 
+        }  else {
+            tradeActionText =  'Start Trading';
         }
     }
+
 
     const actions = [{
         onActionClick: (level) => onTradeClick(level),

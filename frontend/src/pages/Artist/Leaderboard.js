@@ -30,7 +30,7 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
 
       if (artist.number_id && nfts) {
         let _numberOfNfts = await countNFTsByLevel(nfts, artist.number_id);
-        setNumberOfNfts(_numberOfNfts);
+        setNumberOfNfts(_numberOfNfts.levels);
       }
     };
 

@@ -26,7 +26,7 @@ export const Artist = (props) => {
   const [showSend, setShowSend] = useState(false);
   const [currentGame, setCurrentGame] = useState(null);
 
-  const [selectedLevel, setSelectedLevel] = useState(currentGame?.level || 1);
+  const [selectedLevel, setSelectedLevel] = useState(1);
   const {
     setShowPickArtistModal,
     setChooseArtistView,
@@ -78,7 +78,7 @@ export const Artist = (props) => {
   };
 
   const onTradeClick = (level) => {
-    console.log("onTradeClick", level);
+    console.log("onTradeClick level ", level)
     setShowTrade(true);
     setSelectedLevel(level);
   };
@@ -92,7 +92,7 @@ export const Artist = (props) => {
 
   const onLevelSelected = (level) => {
     console.log("onLevelSelected", level);
-    setSelectedLevel(level || currentGame?.level || 1);
+    setSelectedLevel(level);
   };
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export const Artist = (props) => {
 
         if (_artist.number_id && nfts) {
           const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
-          setNftCount(_nftCount);
+          setNftCount(_nftCount.levels);
         }
 
         setWavNfts(_wavNfts);
@@ -180,7 +180,7 @@ export const Artist = (props) => {
           <div className="flex flex-col  items-center   pt-24 mt-12"></div>
         </div>
       </div>
-      <TradeModal setShow={setShowTrade} show={showTrade} />
+      <TradeModal setShow={setShowTrade} show={showTrade} setLevel={onLevelSelected} level={selectedLevel}  />
 
       <SendModal setShow={setShowSend} show={showSend} />
     </div>
