@@ -9,7 +9,7 @@ export const CustomModal = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  useEffect(() => {});
+  useEffect(() => { });
 
   return (
     <>
@@ -31,8 +31,9 @@ export const CustomModal = (props) => {
           )}
         </div>
         <div className="line"></div>
-        {content()}
-
+        <div class="modal-body">
+          {content()}
+        </div>
         <div className="line"></div>
         <PoweredByLiquality />
       </Modal>
