@@ -141,9 +141,16 @@ export const LoginModal = (props) => {
     } else return null;
   };
 
+  let typeOfLogo;
+  if (content === "creditcardPayment") {
+    typeOfLogo = "creditCard";
+  } else if (content === "loginOrRegister") {
+    typeOfLogo = "none";
+  } else typeOfLogo = null;
   return (
     <>
       <CustomModal
+        type={typeOfLogo}
         show={show}
         setShow={setShow}
         content={whichContentToRender}

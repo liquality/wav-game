@@ -1,4 +1,4 @@
-import { ReactComponent as NftTiles } from "../../images/nft_tiles.svg";
+import { ReactComponent as NftTiles } from "../../images/OneNftTile.svg";
 import { useState } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 import { getPublicKey } from "../../utils";
@@ -38,7 +38,7 @@ export const CreditcardPayment = (props) => {
           }}
         >
           {" "}
-          <NftTiles />
+          <NftTiles style={{ width: "406px", height: "515px" }} />
         </div>
       </div>
       <div className="w-1/2 flex flex-col justify-center">

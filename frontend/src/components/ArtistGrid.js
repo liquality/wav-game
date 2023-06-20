@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getGameIdBasedOnHref } from "../utils";
+import { SpinningLoader } from "./SpinningLoader";
 
 export const ArtistGrid = (props) => {
   const { selectedId, handleClick, artistData, artistImages, games } = props;
@@ -91,21 +92,27 @@ export const ArtistGrid = (props) => {
         );
       });
     } else {
-      return <p colSpan="3">No data available</p>;
+      return null;
     }
   };
 
   return (
     <div className="justify-center">
-      <div className="flexDirectionRow justify-center mb-3">
-        {renderButtons(0, 2)}
-      </div>{" "}
-      <div className="flexDirectionRow justify-center mb-3">
-        {renderButtons(2, 6)}
-      </div>
-      <div className="flexDirectionRow justify-center mb-3">
-        {renderButtons(6, 8)}
-      </div>
+      {artistData?.length > 0 && artistData ? (
+        <div>
+          <div className="flexDirectionRow justify-center mb-3">
+            {renderButtons(0, 2)}
+          </div>{" "}
+          <div className="flexDirectionRow justify-center mb-3">
+            {renderButtons(2, 6)}
+          </div>
+          <div className="flexDirectionRow justify-center">
+            {renderButtons(6, 8)}
+          </div>
+        </div>
+      ) : (
+        <SpinningLoader />
+      )}
     </div>
   );
 };
