@@ -101,6 +101,7 @@ export const LoginModal = (props) => {
           setHeaderText={setHeaderText}
           createNewWallet={createNewWallet}
           loading={loading}
+          handleClose={handleClose}
         />
       );
     } else if (content === "pickAvatar") {

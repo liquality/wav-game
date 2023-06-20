@@ -214,7 +214,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .modalTerms {
-  font-family: "000 webfont";
+  font-family: "Sora";
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -801,4 +801,21 @@ div.background {
   width: 336px;
   height: 430px;
   border-radius: 20px;
+}
+
+.termsUpper {
+  font-family: "Verdana";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 26px;
+  text-transform: capitalize;
+}
+
+.terms {
+  font-family: "Verdana";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 26px;
 }
