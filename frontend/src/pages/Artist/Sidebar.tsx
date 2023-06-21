@@ -6,7 +6,7 @@ import { ReactComponent as ArrowRight } from "../../images/arrow_right.svg";
 import { ReactComponent as TwitterIcon } from "../../images/twitter.svg";
 import { ReactComponent as InstagramIcon } from "../../images/instagram.svg";
 import { ReactComponent as TikTokIcon } from "../../images/tiktok.svg";
-import { ReactComponent as LensIcon } from "../../images/lens.svg";
+import LensIcon from "../../images/lenster.png";
 import { Button } from "../../components/Button/Button";
 import { ArtistBioModal } from './ArtistBioModal'
 const SocialLink = (
@@ -32,7 +32,7 @@ const SocialLink = (
       SocialIcon = TikTokIcon;
       break;
     case "lens":
-      SocialIcon = LensIcon;
+      SocialIcon = () => (<img src={LensIcon} alt="" />);
       break;
   }
 

@@ -1,6 +1,6 @@
 export const WAV_NFT_ADDRESS = process.env.REACT_APP_WAV_NFT_ADDRESS;
 export const WAV_PROXY_ADDRESS = process.env.REACT_APP_WAV_PROXY_ADDRESS;
-export const CHAIN_ID = process.env.REACT_APP_CHAIN_ID;
+export const CHAIN_ID = +process.env.REACT_APP_CHAIN_ID;
 
 export const WAV_PROXY_ABI = [
   {

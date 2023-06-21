@@ -19,24 +19,29 @@ import { ReactComponent as Twitter } from "../images/twitter.svg";
 import { ReactComponent as Discord } from "../images/discord.svg";
 import { ReactComponent as Telegram } from "../images/telegram.svg";
 import { ReactComponent as Github } from "../images/github.svg";
-
+import { useNavigate } from "react-router-dom";
 import { ArtistGrid } from "../components/ArtistGrid";
 import { LoginModal } from "../components/Onboarding/LoginModal";
 import StaticDataService from "../services/StaticDataService";
-import CustomButton from "../components/Button";
+import { fetchSession } from "../utils";
+import UserService from "../services/UserService";
+import { Button } from "../components/Button/Button";
 
-export default function Home() {
+export default function Home(props) {
+  const { setChooseArtistView, setShowPickArtistModal, setSelectedArtist } = props;
   const [show, setShow] = React.useState(false);
-  const [selectedId, setSelectedId] = useState(null);
   const [artistData, setArtistData] = useState([]);
+  const [games, setGames] = useState([]);
+  const [selectedArtistItem, setSelectedArtistItem] = useState(null);
   const [artistImages, setArtistImages] = useState({});
+  const navigate = useNavigate();
 
   const fetchArtist = async (id) => {
     try {
-      const artist = await StaticDataService.getArtists();
-      return artist;
+      return await StaticDataService.getArtists();
     } catch (err) {
       console.log(err, "Error fetching the artist");
+      return null;
     }
   };
 
@@ -44,6 +49,16 @@ export default function Home() {
     const init = async () => {
       const artists = await fetchArtist();
       const images = await StaticDataService.getArtistImages();
+      const token = fetchSession()?.token;
+      if (token) {
+        const _games = await UserService.getGameByUserId(
+          fetchSession()?.id, //userid
+          "",
+          token
+        );
+        setGames(_games);
+      }
+
       setArtistImages(images);
       setArtistData(artists);
     };
@@ -51,10 +66,28 @@ export default function Home() {
     init();
   }, []);
 
-  const handleArtistClick = (selected) => {
-    setSelectedId(selected);
+  const handleArtistClick = (artist) => {
+    setSelectedArtistItem(artist);
   };
 
+  const handleChooseArtist = () => {
+    if (fetchSession()?.token) {
+      // check game status if it not started yet we redirect to the modal, if not just redirecto to the page
+      const game = games?.find((g) => {
+        return g.artist_name === selectedArtistItem?.id
+      });
+
+      if (game && game.level) {
+        navigate(`/artist/${game.artist_name}`);
+      } else {
+        setSelectedArtist(selectedArtistItem);
+        setChooseArtistView("gameIncentives");
+        setShowPickArtistModal(true);
+      }
+    } else {
+      setShow(true);
+    }
+  }
   return (
     <div className="mt-5">
       {/* Welcome to wavgame hero */}
@@ -64,7 +97,7 @@ export default function Home() {
           Welcome to Wavgame
         </span>
         <div
-          style={{ left: "46%", top: "65%", width: "35%" }}
+          style={{ left: "46%", top: "65%", width: '35%' }}
           className="flex flex-wrap absolute p-3"
         >
           <p className="flex">
@@ -88,23 +121,24 @@ export default function Home() {
 
       {/* Artist grid */}
       <ArtistGrid
+        selectedId={selectedArtistItem}
         artistData={artistData}
         artistImages={artistImages}
-        games={[]}
-        selectedId={selectedId}
+        games={games}
         handleClick={handleArtistClick}
       />
       <br></br>
       <br></br>
       <div className="mt-2 mb-24 flex justify-center items-center">
-        <CustomButton
-          type="big"
-          pink
-          disabled={selectedId ? false : true}
-          onClick={() => setShow(true)}
+        <Button
+          size={'large'}
+          disabled={!selectedArtistItem}
+          mode={'pink'}
+          onClick={handleChooseArtist}
         >
           CHOOSE ARTIST
-        </CustomButton>
+        </Button>
+
       </div>
 
       {/* How to play */}

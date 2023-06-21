@@ -1,5 +1,6 @@
 import { setup } from "@liquality/wallet-sdk";
 import StaticDataService from "./services/StaticDataService";
+import { ethers } from "ethers";
 
 export function setupSDK() {
     setup({
@@ -29,11 +30,11 @@ export const logOut = () => {
 };
 
 export function getPrivateKey(): string {
-    return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.privateKey;
+    return JSON.parse(localStorage.getItem("loginResponse")!)?.loginResponse?.privateKey;
 }
 
 export function getPublicKey(): string {
-    return JSON.parse(localStorage.getItem("loginResponse")!).loginResponse.publicAddress;
+    return JSON.parse(localStorage.getItem("loginResponse")!)?.loginResponse?.publicAddress;
 }
 
 export function seeIfUserCanLogIn() {
@@ -76,14 +77,16 @@ export const getGameIdBasedOnHref = async () => {
 
 
 
-export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId) => {
+export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId, level) => {
     let firstChar = artistNumberId.toString()[0];
 
     const result = [];
 
     for (let i = 0; i < nftsArray.length; i++) {
         const obj = nftsArray[i];
-        if (obj.id && obj.id.toString().startsWith(firstChar.toString())) {
+        if (ethers.getAddress(obj.contract.address) === 
+        ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS) && 
+        obj.id && obj.id.toString().startsWith(firstChar.toString())) {
             result.push(obj);
         }
     }
@@ -94,21 +97,20 @@ export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId) => 
 
 
 export const countNFTsByLevel = async (nfts, artistNumberId) => {
-    const artistNFTs = nfts.filter(nft => {
-        let artistNrString = artistNumberId.toString()
-        return nft.id[0] === artistNrString[0]
-    });
     const levels = {};
-    artistNFTs.forEach(nft => {
-        const level = parseInt(nft.id.slice(-1));
-        if (!levels[`level${level}`]) {
+    let totalCollectibles = 0;
+    let artistNrString = artistNumberId.toString()
+    nfts.forEach(nft => {
+        if ( nft.id[0] === artistNrString[0] && 
+            ethers.getAddress(nft.contract.address) === 
+            ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS)) {
+            const level = parseInt(nft.id.slice(-1));
             levels[`level${level}`] = nft.balance;
-        } else {
-            levels[`level${level}`] += nft.balance;
+            totalCollectibles += nft.balance
         }
 
     });
-    return levels;
+    return {levels, totalCollectibles};
 }
 
 

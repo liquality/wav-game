@@ -1,7 +1,7 @@
 import { ReactComponent as TwitterIcon } from "../images/twitter.svg";
 import { ReactComponent as InstagramIcon } from "../images/instagram.svg";
 import { ReactComponent as TikTokIcon } from "../images/tiktok.svg";
-import { ReactComponent as LensIcon } from "../images/lens.svg";
+import LensIcon from "../images/lenster.png";
 
 const Footer = () => {
   return (
@@ -41,7 +41,7 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <LensIcon />
+            <img src={LensIcon} alt="" />
           </a>{" "}
         </div>
         <div

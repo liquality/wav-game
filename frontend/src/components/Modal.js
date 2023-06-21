@@ -8,9 +8,8 @@ export const CustomModal = (props) => {
   const { content, setShow, show, modalHeaderText, type } = props;
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
-  useEffect(() => {});
+  useEffect(() => { });
 
   let logo;
   if (type === "creditCard") {
@@ -46,11 +45,11 @@ export const CustomModal = (props) => {
             <div className="modal-header-notext"></div>
           )}
         </div>
-        <div className="line"></div>
-        {content()}
-
-        <div className="line"></div>
-
+        <div className="modal-body">
+          <div className="line"></div>
+          {content()}
+          <div className="line"></div>
+        </div>
         {logo}
       </Modal>
     </>

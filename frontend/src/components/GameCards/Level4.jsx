@@ -3,9 +3,8 @@ import { LevelCard } from "../LevelCard/LevelCard";
 import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
 
 export const Level4 = (props) => {
-    const { selectedLevel, game, onSetLevel, onTradeClick, nftCount } = props;
-    const level3Count = nftCount['level3'] || -1;
-    const level4Count = nftCount['level4'] || -1;
+    const { selectedLevel, game, onSetLevel, onTradeClick, nftCount, burnStatus } = props;
+    const level4Count = nftCount['level4'] || 0;
     let status = getLevelsStatuses(game?.level || 1)[4];
     let instructions = '';
     let tradeActionText = '';
@@ -13,15 +12,18 @@ export const Level4 = (props) => {
     let noActions = false;
     let edition = ''; //100/100 CLAIMED
     let title = 'Get 1 limited physical item';
-
-    if (level3Count <= 0) {
-        instructions = 'You need 2 unreleased songs to trade for this.';
-        tradeActionText = 'Level locked';
-        actionDisabled = true;
-    } else if (level3Count === 1) {
-        instructions = 'Get 1 more from past level to trade.';
-        tradeActionText = 'Level locked';
-        actionDisabled = true;
+    actionDisabled = false;
+    instructions = `You have ${level4Count === -1 ? 0 : level4Count} NFTs.`;
+    if(level4Count < 2){
+        if (level4Count === 0) {
+            instructions = 'You need 2 Artist collectibles to trade for this.';
+            tradeActionText = 'Level locked';
+            actionDisabled = true;
+        } else {
+            instructions = 'Get 1 more to trade for next level.';
+            tradeActionText = 'Start Trading';
+            actionDisabled = true;
+        }
     } else {
         // count down
         const unlockDate = new Date(game?.created_at);
@@ -36,21 +38,10 @@ export const Level4 = (props) => {
             title = 'Countdown to unlock';
             instructions = `${difference.days}DAYS:${difference.hours}HRS:${difference.minutes}MIN`;
         } else {
-            actionDisabled = false;
-            instructions = `You have ${level4Count === -1 ? 0 : level4Count} NFTs.`;
-            switch (level4Count) {
-                case -1:
-                    tradeActionText = 'Trade Now';
-                    break;
-                case 0:
-                    tradeActionText = 'Trade Now';
-                    break;
-                case 1:
-                    tradeActionText = 'Trade More';
-                    break;
-                default:
-                    tradeActionText = 'Trade More';
-                    break;
+            if (burnStatus) {
+                tradeActionText =  'Trade More'; 
+            }  else {
+                tradeActionText =  'Start Trading';
             }
         }
     }
