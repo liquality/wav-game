@@ -581,7 +581,7 @@ div.background {
 }
 
 .coral {
-  color: #ff6979;
+  color: #ff6979 !important;
 }
 
 .lineCoral {
@@ -818,4 +818,19 @@ div.background {
   font-weight: 400;
   font-size: 13px;
   line-height: 26px;
+}
+
+.faqQuestion {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height, or 147% */
+
+  letter-spacing: 1px;
+
+  /* Greys/White */
+
+  color: #ffffff;
 }

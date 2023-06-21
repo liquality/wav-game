@@ -16,6 +16,7 @@ import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import { countNFTsByLevel, getPublicKey } from "../../utils";
 import { CHAIN_ID } from "../../data/contract_data";
+import Faq from "../../components/Faq";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -78,7 +79,7 @@ export const Artist = (props) => {
   };
 
   const onTradeClick = (level) => {
-    console.log("onTradeClick level ", level)
+    console.log("onTradeClick level ", level);
     setShowTrade(true);
     setSelectedLevel(level);
   };
@@ -176,11 +177,17 @@ export const Artist = (props) => {
               </div>
             </div>
             <Leaderboard setShowSendModal={setShowSend} artist={artist} />
+            <Faq />
           </div>
           <div className="flex flex-col  items-center   pt-24 mt-12"></div>
         </div>
       </div>
-      <TradeModal setShow={setShowTrade} show={showTrade} setLevel={onLevelSelected} level={selectedLevel}  />
+      <TradeModal
+        setShow={setShowTrade}
+        show={showTrade}
+        setLevel={onLevelSelected}
+        level={selectedLevel}
+      />
 
       <SendModal setShow={setShowSend} show={showSend} />
     </div>

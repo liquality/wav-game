@@ -56,7 +56,7 @@
 }
 
 .bio-artist-name {
-  color: #E0E0E0;
+  color: #e0e0e0;
 }
 
 .artist-name {
@@ -73,12 +73,12 @@
   letter-spacing: 0.02em;
   text-transform: capitalize;
 }
-.bio-artist-desc { 
-  color: #BDBDBD;  
+.bio-artist-desc {
+  color: #bdbdbd;
 }
 
-.artist-desc { 
-  color: #ff9fa9;  
+.artist-desc {
+  color: #ff9fa9;
 }
 
 .artist-link {
@@ -110,7 +110,6 @@
   border-top: 1px solid #bf3948;
 }
 
-
 .artist-image {
   width: 14.875rem;
   height: 14.875rem;
@@ -128,11 +127,10 @@
   border: 1px solid #828282;
 }
 
-
-.artist-content h2, 
+.artist-content h2,
 .artist-info h2 {
   text-transform: uppercase;
-  font-family: 'Sora';
+  font-family: "Sora";
   font-style: normal;
   font-weight: 500;
   font-size: 0.813rem;
@@ -177,6 +175,10 @@
   height: 150px;
   border-bottom: 1px solid #828282;
   border-top: 1px solid #828282;
+}
+
+.faqContainer {
+  width: 145%;
 }
 
 .leaderboardToggle {
