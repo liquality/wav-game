@@ -27,7 +27,7 @@ export const PickAvatar = (props) => {
         localStorage.setItem("session", JSON.stringify(response));
 
         setContent("pickArtist");
-        setHeaderText("change artist");
+        setHeaderText("Change artist");
       } catch (err) {
         console.log("Error creating user");
       }

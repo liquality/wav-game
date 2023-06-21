@@ -16,7 +16,7 @@ export const ChooseNewArtistModal = (props) => {
     setChooseArtistView,
   } = props;
 
-  const [headerText, setHeaderText] = useState("Change an artist");
+  const [headerText, setHeaderText] = useState("Change artist");
   const handleClose = () => {
     setShow(false);
     setChooseArtistView("chooseArtistStart");
