@@ -4,8 +4,7 @@ import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
 
 export const Level6 = (props) => {
     const { selectedLevel, game, onSetLevel, onTradeClick, nftCount } = props;
-    const level5Count = nftCount['level5'] || -1;
-    const level6Count = nftCount['level6'] || -1;
+    const level6Count = nftCount['level6'] || 0;
     let status = getLevelsStatuses(game?.level || 1)[6];
     let instructions = '';
     let tradeActionText = '';
@@ -14,14 +13,16 @@ export const Level6 = (props) => {
     let noActions = false;
     let title = 'A chance to win a 1:1 trip + concert experience';
 
-    if (level5Count <= 0) {
-        instructions = 'You need to start with 32 Game collectibles.';
-        tradeActionText = 'Level locked';
-        actionDisabled = true;
-    } else if (level5Count === 1) {
-        instructions = 'Get 1 more from past level to trade.';
-        tradeActionText = 'Level locked';
-        actionDisabled = true;
+    if(level6Count < 2){
+        if (level6Count === 0) {
+            instructions = 'You need to start with 32 Game collectibles.';
+            tradeActionText = 'Level locked';
+            actionDisabled = true;
+        } else {
+            instructions = 'Get 1 more from past level to trade.';
+            tradeActionText = 'Level locked';
+            actionDisabled = true;
+        }
     } else {
         // count down
         const unlockDate = new Date(game?.created_at);
