@@ -77,7 +77,6 @@ export const LoginModal = (props) => {
           token
         );
       }
-
     } catch (err) {
       console.log(err, "Error fetching user");
     }
@@ -93,10 +92,12 @@ export const LoginModal = (props) => {
       await loginUser(response.loginResponse?.userInfo?.email);
       setLoginResponse(response);
 
-      // get the games and redirect to the latest created 
+      // get the games and redirect to the latest created
       const games = await fetchGamesByUserId();
       if (games && games.length > 0) {
-        const sortedGames = games.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        const sortedGames = games.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
         const { artist_name } = sortedGames[0];
         if (artist_name) {
           setLoading(false);
@@ -106,11 +107,9 @@ export const LoginModal = (props) => {
         } else {
           window.location.reload();
         }
-
       } else {
         window.location.reload();
       }
-
     } else {
       setLoading(true);
       const response = await AuthService.createWallet(tKey, verifierMap);

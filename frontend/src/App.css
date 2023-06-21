@@ -820,12 +820,48 @@ div.background {
   line-height: 26px;
 }
 
-.faqQuestion {
+/*********/
+
+/* ------------ */
+
+.card {
+  background-color: transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  overflow: hidden;
+}
+.rc-accordion-toggle {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  justify-content: space-between;
+  background-color: transparent;
+  transition: 0.3s;
+}
+.rc-accordion-toggle.active {
+  background-color: transparent;
+}
+.rc-accordion-toggle.active .rc-accordion-icon {
+  transform: rotate(180deg);
+  color: #fff;
+}
+.rc-accordion-card {
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.rc-accordion-card:last-child {
+  margin-bottom: 0;
+}
+.rc-accordion-title {
   font-family: "Sora";
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
   line-height: 22px;
+  text-transform: uppercase;
   /* identical to box height, or 147% */
 
   letter-spacing: 1px;
@@ -833,4 +869,35 @@ div.background {
   /* Greys/White */
 
   color: #ffffff;
+}
+.rc-accordion-toggle.active .rc-accordion-title {
+  color: #fff;
+}
+.rc-accordion-icon {
+  position: relative;
+  top: 2px;
+  color: white;
+  transition: 0.35s;
+  font-size: 12px;
+}
+.rc-accordion-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 15px;
+}
+.rc-accordion-body p {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  color: white;
+}
+.rc-collapse {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+.rc-collapse.show {
+  height: auto;
 }

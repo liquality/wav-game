@@ -179,7 +179,7 @@ export const Artist = (props) => {
             <Leaderboard setShowSendModal={setShowSend} artist={artist} />
             <Faq />
           </div>
-          <div className="flex flex-col  items-center   pt-24 mt-12"></div>
+          <div className="flexDirectionCol"></div>
         </div>
       </div>
       <TradeModal
