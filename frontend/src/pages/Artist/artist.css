@@ -170,6 +170,15 @@
   color: #e0e0e0;
 }
 
+.faq-header-title {
+  font-family: "Alba";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.563rem;
+  line-height: 3.688rem;
+  color: #e0e0e0;
+}
+
 .leaderboardContainer {
   width: 100%;
   height: 150px;
