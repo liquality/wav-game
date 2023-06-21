@@ -36,7 +36,8 @@ export const Artist = (props) => {
   } = props;
   const [wavNfts, setWavNfts] = useState(null);
   const [nfts, setNfts] = useState(null);
-  const [nftCount, setNftCount] = useState({});
+  const [nftCount, setNftCount] = useState(0);
+  const [collectibleCount, setCollectibleCount] = useState(0);
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
@@ -114,6 +115,7 @@ export const Artist = (props) => {
         if (_artist.number_id && nfts) {
           const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
           setNftCount(_nftCount.levels);
+          setCollectibleCount(_nftCount.totalCollectibles);
         }
 
         setWavNfts(_wavNfts);
@@ -149,7 +151,7 @@ export const Artist = (props) => {
             <div className="game-header-title">
               {artist?.name?.toUpperCase()}'s GAME_
             </div>
-            <div className="game-header-counter">COLLECTABLES: 42</div>
+            <div className="game-header-counter">COLLECTIBLES: {collectibleCount}</div>
           </div>
           <div className="flex flex-col justify-center mt-5">
             <GameTabs
