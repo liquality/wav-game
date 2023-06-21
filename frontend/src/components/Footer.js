@@ -5,7 +5,7 @@ import LensIcon from "../images/lenster.png";
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer style={{ width: "100vw" }} className="footer">
       <div className="container flex flex-row justify-between items-center">
         <div className="logo-text">
           WavGame <div className="logo-addon">Beta</div>
