@@ -68,7 +68,7 @@ const Faq = () => {
   };
 
   return (
-    <div className="faqContainer mt-5 mb-12">
+    <div className="faqContainer  mt-5 mb-12">
       <h4 className="game-header-title coral">FAQ's</h4>
       <div style={{ width: "100%" }} className="lineCoral mb-5 mt-5"></div>
 

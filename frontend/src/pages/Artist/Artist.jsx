@@ -166,7 +166,7 @@ export const Artist = (props) => {
               nftCount={nftCount}
             />
           </div>
-          <div className="flex flex-col  items-center pt-24 mt-12">
+          <div className="flex flex-col   pt-24 mt-12">
             <div className="flex flex-col justify-center items-center  mb-24 relative">
               <RewardsTout className="mt-5" />
 
@@ -176,10 +176,11 @@ export const Artist = (props) => {
                 </span>
               </div>
             </div>
-            <Leaderboard setShowSendModal={setShowSend} artist={artist} />
-            <Faq />
           </div>
-          <div className="flexDirectionCol"></div>
+          <div className="flexDirectionCol">
+            <Leaderboard setShowSendModal={setShowSend} artist={artist} />
+            <Faq />{" "}
+          </div>
         </div>
       </div>
       <TradeModal
