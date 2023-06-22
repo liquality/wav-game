@@ -8,9 +8,9 @@ import { ProcessingSend } from "./ProcessingSend";
 export const SendModal = (props) => {
   const { show, setShow } = props;
   const [content, setContent] = useState("sendStart");
-  const [headerText] = useState("Send");
   const [selectedNft, setSelectedNft] = useState(null);
   const [sendRequest, setSendRequest] = useState({address:"",tokenID:0});
+  const [txStatus, setTxStatus] = useState({hash:null});
 
   const handleClose = () => setShow(false);
 
@@ -48,6 +48,8 @@ export const SendModal = (props) => {
           setContent={setContent}
           handleClose={handleClose}
           sendRequest={sendRequest}
+          setTxStatus={setTxStatus}
+          txStatus = {txStatus}
         />
       );
     } else return null;
@@ -59,7 +61,7 @@ export const SendModal = (props) => {
         show={show}
         setShow={setShow}
         content={whichContentToRender}
-        modalHeaderText={headerText}
+        txStatus={txStatus}
       >
         {" "}
         {whichContentToRender()}

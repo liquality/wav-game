@@ -1,16 +1,13 @@
 import { ReactComponent as GreenCheckmark } from "../../images/green_checkmark.svg";
 import ProcessingTx from "../ProcessingTx";
-import CustomButton from "../Button";
 import { useEffect } from "react";
 import { NftService } from "@liquality/wallet-sdk";
 import { getPrivateKey } from "../../utils";
 import { WAV_NFT_ADDRESS } from "../../data/contract_data";
-import { useState } from "react";
 import { CHAIN_ID } from "../../data/contract_data";
 
 export const ProcessingSend = (props) => {
-  const { content, setContent, sendRequest } = props;
-  const [txStatus, setTxStatus] = useState({hash:null});
+  const { content, setContent, sendRequest, setTxStatus, txStatus } = props;
 
   useEffect(() => {
     const sendNft = async () => {
@@ -43,7 +40,7 @@ export const ProcessingSend = (props) => {
     <div className="contentView flex">
       <div className=" justify-center items-center  m-auto">
         <div style={{ width: "100%" }}>
-        <ProcessingTx txStatus={txStatus} />
+        <ProcessingTx txStatus={txStatus} content={content} />
           {txStatus.hash ? (
             <div className="flex">
               <p className="flexDirectionRow">
@@ -55,6 +52,8 @@ export const ProcessingSend = (props) => {
           <br></br>
 
           <br></br>
+        
+        {txStatus.hash ? (
           <div className="flex">
             <div
               style={{ bottom: "18%" }}
@@ -69,6 +68,7 @@ export const ProcessingSend = (props) => {
               </button>
             </div>
           </div>
+        ) : null}
         </div>
       </div>
     </div>

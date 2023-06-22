@@ -5,7 +5,7 @@ import { PoweredByLiquality } from "./PoweredByLiquality";
 import { ReactComponent as PoweredByCrossmint } from "../images/powered_by_crossmint.svg";
 
 export const CustomModal = (props) => {
-  const { content, setShow, show, modalHeaderText, type } = props;
+  const { content, setShow, show, modalHeaderText, type, txStatus } = props;
 
   const handleClose = () => setShow(false);
 
@@ -34,9 +34,11 @@ export const CustomModal = (props) => {
         onHide={handleClose}
         dialogClassName="custom-modal"
       >
+        {( content !== "processingSend" || (content === "processingSend" && txStatus.hash)?
         <button className="modal-close-x" onClick={handleClose}>
           <ModalCloseX />
         </button>
+        : null )}
 
         <div className="modal-header-text">
           {modalHeaderText ? (
