@@ -2,59 +2,29 @@ import "../../App.css";
 import { useState, useEffect } from "react";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
-import UserService from "../../services/UserService";
 import {
-  countNFTsByLevel,
   getHowManyPlayersAreInEachLevel,
   getPublicKey,
 } from "../../utils";
-import { NftService } from "@liquality/wallet-sdk";
-import { CHAIN_ID } from "../../data/contract_data";
 
-const Leaderboard = ({ setShowSendModal, artist }) => {
+const Leaderboard = ({ setShowSendModal, artist, nftCount }) => {
   const [showNfts, setShowNfts] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState(null);
-  const [nfts, setNfts] = useState(null);
-  const [numberOfNfts, setNumberOfNfts] = useState(null);
-  const [loadingNfts, setLoadingNfts] = useState(false);
-
-  const fetchNfts = async (address, chainId) => {
-    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
-    return nfts;
-  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!nfts) {
-        setLoadingNfts(true);
-        const nftData = await fetchNfts();
-        setNfts(nftData);
-        setLoadingNfts(false);
-      }
-
-      if (artist.number_id && nfts) {
-        let _numberOfNfts = await countNFTsByLevel(nfts, artist.number_id);
-        setNumberOfNfts(_numberOfNfts.levels);
+    const getLeaderboardData = async () => {
+      if (artist.number_id) {
+        try {
+          const leaderboard = await getHowManyPlayersAreInEachLevel(
+            artist.number_id
+          );
+          return leaderboard;
+        } catch (err) {
+          console.log(err, "Error fetching the leaderboard");
+        }
       }
     };
 
-    fetchData();
-  }, [nfts, artist]);
-
-  const getLeaderboardData = async () => {
-    if (artist.number_id) {
-      try {
-        const leaderboard = await getHowManyPlayersAreInEachLevel(
-          artist.number_id
-        );
-        return leaderboard;
-      } catch (err) {
-        console.log(err, "Error fetching the leaderboard");
-      }
-    }
-  };
-
-  useEffect(() => {
     const fetchData = async () => {
       if (!leaderboardData) {
         const _leaderboardData = await getLeaderboardData();
@@ -65,7 +35,7 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
     return () => {
       //any cleanup
     };
-  }, [getLeaderboardData]);
+  }, [artist, leaderboardData]);
 
   const activeToggleStyle = {
     borderBottom: "1px solid #f251bc",
@@ -103,22 +73,22 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
                 NFTs
               </th>
               <td className="px-6 py-4">
-                {numberOfNfts?.level1 ? numberOfNfts?.level1 : "--"}
+                {nftCount?.level1 ? nftCount?.level1 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts?.level2 ? numberOfNfts?.level2 : "--"}
+                {nftCount?.level2 ? nftCount?.level2 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts?.level3 ? numberOfNfts?.level3 : "--"}
+                {nftCount?.level3 ? nftCount?.level3 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts?.level4 ? numberOfNfts?.level4 : "--"}
+                {nftCount?.level4 ? nftCount?.level4 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts?.level5 ? numberOfNfts?.level5 : "--"}
+                {nftCount?.level5 ? nftCount?.level5 : "--"}
               </td>
               <td className="px-6 py-4">
-                {numberOfNfts?.level6 ? numberOfNfts?.level6 : "--"}
+                {nftCount?.level6 ? nftCount?.level6 : "--"}
               </td>
             </tr>
           </tbody>

@@ -37,13 +37,14 @@ export const Artist = (props) => {
   } = props;
   const [nftOwners, setNftOwners] = useState(null);
   const [nfts, setNfts] = useState(null);
-  const [nftCount, setNftCount] = useState(0);
+  const [nftCount, setNftCount] = useState(null);
   const [collectibleCount, setCollectibleCount] = useState(0);
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
     return nfts;
   };
+
 
   const fetchArtist = async (id) => {
     try {
@@ -65,18 +66,6 @@ export const Artist = (props) => {
     } catch (err) {
       console.log(err, "Error fetching user");
       return null;
-    }
-  };
-
-  const fetchNftCollection = async (id) => {
-    try {
-      const wavNfts = await NftService.getNftsForContract(
-        WAV_NFT_ADDRESS,
-        80001
-      );
-      return wavNfts;
-    } catch (err) {
-      console.log(err, "Error fetching the wav nfts");
     }
   };
 
@@ -132,7 +121,7 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, [artistId, userGames, nfts, nftCount]);
+  }, [artistId, userGames, nfts, nftCount, nftOwners]);
 
   return (
     <div className="container mx-auto">
@@ -186,7 +175,10 @@ export const Artist = (props) => {
                 </div>
               </div>
               <div className="flexDirectionCol">
-                <Leaderboard setShowSendModal={setShowSend} artist={artist} />
+                <Leaderboard
+                  setShowSendModal={setShowSend}
+                  artist={artist}
+                  nftCount={nftCount} />
                 <Faq />{" "}
               </div>
             </div>
