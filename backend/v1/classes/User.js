@@ -90,6 +90,7 @@ class User {
                         { id, public_address },
                         "my-secret"
                       );
+                      console.log(id, "ID user ");
                       resolve({
                         id,
                         serviceprovider_name,

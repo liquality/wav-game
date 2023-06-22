@@ -388,7 +388,7 @@ input[type="number"]::-webkit-outer-spin-button {
   border-right: none;
   padding: 3px;
   margin: 15;
-  width: 80%;
+  width: 30%;
   padding-bottom: 10px;
 }
 
