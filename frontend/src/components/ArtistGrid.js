@@ -23,11 +23,11 @@ export const ArtistGrid = (props) => {
     if (artistData?.length > 0 && artistData) {
       return artistData.slice(startHere, endHere).map((item, index) => {
         const game = games?.find((game) => {
-          return game.artist_name === item?.id
+          return game.artist_name === item?.id;
         });
 
         const level = game?.level;
-        console.log('game', game)
+        console.log("game", game);
         const userIsOnHrefArtist = item?.id === artistFromHref?.id;
 
         //I am sorry for this convoluted and messy logic,
@@ -57,9 +57,7 @@ export const ArtistGrid = (props) => {
         return (
           <div className="flexDirectionRow  mb-3" key={index}>
             <button
-              onClick={() =>
-                handleClick(item, userIsOnHrefArtist || level)
-              }
+              onClick={() => handleClick(item, userIsOnHrefArtist || level)}
               className="defaultArtistBtn"
               disabled={isDisabled}
               style={buttonStyle}
@@ -111,7 +109,11 @@ export const ArtistGrid = (props) => {
           </div>
         </div>
       ) : (
-        <SpinningLoader />
+        <div className="contentView m-5 p-5 flex justify-center items-center ">
+          <div className="m-4 p-4">
+            <SpinningLoader />
+          </div>
+        </div>
       )}
     </div>
   );

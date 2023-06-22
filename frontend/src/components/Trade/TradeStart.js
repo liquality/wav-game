@@ -24,7 +24,14 @@ import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import UserService from "../../services/UserService";
 
 export const TradeStart = (props) => {
-  const { setContent, gameContract, nftContract, setTradeStatus, userNfts, level } = props;
+  const {
+    setContent,
+    gameContract,
+    nftContract,
+    setTradeStatus,
+    userNfts,
+    level,
+  } = props;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
@@ -55,12 +62,12 @@ export const TradeStart = (props) => {
     let firstChar = artist.number_id.toString()[0];
     return firstChar + 0 + levelUp;
   };
-  
+
   useEffect(() => {
     const init = async () => {
       if (userNfts) {
         const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(level);
-        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(level+1);
+        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(level + 1);
         setTokenIdForNewLevel(_tokenIdForNewLevel);
         setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
       }
@@ -100,22 +107,22 @@ export const TradeStart = (props) => {
             WAV_PROXY_ADDRESS,
             true
           );
-          await TransactionService.sendGaslessly(
-            WAV_NFT_ADDRESS,
-            approvalTx.data,
-            privateKey,
-            CHAIN_ID
-          );
+        await TransactionService.sendGaslessly(
+          WAV_NFT_ADDRESS,
+          approvalTx.data,
+          privateKey,
+          CHAIN_ID
+        );
       }
       setTradeStatus({
         txHash: null,
         submited: false,
-        approval: true
+        approval: true,
       });
 
       let levelUpTx = await gameContract.levelUp.populateTransaction(
         artist?.number_id,
-        level+1
+        level + 1
       );
 
       let txHashLevelUp = await TransactionService.sendGaslessly(
@@ -127,7 +134,7 @@ export const TradeStart = (props) => {
       setTradeStatus({
         txHash: null,
         submited: true,
-        approval: true
+        approval: true,
       });
 
       if (txHashLevelUp) {
@@ -142,7 +149,7 @@ export const TradeStart = (props) => {
         setTradeStatus({
           txHash: txHashLevelUp,
           submited: true,
-          approval: true
+          approval: true,
         });
       } else {
         //Set transaction failed error msg
@@ -175,7 +182,7 @@ export const TradeStart = (props) => {
                   />
                   <img
                     src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
-                    className="mr-1 nftPreviewTrade object-cover"
+                    className="mr-1 nftPreviewTrade "
                     alt="NFT Preview"
                   />
                 </div>

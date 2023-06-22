@@ -1,6 +1,7 @@
 import { setup } from "@liquality/wallet-sdk";
 import StaticDataService from "./services/StaticDataService";
 import { ethers } from "ethers";
+import { WAV_NFT_ABI, WAV_NFT_ADDRESS, WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "./data/contract_data";
 
 export function setupSDK() {
     setup({
@@ -84,9 +85,9 @@ export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId, lev
 
     for (let i = 0; i < nftsArray.length; i++) {
         const obj = nftsArray[i];
-        if (ethers.getAddress(obj.contract.address) === 
-        ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS) && 
-        obj.id && obj.id.toString().startsWith(firstChar.toString())) {
+        if (ethers.getAddress(obj.contract.address) ===
+            ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS) &&
+            obj.id && obj.id.toString().startsWith(firstChar.toString())) {
             result.push(obj);
         }
     }
@@ -101,8 +102,8 @@ export const countNFTsByLevel = async (nfts, artistNumberId) => {
     let totalCollectibles = 0;
     let artistNrString = artistNumberId.toString()
     nfts.forEach(nft => {
-        if ( nft.id[0] === artistNrString[0] && 
-            ethers.getAddress(nft.contract.address) === 
+        if (nft.id[0] === artistNrString[0] &&
+            ethers.getAddress(nft.contract.address) ===
             ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS)) {
             const level = parseInt(nft.id.slice(-1));
             levels[`level${level}`] = nft.balance;
@@ -110,7 +111,7 @@ export const countNFTsByLevel = async (nfts, artistNumberId) => {
         }
 
     });
-    return {levels, totalCollectibles};
+    return { levels, totalCollectibles };
 }
 
 
@@ -166,3 +167,73 @@ export const getDifferenceBetweenDates = (startDate: any, endDate: any) => {
     const days = Math.floor(hours / 24);
     return { seconds: seconds - (60 * minutes), minutes: minutes - (60 * hours), hours: hours - (24 * days), days };
 };
+
+
+export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
+    const tokenIdArray = await generateTokenIdArray(artistNumberId / 1000);
+    const nftObject = await fetchNFTOwners();
+    const countByTokenId = {};
+
+    for (const item of nftObject.result) {
+        const tokenId = Number(item.token_id);
+        const amount = Number(item.amount);
+
+        if (tokenIdArray.includes(tokenId)) {
+            if (amount >= 2) {
+                const level = tokenIdArray.indexOf(tokenId) + 1;
+                if (countByTokenId[level]) {
+                    countByTokenId[level]++;
+                } else {
+                    countByTokenId[level] = 1;
+                }
+            }
+        }
+    }
+
+    const resultObject = {};
+    for (let i = 0; i < tokenIdArray.length; i++) {
+        const level = `level${i + 1}`;
+        resultObject[level] = countByTokenId[i + 1] || 0;
+    }
+
+    return resultObject;
+};
+
+
+
+
+//TODO: mumbai chainid in hex: 0x13881
+async function fetchNFTOwners() {
+    if (process.env.REACT_APP_MORALIS_API_KEY) {
+        const url =
+            `https://deep-index.moralis.io/api/v2/nft/0x3611bB3DA6Fb531917ad3683FFDEa427dA5bA791/owners?chain=0x13881&disable_total=false&limit=30`;
+
+        const headers = {
+            "x-api-key": process.env.REACT_APP_MORALIS_API_KEY,
+        };
+
+        try {
+            const response = await fetch(url, { headers });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    } else { console.log("Error, must set Moralis API key") }
+
+}
+export const generateTokenIdArray = async (artistNumberId) => {
+    const base = artistNumberId * 100;
+
+    const result = [];
+    for (let i = 1; i <= 6; i++) {
+        if (i === 3) continue; // Skip the number 3 in the sequence
+        result.push(base + i);
+    }
+
+    return result;
+}

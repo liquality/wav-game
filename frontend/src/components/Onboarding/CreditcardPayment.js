@@ -25,7 +25,7 @@ export const CreditcardPayment = (props) => {
   return (
     <div className=" contentView flex">
       <div className="p-4 w-1/2 flex justify-center items-center margin-auto">
-        {/* Big image container */}
+        {/* Big image container e*/}
 
         <div
           style={{

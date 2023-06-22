@@ -34,7 +34,7 @@ export const Artist = (props) => {
     setSelectedArtist,
     userGames,
   } = props;
-  const [wavNfts, setWavNfts] = useState(null);
+  const [nftOwners, setNftOwners] = useState(null);
   const [nfts, setNfts] = useState(null);
   const [nftCount, setNftCount] = useState(0);
   const [collectibleCount, setCollectibleCount] = useState(0);
@@ -104,7 +104,6 @@ export const Artist = (props) => {
         setArtist(_artist);
         const _image = (await import(`../../images/artists/${_artist.image}`))
           .default;
-        const _wavNfts = await fetchNftCollection();
         const currentGame = await fetchCurrentGame(_artist?.number_id);
 
         if (!nfts) {
@@ -112,13 +111,17 @@ export const Artist = (props) => {
           setNfts(nftData);
         }
 
-        if (_artist.number_id && nfts) {
+        if (!nftOwners) {
+          /*   const _nftOwners = await getNFTOwnersCount(_artist.number_id);
+          setNftOwners(_nftOwners); */
+        }
+
+        if (_artist.number_id && nfts && !nftCount) {
           const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
           setNftCount(_nftCount.levels);
           setCollectibleCount(_nftCount.totalCollectibles);
         }
 
-        setWavNfts(_wavNfts);
         setImage(_image);
         setCurrentGame(currentGame);
       }
@@ -129,8 +132,6 @@ export const Artist = (props) => {
       //any cleanup
     };
   }, [artistId, userGames, nfts, nftCount]);
-
-  console.log(nftCount, "nft count");
 
   return (
     <div className="container mx-auto">
@@ -151,7 +152,9 @@ export const Artist = (props) => {
             <div className="game-header-title">
               {artist?.name?.toUpperCase()}'s GAME_
             </div>
-            <div className="game-header-counter">COLLECTIBLES: {collectibleCount}</div>
+            <div className="game-header-counter">
+              COLLECTIBLES: {collectibleCount}
+            </div>
           </div>
           <div className="flex flex-col justify-center mt-5">
             <GameTabs

@@ -73,34 +73,24 @@ class User {
               } else if (insertResult.affectedRows < 1) {
                 reject(new ApiError(500, "User not saved!"));
               } else {
-                db.query(
-                  "SELECT LAST_INSERT_ID() AS id",
-                  (err, selectResult) => {
-                    if (err) {
-                      reject(new ApiError(500, err));
-                    } else {
-                      const {
-                        serviceprovider_name,
-                        avatar,
-                        username,
-                        public_address,
-                      } = user;
-                      const id = selectResult[0].id;
-                      const token = jwt.sign(
-                        { id, public_address },
-                        "my-secret"
-                      );
-                      resolve({
-                        id,
-                        serviceprovider_name,
-                        avatar,
-                        username,
-                        public_address,
-                        token,
-                      });
-                    }
-                  }
-                );
+                const id = insertResult.insertId; // Retrieve the generated ID directly
+
+                const {
+                  serviceprovider_name,
+                  avatar,
+                  username,
+                  public_address,
+                } = user;
+                const token = jwt.sign({ id, public_address }, "my-secret");
+                console.log(id, "ID user ");
+                resolve({
+                  id,
+                  serviceprovider_name,
+                  avatar,
+                  username,
+                  public_address,
+                  token,
+                });
               }
               db.release();
             }

@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 import UserService from "../../services/UserService";
-import { countNFTsByLevel, getPublicKey } from "../../utils";
+import {
+  countNFTsByLevel,
+  getHowManyPlayersAreInEachLevel,
+  getPublicKey,
+} from "../../utils";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "../../data/contract_data";
 
@@ -40,8 +44,8 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
   const getLeaderboardData = async () => {
     if (artist.number_id) {
       try {
-        const leaderboard = await UserService.getLeaderboardData(
-          artist?.number_id
+        const leaderboard = await getHowManyPlayersAreInEachLevel(
+          artist.number_id
         );
         return leaderboard;
       } catch (err) {

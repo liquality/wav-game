@@ -56,7 +56,7 @@ class Game {
           [
             "not_started", //status default is not started when game is created
             game.user_id,
-            game.level,
+            1, // start game at lvl 1
             game.artist_name,
             game.level_4_claimed_prizes,
             game.level_5_claimed_prizes,
