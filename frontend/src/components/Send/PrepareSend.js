@@ -18,7 +18,7 @@ export const PrepareSend = ({
 }) => {
   const [addressInput, setAddressInput] = useState("");
 
-  const sendNft = async (address, chainId) => {
+  const sendNft = async () => {
     setSendRequest({address:addressInput,tokenID:selectedNft.id});
     setContent("processingSend");
   };

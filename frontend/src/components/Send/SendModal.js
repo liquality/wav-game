@@ -44,6 +44,7 @@ export const SendModal = (props) => {
     } else if (content === "processingSend") {
       return (
         <ProcessingSend
+          content={content}
           setContent={setContent}
           handleClose={handleClose}
           sendRequest={sendRequest}
