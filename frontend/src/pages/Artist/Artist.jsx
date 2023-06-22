@@ -11,7 +11,6 @@ import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
 import { NftService } from "@liquality/wallet-sdk";
-import { WAV_NFT_ADDRESS } from "../../data/contract_data";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import { countNFTsByLevel, getPublicKey } from "../../utils";
@@ -29,6 +28,7 @@ export const Artist = (props) => {
   const [currentGame, setCurrentGame] = useState(null);
 
   const [selectedLevel, setSelectedLevel] = useState(1);
+  const [tradeLevel, setTradeLevel] = useState(1);
   const {
     setShowPickArtistModal,
     setChooseArtistView,
@@ -70,9 +70,9 @@ export const Artist = (props) => {
   };
 
   const onTradeClick = (level) => {
+    setTradeLevel(level);
     console.log("onTradeClick level ", level);
     setShowTrade(true);
-    setSelectedLevel(level);
   };
 
   const onGetMoreClick = (level) => {
@@ -186,8 +186,8 @@ export const Artist = (props) => {
           <TradeModal
             setShow={setShowTrade}
             show={showTrade}
-            setLevel={onLevelSelected}
-            level={selectedLevel}
+            setLevel={(level) => setTradeLevel(level)}
+            level={tradeLevel}
           />
           <SendModal setShow={setShowSend} show={showSend} />{" "}
         </div>
