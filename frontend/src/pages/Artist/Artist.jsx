@@ -133,8 +133,6 @@ export const Artist = (props) => {
     };
   }, [artistId, userGames, nfts, nftCount]);
 
-  console.log(nftOwners, "NFT OWNERS?");
-
   return (
     <div className="container mx-auto">
       <div className="flex">

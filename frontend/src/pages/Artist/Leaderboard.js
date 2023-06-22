@@ -67,8 +67,6 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
     };
   }, [getLeaderboardData]);
 
-  console.log(leaderboardData, "leaderboard data");
-
   const activeToggleStyle = {
     borderBottom: "1px solid #f251bc",
     color: "#f251bc",
