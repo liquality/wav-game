@@ -34,7 +34,7 @@ export const Artist = (props) => {
     setSelectedArtist,
     userGames,
   } = props;
-  const [wavNfts, setWavNfts] = useState(null);
+  const [nftOwners, setNftOwners] = useState(null);
   const [nfts, setNfts] = useState(null);
   const [nftCount, setNftCount] = useState(0);
   const [collectibleCount, setCollectibleCount] = useState(0);
@@ -111,7 +111,12 @@ export const Artist = (props) => {
           setNfts(nftData);
         }
 
-        if (_artist.number_id && nfts) {
+        if (!nftOwners) {
+          /*   const _nftOwners = await getNFTOwnersCount(_artist.number_id);
+          setNftOwners(_nftOwners); */
+        }
+
+        if (_artist.number_id && nfts && !nftCount) {
           const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
           setNftCount(_nftCount.levels);
           setCollectibleCount(_nftCount.totalCollectibles);
@@ -127,6 +132,8 @@ export const Artist = (props) => {
       //any cleanup
     };
   }, [artistId, userGames, nfts, nftCount]);
+
+  console.log(nftOwners, "NFT OWNERS?");
 
   return (
     <div className="container mx-auto">
