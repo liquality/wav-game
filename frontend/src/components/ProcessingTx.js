@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function ProcessingTx({ tradeStatus }) {
+export default function ProcessingTx({ txStatus }) {
   const [percentageFilled, setPercentageFilled] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   useEffect(() => {
@@ -11,7 +11,7 @@ export default function ProcessingTx({ tradeStatus }) {
 
   return (
     <div>
-      <p className="webfont text-2xl">{tradeStatus.txHash ? "Complete" : "Processing"}</p>
+      <p className="webfont text-2xl">{txStatus.hash ? "Complete" : "Processing"}</p>
 
       <div className="progressbar mb-5">
         <div
@@ -23,7 +23,7 @@ export default function ProcessingTx({ tradeStatus }) {
           }}
         ></div>
       </div>
-      <a href={`https://mumbai.polygonscan.com/address/${tradeStatus.txHash}`}></a>
+      <a href={`https://mumbai.polygonscan.com/address/${txStatus.hash}`}></a>
     </div>
   );
 }

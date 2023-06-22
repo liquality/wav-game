@@ -22,8 +22,8 @@ export const TradeModal = (props) => {
   const [gameContract, setGameContract] = useState(null);
   const [userNfts, setUserNfts] = useState(null);
 
-  const [tradeStatus, setTradeStatus] = useState({
-    txHash: null,
+  const [txStatus, settxStatus] = useState({
+    hash: null,
     submited: false,
     approval: false
   });
@@ -76,14 +76,14 @@ export const TradeModal = (props) => {
           setContent={setContent}
           gameContract={gameContract}
           nftContract={nftContract}
-          setTradeStatus={setTradeStatus}
+          settxStatus={settxStatus}
           level={level}
         />
       );
     } else if (content === "processingTrade") {
       return (
         <ProcessingTrade
-          tradeStatus={tradeStatus}
+          txStatus={txStatus}
           setHeaderText={setHeaderText}
           setContent={setContent}
         />

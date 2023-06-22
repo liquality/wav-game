@@ -1,18 +1,17 @@
-import { NftService } from "@liquality/wallet-sdk";
-import { getPrivateKey, getPublicKey, shortenAddress } from "../../utils";
+
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { ReactComponent as Polygon } from "../../images/polygon.svg";
 import { useState } from "react";
 import CustomButton from "../Button";
-import { CHAIN_ID } from "../../data/contract_data";
+import { getPublicKey, shortenAddress } from "../../utils";
 
 const imagePlaceholder =
   "https://flowbite.com/docs/images/examples/image-4@2x.jpg";
 
 export const PrepareSend = ({
-  setTxHash,
+  setSendRequest,
   setContent,
   selectedNft,
   handleClose,
@@ -20,26 +19,8 @@ export const PrepareSend = ({
   const [addressInput, setAddressInput] = useState("");
 
   const sendNft = async (address, chainId) => {
-    try {
-      const transferRequest = {
-        contractAddress: selectedNft.contract.address,
-        receiver: addressInput,
-        tokenIDs: [selectedNft.id],
-      };
-
-      let pk = getPrivateKey();
-      setContent("processingSend");
-
-      let txHash = await NftService.transferNft(
-        transferRequest,
-        CHAIN_ID,
-        pk,
-        true
-      );
-      setTxHash(txHash);
-    } catch (err) {
-      console.log(err, "error transfering nft");
-    }
+    setSendRequest({address:addressInput,tokenID:selectedNft.id});
+    setContent("processingSend");
   };
 
   const handleSendInput = (e) => {

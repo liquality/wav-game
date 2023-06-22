@@ -8,9 +8,9 @@ import { ProcessingSend } from "./ProcessingSend";
 export const SendModal = (props) => {
   const { show, setShow } = props;
   const [content, setContent] = useState("sendStart");
-  const [headerText, setHeaderText] = useState("Send");
+  const [headerText] = useState("Send");
   const [selectedNft, setSelectedNft] = useState(null);
-  const [txHash, setTxHash] = useState(false);
+  const [sendRequest, setSendRequest] = useState({address:"",tokenID:0});
 
   const handleClose = () => setShow(false);
 
@@ -21,6 +21,7 @@ export const SendModal = (props) => {
   }, [content]);
 
   const whichContentToRender = () => {
+    console.log("whichContentToRender >> ", content)
     if (content === "sendStart") {
       return (
         <SendStart
@@ -35,7 +36,7 @@ export const SendModal = (props) => {
       return (
         <PrepareSend
           setContent={setContent}
-          setTxHash={txHash}
+          setSendRequest={setSendRequest}
           handleClose={handleClose}
           selectedNft={selectedNft}
         />
@@ -45,7 +46,7 @@ export const SendModal = (props) => {
         <ProcessingSend
           setContent={setContent}
           handleClose={handleClose}
-          txHash={txHash}
+          sendRequest={sendRequest}
         />
       );
     } else return null;
