@@ -18,7 +18,12 @@ const AvatarComponent = ({ avatar }) => {
   );
 };
 
-const UserMenu = ({ isOpen, onClose, setShowPickArtistModal, setUserMenuOpen }) => {
+const UserMenu = ({
+  isOpen,
+  onClose,
+  setShowPickArtistModal,
+  setUserMenuOpen,
+}) => {
   const wrapperRef = useRef(null);
 
   const [user, setUser] = useState({});
@@ -71,7 +76,11 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal, setUserMenuOpen }) 
 
   useEffect(() => {
     const handleMouseOutside = (event) => {
-      if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      if (
+        wrapperRef &&
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target)
+      ) {
         onClose();
       }
     };
@@ -83,7 +92,6 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal, setUserMenuOpen }) 
       setGames(games);
     };
     fetchData();
-
 
     document.addEventListener("mouseover", handleMouseOutside);
     document.addEventListener("mousedown", handleMouseOutside);
@@ -102,7 +110,7 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal, setUserMenuOpen }) 
   };
 
   const handleGameSelected = (game) => {
-    navigate(`/artist/${game.artist_name}`)
+    navigate(`/artist/${game.artist_name}`);
     onClose();
   };
 
@@ -122,18 +130,19 @@ const UserMenu = ({ isOpen, onClose, setShowPickArtistModal, setUserMenuOpen }) 
         );
       });
     } else {
-      return <p>No NFTs available</p>;
+      return <div className="pr-5 mt-3">No games yet</div>;
     }
 
     return rows;
   };
 
   return (
-    <ul ref={wrapperRef} className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700">
+    <ul
+      ref={wrapperRef}
+      className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700"
+    >
       <button onClick={() => setUserMenuOpen(!isOpen)}>
-        {user?.avatar ? (
-          <AvatarComponent avatar={user.avatar} />
-        ) : null}
+        {user?.avatar ? <AvatarComponent avatar={user.avatar} /> : null}
       </button>
       {isOpen && (
         <div className="absolute right-24 w-64 h-418  z-50 userMenuDiv">
