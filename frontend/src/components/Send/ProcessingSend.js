@@ -27,6 +27,7 @@ export const ProcessingSend = (props) => {
             pk,
             true
           );
+          console.log("txHash >> ", txHash)
           setTxStatus({hash:txHash});
         } catch (err) {
           console.log(err, "error transfering nft >>> ");

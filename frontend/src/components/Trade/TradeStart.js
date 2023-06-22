@@ -88,10 +88,8 @@ export const TradeStart = (props) => {
       const provider = new ethers.JsonRpcProvider(
         process.env.REACT_APP_RPC_URL
       );
-
       const artist = await getArtist();
       const privateKey = getPrivateKey();
-      const signer = new ethers.Wallet(privateKey, provider);
 
       // Check approval
       const approved = await NftService.isApprovedForAll(
