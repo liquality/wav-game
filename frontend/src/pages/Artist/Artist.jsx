@@ -17,6 +17,7 @@ import UserService from "../../services/UserService";
 import { countNFTsByLevel, getPublicKey } from "../../utils";
 import { CHAIN_ID } from "../../data/contract_data";
 import Faq from "../../components/Faq";
+import { SpinningLoader } from "../../components/SpinningLoader";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -135,67 +136,76 @@ export const Artist = (props) => {
 
   return (
     <div className="container mx-auto">
-      <div className="flex">
-        <Sidebar
-          open={sidebarOpen}
-          setOpen={setSidebarOpen}
-          artist={artist}
-          image={image}
-          setChooseArtistView={setChooseArtistView}
-          setShowPickArtistModal={setShowPickArtistModal}
-        />
-        <div className="flex flex-col items-center md:ml-20 grow">
-          <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
-            <div className="game-header-level">
-              LEVEL: {currentGame?.level || "0"}{" "}
-            </div>
-            <div className="game-header-title">
-              {artist?.name?.toUpperCase()}'s GAME_
-            </div>
-            <div className="game-header-counter">
-              COLLECTIBLES: {collectibleCount}
-            </div>
-          </div>
-          <div className="flex flex-col justify-center mt-5">
-            <GameTabs
-              selectedLevel={selectedLevel}
-              currentGame={currentGame}
-              onLevelSelected={onLevelSelected}
+      {image && artist && currentGame && nftCount ? (
+        <div>
+          <div className="flex">
+            <Sidebar
+              open={sidebarOpen}
+              setOpen={setSidebarOpen}
+              artist={artist}
+              image={image}
+              setChooseArtistView={setChooseArtistView}
+              setShowPickArtistModal={setShowPickArtistModal}
             />
-            <GameCards
-              onTradeClick={onTradeClick}
-              onGetMoreClick={onGetMoreClick}
-              onLevelSelected={onLevelSelected}
-              selectedLevel={selectedLevel}
-              currentGame={currentGame}
-              nftCount={nftCount}
-            />
-          </div>
-          <div className="flex flex-col   pt-24 mt-12">
-            <div className="flex flex-col justify-center items-center  mb-24 relative">
-              <RewardsTout className="mt-5" />
+            <div className="flex flex-col items-center md:ml-20 grow">
+              <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
+                <div className="game-header-level">
+                  LEVEL: {currentGame?.level || "0"}{" "}
+                </div>
+                <div className="game-header-title">
+                  {artist?.name?.toUpperCase()}'s GAME_
+                </div>
+                <div className="game-header-counter">
+                  COLLECTIBLES: {collectibleCount}
+                </div>
+              </div>
+              <div className="flex flex-col justify-center mt-5">
+                <GameTabs
+                  selectedLevel={selectedLevel}
+                  currentGame={currentGame}
+                  onLevelSelected={onLevelSelected}
+                />
+                <GameCards
+                  onTradeClick={onTradeClick}
+                  onGetMoreClick={onGetMoreClick}
+                  onLevelSelected={onLevelSelected}
+                  selectedLevel={selectedLevel}
+                  currentGame={currentGame}
+                  nftCount={nftCount}
+                />
+              </div>
+              <div className="flex flex-col   pt-24 mt-12">
+                <div className="flex flex-col justify-center items-center  mb-24 relative">
+                  <RewardsTout className="mt-5" />
 
-              <div style={{ left: "20%", top: "35%" }} className="absolute">
-                <span className="lightCoral">
-                  EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS!
-                </span>
+                  <div style={{ left: "20%", top: "35%" }} className="absolute">
+                    <span className="lightCoral">
+                      EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS!
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="flexDirectionCol">
+                <Leaderboard setShowSendModal={setShowSend} artist={artist} />
+                <Faq />{" "}
               </div>
             </div>
           </div>
-          <div className="flexDirectionCol">
-            <Leaderboard setShowSendModal={setShowSend} artist={artist} />
-            <Faq />{" "}
+          <TradeModal
+            setShow={setShowTrade}
+            show={showTrade}
+            setLevel={onLevelSelected}
+            level={selectedLevel}
+          />
+          <SendModal setShow={setShowSend} show={showSend} />{" "}
+        </div>
+      ) : (
+        <div className="contentView m-5 p-5 flex justify-center items-center ">
+          <div className="m-4 p-4">
+            <SpinningLoader />
           </div>
         </div>
-      </div>
-      <TradeModal
-        setShow={setShowTrade}
-        show={showTrade}
-        setLevel={onLevelSelected}
-        level={selectedLevel}
-      />
-
-      <SendModal setShow={setShowSend} show={showSend} />
+      )}
     </div>
   );
 };
