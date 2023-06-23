@@ -41,23 +41,19 @@ export const TradeModal = (props) => {
           process.env.REACT_APP_RPC_URL
         );
         // Create a new instance of the contract using the ABI and address
-        const nftContract = new ethers.Contract(
+        const _nftContract = new ethers.Contract(
           WAV_NFT_ADDRESS,
           WAV_NFT_ABI,
           provider
         );
-        const gameContract = new ethers.Contract(
+        const _gameContract = new ethers.Contract(
           WAV_PROXY_ADDRESS,
           WAV_PROXY_ABI,
           provider
         );
-        setNftContract(nftContract);
-        setGameContract(gameContract);
-
-        const contractNfts = await NftService.getNftsForContract(
-          WAV_NFT_ADDRESS,
-          CHAIN_ID
-        );
+        setNftContract(_nftContract);
+        setGameContract(_gameContract);
+        
         const userNfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
         setUserNfts(userNfts);
       } catch (error) {
@@ -65,8 +61,10 @@ export const TradeModal = (props) => {
       }
     };
 
-    initializeContract();
-  }, []);
+    if(!gameContract || !nftContract) {
+      initializeContract();
+    }
+  }, [gameContract, nftContract]);
 
   const whichContentToRender = () => {
     if (content === "tradeStart") {

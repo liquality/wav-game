@@ -84,10 +84,7 @@ export const TradeStart = (props) => {
   const startTrade = async (data) => {
     try {
       setContent("processingTrade");
-
-      const provider = new ethers.JsonRpcProvider(
-        process.env.REACT_APP_RPC_URL
-      );
+      
       const artist = await getArtist();
       const privateKey = getPrivateKey();
 
