@@ -28,7 +28,7 @@ export const TradeStart = (props) => {
     setContent,
     gameContract,
     nftContract,
-    setTradeStatus,
+    setTxStatus,
     userNfts,
     level,
   } = props;
@@ -112,7 +112,7 @@ export const TradeStart = (props) => {
           CHAIN_ID
         );
       }
-      setTradeStatus({
+      setTxStatus({
         txHash: null,
         submited: false,
         approval: true,
@@ -129,7 +129,7 @@ export const TradeStart = (props) => {
         privateKey,
         CHAIN_ID
       );
-      setTradeStatus({
+      setTxStatus({
         txHash: null,
         submited: true,
         approval: true,
@@ -144,7 +144,7 @@ export const TradeStart = (props) => {
           },
           fetchSession().token
         );
-        setTradeStatus({
+        setTxStatus({
           txHash: txHashLevelUp,
           submited: true,
           approval: true,
