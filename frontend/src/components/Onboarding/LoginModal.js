@@ -35,7 +35,7 @@ const directParams = {
 export const LoginModal = (props) => {
   const { show, setShow } = props;
   const [tKey, setTKey] = useState({});
-  const [content, setContent] = useState("pickArtist");
+  const [content, setContent] = useState("loginOrRegister");
   const [headerText, setHeaderText] = useState("");
 
   const [loading, setLoading] = useState(false);
