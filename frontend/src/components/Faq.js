@@ -200,7 +200,7 @@ const AccordionItem = (props) => {
 
 const Faq = () => {
   const [active, setActive] = useState(null);
-  const [showMoreRows, setShowMoreRows] = useState(4);
+  const [showMoreRows, setShowMoreRows] = useState(5);
 
   const handleToggle = (index) => {
     if (active === index) {
