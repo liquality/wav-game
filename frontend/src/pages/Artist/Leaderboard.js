@@ -2,10 +2,7 @@ import "../../App.css";
 import { useState, useEffect } from "react";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
-import {
-  getHowManyPlayersAreInEachLevel,
-  getPublicKey,
-} from "../../utils";
+import { getHowManyPlayersAreInEachLevel, getPublicKey } from "../../utils";
 
 const Leaderboard = ({ setShowSendModal, artist, nftCount }) => {
   const [showNfts, setShowNfts] = useState(false);
@@ -36,6 +33,8 @@ const Leaderboard = ({ setShowSendModal, artist, nftCount }) => {
       //any cleanup
     };
   }, [artist, leaderboardData]);
+
+  console.log(leaderboardData, "leaderboarddata BÄ");
 
   const activeToggleStyle = {
     borderBottom: "1px solid #f251bc",

@@ -2,6 +2,7 @@ import { setup } from "@liquality/wallet-sdk";
 import StaticDataService from "./services/StaticDataService";
 import { ethers } from "ethers";
 import { WAV_NFT_ABI, WAV_NFT_ADDRESS, WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "./data/contract_data";
+import { nft } from "@liquality/wallet-sdk/dist/typechain-types/contracts";
 
 export function setupSDK() {
     setup({
@@ -169,6 +170,7 @@ export const getDifferenceBetweenDates = (startDate: any, endDate: any) => {
 export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
     const tokenIdArray = await generateTokenIdArray(artistNumberId / 1000);
     const nftObject = await fetchNFTOwners();
+    console.log(nftObject, 'fetch nft owners BÄ')
     const countByTokenId = {};
 
     for (const item of nftObject.result) {
@@ -176,7 +178,7 @@ export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
         const amount = Number(item.amount);
 
         if (tokenIdArray.includes(tokenId)) {
-            if (amount >= 2) {
+            if (amount >= 1) {
                 const level = tokenIdArray.indexOf(tokenId) + 1;
                 if (countByTokenId[level]) {
                     countByTokenId[level]++;
@@ -203,7 +205,7 @@ export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
 async function fetchNFTOwners() {
     if (process.env.REACT_APP_MORALIS_API_KEY) {
         const url =
-            `https://deep-index.moralis.io/api/v2/nft/0x3611bB3DA6Fb531917ad3683FFDEa427dA5bA791/owners?chain=0x13881&disable_total=false&limit=30`;
+            `https://deep-index.moralis.io/api/v2/nft/${WAV_NFT_ADDRESS}/owners?chain=0x13881&disable_total=false`;
 
         const headers = {
             "x-api-key": process.env.REACT_APP_MORALIS_API_KEY,
