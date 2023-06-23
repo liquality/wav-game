@@ -42,7 +42,7 @@ export const GameCards = (props: GameCardsProps) => {
   
   useEffect(() => {
     async function getBurnStatus() {
-      const _burnStatus = await [1,2,3,4,5].reduce(async (prev, level) => {
+      const _burnStatus = await [1,2,3,4,5,6].reduce(async (prev, level) => {
         const accum = await prev;
         const status = await ContractService.getBurnStatus(currentGame.game_symbol_id, getPublicKey(), level);
         accum[level] = status;

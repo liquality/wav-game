@@ -5,7 +5,7 @@ import { ReactComponent as GreenCheckmark } from "../../images/green_checkmark.s
 import ProcessingTx from "../ProcessingTx";
 
 export const ProcessingTrade = (props) => {
-  const { setContent, tradeStatus } = props;
+  const { setContent, txStatus } = props;
 
   //Psuedo code for now
   useEffect(() => {
@@ -20,10 +20,10 @@ export const ProcessingTrade = (props) => {
     <div className="contentView flex">
       <div className=" justify-center items-center  m-auto">
         <div style={{ width: "100%" }}>
-          <ProcessingTx tradeStatus={tradeStatus} />
+          <ProcessingTx txStatus={txStatus} />
           <div className="flex">
             <p className="flexDirectionRow">
-            {tradeStatus.approval ? (
+            {txStatus.approval ? (
                 <GreenCheckmark /> 
               ) : (
                 <GreenDots className="mr-3 mt-3.5" />
@@ -35,7 +35,7 @@ export const ProcessingTrade = (props) => {
 
           <div className="flex">
             <p className="flexDirectionRow">
-            {tradeStatus.approval ? (
+            {txStatus.approval ? (
                 <GreenCheckmark /> 
               ) : (
                 <GreenDots className="mr-3 mt-3.5" />
@@ -46,7 +46,7 @@ export const ProcessingTrade = (props) => {
           <br></br>
           <div className="flex">
             <p className="flexDirectionRow">
-              {tradeStatus.approval ? (
+              {txStatus.approval ? (
                 <GreenCheckmark />
               ) : (
                 <GreenDots className="mr-3 mt-3.5" />
