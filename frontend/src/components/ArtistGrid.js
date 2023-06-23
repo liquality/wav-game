@@ -87,7 +87,7 @@ export const ArtistGrid = (props) => {
         );
       });
     } else {
-      return <p colSpan="3">No data available</p>;
+      return null;
     }
   };
 
