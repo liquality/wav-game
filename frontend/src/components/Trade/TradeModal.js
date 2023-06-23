@@ -22,7 +22,7 @@ export const TradeModal = (props) => {
   const [gameContract, setGameContract] = useState(null);
   const [userNfts, setUserNfts] = useState(null);
 
-  const [txStatus, settxStatus] = useState({
+  const [txStatus, setTxStatus] = useState({
     hash: null,
     submited: false,
     approval: false
@@ -76,7 +76,7 @@ export const TradeModal = (props) => {
           setContent={setContent}
           gameContract={gameContract}
           nftContract={nftContract}
-          settxStatus={settxStatus}
+          setTxStatus={setTxStatus}
           level={level}
         />
       );
