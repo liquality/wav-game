@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { NftService } from "@liquality/wallet-sdk";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
-import { countNFTsByLevel, getPublicKey } from "../../utils";
+import { getNFTsByLevel, getPublicKey } from "../../utils";
 import { CHAIN_ID } from "../../data/contract_data";
 import Faq from "../../components/Faq";
 import { SpinningLoader } from "../../components/SpinningLoader";
@@ -39,6 +39,7 @@ export const Artist = (props) => {
   const [nfts, setNfts] = useState(null);
   const [nftCount, setNftCount] = useState(null);
   const [collectibleCount, setCollectibleCount] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState(0);
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
@@ -107,9 +108,10 @@ export const Artist = (props) => {
         }
 
         if (_artist.number_id && nfts && !nftCount) {
-          const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
-          setNftCount(_nftCount.levels);
-          setCollectibleCount(_nftCount.totalCollectibles);
+          const nftData = getNFTsByLevel(nfts, _artist.number_id);
+          setNftCount(nftData.levels);
+          setCollectibleCount(nftData.totalCollectibles);
+          setCurrentLevel(nftData.currentLevel);
         }
 
         setImage(_image);
@@ -139,7 +141,7 @@ export const Artist = (props) => {
             <div className="flex flex-col items-center md:ml-20 grow">
               <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
                 <div className="game-header-level">
-                  LEVEL: {currentGame?.level || "0"}{" "}
+                  LEVEL: {currentLevel || "0"}{" "}
                 </div>
                 <div className="game-header-title">
                   {artist?.name?.toUpperCase()}'s GAME_
@@ -153,12 +155,14 @@ export const Artist = (props) => {
                   selectedLevel={selectedLevel}
                   currentGame={currentGame}
                   onLevelSelected={onLevelSelected}
+                  currentLevel={currentLevel}
                 />
                 <GameCards
                   onTradeClick={onTradeClick}
                   onGetMoreClick={onGetMoreClick}
                   onLevelSelected={onLevelSelected}
                   selectedLevel={selectedLevel}
+                  currentLevel={currentLevel}
                   currentGame={currentGame}
                   nftCount={nftCount}
                 />

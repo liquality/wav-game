@@ -28,14 +28,6 @@ const UserService = {
     return NetworkService.putResourceWithAuth("/v1/game/", gameObject, jwt);
   },
 
-  levelUpTrade: async function (gameObject, jwt) {
-    return NetworkService.putResourceWithAuth(
-      "/v1/gamelevelup",
-      gameObject,
-      jwt
-    );
-  },
-
   getLeaderboardData: async function (gameID, jwt) {
     return NetworkService.getResourceWithAuth(
       "/v1/game/leaderboard/" + gameID,

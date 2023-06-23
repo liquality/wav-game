@@ -70,22 +70,22 @@ const Leaderboard = ({ setShowSendModal, artist, nftCount }) => {
                 NFTs
               </th>
               <td className="px-6 py-4">
-                {nftCount?.level1 ? nftCount?.level1 : "--"}
+                {nftCount[1] ? nftCount[1] : "--"}
               </td>
               <td className="px-6 py-4">
-                {nftCount?.level2 ? nftCount?.level2 : "--"}
+                {nftCount[2] ? nftCount[2] : "--"}
               </td>
               <td className="px-6 py-4">
-                {nftCount?.level3 ? nftCount?.level3 : "--"}
+                {nftCount[3] ? nftCount[3] : "--"}
               </td>
               <td className="px-6 py-4">
-                {nftCount?.level4 ? nftCount?.level4 : "--"}
+                {nftCount[4] ? nftCount[4] : "--"}
               </td>
               <td className="px-6 py-4">
-                {nftCount?.level5 ? nftCount?.level5 : "--"}
+                {nftCount[5] ? nftCount[5] : "--"}
               </td>
               <td className="px-6 py-4">
-                {nftCount?.level6 ? nftCount?.level6 : "--"}
+                {nftCount[6] ? nftCount[6] : "--"}
               </td>
             </tr>
           </tbody>

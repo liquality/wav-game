@@ -17,6 +17,7 @@ interface GameCardsProps {
   currentGame?: any;
 
   selectedLevel: number;
+  currentLevel: number;
 
   nftCount: any;
 
@@ -32,12 +33,12 @@ interface GameCardsProps {
  * The collection or Card Levels with animation
  */
 export const GameCards = (props: GameCardsProps) => {
-  const { currentGame, selectedLevel, onTradeClick, onGetMoreClick, onLevelSelected, nftCount } = props;
+  const { currentGame, currentLevel, selectedLevel, onTradeClick, onGetMoreClick, onLevelSelected, nftCount } = props;
   const [burnStatus, setBurnStatus] = useState({});
 
   async function onSetLevel(levelId?: number) {
     console.log("onSetLevel level >>>>~>> ", levelId)
-    onLevelSelected(levelId || currentGame?.level || 1);
+    onLevelSelected(levelId || currentLevel || 1);
   }
   
   useEffect(() => {
@@ -58,57 +59,57 @@ export const GameCards = (props: GameCardsProps) => {
     <div className="mt-5 game-cards">
       <Level1
         selectedLevel={selectedLevel}
-        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
         burnStatus={burnStatus[1]}
+        currentLevel={currentLevel}
       />
       <Level2
         selectedLevel={selectedLevel}
-        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
         burnStatus={burnStatus[2]}
+        currentLevel={currentLevel}
       />
       <Level3
         selectedLevel={selectedLevel}
-        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
         burnStatus={burnStatus[3]}
+        currentLevel={currentLevel}
       />
       <Level4
         selectedLevel={selectedLevel}
-        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
         burnStatus={burnStatus[4]}
+        currentLevel={currentLevel}
       />
       <Level5
         selectedLevel={selectedLevel}
-        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
         burnStatus={burnStatus[5]}
+        currentLevel={currentLevel}
       />
       <Level6
         selectedLevel={selectedLevel}
-        game={currentGame}
         onSetLevel={onSetLevel}
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
         burnStatus={burnStatus[6]}
+        currentLevel={currentLevel}
       />
     </div>
   );
