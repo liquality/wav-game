@@ -2,6 +2,7 @@
 
 var Game = require("../classes/Game");
 var ApiError = require("../classes/ApiError");
+const { helperFindArtistNumberIdByTokenId } = require("../helper");
 
 var gameHandler = {};
 
@@ -28,13 +29,54 @@ gameHandler.read = function (req, res) {
   }
 };
 
+gameHandler.readGamesByUserId = function (req, res) {
+  const userid = Number(req.params.userid);
+  const gameNumberId = Number(req.params.artistNumberId);
+  const userIdFromSession = req.user.id;
+
+  if (userid) {
+    if (userid === userIdFromSession) {
+      var game = new Game();
+      game.readGameByUserId(userid, gameNumberId).then(
+        (game) => {
+          res.status(200).send(game);
+        },
+        (reason) => {
+          res.status(400).send(new ApiError(400, reason));
+        }
+      );
+    } else {
+      res
+        .status(403)
+        .send(new ApiError(403, "Access denied, gameid does not match"));
+    }
+  }
+};
+
+gameHandler.getLeaderboardData = function (req, res) {
+  const gameId = Number(req.params.game_symbol_id);
+  if (gameId) {
+    var game = new Game();
+    game.getLeaderboardData(gameId).then(
+      (game) => {
+        res.status(200).send(game);
+      },
+      (reason) => {
+        res.status(400).send(new ApiError(400, reason));
+      }
+    );
+  } else {
+    res
+      .status(403)
+      .send(new ApiError(403, "Access denied, gameid does not match"));
+  }
+};
+
 gameHandler.create = function (req, res) {
   var game = new Game();
-  console.log(req.body, "req body in game?", req.user, "User in gamehandler");
   game.set(req.body); // should be a game object
 
   if (req.body.user_id === req.user.id) {
-    console.log("Inside here");
     game.create().then(
       (game) => {
         res.status(200).send(game);
@@ -47,13 +89,11 @@ gameHandler.create = function (req, res) {
 };
 
 gameHandler.update = function (req, res) {
-  var id = req.params.id;
   var game = new Game();
   game.set(req.body);
-  //TODO: do we need apiSession and userid?
-  //game.id = req.apiSession.userid;
-
-  if (id == id) {
+  const userid = Number(req.params.userid);
+  const userIdFromSession = req.user.id;
+  if (userid == userIdFromSession) {
     game.update().then(
       (game) => {
         res.status(200).send(game);
@@ -63,7 +103,7 @@ gameHandler.update = function (req, res) {
       }
     );
   } else {
-    res.status(403).send(new ApiError(403, "Access denied"));
+    res.status(403).send(new ApiError(403, "Access denied, update"));
   }
 };
 
@@ -88,7 +128,52 @@ gameHandler.delete = function (req, res) {
       }
     );
   } else {
-    res.status(403).send(new ApiError(403, "Access denied"));
+    res.status(403).send(new ApiError(403, "Access denied for delete game"));
+  }
+};
+
+gameHandler.levelUpTrade = function (req, res) {
+  const gameId = req.body.gameId;
+  const userId = req.body.userId;
+  const userIdFromSession = req.user.id;
+
+  if (userId && gameId) {
+    if (userId === userIdFromSession) {
+      const game = new Game();
+      game.levelUpTrade(userId, gameId).then(
+        (game) => {
+          res.status(200).send(game);
+        },
+        (reject) => {
+          res.status(400).send(new ApiError(400, reject));
+        }
+      );
+    } else {
+      res.status(400).send(new ApiError(400, reason));
+    }
+  } else {
+    res.status(403).send(new ApiError(403, "Access denied for level up"));
+  }
+};
+
+gameHandler.webhook = async function (req, res) {
+  console.log(req.body, "req body???");
+  const { status, tokenIds } = req.body;
+  if (status === "success") {
+    const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
+    console.log(artistNumberId, "artist nr id");
+    const game = new Game();
+    game.levelUpOnboarding(req.body.walletAddress, artistNumberId).then(
+      (game) => {
+        console.log("webhook successfull");
+        res.status(200).send(game);
+      },
+      (reject) => {
+        res.status(400).send(new ApiError(400, reject));
+      }
+    );
+  } else {
+    res.status(400).send(new ApiError(400, reason));
   }
 };
 

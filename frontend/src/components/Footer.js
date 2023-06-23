@@ -1,20 +1,19 @@
-import React from "react";
-
-import { ReactComponent as DiscordIcon } from "../images/discord.svg";
-import { ReactComponent as TelegramIcon } from "../images/telegram.svg";
 import { ReactComponent as TwitterIcon } from "../images/twitter.svg";
+import { ReactComponent as InstagramIcon } from "../images/instagram.svg";
+import { ReactComponent as TikTokIcon } from "../images/tiktok.svg";
+import LensIcon from "../images/lenster.png";
 
 const Footer = () => {
   return (
-    <footer class="footer">
-      <div className="flexDirectionRow">
-        <p className="webfont" style={{ fontSize: "39px" }}>
-          WavGame
-        </p>
-        <div className="flexDirectionRow ml-5 mt-4">
+    <footer style={{ width: "100vw" }} className="footer">
+      <div className="container flex flex-row justify-between items-center">
+        <div className="logo-text">
+          WavGame <div className="logo-addon">Beta</div>
+        </div>
+        <div className="flex ml-5">
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://twitter.com/Liquality_io/"
+            href="https://twitter.com/wavWRLD_"
             target="_blank"
             rel="noreferrer"
           >
@@ -22,29 +21,37 @@ const Footer = () => {
           </a>{" "}
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://discord.com/invite/35yAGaQ3gx"
+            href="https://www.instagram.com/wavwrld.eth"
             target="_blank"
             rel="noreferrer"
           >
-            <DiscordIcon />
+            <InstagramIcon />
           </a>{" "}
           <a
             className="md:hover:text-white-700 ml-3"
-            href="https://t.me/liquality"
+            href="https://www.tiktok.com/@wavwrld"
             target="_blank"
             rel="noreferrer"
           >
-            <TelegramIcon />
+            <TikTokIcon />
+          </a>{" "}
+          <a
+            className="md:hover:text-white-700 ml-3"
+            href="https://lenster.xyz/u/wavwrld"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={LensIcon} alt="" />
           </a>{" "}
         </div>
-        <p
+        <div
           className="mt-4 mr-5 alignTextToRight"
           style={{ fontSize: "12px", color: "#BDBDBD" }}
         >
           {" "}
           Copyright WAVwrld_ 2023. All Rights Reserved. Privacy Policy | Terms
           of Use
-        </p>
+        </div>
       </div>
     </footer>
   );

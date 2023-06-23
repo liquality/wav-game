@@ -1,59 +1,68 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/utils/structs/EnumerableSetUpgradeable.sol";
-import "@opengsn/contracts/src/ERC2771Recipient.sol";
-import "@opengsn/contracts/src/interfaces/IERC2771Recipient.sol";
-import "./interfaces/IWavGame.sol";
-import "./interfaces/IWavNFT.sol";
-import "./libraries/Helper.sol";
+import {PausableUpgradeable} from "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import {ERC165Upgradeable} from "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol";
+import {EnumerableSetUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/structs/EnumerableSetUpgradeable.sol";
+import {ERC2771Recipient} from "@opengsn/contracts/src/ERC2771Recipient.sol";
+import {IERC2771Recipient} from "@opengsn/contracts/src/interfaces/IERC2771Recipient.sol";
+import {ContextUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol";
+import { IWavGame } from "./interfaces/IWavGame.sol";
+import { IWavNFT } from "./interfaces/IWavNFT.sol";
+import { Helper } from "./libraries/Helper.sol";
 
-contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWavGame, ERC2771Recipient, ReentrancyGuardUpgradeable, ERC165Upgradeable {
-    using EnumerableSetUpgradeable for EnumerableSetUpgradeable.UintSet;
+contract WavGame is
+    Initializable,
+    PausableUpgradeable,
+    OwnableUpgradeable,
+    IWavGame,
+    ERC2771Recipient,
+    ReentrancyGuardUpgradeable,
+    ERC165Upgradeable
+{
     using EnumerableSetUpgradeable for EnumerableSetUpgradeable.AddressSet;
 
     uint256 public feePerMint; // In wei
-    uint256 constant internal ENTRY_LEVEL = 1; 
-    IWavNFT public wavNFT; 
-    // address payable public revenueContract; // Platform revenue spliting contract
+    uint256 internal constant ENTRY_LEVEL = 1;
+    IWavNFT public wavNFT;
 
-    address[] gameIDs; // Refers to the artists
-    mapping(address => uint256) availablePayments;
-    mapping(address => Game) internal wavGames;
-    mapping(address => mapping(uint256 => EnumerableSetUpgradeable.AddressSet)) collectors;// Collectors per islands per game
-    mapping(address => mapping(uint256 => EnumerableSetUpgradeable.UintSet)) burnableSet;// Burnable NFT sets per islands per game
-    mapping(address => mapping(uint256 => EnumerableSetUpgradeable.UintSet)) mintableSet;// Mintable NFT sets per islands per game
+    uint256[] public artistIDs;
+    mapping(uint256 => uint256) public availablePayments;
+    mapping(uint256 => ArtistGame) internal wavGames;
+    mapping(uint256 => mapping(uint256 => EnumerableSetUpgradeable.AddressSet)) internal collectors; // Collectors per levels per game
 
-    
-    event LeveledUp(address indexed caller, address indexed collector, uint256 indexed nextIslandID, uint256 totalMinted);
-    event Collected(address indexed caller, address indexed to, uint256 indexed amountSent, uint256 totalMinted);
-    event TreasurySet(address indexed gameID, address payable indexed  treasury);
-    event SpecialMint(address indexed collector, uint256 indexed id, uint256 indexed amount);
-    event IslandUpdated(address indexed gameID, uint256 indexed islandID);
-    event PaymentForwarded(address indexed to, uint256 indexed amount);
-    event GameSet(address indexed gameID, uint256 indexed islandID);
+    event LeveledUp(
+        uint256 indexed artistID,
+        address indexed collector,
+        uint256 indexed newLevelID,
+        uint256 totalMinted
+    );
+    event Collected(uint256 indexed artistID, address indexed to, uint256 indexed amountSent, uint256 totalMinted);
+    event TreasurySet(uint256 indexed artistID, address payable indexed treasury);
+    event SpecialMint(uint256 indexed artistID, address indexed collector, uint256 indexed id, uint256 amount);
+    event LevelUpdated(uint256 indexed artistID, uint256 indexed levelID);
+    event PaymentForwarded(uint256 indexed artistID, address indexed to, uint256 indexed amount);
+    event ArtistGameSet(uint256 indexed artistID, uint256 indexed levelID);
     event FeeSet(uint256 indexed oldFee, uint256 indexed newFee);
+    event WavNFTSet(address old, address wavNFT);
 
-    error InsufficientPayment(uint256 requiredAmt, uint256 ammountSent);   
-    error NFTNotInMintableSet(uint256 invalidNFT, uint256 islandID);
+    error InsufficientPayment(uint256 requiredAmt, uint256 ammountSent);
     error InvalidTreasury(address treasury);
-    error RequiredBurnNotMet(uint8 requiredBurn);
-    error InvalidGameID(address gameID);
+    error InvalidArtistID(uint256 artistID);
     error InvalidNextLevel();
     error ParametersMisMatch();
     error PaymentRequired();
-    error IslandNotFound();
+    error LevelNotFound();
     error WavNftNotSet();
-    error BurnBatchFailed();
+    error AmountCannotBeZero();
+    error RequiredBurnNotMet(uint8 requiredBurn);
 
-    modifier onlyValidIsland(address _gameID, uint256 _islandID) {
-        if(Helper.getIslandIndex(_islandID) >= wavGames[_gameID].islands.length){
-            revert IslandNotFound();
+    modifier onlyValidLevel(uint256 _artistID, uint256 _levelID) {
+        if (Helper.getLevelIndex(_levelID) >= wavGames[_artistID].levels.length) {
+            revert LevelNotFound();
         }
         _;
     }
@@ -63,7 +72,7 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         _disableInitializers();
     }
 
-    function initialize(IWavNFT _wavNFT, address _trustedForwarder,uint256 _feePerMint) initializer public {
+    function initialize(IWavNFT _wavNFT, address _trustedForwarder, uint256 _feePerMint) public initializer {
         __Pausable_init();
         __Ownable_init();
 
@@ -72,190 +81,198 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         _setTrustedForwarder(_trustedForwarder);
     }
 
-    /// @notice This function mints level 1 (First game island) NFTs to the _recipient
-    /// @param _recipient The recipient of the minted level 1 (First game island) NFT
-    /// @param _mintableNFTs nft ids to mint
-    /// @param _mintableAmountPerNFTs nft quantities to mint
-    /// @dev This function 
-    function collect(address _gameID, address _recipient, uint[] calldata _mintableNFTs, uint[] calldata _mintableAmountPerNFTs) external override payable  whenNotPaused nonReentrant onlyValidIsland(_gameID, ENTRY_LEVEL) {
-        if (_mintableNFTs.length != _mintableAmountPerNFTs.length) {
-            revert ParametersMisMatch();
+    /// @notice This function mints level 1 (First artist game level) NFTs to the _recipient
+    /// @param _artistID Artist ID to collect in
+    /// @param _recipient The recipient of the minted level 1 (First artist game level) NFT
+    /// @param _amount nft quantity to mint
+    /// @dev This function allows a
+    function collect(
+        uint256 _artistID,
+        address _recipient,
+        uint256 _amount
+    ) external payable virtual whenNotPaused nonReentrant onlyValidLevel(_artistID, ENTRY_LEVEL) {
+        if (_amount == 0) {
+            revert AmountCannotBeZero();
+        }
+        uint totalPayable = _amount * feePerMint;
+        IWavGame.Level memory level = wavGames[_artistID].levels[Helper.getLevelIndex(ENTRY_LEVEL)];
+
+        if (totalPayable > msg.value) {
+            revert InsufficientPayment(totalPayable, msg.value);
         }
 
-        uint totalPayable = 0;
-        uint totalMinted = 0;
+        wavNFT.mint(_recipient, level.mintID, _amount, bytes(" "));
 
-        for (uint i; i < _mintableNFTs.length;) { 
-            if (!mintableSet[_gameID][ENTRY_LEVEL].contains(_mintableNFTs[i])){
-                revert NFTNotInMintableSet(_mintableNFTs[i], ENTRY_LEVEL);
-            }
-            totalMinted +=_mintableAmountPerNFTs[i];
-            totalPayable += _mintableAmountPerNFTs[i] * feePerMint;
-            unchecked {++i;}
-        }
-        
-        if (totalPayable > msg.value) { 
-            revert InsufficientPayment(totalPayable,msg.value);
-        }
+        availablePayments[_artistID] += msg.value;
+        _syncMint(_artistID, ENTRY_LEVEL, _recipient, _amount);
 
-        wavNFT.mintBatch(_recipient, _mintableNFTs, _mintableAmountPerNFTs, bytes(" "));
-        availablePayments[_gameID] += msg.value;
-        _syncMint(_gameID, ENTRY_LEVEL, _recipient, totalMinted);
-
-        emit Collected(_msgSender(), _recipient, msg.value, totalMinted);
+        emit Collected(_artistID, _recipient, msg.value, _amount);
     }
 
-    function levelUp(address _gameID, uint256 _islandID, uint[] calldata _burnableNFTs, uint[] calldata _burnableAmountPerNFTs) external override  whenNotPaused nonReentrant onlyValidIsland(_gameID, _islandID) {
-        if (_burnableNFTs.length != _burnableAmountPerNFTs.length) {
-            revert ParametersMisMatch();
-        }
-        if(_islandID <= ENTRY_LEVEL) {
+    function levelUp(
+        uint256 _artistID,
+        uint256 _newLevelID
+    ) external override whenNotPaused nonReentrant onlyValidLevel(_artistID, _newLevelID) {
+        if (_newLevelID <= ENTRY_LEVEL) {
             revert InvalidNextLevel();
         }
-        IWavGame.Island memory nextIsland = wavGames[_gameID].islands[Helper.getIslandIndex(_islandID)];
-
-        uint totalBurnAmount;
-
-        for (uint256 i = 0; i < _burnableNFTs.length;) { 
-            if (burnableSet[_gameID][_islandID].contains(_burnableNFTs[i])) {
-                totalBurnAmount += _burnableAmountPerNFTs[i];
-            }
-            unchecked {++i;} 
+        IWavGame.Level memory newLevel = wavGames[_artistID].levels[Helper.getLevelIndex(_newLevelID)];
+        if (wavNFT.balanceOf(_msgSender(), newLevel.burnID) < newLevel.requiredBurn) {
+            revert RequiredBurnNotMet(newLevel.requiredBurn);
         }
+        wavNFT.burn(_msgSender(), newLevel.burnID, newLevel.requiredBurn);
+        wavNFT.mint(_msgSender(), newLevel.mintID, newLevel.requiredMint, bytes(" "));
 
-        if(totalBurnAmount != nextIsland.requiredBurn){
-            revert RequiredBurnNotMet(nextIsland.requiredBurn);
-        }
-        
-        // Burn Collectors NFTs... create EIP2771 calldata by appending _msgSender()
-        bytes memory burnBatchCallData = abi.encodePacked(abi.encodeWithSelector(IWavNFT.burnBatch.selector, _burnableNFTs, _burnableAmountPerNFTs),abi.encodePacked(_msgSender()));
-        (bool success, ) = address(wavNFT).call(burnBatchCallData);
+        wavGames[_artistID].levels[Helper.getLevelIndex(_newLevelID - 1)].burnCount += newLevel.requiredBurn; // Increase burnCount of old/prev Level
+        _syncMint(_artistID, _newLevelID, _msgSender(), newLevel.requiredMint);
 
-        if(!success) revert BurnBatchFailed();
-
-        EnumerableSetUpgradeable.UintSet storage _mintableSet = mintableSet[_gameID][_islandID];
-        wavNFT.mint(_msgSender(), _mintableSet.values()[0], nextIsland.requiredMint, bytes(" "));
-   
-        wavGames[_gameID].islands[Helper.getIslandIndex(_islandID-1)].burnCount += totalBurnAmount; // Increase burnCount of old/prev island
-        _syncMint(_gameID, _islandID, _msgSender(), nextIsland.requiredMint);
-
-        emit LeveledUp(msg.sender, _msgSender(), _islandID, nextIsland.requiredMint);
+        emit LeveledUp(_artistID, _msgSender(), _newLevelID, newLevel.requiredMint);
     }
+
     function supportsInterface(bytes4 interfaceId) public view override returns (bool) {
-        return interfaceId == type(IWavGame).interfaceId || interfaceId == type(IERC2771Recipient).interfaceId ||
-        super.supportsInterface(interfaceId);
+        return interfaceId == type(IERC2771Recipient).interfaceId || super.supportsInterface(interfaceId);
     }
 
     //Returns true if msg.sender qualifies for special prize on artist collection
-    function isEarlyBirdCollector(address _gameID, uint256 _islandID) public view returns (bool) {
-        return collectors[_gameID][_islandID].contains(msg.sender);
-    } 
-    function fetchEarlyBirdCollectors(address _gameID, uint256 _islandID) public view returns (address[] memory) {
-        return collectors[_gameID][_islandID].values();
+    function isEarlyBirdCollector(uint256 _artistID, uint256 _levelID) public view returns (bool) {
+        return collectors[_artistID][_levelID].contains(msg.sender);
     }
-    // Get all islands and treasury of a given gameID
-    function fetchGame(address _gameID) public view returns (IWavGame.Island[] memory, address) {
-        return (wavGames[_gameID].islands, wavGames[_gameID].treasury);
-   
+
+    function fetchEarlyBirdCollectors(uint256 _artistID, uint256 _levelID) public view returns (address[] memory) {
+        return collectors[_artistID][_levelID].values();
     }
-    function getBalance(address _gameID) public view returns (uint256){
-        return availablePayments[_gameID];
+
+    // Get all levels and treasury of a given artistID
+    function fetchGame(uint256 _artistID) public view returns (IWavGame.Level[] memory, address) {
+        return (wavGames[_artistID].levels, wavGames[_artistID].treasury);
     }
-    // Get island info for given gameID, and islandID
-    function getIsland(address _gameID, uint256 _islandID) public view returns (IWavGame.Island memory, uint[] memory, uint[] memory) {
-        return (wavGames[_gameID].islands[Helper.getIslandIndex(_islandID)], burnableSet[_gameID][_islandID].values(), mintableSet[_gameID][_islandID].values());
-   
+
+    function getBalance(uint256 _artistID) public view returns (uint256) {
+        return availablePayments[_artistID];
     }
-    // Get treasury contract for given game
-    function getTreasury(address _gameID) public view returns (address) {
-        return wavGames[_gameID].treasury;
+
+    // Get level info for given artistID, and levelID
+    function getLevel(uint256 _artistID, uint256 _levelID) public view returns (IWavGame.Level memory) {
+        return wavGames[_artistID].levels[Helper.getLevelIndex(_levelID)];
     }
+
+    // Get treasury contract for given artist game
+    function getTreasury(uint256 _artistID) public view returns (address) {
+        return wavGames[_artistID].treasury;
+    }
+
     function getFeePerMint() public view returns (uint256) {
         return feePerMint;
     }
 
-    //============================= Game Administration ============================
-    // No checks are done for mint and batchMints, these are admin functions for minting non-game related NFTs, minting 
+    //============================= WavGames Administration ============================
+    // No checks are done for mint and batchMints, these are admin functions for minting non-game related NFTs, minting
     //a game-specific NFT through this functions may distrupt calculations on the game
     // Use special mint instead.
-    function mint(address _recipient, uint _id, uint _amount) external  onlyOwner {
+    function mint(address _recipient, uint _id, uint _amount) external onlyOwner {
         wavNFT.mint(_recipient, _id, _amount, " ");
     }
-    function wavMint(address _recipient, address _gameID, uint256 _islandID, uint256 _id, uint256 _amount) external  onlyOwner onlyValidIsland(_gameID, _islandID) {
 
-        if (!mintableSet[_gameID][_islandID].contains(_id)){
-            revert NFTNotInMintableSet(_id, _islandID);
-        }
+    function wavMint(
+        uint256 _artistID,
+        uint256 _levelID,
+        address _recipient,
+        uint256 _amount
+    ) external onlyOwner onlyValidLevel(_artistID, _levelID) {
+        IWavGame.Level memory level = wavGames[_artistID].levels[Helper.getLevelIndex(_levelID)];
 
-        wavNFT.mint(_recipient, _id, _amount, " ");
-        _syncMint(_gameID, _islandID, _recipient, _amount);
+        wavNFT.mint(_recipient, level.mintID, _amount, " ");
+        _syncMint(_artistID, _levelID, _recipient, _amount);
 
-        emit SpecialMint(_recipient, _id, _amount);
+        emit SpecialMint(_artistID, _recipient, level.mintID, _amount);
     }
-    function batchMint(address _recipient, uint[] memory _ids, uint[] memory _amount) external  onlyOwner {
+
+    function batchMint(address _recipient, uint[] memory _ids, uint[] memory _amount) external onlyOwner {
         wavNFT.mintBatch(_recipient, _ids, _amount, " ");
-    } 
-    function forwardValue() external onlyOwner nonReentrant {
-        uint256 gamesLength = gameIDs.length;
-        for (uint256 i = 0; i < gamesLength;) {
-            address gameId = gameIDs[i];
-            uint256 pendingPayment = availablePayments[gameId];
-            address payable treasury = wavGames[gameId].treasury;
+    }
+
+    function forwardValue() external nonReentrant {
+        uint256 artistLength = artistIDs.length;
+        for (uint256 i = 0; i < artistLength; ) {
+            uint256 artistID = artistIDs[i];
+            uint256 pendingPayment = availablePayments[artistID];
+            address payable treasury = wavGames[artistID].treasury;
             _assertValidTreasury(treasury);
-            ( bool success, ) = treasury.call{value: pendingPayment}("");
+            availablePayments[artistID] = 0;
+            (bool success, ) = treasury.call{value: pendingPayment}("");
 
-            if(success) availablePayments[gameId] = 0;
-
-            emit PaymentForwarded(gameId, pendingPayment);
-            unchecked {++i;}
+            if (success) {
+                emit PaymentForwarded(artistID, treasury, pendingPayment);
+            }
+            unchecked {
+                ++i;
+            }
         }
     }
 
-    function setFeePerMint(uint256  _feePerMint) external onlyOwner {
+    function setFeePerMint(uint256 _feePerMint) external onlyOwner {
         uint256 oldFee = feePerMint;
         feePerMint = _feePerMint;
         emit FeeSet(oldFee, _feePerMint);
     }
+
     function setTrustedForwarder(address _trustedForwarder) public onlyOwner {
         _setTrustedForwarder(_trustedForwarder);
     }
-    // This creates a game if not exist, then populates the islands, or updates the game by adding new islands.
-    //This function always adds a new island to the specified game, only call this function when adding new islands to an given game
-    function setGame(address _gameID, IWavGame.IslandParam[] calldata _islands) external onlyOwner {
-        _assertValidGameID(_gameID);
-        if (wavGames[_gameID].islands.length == 0) {
-            gameIDs.push(_gameID);
-        }
-        _setGame(_gameID, _islands);
+    function setWavNFT(IWavNFT _wavNft) public onlyOwner {
+        IWavNFT old = wavNFT;
+        wavNFT = _wavNft;
+        emit WavNFTSet(address(old), address(wavNFT));
     }
-    function setTreasuries(address[] calldata _gameIDs, address payable[] calldata _treasuries) external onlyOwner {
-        if (_gameIDs.length != _treasuries.length) {
-            revert ParametersMisMatch();
+    // This creates an artist game if not exist, then populates the levels, or updates the artist game by adding new levels.
+    //This function always adds a new level to the specified artist game, only call this function when adding new levels to a given artist game
+    function setArtistGame(uint256 _artistID, IWavGame.LevelParam[] calldata _levels) external onlyOwner {
+        _assertValidArtistID(_artistID);
+        if (wavGames[_artistID].levels.length == 0) {
+            artistIDs.push(_artistID);
         }
-        for (uint256 i; i < _gameIDs.length;) {
-            // _assertValidTreasury(_treasuries[i]);
-            wavGames[_gameIDs[i]].treasury = _treasuries[i];
-            emit TreasurySet(_gameIDs[i], _treasuries[i]);
-            unchecked {++i;} 
-        }
-    }
-    function updateIsland(address _gameID, uint256 _islandID, IWavGame.IslandParam calldata _islandParam) external onlyOwner onlyValidIsland(_gameID,_islandID) {
-        uint256 islandIndex = Helper.getIslandIndex(_islandID); 
-        if (_islandParam.requiredBurn > 0) {
-            wavGames[_gameID].islands[islandIndex].requiredBurn = _islandParam.requiredBurn;
-        }
-        if (_islandParam.requiredMint > 0) {
-            wavGames[_gameID].islands[islandIndex].requiredMint = _islandParam.requiredMint;
-        }
-        if (_islandParam.earlyBirdCutOff > 0) {
-            wavGames[_gameID].islands[islandIndex].earlyBirdCutOff = _islandParam.earlyBirdCutOff;
-        }
-        _setBurnable(_gameID, _islandID, burnableSet[_gameID][_islandID], _islandParam.burnableSet);
-        _setMintable(mintableSet[_gameID][_islandID], _islandParam.mintableSet);
-        emit IslandUpdated(_gameID, _islandID);
+        _setArtistGame(_artistID, _levels);
     }
 
-    function transferWavNftOwnership(address newOwner) external  onlyOwner {
+    function setTreasuries(uint256[] calldata _artistIDs, address payable[] calldata _treasuries) external onlyOwner {
+        if (_artistIDs.length != _treasuries.length) {
+            revert ParametersMisMatch();
+        }
+        for (uint256 i; i < _artistIDs.length; ) {
+            // _assertValidTreasury(_treasuries[i]);
+            wavGames[_artistIDs[i]].treasury = _treasuries[i];
+            emit TreasurySet(_artistIDs[i], _treasuries[i]);
+            unchecked {
+                ++i;
+            }
+        }
+    }
+
+    function updateLevel(
+        uint256 _artistID,
+        uint256 _levelID,
+        IWavGame.LevelParam calldata _levelParam
+    ) external onlyOwner onlyValidLevel(_artistID, _levelID) {
+        uint256 levelIndex = Helper.getLevelIndex(_levelID);
+        if (_levelParam.requiredBurn > 0) {
+            wavGames[_artistID].levels[levelIndex].requiredBurn = _levelParam.requiredBurn;
+        }
+        if (_levelParam.requiredMint > 0) {
+            wavGames[_artistID].levels[levelIndex].requiredMint = _levelParam.requiredMint;
+        }
+        if (_levelParam.mintID > 0) {
+            wavGames[_artistID].levels[levelIndex].mintID = _levelParam.mintID;
+        }
+        if (_levelParam.burnID > 0) {
+            wavGames[_artistID].levels[levelIndex].burnID = _levelParam.burnID;
+        }
+        if (_levelParam.earlyBirdCutOff > 0) {
+            wavGames[_artistID].levels[levelIndex].earlyBirdCutOff = _levelParam.earlyBirdCutOff;
+        }
+        emit LevelUpdated(_artistID, _levelID);
+    }
+
+    function transferWavNftOwnership(address newOwner) external onlyOwner {
         wavNFT.transferOwnership(newOwner);
     }
 
@@ -267,71 +284,63 @@ contract WavGame is Initializable, PausableUpgradeable, OwnableUpgradeable, IWav
         _unpause();
     }
 
-    function _syncMint(address _gameID, uint256 _islandID, address _recipient, uint256 _mintCount) internal {
-        uint256 islandIndex = Helper.getIslandIndex(_islandID);
-        Island memory island = wavGames[_gameID].islands[islandIndex];
-        wavGames[_gameID].islands[islandIndex].mintCount += _mintCount;
-        if (collectors[_gameID][_islandID].length() < island.earlyBirdCutOff && !collectors[_gameID][_islandID].contains(_recipient)){
-            collectors[_gameID][_islandID].add(_recipient);
+    function _syncMint(uint256 _artistID, uint256 _levelID, address _recipient, uint256 _mintCount) internal {
+        uint256 levelIndex = Helper.getLevelIndex(_levelID);
+        Level memory level = wavGames[_artistID].levels[levelIndex];
+        wavGames[_artistID].levels[levelIndex].mintCount += _mintCount;
+        if (
+            collectors[_artistID][_levelID].length() < level.earlyBirdCutOff &&
+            !collectors[_artistID][_levelID].contains(_recipient)
+        ) {
+            collectors[_artistID][_levelID].add(_recipient);
         }
     }
 
-    function _setBurnable(address _gameID, uint256 _islandID, EnumerableSetUpgradeable.UintSet storage oldBurnableSet, IWavGame.SetParam[] memory newBurnableSet) internal  {
-        for (uint256 i; i < newBurnableSet.length;) {
-            if (newBurnableSet[i].status) {
-                // NFT for burn must be mintable from prevLevel, to ensure levelup 
-                //is only possible from a level lower to the next immediate level 
-                if (_islandID != ENTRY_LEVEL && mintableSet[_gameID][_islandID - 1].contains(newBurnableSet[i].id)) {
-                    oldBurnableSet.add(newBurnableSet[i].id);
-                }
-            } else {
-                oldBurnableSet.remove(newBurnableSet[i].id);
-            }
-            unchecked {++i;} 
-        }
-    }
-    function _setMintable(EnumerableSetUpgradeable.UintSet storage oldMintableSet, IWavGame.SetParam[] memory newMintableSet) internal  {
-        for (uint256 i; i < newMintableSet.length;) {
-            if (newMintableSet[i].status) {
-                oldMintableSet.add(newMintableSet[i].id);
-            } else {
-                oldMintableSet.remove(newMintableSet[i].id);
-            }
-            unchecked {++i;} 
-        }
-    }	
-
-    function _msgSender() internal view virtual override(ContextUpgradeable, ERC2771Recipient) returns (address sender) {
+    function _msgSender()
+        internal
+        view
+        virtual
+        override(ContextUpgradeable, ERC2771Recipient)
+        returns (address sender)
+    {
         return ERC2771Recipient._msgSender();
     }
+
     function _msgData() internal view virtual override(ContextUpgradeable, ERC2771Recipient) returns (bytes calldata) {
         return ERC2771Recipient._msgData();
     }
-    function _setGame(address _gameID, IWavGame.IslandParam[] memory _islands) internal {
-        for (uint256 i; i < _islands.length;) {
-            wavGames[_gameID].islands.push(IWavGame.Island(
-                _islands[i].requiredBurn,
-                _islands[i].requiredMint,
-                _islands[i].earlyBirdCutOff,
-                0,
-                0
-            ));
-            uint256 islandID = wavGames[_gameID].islands.length;
-            _setBurnable(_gameID, islandID, burnableSet[_gameID][islandID], _islands[i].burnableSet);
-            _setMintable(mintableSet[_gameID][islandID], _islands[i].mintableSet);
 
-            emit GameSet(_gameID, islandID);
-            unchecked {++i;} 
+    function _setArtistGame(uint256 _artistID, IWavGame.LevelParam[] memory _levels) internal {
+        for (uint256 i; i < _levels.length; ) {
+            wavGames[_artistID].levels.push(
+                IWavGame.Level(
+                    _levels[i].requiredBurn,
+                    _levels[i].requiredMint,
+                    _levels[i].earlyBirdCutOff,
+                    _levels[i].mintID,
+                    _levels[i].burnID,
+                    0,
+                    0
+                )
+            );
+            uint256 levelID = wavGames[_artistID].levels.length;
+
+            emit ArtistGameSet(_artistID, levelID);
+            unchecked {
+                ++i;
+            }
         }
     }
-    function _assertValidTreasury(address _contract) pure internal {
+
+    function _assertValidTreasury(address _contract) internal pure {
         if (_contract == address(0)) {
             revert InvalidTreasury(_contract);
         }
     }
-    function _assertValidGameID(address _gameID) pure internal {
-        if (_gameID == address(0)) {
-            revert InvalidGameID(_gameID);
+
+    function _assertValidArtistID(uint256 _artistID) internal pure {
+        if (_artistID == 0) {
+            revert InvalidArtistID(_artistID);
         }
     }
 }

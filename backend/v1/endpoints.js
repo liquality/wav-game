@@ -19,6 +19,14 @@ endpoints.readUser = {
   description: "create user",
 };
 
+endpoints.loginUser = {
+  url: "/v1/user/login/:serviceprovider_name",
+  method: "get",
+  middleware: [],
+  handler: userHandler.loginUser,
+  description: "login user",
+};
+
 endpoints.updateUser = {
   url: "/v1/user/:id",
   method: "put",
@@ -47,15 +55,31 @@ endpoints.createGame = {
 endpoints.readGame = {
   url: "/v1/game/:id",
   method: "get",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: gameHandler.read,
-  description: "create game",
+  description: "read game",
+};
+
+endpoints.readGameByUserId = {
+  url: "/v1/games/:userid/:artistNumberId?",
+  method: "get",
+  middleware: [middleware.authenticateJWT],
+  handler: gameHandler.readGamesByUserId,
+  description: "read game by user id ",
+};
+
+endpoints.getLeaderboardData = {
+  url: "/v1/game/leaderboard/:game_symbol_id",
+  method: "get",
+  middleware: [],
+  handler: gameHandler.getLeaderboardData,
+  description: "read leaderboard data based on game symbol id ",
 };
 
 endpoints.updateGame = {
-  url: "/v1/game/:id",
+  url: "/v1/game/:userid",
   method: "put",
-  middleware: [],
+  middleware: [middleware.authenticateJWT],
   handler: gameHandler.update,
   description: "update game",
 };
@@ -68,4 +92,21 @@ endpoints.deleteGame = {
   description: "delete game",
 };
 
+endpoints.levelUpTrade = {
+  url: "/v1/gamelevelup",
+  method: "put",
+  middleware: [middleware.authenticateJWT],
+  handler: gameHandler.levelUpTrade,
+  description: "level up game based on userid + gameid",
+};
+
+/*WEBHOOK EVENTS FROM CROSSMINT*/
+
+endpoints.listenToWebhook = {
+  url: "/v1/webhook",
+  method: "post",
+  middleware: [],
+  handler: gameHandler.webhook,
+  description: "listen to crossmint webhook",
+};
 module.exports = endpoints;

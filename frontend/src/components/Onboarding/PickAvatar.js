@@ -1,44 +1,54 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { TextField } from "@mui/material";
-
+import { useState } from "react";
 import { ReactComponent as AvatarPlaceholder } from "../../images/avatar_placeholder.svg";
-import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import UserService from "../../services/UserService";
-import { fetchSession } from "../../utils";
+import CustomButton from "../Button";
 
 export const PickAvatar = (props) => {
   const { serviceproviderName, publicAddress, setContent, setHeaderText } =
     props;
   const [username, setUsername] = useState("");
   const [avatarImage, setAvatarImage] = useState(null);
+  const [imageError, setImageError] = useState("");
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
 
-  const handleSetNewPage = () => {
+  const handleSetNewPage = async () => {
     // Call UserService.createUser() and pass the avatar image data along with other necessary data
     if (username && avatarImage && publicAddress) {
-      try {
-        UserService.createUser({
-          serviceprovider_name: serviceproviderName,
-          username,
-          avatar: avatarImage,
-          public_address: publicAddress,
-        }).then((response) => {
-          //Set session
-          localStorage.setItem("session", JSON.stringify(response));
-          console.log(response, "user obj response");
+      const payload = {
+        serviceprovider_name: serviceproviderName,
+        username,
+        avatar: avatarImage,
+        public_address: publicAddress,
+      };
 
-          setContent("pickArtist");
-          setHeaderText("Choose an artist");
-        });
-      } catch (err) {
-        console.log("Error creating user");
+      // Calculate payload size
+      const payloadSizeInBytes = JSON.stringify(payload).length;
+
+      // Set the maximum payload size in bytes (adjust as per your requirement)
+      const maxPayloadSizeInBytes = 4 * 1024 * 1024; // 4 MB
+
+      if (payloadSizeInBytes <= maxPayloadSizeInBytes) {
+        try {
+          const response = await UserService.createUser(payload);
+          // Set session
+          localStorage.setItem("session", JSON.stringify(response));
+
+          if (response) {
+            setContent("pickArtist");
+            setHeaderText("change artist");
+          }
+        } catch (err) {
+          console.log("Error creating user");
+        }
+      } else {
+        setImageError("Image is too large");
+        console.log("Payload size is too large");
       }
     } else {
-      //Set error msg here
+      // Set error msg here
       console.log("Please provide an avatar & username");
     }
   };
@@ -53,9 +63,8 @@ export const PickAvatar = (props) => {
     }
   };
 
-  console.log(avatarImage, "avatarImage");
   return (
-    <div className="text-center mx-auto">
+    <div className="text-center mx-auto contentView">
       <div
         className="flex justify-center items-center mx-auto mt-5"
         style={{ cursor: "pointer" }}
@@ -70,13 +79,15 @@ export const PickAvatar = (props) => {
           ) : (
             <AvatarPlaceholder />
           )}
-          <input
-            id="avatarInput"
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-            style={{ display: "none" }}
-          />
+          <button>
+            <input
+              id="avatarInput"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              style={{ display: "none" }}
+            />
+          </button>
         </label>
       </div>
 
@@ -87,19 +98,17 @@ export const PickAvatar = (props) => {
         value={username}
         onChange={handleUsernameChange}
       />
+      <br></br>
 
-      {/* TODO: make button inactive if no username is put in */}
-      <button
-        className="modalButtonSignIn  mt-5 mb-5 px-4"
+      <CustomButton
+        mt={"100px"}
+        type="big"
+        pink
         onClick={handleSetNewPage}
         disabled={username && avatarImage ? false : true}
-        style={{
-          width: "180px",
-          opacity: username && avatarImage ? 1 : 0.5,
-        }}
       >
-        Continue
-      </button>
+        CONTINUE
+      </CustomButton>
     </div>
   );
 };

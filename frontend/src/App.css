@@ -9,6 +9,10 @@ body {
   font-family: "Sora";
 }
 
+::selection {
+  background-color: #bc2b8ba6;
+}
+
 @font-face {
   font-family: "000 webfont";
   src: url("./fonts/000webfont\ Regular.ttf") format("truetype");
@@ -62,30 +66,26 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #f5f5f5;
 }
 
-.navBarText {
-  font-family: "Sora";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-
-  color: #f5f5f5;
-
-  text-align: center;
-  letter-spacing: -0.08px;
-
-  color: white;
-}
-
-.navBarLogoText {
+.logo-text {
+  display: flex;
+  align-items: start;
   font-family: "000 webfont";
   font-style: normal;
   font-weight: 400;
-  font-size: 45px;
-
+  font-size: 2.813rem;
   text-align: center;
   letter-spacing: -0.08px;
   color: white;
+}
+
+.logo-addon {
+  font-family: "000 webfont";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.563rem !important;
+  color: #bdbdbd;
+  margin-left: 0.459rem;
+  line-height: 3.875rem;
 }
 
 .navBold {
@@ -93,7 +93,8 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: 700;
 }
 
-.navBarText:hover {
+.navBarText:hover,
+.logo-text:hover {
   text-decoration: none;
   color: white;
 }
@@ -114,6 +115,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background: #e61ea3;
   border-radius: 100px;
 }
+
 .headerBtn {
   font-family: "Sora";
   font-size: 15px;
@@ -212,7 +214,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .modalTerms {
-  font-family: "000 webfont";
+  font-family: "Sora";
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -240,12 +242,27 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* WaveWrld/Modal header */
 .custom-modal {
-  max-width: 80%;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .custom-modal .modal-content {
   background-color: #1e1e1e;
   color: #fff;
+}
+
+.modal-content {
+  max-width: 100%;
+  min-width: 97vw;
+  min-height: 97vh;
+  overflow: auto;
 }
 
 .modal-header-text {
@@ -273,13 +290,20 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: row;
 }
 
-.footer {
-  flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
+.flexDirectionCol {
+  display: flex;
+  flex-direction: column;
+}
 
+.footer {
+  flex-shrink: 0;
+  /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  align-items: center;
   background-color: #272222;
+}
+
+.footer > div {
+  height: 6.125rem;
 }
 
 .alignTextToRight {
@@ -289,8 +313,13 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .leftModalContainer {
   width: 80rem;
+  height: 70vh;
   border-right: 1px solid #828282;
   text-align: center;
+}
+
+.contentView {
+  height: 70vh;
 }
 
 .leftModalContainerCreditcard {
@@ -359,7 +388,7 @@ input[type="number"]::-webkit-outer-spin-button {
   border-right: none;
   padding: 3px;
   margin: 15;
-  width: 80%;
+  width: 30%;
   padding-bottom: 10px;
 }
 
@@ -434,7 +463,7 @@ button.xmint-btn {
 }
 
 button.xmint-btn:after {
-  content: "Pay with Creditcard";
+  content: "BUY WITH CREDITCARD";
   color: white;
 }
 
@@ -467,6 +496,7 @@ div.background {
   width: 20%;
   height: 224px;
 }
+
 #block {
   background: linear-gradient(359.34deg, #bf3948 0.46%, #962bc7 99.33%);
   filter: alpha(opacity=60);
@@ -550,6 +580,10 @@ div.background {
   width: 100%;
 }
 
+.coral {
+  color: #ff6979 !important;
+}
+
 .lineCoral {
   border: 1px solid #973540;
   width: 90%;
@@ -564,13 +598,33 @@ div.background {
   color: #ff9fa9 !important;
 }
 
+.userAvatar {
+  padding: 10;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  border: 1px solid #f5f5f5;
+  background-color: transparent;
+  outline: 1px solid #bc2b8b;
+  outline-offset: 0.313rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .userMenuText {
   font-family: "Sora";
   font-style: normal;
   font-weight: 300;
   font-size: 17px;
+}
 
+.userMenuDiv {
+  top: 6rem;
+  background-color: #262020;
   letter-spacing: 1px;
+  border: 1px solid #4f4f4f;
+  border-radius: 20px;
 }
 
 .userMenuAddressText {
@@ -636,4 +690,242 @@ div.background {
   width: 80%;
   height: 377px;
   border-radius: 53px;
+}
+
+.progressbar {
+  position: relative;
+  overflow: hidden;
+  width: 350px;
+  height: 9px;
+  background-color: #4f4f4f;
+}
+
+.progressPercent {
+  font-weight: 600;
+  font-family: "Sora";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #eee;
+  text-shadow: -1px 0 #555, 0 1px #555, 1px 0 #555, 0 -1px #555;
+}
+
+.custom-button:hover,
+.custom-button:focus {
+  background: #ff82af !important;
+  border-radius: 100px;
+  color: white !important;
+}
+
+.custom-button:active {
+  background: #bb007b !important;
+  border-radius: 100px;
+  color: white !important;
+}
+
+.disabledBtn {
+  background: #4f4f4f;
+  color: white !important;
+  border-radius: 100px;
+}
+
+.violet {
+  color: #c154f3 !important;
+}
+
+.nftImageSendMany {
+  border-radius: 20px;
+  width: 120.57px;
+  height: 156.17px;
+}
+
+.nftImageSendTwo {
+  border-radius: 20px;
+
+  width: 247.41px;
+  height: 319.27px;
+}
+
+.nftImageSendOne {
+  border-radius: 20px;
+
+  width: 272px;
+  height: 351px;
+}
+
+.nftImagePrepared {
+  width: 367px;
+  height: 472px;
+  border-radius: 20px;
+}
+
+.greySmallText {
+  /* WaveWrld/body copy */
+
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 19px;
+  /* or 136% */
+
+  letter-spacing: 0.5px;
+
+  /* Gray 5 */
+
+  color: #e0e0e0;
+}
+
+.greyUpperCaseText {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
+  /* identical to box height, or 146% */
+
+  letter-spacing: 0.5px;
+
+  /* Gray 3 */
+
+  color: #828282;
+}
+
+.nftPreviewTrade {
+  width: 176px;
+  height: 220px;
+  border-radius: 20px;
+}
+.nftBigPreviewTrade {
+  width: 336px;
+  height: 430px;
+  border-radius: 20px;
+}
+
+.termsUpper {
+  font-family: "Verdana";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 26px;
+  text-transform: capitalize;
+}
+
+.terms {
+  font-family: "Verdana";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 26px;
+}
+
+/*********/
+
+/* ------------ */
+
+.card {
+  background-color: transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  overflow: hidden;
+}
+.rc-accordion-toggle {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  justify-content: space-between;
+  background-color: transparent;
+  transition: 0.3s;
+}
+.rc-accordion-toggle.active {
+  background-color: transparent;
+}
+.rc-accordion-toggle.active .rc-accordion-icon {
+  transform: rotate(180deg);
+  color: #fff;
+}
+.rc-accordion-card {
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.rc-accordion-card:last-child {
+  margin-bottom: 0;
+}
+.rc-accordion-title {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  text-transform: uppercase;
+  /* identical to box height, or 147% */
+
+  letter-spacing: 1px;
+
+  /* Greys/White */
+
+  color: #ffffff;
+}
+.rc-accordion-toggle.active .rc-accordion-title {
+  color: #fff;
+}
+.rc-accordion-icon {
+  position: relative;
+  top: 2px;
+  color: white;
+  transition: 0.35s;
+  font-size: 12px;
+}
+.rc-accordion-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 15px;
+}
+.rc-accordion-body p {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  color: white;
+}
+.rc-collapse {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+.rc-collapse.show {
+  height: auto;
+}
+
+.button {
+  background-color: #e61ea3;
+  border-radius: 100px;
+  color: white;
+  padding: 0.5em;
+  width: "227px";
+  height: "56px";
+  text-decoration: none;
+  padding: 15px;
+}
+
+.button:focus,
+.button:hover {
+  background-color: #e61ea3;
+  color: White;
+  text-decoration: none;
+}
+
+.content {
+  display: none;
+  margin: 1em 0;
+}
+
+.content.active,
+.no-js .content {
+  display: block;
 }

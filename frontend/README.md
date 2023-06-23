@@ -10,5 +10,10 @@ Created using Liquality SDK + React
 
 # Run the app
 
+Add the environment variables in a .env file
+`REACT_APP_GELATO_API_KEY=your_key
+REACT_APP_ALCHEMY_API_KEY=your_key
+`
+
 `npm install`
 `npm run dev` //Opens on PORT=3005 which is important because thats where the service worker works

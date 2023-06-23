@@ -17,39 +17,82 @@ class Game {
       this.level_5_claimed_prizes = game.level_5_claimed_prizes;
       this.level_6_claimed_main_prize = game.level_6_claimed_main_prize;
       this.claimable_prize_count = game.claimable_prize_count;
+      this.game_symbol_id = game.game_symbol_id;
+      this.created_at = game.created_at;
     }
   }
 
   /*                  */
   /* CRUD OPERATIONS  */
   /*                  */
+
   create = async () => {
     const game = this;
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
         db.query(
-          "INSERT INTO `game` (status, user_id, level, artist_name, level_4_claimed_prizes, level_5_claimed_prizes, level_6_claimed_main_prize, claimable_prize_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
-          [
-            "not_started", //status default is not started when game is created
-            game.user_id,
-            game.level,
-            game.artist_name,
-            game.level_4_claimed_prizes,
-            game.level_5_claimed_prizes,
-            game.level_6_claimed_main_prize,
-            game.claimable_prize_count,
-          ],
-          (err, results, fields) => {
-            console.log(err, "results", results);
+          "SELECT COUNT(*) AS count FROM `game` WHERE user_id = ? AND game_symbol_id = ?",
+          [game.user_id, game.game_symbol_id],
+          (err, results) => {
             if (err) {
               reject(new ApiError(500, err));
-            } else if (results.length < 1) {
-              reject(new ApiError(500, "Game not saved!"));
-            } else {
-              game.id = results.insertId;
-              resolve(game);
+              db.release();
+              return;
             }
-            db.release();
+            const rowCount = results[0].count;
+
+            if (rowCount > 0) {
+              // Update existing row
+              db.query(
+                "UPDATE `game` SET status=?, level=?, artist_name=?, level_4_claimed_prizes=?, level_5_claimed_prizes=?, level_6_claimed_main_prize=?, claimable_prize_count=? WHERE user_id=? AND game_symbol_id=?;",
+                [
+                  "in_progress",
+                  game.level,
+                  game.artist_name,
+                  game.level_4_claimed_prizes,
+                  game.level_5_claimed_prizes,
+                  game.level_6_claimed_main_prize,
+                  game.claimable_prize_count,
+                  game.user_id,
+                  game.game_symbol_id,
+                ],
+                (err, results, fields) => {
+                  if (err) {
+                    reject(new ApiError(500, err));
+                  } else if (results.affectedRows < 1) {
+                    reject(new ApiError(404, "Game not found!"));
+                  } else {
+                    resolve(game);
+                  }
+                  db.release();
+                }
+              );
+            } else {
+              // Insert new row
+              db.query(
+                "INSERT INTO `game` (status, user_id, level, artist_name, level_4_claimed_prizes, level_5_claimed_prizes, level_6_claimed_main_prize, claimable_prize_count, game_symbol_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, UTC_TIMESTAMP());",
+                [
+                  "in_progress",
+                  game.user_id,
+                  1,
+                  game.artist_name,
+                  game.level_4_claimed_prizes,
+                  game.level_5_claimed_prizes,
+                  game.level_6_claimed_main_prize,
+                  game.claimable_prize_count,
+                  game.game_symbol_id,
+                ],
+                (err, results, fields) => {
+                  if (err) {
+                    reject(new ApiError(500, err));
+                  } else {
+                    game.id = results.insertId;
+                    resolve(game);
+                  }
+                  db.release();
+                }
+              );
+            }
           }
         );
       });
@@ -72,7 +115,6 @@ class Game {
                 reject(new ApiError(404, "Game not found"));
               } else {
                 game.set(results[0]);
-                console.log(results, "results??");
                 resolve(game);
               }
               db.release();
@@ -87,38 +129,36 @@ class Game {
   };
 
   update = async () => {
-    update = async () => {
-      const game = this;
-      const promise = new Promise((resolve, reject) => {
-        this.MySQL.pool.getConnection((err, db) => {
-          db.query(
-            "UPDATE `game` SET status=?, user_id=?, level=?, artist_name=?, level_4_claimed_prizes=?, level_5_claimed_prizes=?, level_6_claimed_main_prize=?, claimable_prize_count=? WHERE id=?;",
-            [
-              game.status,
-              game.user_id,
-              game.level,
-              game.artist_name,
-              game.level_4_claimed_prizes,
-              game.level_5_claimed_prizes,
-              game.level_6_claimed_main_prize,
-              game.claimable_prize_count,
-              game.id,
-            ],
-            (err, results, fields) => {
-              if (err) {
-                reject(new ApiError(500, err));
-              } else if (results.affectedRows < 1) {
-                reject(new ApiError(404, "Game not found!"));
-              } else {
-                resolve(game);
-              }
-              db.release();
+    const game = this;
+    const promise = new Promise((resolve, reject) => {
+      this.MySQL.pool.getConnection((err, db) => {
+        db.query(
+          "UPDATE `game` SET status=?, user_id=?, level=?, artist_name=?, level_4_claimed_prizes=?, level_5_claimed_prizes=?, level_6_claimed_main_prize=?, claimable_prize_count=? game_symbol_id=? WHERE id=?;",
+          [
+            game.status,
+            game.user_id,
+            game.level,
+            game.artist_name,
+            game.level_4_claimed_prizes,
+            game.level_5_claimed_prizes,
+            game.level_6_claimed_main_prize,
+            game.claimable_prize_count,
+            game.id,
+          ],
+          (err, results, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else if (results.affectedRows < 1) {
+              reject(new ApiError(404, "Game not found!"));
+            } else {
+              resolve(game);
             }
-          );
-        });
+            db.release();
+          }
+        );
       });
-      return promise;
-    };
+    });
+    return promise;
   };
 
   delete = async (id) => {
@@ -144,6 +184,171 @@ class Game {
       } else {
         reject(new ApiError(400, "Missing game id"));
       }
+    });
+    return promise;
+  };
+
+  readGameByUserId = async (userId, gameNumberId, helper) => {
+    console.log(userId, gameNumberId, "userid and game nr id");
+    const game = this;
+    const promise = new Promise((resolve, reject) => {
+      if (userId) {
+        MySQL.pool.getConnection((err, db) => {
+          if (gameNumberId) {
+            db.execute(
+              "SELECT * FROM `game` WHERE user_id = ? AND game_symbol_id = ?",
+              [userId, gameNumberId],
+              (err, results, fields) => {
+                if (err) {
+                  reject(new ApiError(500, err));
+                } else if (results.length < 1) {
+                  if (helper) {
+                    resolve(null);
+                  } else {
+                    reject(new ApiError(404, "Game not found"));
+                  }
+                } else {
+                  game.set(results[0]);
+                  resolve(results[0]);
+                }
+                db.release();
+              }
+            );
+          } else {
+            db.execute(
+              "select * from `game` where user_id = ?",
+              [userId],
+              (err, results, fields) => {
+                if (err) {
+                  reject(new ApiError(500, err));
+                } else if (results.length < 1) {
+                  reject(new ApiError(404, "Game not found"));
+                } else {
+                  game.set(results[0]);
+                  resolve(results);
+                }
+                db.release();
+              }
+            );
+          }
+        });
+      } else {
+        reject(new ApiError(500, "Missing user id"));
+      }
+    });
+    return promise;
+  };
+  getLeaderboardData = async (gameId) => {
+    const promise = new Promise((resolve, reject) => {
+      MySQL.pool.getConnection((err, db) => {
+        db.execute(
+          "SELECT level, COUNT(DISTINCT user_id) AS userCount FROM `game` WHERE game_symbol_id = ? GROUP BY level",
+          [gameId],
+          (err, results, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else {
+              const leaderboardData = {};
+              results.forEach((row) => {
+                leaderboardData[`level${row.level}`] = row.userCount;
+              });
+              resolve(leaderboardData);
+            }
+            db.release();
+          }
+        );
+      });
+    });
+    return promise;
+  };
+
+  levelUpTrade = async (userId, gameNumberId) => {
+    const promise = new Promise((resolve, reject) => {
+      MySQL.pool.getConnection((err, db) => {
+        db.query(
+          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ?",
+          [userId, gameNumberId],
+          (err, gameResults, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else if (gameResults.affectedRows < 1) {
+              reject(new ApiError(404, "Game with given user_id not found!"));
+            } else {
+              resolve(gameResults);
+            }
+            db.release();
+          }
+        );
+      });
+    });
+    return promise;
+  };
+
+  readUserByWalletAddress = async (address) => {
+    const promise = new Promise((resolve, reject) => {
+      if (address) {
+        MySQL.pool.getConnection((err, db) => {
+          db.execute(
+            "SELECT * FROM `user` WHERE public_address = ?",
+            [address],
+            (err, results, fields) => {
+              if (err) {
+                reject(new ApiError(500, err));
+              } else if (results.length < 1) {
+                reject(new ApiError(404, "User with wallet address not found"));
+              } else {
+                resolve(results[0]);
+              }
+              db.release();
+            }
+          );
+        });
+      } else {
+        reject(new ApiError(500, "Missing wallet address"));
+      }
+    });
+    return promise;
+  };
+
+  levelUpOnboarding = async (address, artistNumberId) => {
+    const game = this;
+    const user = await this.readUserByWalletAddress(address);
+    const promise = new Promise((resolve, reject) => {
+      MySQL.pool.getConnection((err, db) => {
+        if (err) {
+          reject(new ApiError(500, err));
+          return;
+        }
+
+        console.log(
+          address,
+          "address",
+          artistNumberId,
+          "artistnr id",
+          "USERID:",
+          user.id
+        );
+        // Update game table
+        db.query(
+          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ? AND level IS NULL",
+          [user.id, artistNumberId],
+          (err, gameResults, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else if (gameResults.affectedRows < 1) {
+              reject(
+                new ApiError(
+                  404,
+                  "Game with given user_id and game_symbol_id not found!, if this game level is not NULL, you can ignore this error"
+                )
+              );
+            } else {
+              resolve(game);
+            }
+            db.release();
+          }
+        );
+      });
     });
     return promise;
   };

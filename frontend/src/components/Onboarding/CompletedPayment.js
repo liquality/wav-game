@@ -1,6 +1,3 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { ReactComponent as LiqualityLogo } from "../../images/liquality_logo.svg";
 import { ReactComponent as Congrats } from "../../images/congrats.svg";
 
 export const CompletedPayment = (props) => {

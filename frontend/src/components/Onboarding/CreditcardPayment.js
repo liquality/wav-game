@@ -1,36 +1,31 @@
-import { ReactComponent as NftTiles } from "../../images/nft_tiles.svg";
-import { ReactComponent as MysteryBox } from "../../images/mystery_box.svg";
-import * as React from "react";
-import { useState, useEffect } from "react";
+import { ReactComponent as NftTiles } from "../../images/OneNftTile.svg";
+import { useState } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
-import { fetchSession } from "../../utils";
+import { getPublicKey } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 export const CreditcardPayment = (props) => {
-  const { setContent } = props;
+  const { setContent, selectedId } = props;
   const [nftAmount, setNftAmount] = useState(1);
 
-  const handleIncrement = () => {
-    setNftAmount(nftAmount + 1);
-  };
+  const navigate = useNavigate();
 
-  const handleDecrement = () => {
-    if (nftAmount > 0) {
-      setNftAmount(nftAmount - 1);
-    }
+  const handleDoneWithCheckout = () => {
+    navigate(`/artist/${selectedId.id}`);
   };
 
   const handleAmountChange = (event) => {
     const { name, value } = event.target;
     //prevent negative nrs
     var inputValue = Number(value) < 0 ? 0 : value;
-
     setNftAmount(inputValue);
   };
 
+  let totalNFTsPrice = (0.0005 * nftAmount).toString();
   return (
-    <div className="flex">
+    <div className=" contentView flex">
       <div className="p-4 w-1/2 flex justify-center items-center margin-auto">
-        {/* Big image container */}
+        {/* Big image container e*/}
 
         <div
           style={{
@@ -43,7 +38,7 @@ export const CreditcardPayment = (props) => {
           }}
         >
           {" "}
-          <NftTiles />
+          <NftTiles style={{ width: "406px", height: "515px" }} />
         </div>
       </div>
       <div className="w-1/2 flex flex-col justify-center">
@@ -53,10 +48,10 @@ export const CreditcardPayment = (props) => {
           {" "}
           <img
             className="avatarImage ml-2"
-            src="https://avatars.githubusercontent.com/u/34882183?v=4"
+            src={require(`../../images/artists/${selectedId?.image}`)}
             alt="Artist Avatar"
           />{" "}
-          <p className="mt-2">Artist Name</p>
+          <p className="mt-2">{selectedId.name}</p>
         </div>
         <p className="lineNoCenter mt-5 mb-4" style={{ width: "50%" }}></p>
 
@@ -82,17 +77,24 @@ export const CreditcardPayment = (props) => {
             onChange={handleAmountChange}
             required
           />
-          <p className="mr-3 mt-2 ml-5">Total $100 </p>
+          <p className="mr-3 mt-2 ml-5">
+            <b>TOTAL:</b> ${10 * nftAmount}{" "}
+          </p>
         </div>
 
         <CrossmintPayButton
-          clientId="_YOUR_CLIENT_ID_"
-          environment="_ENVIRONMENT_"
+          onClick={handleDoneWithCheckout}
+          clientId="d40b03b9-09a3-4ad8-a4f8-15fef67cad21"
+          environment="staging"
           className="xmint-btn"
+          mintTo={getPublicKey()}
           mintConfig={{
-            type: "erc-721",
-            quantity: "_NUMBER_OF_NFTS_",
-            totalPrice: "_PRICE_IN_NATIVE_TOKEN_",
+            type: "erc-1155",
+            _amount: nftAmount,
+            totalPrice: totalNFTsPrice,
+            _recipient: getPublicKey(),
+            _gameID: selectedId.number_id,
+
             // your custom minting arguments...
           }}
         />

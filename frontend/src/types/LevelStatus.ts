@@ -1,0 +1,1 @@
+export type LevelStatus = 'active' | 'completed' | 'upcomming' | 'locked' | 'won' | 'next';

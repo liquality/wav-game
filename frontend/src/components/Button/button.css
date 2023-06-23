@@ -1,0 +1,131 @@
+.wave-button {
+  font-family: 'Sora', Arial, sans-serif;
+  font-weight: 500;
+  border: 0;
+  border-radius: 6.25em;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  background-color: #ffff;
+  color: #E61EA3;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.wave-link {
+  opacity: 1;
+  font-family: 'Sora', Arial, sans-serif;
+  font-weight: 500;
+  border: 0;
+  cursor: pointer;
+  line-height: 1;
+  background-color: transparent;
+  color: #F251BC;
+  border: none;
+  text-transform: uppercase;
+}
+
+.wave-link:active, 
+.wave-link:hover,
+.wave-link.active{
+  color: #BB007B;
+}
+
+.wave-button--pink {
+  color: #FFFFFF;
+  background-color: #E61EA3;
+}
+
+.wave-link--default {
+  color: #FFFFFF;
+}
+
+.wave-link:active, 
+.wave-link:hover,
+.wave-link.active{
+  color: #BB007B;
+}
+
+.wave-button:hover,
+.wave-button--pink:hover {
+  color: #FFFFFF;
+  background-color: #FF82AF;
+}
+.wave-button:active, 
+.wave-button.active
+.wave-button--pink:active, 
+.wave-button--pink.active {
+  color: #FFFFFF;
+  background-color: #BB007B;
+}
+
+.wave-button:disabled,
+.wave-link:disabled {
+  opacity: 0.35;
+}
+
+.wave-button--pinkStroke {
+  color: #FFFFFF;
+  background-color: #BC2B8B;
+  border: solid 1px #FFFFFF;
+}
+
+.wave-button--pinkStroke:hover {
+  background-color: #FF82AF;
+}
+.wave-button--pinkStroke:active, 
+.wave-button--pinkStroke.active {
+  background-color: #BB007B;
+}
+
+.wave-button--inactive {
+  color: #FFFFFF;
+  background-color: #4F4F4F;
+}
+
+.wave-button--inactive:hover,
+.wave-button--inactive:active,
+.wave-button--inactive.active {
+  color: #FFFFFF;
+  background-color: #222222;
+}
+
+.wave-button--stroke {
+  color: #E0E0E0;
+  background-color: #211C1C;
+  border: 1px solid #E0E0E0;
+}
+
+.wave-button--stroke:hover,
+.wave-button--stroke:active,
+.wave-button--stroke.active {
+  color: #888787;
+  background-color: #211C1C;
+}
+
+.wave-link--small,
+.wave-button--small {
+  font-size: 0.55rem;
+  padding: 0 0.313rem;
+  min-width: 4.375;
+  min-height: 1.625rem;
+}
+
+.wave-link--medium,
+.wave-button--medium {
+  font-size: 0.75rem;
+  padding: 0 0.313rem;
+  min-width: 7.5rem;
+  min-height: 2.875rem;
+}
+
+.wave-link--large,
+.wave-button--large {
+  font-size: 0.875rem;
+  padding: 0 1.313rem;
+  min-width: 8rem;
+  min-height: 3.5rem;
+}

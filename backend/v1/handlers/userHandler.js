@@ -17,7 +17,6 @@ userHandler.read = function (req, res) {
       var user = new User();
       user.read(id).then(
         (user) => {
-          console.log(user, "USER?");
           res.status(200).send(user);
         },
         (reason) => {
@@ -34,13 +33,12 @@ userHandler.read = function (req, res) {
 
 userHandler.create = function (req, res) {
   var user = new User();
+
   user.set(req.body); // should be a user object
   // Send the JWT token as a response to save in client localstorage
-  console.log(user, "user???");
 
   user.create().then(
     (result) => {
-      console.log(result, "RESULT AFTER CREATE USER");
       res.status(200).send(result);
     },
     (reject) => {
@@ -93,6 +91,19 @@ userHandler.delete = function (req, res) {
   } else {
     res.status(403).send(new ApiError(403, "Access denied"));
   }
+};
+
+userHandler.loginUser = function (req, res) {
+  var serviceprovider_name = req.params.serviceprovider_name;
+  var user = new User();
+  user.loginUser(serviceprovider_name).then(
+    (result) => {
+      res.status(200).send(result);
+    },
+    (reason) => {
+      res.status(400).send(new ApiError(400, reason));
+    }
+  );
 };
 
 module.exports = userHandler;

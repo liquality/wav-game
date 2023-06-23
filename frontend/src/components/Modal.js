@@ -1,37 +1,58 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { ReactComponent as ModalCloseX } from "../images/modal_close_x.svg";
 import { PoweredByLiquality } from "./PoweredByLiquality";
+import Crossmint from "../images/powered_by_crossmintPNG.png";
 
 export const CustomModal = (props) => {
-  const { content, setShow, show, modalHeaderText } = props;
-  const [tKey, setTKey] = useState({});
+  const { content, setShow, show, modalHeaderText, type, txStatus } = props;
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => {});
 
-  console.log(modalHeaderText, "MODAL HEADER text content");
+  let logo;
+  if (type === "creditCard") {
+    logo = (
+      <div className="text-center mx-auto">
+        <div className="flex justify-center items-center mt-3 mb-3">
+          <img src={Crossmint} alt="crossmint" />
+        </div>
+      </div>
+    );
+  } else if (type === "none") {
+    logo = null;
+  } else {
+    logo = <PoweredByLiquality />;
+  }
+
   return (
     <>
-      <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
+      <Modal
+        style={{ minHeight: `${window.innerHeight}px` }}
+        show={show}
+        onHide={handleClose}
+        dialogClassName="custom-modal"
+      >
+        {( content !== "processingSend" || (content === "processingSend" && txStatus.hash)?
         <button className="modal-close-x" onClick={handleClose}>
           <ModalCloseX />
         </button>
+        : null )}
 
-        <p className="modal-header-text">
+        <div className="modal-header-text">
           {modalHeaderText ? (
             modalHeaderText
           ) : (
             <div className="modal-header-notext"></div>
           )}
-        </p>
-        <div className="line"></div>
-        {content()}
-        <div className="line"></div>
-        <PoweredByLiquality />
+        </div>
+        <div className="modal-body">
+          <div className="line"></div>
+          {content()}
+          <div className="line"></div>
+        </div>
+        {logo}
       </Modal>
     </>
   );

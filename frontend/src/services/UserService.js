@@ -5,12 +5,46 @@ const UserService = {
     return NetworkService.postResourceWithAuth("/v1/user/", userObject, jwt);
   },
 
-  getGameByUserId: async function (userId, jwt) {
-    return NetworkService.getResourceWithAuth("/v1/game/" + userId, jwt);
+  getUserByUserId: async function (userId, jwt) {
+    return NetworkService.getResourceWithAuth("/v1/user/" + userId, jwt);
+  },
+
+  getGameByUserId: async function (userId, artist_number_id, jwt) {
+    let url = `/v1/games/${userId}`;
+    if (artist_number_id) {
+      url = `${url}/${artist_number_id}`
+    }
+    return NetworkService.getResourceWithAuth(
+      url,
+      jwt
+    );
   },
 
   createGame: async function (gameObject, jwt) {
     return NetworkService.postResourceWithAuth("/v1/game/", gameObject, jwt);
+  },
+
+  updateGame: async function (gameObject, jwt) {
+    return NetworkService.putResourceWithAuth("/v1/game/", gameObject, jwt);
+  },
+
+  levelUpTrade: async function (gameObject, jwt) {
+    return NetworkService.putResourceWithAuth(
+      "/v1/gamelevelup",
+      gameObject,
+      jwt
+    );
+  },
+
+  getLeaderboardData: async function (gameID, jwt) {
+    return NetworkService.getResourceWithAuth(
+      "/v1/game/leaderboard/" + gameID,
+      jwt
+    );
+  },
+
+  loginUser: async function (userEmail) {
+    return NetworkService.getResourceWithAuth("/v1/user/login/" + userEmail);
   },
 };
 export default UserService;

@@ -1,48 +1,109 @@
 import { DataContext } from "./DataContext";
-import { useEffect, useState } from "react";
 import "./App.css";
-
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Auth from "./pages/Auth";
-
-import { Route, Routes, useLocation } from "react-router-dom";
-import { Balances } from "./pages/Balances";
-import { Dashboard } from "./pages/Dashboard/Dashboard";
-
-import { fetchSession, setupSDK } from "./utils";
+import { Route, Routes } from "react-router-dom";
+import { Terms } from "./pages/Terms";
+import { setupSDK } from "./utils";
 import Footer from "./components/Footer";
+import { Artist } from "./pages/Artist/Artist";
+import { useState, useEffect } from "react";
+import UserService from "./services/UserService";
+import { fetchSession } from "./utils";
+import { SpinningLoader } from "./components/SpinningLoader";
 
 function App() {
   setupSDK();
+  const [showPickArtistModal, setShowPickArtistModal] = useState(false);
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [chooseArtistView, setChooseArtistView] = useState("chooseArtistStart");
+  const [selectedArtist, setSelectedArtist] = useState(null);
 
-  const [loginResponse, setLoginResponse] = useState(
-    JSON.parse(localStorage.getItem("loginResponse")) || {}
-  );
+  const fetchUser = async () => {
+    if (fetchSession()?.id) {
+      try {
+        const user = await UserService.getUserByUserId(
+          fetchSession().id, //userid
+          fetchSession().token
+        );
+        return user;
+      } catch (err) {
+        console.log(err, "Error fetching user");
+      }
+    } else return {};
+  };
 
   useEffect(() => {
-    localStorage.setItem("loginResponse", JSON.stringify(loginResponse));
-  }, [loginResponse]);
-  const location = useLocation();
+    const fetchData = async () => {
+      setLoading(true);
+      const user = await fetchUser();
+      setUser(user);
+      setLoading(false);
+    };
+
+    fetchData();
+    return () => {};
+  }, []);
 
   return (
-    <body className="stretched device-xl no-transition">
+    <div className="stretched device-xl no-transition">
       <DataContext.Provider
         value={{
-          loginResponse: loginResponse,
-          setLoginResponse: setLoginResponse,
+          loginResponse: "",
+          setLoginResponse: "",
+          showPickArtistModal,
+          setShowPickArtistModal,
+          chooseArtistView,
+          setChooseArtistView,
+          user,
         }}
       >
         {" "}
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/balances" element={<Balances />} />
-        </Routes>
+        <Navbar
+          user={user}
+          showPickArtistModal={showPickArtistModal}
+          setShowPickArtistModal={setShowPickArtistModal}
+          chooseArtistView={chooseArtistView}
+          setChooseArtistView={setChooseArtistView}
+          selectedArtist={selectedArtist}
+          setSelectedArtist={setSelectedArtist}
+        />
+        {loading ? (
+          <div className="contentView m-5 p-5 flex justify-center items-center ">
+            <div className="m-4 p-4">
+              <SpinningLoader />
+            </div>
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={
+              <Home 
+                setShowPickArtistModal={setShowPickArtistModal}
+                setChooseArtistView={setChooseArtistView} 
+                selectedArtist={selectedArtist}
+                setSelectedArtist={setSelectedArtist}
+              />} 
+            />
+            <Route path="/terms" element={<Terms />} />
+            <Route
+              path="/artist/:artistId"
+              element={
+                <Artist
+                  user={user}
+                  showPickArtistModal={showPickArtistModal}
+                  setShowPickArtistModal={setShowPickArtistModal}
+                  setChooseArtistView={setChooseArtistView}
+                  selectedArtist={selectedArtist}
+                  setSelectedArtist={setSelectedArtist}
+                />
+              }
+            />
+          </Routes>
+        )}
         <Footer />
       </DataContext.Provider>{" "}
-    </body>
+    </div>
   );
 }
 

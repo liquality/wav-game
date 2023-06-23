@@ -1,6 +1,5 @@
-import * as React from "react";
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { AuthService, tryRegisterSW } from "@liquality/wallet-sdk";
 import { LoginOrRegister } from "./LogInOrRegister";
 import { PickAvatar } from "./PickAvatar";
@@ -8,6 +7,8 @@ import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
+import { fetchSession, seeIfUserCanLogIn } from "../../utils";
+import UserService from "../../services/UserService";
 
 const verifierMap = {
   google: {
@@ -15,16 +16,15 @@ const verifierMap = {
     typeOfLogin: "google",
     clientId:
       "852640103435-0qhvrgpkm66c9hu0co6edkhao3hrjlv3.apps.googleusercontent.com",
-    verifier: "liquality-google-testnet",
+    verifier: "liquality-wavgame",
   },
 };
 
 // 1. Setup Service Provider
 const directParams = {
-  baseUrl:
-    window.location.href === "http://localhost:3005/"
-      ? `http://localhost:3005/serviceworker`
-      : `https://wav-game-staging-public.liquality.io/serviceworker`,
+  baseUrl: window.location.href.startsWith("http://localhost:3005")
+    ? `http://localhost:3005/serviceworker`
+    : `https://wav-game-staging-public.liquality.io/serviceworker`,
   enableLogging: true,
   networkUrl: "https://goerli.infura.io/v3/a8684b771e9e4997a567bbd7189e0b27",
   network: "testnet",
@@ -40,10 +40,9 @@ export const LoginModal = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
-  //const { loginResponse, setLoginResponse } = React.useContext(DataContext);
-
+  const [selectedId, setSelectedId] = useState(null);
+  const navigate = useNavigate();
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const init = async () => {
@@ -58,15 +57,69 @@ export const LoginModal = (props) => {
 
     init();
   }, [loginResponse, content]);
-  console.log(window.location.href, "location HREF");
+
+  const loginUser = async (serviceprovider_name) => {
+    try {
+      const response = await UserService.loginUser(serviceprovider_name);
+      localStorage.setItem("session", JSON.stringify(response));
+    } catch (err) {
+      console.log("Error logging in user");
+    }
+  };
+
+  const fetchGamesByUserId = async () => {
+    try {
+      const token = fetchSession()?.token;
+      if (token) {
+        return await UserService.getGameByUserId(
+          fetchSession()?.id, //userid
+          "",
+          token
+        );
+      }
+    } catch (err) {
+      console.log(err, "Error fetching user");
+    }
+    return null;
+  };
+
   const createNewWallet = async () => {
-    setLoading(true);
-    const response = await AuthService.createWallet(tKey, verifierMap);
-    setLoginResponse(response);
-    setLoading(false);
-    //TODO: create user in db here
-    setContent("pickAvatar");
-    setHeaderText("Pick An Avatar");
+    //Dont create new wallet if user has localstorage shares
+    if (seeIfUserCanLogIn()) {
+      setLoading(true);
+      const response = await AuthService.loginUsingSSO(tKey, verifierMap);
+      localStorage.setItem("loginResponse", JSON.stringify(response));
+      await loginUser(response.loginResponse?.userInfo?.email);
+      setLoginResponse(response);
+
+      // get the games and redirect to the latest created
+      const games = await fetchGamesByUserId();
+      if (games && games.length > 0) {
+        const sortedGames = games.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+        const { artist_name } = sortedGames[0];
+        if (artist_name) {
+          setLoading(false);
+          navigate(`/artist/${artist_name}`);
+          setLoading(false);
+          setShow(false);
+        } else {
+          window.location.reload();
+        }
+      } else {
+        window.location.reload();
+      }
+    } else {
+      setLoading(true);
+      const response = await AuthService.createWallet(tKey, verifierMap);
+      localStorage.setItem("loginResponse", JSON.stringify(response));
+      setLoginResponse(response);
+      setLoading(false);
+      //TODO: create user in db here
+      setContent("pickAvatar");
+      setHeaderText("Pick An Avatar");
+    }
   };
 
   const whichContentToRender = () => {
@@ -76,6 +129,7 @@ export const LoginModal = (props) => {
           setHeaderText={setHeaderText}
           createNewWallet={createNewWallet}
           loading={loading}
+          handleClose={handleClose}
         />
       );
     } else if (content === "pickAvatar") {
@@ -83,17 +137,25 @@ export const LoginModal = (props) => {
         <PickAvatar
           setHeaderText={setHeaderText}
           setContent={setContent}
-          serviceproviderName={loginResponse.loginResponse.userInfo.email}
-          publicAddress={loginResponse.loginResponse.publicAddress}
+          serviceproviderName={loginResponse?.loginResponse?.userInfo?.email}
+          publicAddress={loginResponse?.loginResponse?.publicAddress}
         />
       );
     } else if (content === "pickArtist") {
       return (
-        <PickArtist setHeaderText={setHeaderText} setContent={setContent} />
+        <PickArtist
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+          setHeaderText={setHeaderText}
+          setContent={setContent}
+          type={"onboarding"}
+          handleClose={handleClose}
+        />
       );
     } else if (content === "creditcardPayment") {
       return (
         <CreditcardPayment
+          selectedId={selectedId}
           setHeaderText={setHeaderText}
           setContent={setContent}
         />
@@ -108,9 +170,16 @@ export const LoginModal = (props) => {
     } else return null;
   };
 
+  let typeOfLogo;
+  if (content === "creditcardPayment") {
+    typeOfLogo = "creditCard";
+  } else if (content === "loginOrRegister") {
+    typeOfLogo = "none";
+  } else typeOfLogo = null;
   return (
     <>
       <CustomModal
+        type={typeOfLogo}
         show={show}
         setShow={setShow}
         content={whichContentToRender}
