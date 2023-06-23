@@ -3,9 +3,9 @@ import { LevelCard } from "../LevelCard/LevelCard";
 import { getLevelsStatuses } from "../../utils";
 
 export const Level2 = (props) => {
-    const { selectedLevel, game, onSetLevel, onTradeClick, nftCount, burnStatus } = props;
+    const { selectedLevel, currentLevel, onSetLevel, onTradeClick, nftCount, burnStatus } = props;
     const level2Count = nftCount['level2'] || 0;
-    const status = getLevelsStatuses(game?.level || 1)[2];
+    const status = getLevelsStatuses(currentLevel || 1)[2];
     let instructions = '';
     let tradeActionText = '';
     let actionDisbled = false;

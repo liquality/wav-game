@@ -4,14 +4,14 @@ import { getLevelsStatuses } from "../../utils";
 export const Level1 = (props) => {
   const {
     selectedLevel,
-    game,
     onSetLevel,
     onTradeClick,
     onGetMoreClick,
     nftCount,
     burnStatus,
+    currentLevel
   } = props;
-  const status = getLevelsStatuses(game?.level || 1)[1];
+  const status = getLevelsStatuses(currentLevel || 1)[1];
   const level1Count = nftCount["level1"] || 0;
   const instructions = `You have ${level1Count === -1 ? 0 : level1Count} NFTs.`;
   let tradeActionText = "";

@@ -132,46 +132,12 @@ gameHandler.delete = function (req, res) {
   }
 };
 
-gameHandler.levelUpTrade = function (req, res) {
-  const gameId = req.body.gameId;
-  const userId = req.body.userId;
-  const userIdFromSession = req.user.id;
-
-  if (userId && gameId) {
-    if (userId === userIdFromSession) {
-      const game = new Game();
-      game.levelUpTrade(userId, gameId).then(
-        (game) => {
-          res.status(200).send(game);
-        },
-        (reject) => {
-          res.status(400).send(new ApiError(400, reject));
-        }
-      );
-    } else {
-      res.status(400).send(new ApiError(400, reason));
-    }
-  } else {
-    res.status(403).send(new ApiError(403, "Access denied for level up"));
-  }
-};
-
 gameHandler.webhook = async function (req, res) {
   console.log(req.body, "req body???");
   const { status, tokenIds } = req.body;
   if (status === "success") {
     const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
     console.log(artistNumberId, "artist nr id");
-    const game = new Game();
-    game.levelUpOnboarding(req.body.walletAddress, artistNumberId).then(
-      (game) => {
-        console.log("webhook successfull");
-        res.status(200).send(game);
-      },
-      (reject) => {
-        res.status(400).send(new ApiError(400, reject));
-      }
-    );
   } else {
     res.status(400).send(new ApiError(400, reason));
   }

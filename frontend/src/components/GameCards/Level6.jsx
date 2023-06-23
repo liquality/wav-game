@@ -3,9 +3,9 @@ import { LevelCard } from "../LevelCard/LevelCard";
 import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
 
 export const Level6 = (props) => {
-    const { selectedLevel, game, onSetLevel, onTradeClick, nftCount } = props;
+    const { selectedLevel, currentLevel, onSetLevel, onTradeClick, nftCount } = props;
     const level6Count = nftCount['level6'] || 0;
-    let status = getLevelsStatuses(game?.level || 1)[6];
+    let status = getLevelsStatuses(currentLevel || 1)[6];
     let instructions = '';
     let tradeActionText = '';
     let edition = '';

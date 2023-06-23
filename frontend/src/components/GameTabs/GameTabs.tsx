@@ -20,7 +20,7 @@ interface GameTabsProps {
  * The collection or Tab Levels with animation
  */
 export const GameTabs = (props: GameTabsProps) => {
-  const { selectedLevel, currentGame, onLevelSelected,  } = props;
+  const { selectedLevel, onLevelSelected,  } = props;
   const levelStatuses = getLevelsStatuses(selectedLevel);
 
   return (
