@@ -9,8 +9,8 @@ export const SendModal = (props) => {
   const { show, setShow } = props;
   const [content, setContent] = useState("sendStart");
   const [selectedNft, setSelectedNft] = useState(null);
-  const [sendRequest, setSendRequest] = useState({address:"",tokenID:0});
-  const [txStatus, setTxStatus] = useState({hash:null});
+  const [sendRequest, setSendRequest] = useState({ address: "", tokenID: 0 });
+  const [txStatus, setTxStatus] = useState({ hash: "" });
 
   const handleClose = () => setShow(false);
 
@@ -21,7 +21,7 @@ export const SendModal = (props) => {
   }, [content]);
 
   const whichContentToRender = () => {
-    console.log("whichContentToRender >> ", content)
+    console.log("whichContentToRender >> ", content);
     if (content === "sendStart") {
       return (
         <SendStart
@@ -49,7 +49,7 @@ export const SendModal = (props) => {
           handleClose={handleClose}
           sendRequest={sendRequest}
           setTxStatus={setTxStatus}
-          txStatus = {txStatus}
+          txStatus={txStatus}
         />
       );
     } else return null;

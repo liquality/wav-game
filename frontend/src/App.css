@@ -901,3 +901,31 @@ div.background {
 .rc-collapse.show {
   height: auto;
 }
+
+.button {
+  background-color: #e61ea3;
+  border-radius: 100px;
+  color: white;
+  padding: 0.5em;
+  width: "227px";
+  height: "56px";
+  text-decoration: none;
+  padding: 15px;
+}
+
+.button:focus,
+.button:hover {
+  background-color: #e61ea3;
+  color: White;
+  text-decoration: none;
+}
+
+.content {
+  display: none;
+  margin: 1em 0;
+}
+
+.content.active,
+.no-js .content {
+  display: block;
+}

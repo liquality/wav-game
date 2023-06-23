@@ -1,4 +1,3 @@
-
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
@@ -17,14 +16,29 @@ export const PrepareSend = ({
   handleClose,
 }) => {
   const [addressInput, setAddressInput] = useState("");
+  const [nftAmount, setNftAmount] = useState(0);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const sendNft = async () => {
-    setSendRequest({address:addressInput,tokenID:selectedNft.id});
+    setSendRequest({
+      nftAmount: nftAmount,
+      address: addressInput,
+      tokenID: selectedNft.id,
+    });
     setContent("processingSend");
   };
 
   const handleSendInput = (e) => {
     setAddressInput(e.target.value);
+  };
+
+  const handleNftAmountInput = (e) => {
+    if (e.target.value <= selectedNft.balance) {
+      setNftAmount(e.target.value);
+      setErrorMsg("");
+    } else {
+      setErrorMsg("NFT amount must be lower or equal to your balance");
+    }
   };
 
   const handleCopyClick = (text) => {
@@ -74,24 +88,29 @@ export const PrepareSend = ({
 
         <div className="flexDirectionRow">
           {" "}
-          <img
+          {/*   <img
             className="avatarImage ml-2"
-            src="https://avatars.githubusercontent.com/u/34882183?v=4"
+            src={require(`../../images/artists/${.image}`)}
             alt="Artist Avatar"
-          />{" "}
+          />{" "} */}
           <p className="mt-2">{selectedNft.metadata?.name.split(" - ")[0]}</p>
         </div>
 
         <div className="mt-3">
           {" "}
-          <p className="greyUpperCaseText">{selectedNft.metadata?.name}</p>
+          <p className="greyUpperCaseText">
+            {selectedNft.metadata?.name}{" "}
+            <p className="greyUpperCaseText bold">
+              Balance: {selectedNft.balance}
+            </p>
+          </p>
         </div>
 
         <p className="lineNoCenter mt-2 " style={{ width: "50%" }}></p>
 
         <p className="mt-4 greySmallText" style={{ width: "50%" }}>
-          Transferring the NFT won't impact your reward. You'll still receive it
-          [as one of the initial [n] in level [n]].
+          Transferring the NFT(s) won't impact your reward. You'll still receive
+          it [as one of the initial [n] in level [n]].
         </p>
         <p className="mt-5 mb-2 greyUpperCaseText">
           SEND FROM YOUR POLYGON ACCOUNT
@@ -103,17 +122,33 @@ export const PrepareSend = ({
           <Polygon className="mr-3" />
           {shortenAddress(getPublicKey())} <CopyIcon className="ml-2 mt-1" />
         </button>
-        <input
-          style={{ width: "50%" }}
-          className="passwordInputBox"
-          type="text"
-          placeholder="Send to..."
-          id="nftAmount"
-          name="nftAmount"
-          value={addressInput}
-          onChange={handleSendInput}
-          required
-        />
+        <div className="flexDirectionRow">
+          <input
+            style={{ width: "30%" }}
+            className="passwordInputBox"
+            type="text"
+            placeholder="Send to..."
+            id="nftAmount"
+            name="nftAmount"
+            value={addressInput}
+            onChange={handleSendInput}
+            required
+          />
+          <input
+            style={{ width: "15%", marginLeft: 10 }}
+            className="passwordInputBox"
+            type="number"
+            placeholder="Amount..."
+            id="nftAmount"
+            name="nftAmount"
+            value={nftAmount}
+            onChange={handleNftAmountInput}
+            required
+          />
+        </div>
+        <p className=" greySmallText lightPink" style={{ width: "70%" }}>
+          {errorMsg}
+        </p>
 
         <p className=" greySmallText mt-4" style={{ width: "50%" }}>
           All fees paid by wavWRLD / Average network speed
@@ -121,7 +156,7 @@ export const PrepareSend = ({
 
         <div className="flexDirectionRow mb-3 mt-3">
           <CustomButton
-            disabled={!addressInput ? true : false}
+            disabled={!addressInput && !nftAmount ? true : false}
             pink
             type="big"
             onClick={sendNft}

@@ -27,10 +27,8 @@ export const GameIncentives = ({ selectedArtist, setContent }) => {
         <div className="flexDirectionRow">
           {" "}
           <img
-            className="avatarImage ml-2"
-            src={
-              require(`../../images/artists/${selectedArtist.image}`)
-            }
+            className="avatarImage ml-2 object-cover"
+            src={require(`../../images/artists/${selectedArtist.image}`)}
             alt="Artist Avatar"
           />{" "}
           <p className="mt-2">{selectedArtist.name}</p>

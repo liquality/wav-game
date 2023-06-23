@@ -15,25 +15,28 @@ export const NftImages = (props) => {
   const renderMoreThanThreeImages = () => {
     let rows = [];
     if (nfts) {
-      rows = nfts.slice(0, 7).map((nft, index) => {
+      rows = nfts.slice(0, 50).map((nft, index) => {
         return (
-          <div className="pr-5 mt-3">
-            <button onClick={() => setSelectedNft(nft)}>
-              <img
-                style={selectedNft?.id === nft.id ? readyToSendStyle : {}}
-                src={
-                  nft.metadata?.image?.replace(
-                    "ipfs://",
-                    "https://ipfs.io/ipfs/"
-                  ) || imagePlaceholder
-                }
-                alt={nft.metadata?.name}
-                className="nftImageSendMany w-full h-full object-cover"
-              />
-            </button>
+          <div className="pr-5 mt-3 ">
+            <div>
+              <button onClick={() => setSelectedNft(nft)}>
+                <img
+                  style={selectedNft?.id === nft.id ? readyToSendStyle : {}}
+                  src={
+                    nft.metadata?.image?.replace(
+                      "ipfs://",
+                      "https://ipfs.io/ipfs/"
+                    ) || imagePlaceholder
+                  }
+                  alt={nft.metadata?.name}
+                  className="nftImageSendMany w-full h-full object-cover"
+                />
+              </button>
 
-            <div className="pt-1">
-              <p style={{ fontSize: 11 }}>{nft.metadata?.name}</p>
+              <div className="pt-1">
+                <p style={{ fontSize: 11 }}>{nft.metadata?.name}</p>
+                <p style={{ fontSize: 11 }}>Amount: {nft.balance}</p>
+              </div>
             </div>
           </div>
         );
@@ -45,10 +48,11 @@ export const NftImages = (props) => {
     return rows;
   };
 
+  console.log("selected nft", selectedNft);
   const renderTwoOrThreeImages = () => {
     let rows = [];
     if (nfts) {
-      rows = nfts.slice(0, 7).map((nft, index) => {
+      rows = nfts.map((nft, index) => {
         return (
           <div className="pr-5 mt-3">
             <button onClick={() => setSelectedNft(nft)}>
@@ -66,9 +70,8 @@ export const NftImages = (props) => {
             </button>
 
             <div className="pt-1">
-              <p style={{ fontSize: 11 }}>LVL {index + 1}</p>
-              <p style={{ fontSize: 11 }}> {nft.contract.name}</p>
-              <p style={{ fontSize: 11 }}>{nft.contract.name}</p>
+              <p style={{ fontSize: 11 }}> {nft.metadata?.name}</p>
+              <p style={{ fontSize: 11 }}>Amount: {nft.balance}</p>
             </div>
           </div>
         );
@@ -98,9 +101,8 @@ export const NftImages = (props) => {
         </button>
 
         <div className="pt-1">
-          <p style={{ fontSize: 11 }}> LVL {1}</p>
-          <p style={{ fontSize: 11 }}> {nfts[0].contract.name}</p>
-          <p style={{ fontSize: 11 }}>{nfts[0].contract.name}</p>
+          <p style={{ fontSize: 11 }}> {nfts[0].metadata?.name}</p>
+          <p style={{ fontSize: 11 }}>Amount: {nfts[0].balance}</p>
         </div>
       </div>
     );
@@ -116,5 +118,18 @@ export const NftImages = (props) => {
   }
 
   //https://flowbite.com/docs/images/examples/image-4@2x.jpg
-  return <div className="flexDirectionRow ">{imageSizeToRender}</div>;
+  return (
+    <>
+      {nfts?.length > 6 ? (
+        <div
+          style={{ maxHeight: "400px" }}
+          className="grid grid-cols-6 gap-4  overflow-y-auto"
+        >
+          {imageSizeToRender}
+        </div>
+      ) : (
+        <div className="flexDirectionRow ">{imageSizeToRender}</div>
+      )}
+    </>
+  );
 };

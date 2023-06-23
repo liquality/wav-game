@@ -61,11 +61,9 @@ export const SendStart = ({
             )}
           </div>
           <div className="flexDirectionCol">
-            <br></br>
-            <br></br>
             <div
-              style={{ left: "40%" }}
-              className="flexDirectionRow m-auto absolute bottom-40 "
+              style={{ left: "40%", bottom: "20%" }}
+              className="flexDirectionRow m-auto absolute "
             >
               <CustomButton
                 disabled={selectedNft === null ? true : false}
