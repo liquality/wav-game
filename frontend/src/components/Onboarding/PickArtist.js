@@ -71,19 +71,21 @@ export const PickArtist = (props) => {
     init();
   }, []);
 
-  const handleClick = (artist, navigate) => {
+  const handleClick = (artist, _navigate) => {
     // check game status if it not started yet we redirect to the modal, if not just redirecto to the page
     const game = games?.find((g) => {
-      return g.artist_name === artist?.id
+      return g.artist_name === artist?.id;
     });
+    console.log(_navigate, "navigate");
+    setSelectedId(artist);
+    setShouldNavigate(_navigate);
 
     if (game && game.level) {
       navigate(`/artist/${game.artist_name}`);
-    } else {
-      setSelectedId(artist);
-      setShouldNavigate(navigate);
     }
   };
+
+  console.log(shouldNavigate, "should Nav?");
 
   function renderArtistGrid() {
     return (
@@ -104,7 +106,7 @@ export const PickArtist = (props) => {
   const handleSetNewPage = async () => {
     if (type !== "onboarding") {
       const gameAlreadyStarted = games?.find((game) => {
-        return (game.artist_name === selectedId.id);
+        return game.artist_name === selectedId.id;
       });
       //if game already exists dont create it again
       if (gameAlreadyStarted && !shouldNavigate) {
@@ -135,9 +137,9 @@ export const PickArtist = (props) => {
 
       <div className="flexDirectionRow flex justify-center items-center mt-24 ">
         <Button
-          size={'large'}
+          size={"large"}
           disabled={selectedId ? false : true}
-          mode={'pink'}
+          mode={"pink"}
           onClick={handleSetNewPage}
         >
           {type === "onboarding" ? "CONTINUE" : "SELECT"}

@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { getGameIdBasedOnHref } from "../utils";
-import { SpinningLoader } from "./SpinningLoader";
 
 export const ArtistGrid = (props) => {
   const { selectedId, handleClick, artistData, artistImages, games } = props;
 
   const [artistFromHref, setArtistFromHref] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       const currentGameBasedOnHref = await getGameIdBasedOnHref();
@@ -20,30 +18,28 @@ export const ArtistGrid = (props) => {
   }, []);
 
   const renderButtons = (startHere, endHere) => {
-    if (artistData?.length > 0 && artistData) {
+    if (artistData.length > 0) {
       return artistData.slice(startHere, endHere).map((item, index) => {
-        const game = games?.find((game) => {
-          return game.artist_name === item?.id;
+        const level = games?.find((game) => {
+          if (game.artist_name === item.id) return game.level;
         });
-
-        const level = game?.level;
-        console.log("game", game);
         const userIsOnHrefArtist = item?.id === artistFromHref?.id;
 
         //I am sorry for this convoluted and messy logic,
         //will refactor one day maybe lmao
         let buttonStyle;
-        if (selectedId?.number_id === item.number_id && !userIsOnHrefArtist) {
+        if (selectedId?.number_id === item.number_id) {
           buttonStyle = { color: "white", backgroundColor: "#E61EA3" };
-        } else if (userIsOnHrefArtist) {
-          buttonStyle = { borderColor: "#FF5DC8" };
         }
-        const finished = game?.level_6_claimed_main_prize || false;
+        const finished = games?.find((game) => {
+          if (game.artist_name === item.id)
+            return game.level_6_claimed_main_prize;
+        });
         let isDisabled;
         let renderLevel;
-        if (level && !finished) {
-          renderLevel = `Level ${level}`;
-        } else if (level === 6 && finished) {
+        if (level?.level && !finished?.level_6_claimed_main_prize) {
+          renderLevel = `Level ${level?.level}`;
+        } else if (level?.level === 6 && finished.level_6_claimed_main_prize) {
           isDisabled = true;
           renderLevel = "Game ended";
           buttonStyle = {
@@ -54,16 +50,17 @@ export const ArtistGrid = (props) => {
           renderLevel = "Start game";
         }
 
+        let shouldNavigate = userIsOnHrefArtist || level;
         return (
           <div className="flexDirectionRow  mb-3" key={index}>
             <button
-              onClick={() => handleClick(item, userIsOnHrefArtist || level)}
+              onClick={() => handleClick(item, shouldNavigate)}
               className="defaultArtistBtn"
               disabled={isDisabled}
               style={buttonStyle}
             >
               <img
-                src={artistImages[item?.id]}
+                src={artistImages[item.id]}
                 className="avatarImage ml-2 object-cover"
                 alt="Artist Avatar"
               />
@@ -90,31 +87,21 @@ export const ArtistGrid = (props) => {
         );
       });
     } else {
-      return null;
+      return <p colSpan="3">No data available</p>;
     }
   };
 
   return (
     <div className="justify-center">
-      {artistData?.length > 0 && artistData ? (
-        <div>
-          <div className="flexDirectionRow justify-center mb-3">
-            {renderButtons(0, 2)}
-          </div>{" "}
-          <div className="flexDirectionRow justify-center mb-3">
-            {renderButtons(2, 6)}
-          </div>
-          <div className="flexDirectionRow justify-center">
-            {renderButtons(6, 8)}
-          </div>
-        </div>
-      ) : (
-        <div className="contentView m-5 p-5 flex justify-center items-center ">
-          <div className="m-4 p-4">
-            <SpinningLoader />
-          </div>
-        </div>
-      )}
+      <div className="flexDirectionRow justify-center mb-3">
+        {renderButtons(0, 2)}
+      </div>{" "}
+      <div className="flexDirectionRow justify-center mb-3">
+        {renderButtons(2, 6)}
+      </div>
+      <div className="flexDirectionRow justify-center mb-3">
+        {renderButtons(6, 8)}
+      </div>
     </div>
   );
 };
