@@ -34,8 +34,6 @@ const Leaderboard = ({ setShowSendModal, artist, nftCount }) => {
     };
   }, [artist, leaderboardData]);
 
-  console.log(leaderboardData, "leaderboarddata BÄ");
-
   const activeToggleStyle = {
     borderBottom: "1px solid #f251bc",
     color: "#f251bc",

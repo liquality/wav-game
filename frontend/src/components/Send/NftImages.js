@@ -48,7 +48,6 @@ export const NftImages = (props) => {
     return rows;
   };
 
-  console.log("selected nft", selectedNft);
   const renderTwoOrThreeImages = () => {
     let rows = [];
     if (nfts) {

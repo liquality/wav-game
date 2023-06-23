@@ -76,7 +76,6 @@ export const PickArtist = (props) => {
     const game = games?.find((g) => {
       return g.artist_name === artist?.id;
     });
-    console.log(_navigate, "navigate");
     setSelectedId(artist);
     setShouldNavigate(_navigate);
 
@@ -84,8 +83,6 @@ export const PickArtist = (props) => {
       navigate(`/artist/${game.artist_name}`);
     }
   };
-
-  console.log(shouldNavigate, "should Nav?");
 
   function renderArtistGrid() {
     return (

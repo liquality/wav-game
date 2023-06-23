@@ -154,7 +154,6 @@ export const TradeStart = (props) => {
         setError("Transaction failed, please check the logs");
       }
     } catch (err) {
-      console.log(err, "ERROR, Something with wrong with trade:");
       setError("Transaction failed, please check the logs");
     }
   };

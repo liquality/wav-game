@@ -21,7 +21,6 @@ export const SendModal = (props) => {
   }, [content]);
 
   const whichContentToRender = () => {
-    console.log("whichContentToRender >> ", content);
     if (content === "sendStart") {
       return (
         <SendStart
