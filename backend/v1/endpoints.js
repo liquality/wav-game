@@ -101,4 +101,12 @@ endpoints.listenToWebhook = {
   handler: gameHandler.webhook,
   description: "listen to crossmint webhook",
 };
+
+endpoints.getLevelSettings = {
+  url: "/v1/level-settings",
+  method: "get",
+  middleware: [],
+  handler: gameHandler.getLevelSettings,
+  description: "Get all level settings",
+};
 module.exports = endpoints;

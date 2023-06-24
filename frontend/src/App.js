@@ -79,13 +79,9 @@ function App() {
 
       if (_artist?.number_id && nfts && !nftCount) {
         console.log("FETCHING COUNT AGAIN!");
-        const countNftsAndTotal = await getNFTCountPerLevelAndTotalCollectibles(
-          nfts,
-          _artist.number_id
-        );
-        const _currentLevel = await getCurrentLevel(nfts, _artist.number_id);
-        setNftCount(countNftsAndTotal.levels);
-        setCollectibleCount(countNftsAndTotal.totalCollectibles);
+        const _currentLevel = getCurrentLevel(nfts, _artist.number_id);
+        setNftCount(_currentLevel.levels);
+        setCollectibleCount(_currentLevel.totalCollectibles);
         setCurrentLevel(_currentLevel.currentLevel);
       }
     };

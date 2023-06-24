@@ -35,6 +35,17 @@ const UserService = {
     );
   },
 
+  getLevelSettings: async function (jwt) {
+    const settings = await NetworkService.getResourceWithAuth(
+      "/v1/level-settings",
+      jwt
+    );
+    return (settings || []).reduce((accum, curr) => {
+      accum[curr.level] = curr;
+      return accum;
+    }, {});
+  },
+
   loginUser: async function (userEmail) {
     return NetworkService.getResourceWithAuth("/v1/user/login/" + userEmail);
   },

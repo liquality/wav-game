@@ -32,7 +32,6 @@ export const Artist = (props) => {
     nfts,
     nftCount,
     setNfts,
-    setNftCount,
     currentLevel,
     collectibleCount,
   } = useContext(DataContext);
@@ -114,7 +113,7 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, [artistId, userGames]);
+  }, [artistId, userGames, nfts, setNfts]);
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (
