@@ -1,4 +1,3 @@
-
 import { getPublicKey } from "../../utils";
 import ContractService from "../../services/contractService";
 import "./game-cards.css";
@@ -33,23 +32,37 @@ interface GameCardsProps {
  * The collection or Card Levels with animation
  */
 export const GameCards = (props: GameCardsProps) => {
-  const { currentGame, currentLevel, selectedLevel, onTradeClick, onGetMoreClick, onLevelSelected, nftCount } = props;
+  const {
+    currentGame,
+    currentLevel,
+    selectedLevel,
+    onTradeClick,
+    onGetMoreClick,
+    onLevelSelected,
+    nftCount,
+  } = props;
   const [burnStatus, setBurnStatus] = useState({});
 
   async function onSetLevel(levelId?: number) {
-    console.log("onSetLevel level >>>>~>> ", levelId)
     onLevelSelected(levelId || currentLevel || 1);
   }
-  
+
   useEffect(() => {
     async function getBurnStatus() {
-      const _burnStatus = await [1,2,3,4,5,6].reduce(async (prev, level) => {
-        const accum = await prev;
-        const status = await ContractService.getBurnStatus(currentGame.game_symbol_id, getPublicKey(), level);
-        accum[level] = status;
-        return accum;
-      }, Promise.resolve({}));
-      
+      const _burnStatus = await [1, 2, 3, 4, 5, 6].reduce(
+        async (prev, level) => {
+          const accum = await prev;
+          const status = await ContractService.getBurnStatus(
+            currentGame.game_symbol_id,
+            getPublicKey(),
+            level
+          );
+          accum[level] = status;
+          return accum;
+        },
+        Promise.resolve({})
+      );
+
       setBurnStatus(_burnStatus);
     }
     getBurnStatus();

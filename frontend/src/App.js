@@ -4,21 +4,48 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import { Terms } from "./pages/Terms";
-import { setupSDK } from "./utils";
+import {
+  getCurrentLevel,
+  getNFTCountPerLevelAndTotalCollectibles,
+  getPublicKey,
+  setupSDK,
+} from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
 import { useState, useEffect } from "react";
 import UserService from "./services/UserService";
 import { fetchSession } from "./utils";
 import { SpinningLoader } from "./components/SpinningLoader";
+import { NftService } from "@liquality/wallet-sdk";
+import { CHAIN_ID } from "./data/contract_data";
+import { getGameIdBasedOnHref } from "./utils";
 
 function App() {
   setupSDK();
+
   const [showPickArtistModal, setShowPickArtistModal] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
   const [chooseArtistView, setChooseArtistView] = useState("chooseArtistStart");
   const [selectedArtist, setSelectedArtist] = useState(null);
+  const [nfts, setNfts] = useState(null);
+  const [nftCount, setNftCount] = useState(null);
+  const [collectibleCount, setCollectibleCount] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState(0);
+
+  const fetchNfts = async (address, chainId) => {
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+    return nfts;
+  };
+
+  const fetchArtist = async () => {
+    try {
+      const artist = await getGameIdBasedOnHref();
+      return artist;
+    } catch (err) {
+      console.log(err, "Error fetching the artist");
+    }
+  };
 
   const fetchUser = async () => {
     if (fetchSession()?.id) {
@@ -40,11 +67,32 @@ function App() {
       const user = await fetchUser();
       setUser(user);
       setLoading(false);
+
+      const _artist = await fetchArtist();
+      console.log(_artist, "artist?");
+
+      if (!nfts) {
+        console.log("FETCHING NFTS AGAIN!");
+        const nftData = await fetchNfts();
+        setNfts(nftData);
+      }
+
+      if (_artist?.number_id && nfts && !nftCount) {
+        console.log("FETCHING COUNT AGAIN!");
+        const countNftsAndTotal = await getNFTCountPerLevelAndTotalCollectibles(
+          nfts,
+          _artist.number_id
+        );
+        const _currentLevel = await getCurrentLevel(nfts, _artist.number_id);
+        setNftCount(countNftsAndTotal.levels);
+        setCollectibleCount(countNftsAndTotal.totalCollectibles);
+        setCurrentLevel(_currentLevel.currentLevel);
+      }
     };
 
     fetchData();
     return () => {};
-  }, []);
+  }, [nfts, nftCount]);
 
   return (
     <div className="stretched device-xl no-transition">
@@ -57,6 +105,14 @@ function App() {
           chooseArtistView,
           setChooseArtistView,
           user,
+
+          nfts: nfts,
+          setNftCount: setNftCount,
+          setNfts: setNfts,
+          nftCount: nftCount,
+          collectibleCount: collectibleCount,
+          setCurrentLevel: setCurrentLevel,
+          currentLevel: currentLevel,
         }}
       >
         {" "}
@@ -77,13 +133,16 @@ function App() {
           </div>
         ) : (
           <Routes>
-            <Route path="/" element={
-              <Home 
-                setShowPickArtistModal={setShowPickArtistModal}
-                setChooseArtistView={setChooseArtistView} 
-                selectedArtist={selectedArtist}
-                setSelectedArtist={setSelectedArtist}
-              />} 
+            <Route
+              path="/"
+              element={
+                <Home
+                  setShowPickArtistModal={setShowPickArtistModal}
+                  setChooseArtistView={setChooseArtistView}
+                  selectedArtist={selectedArtist}
+                  setSelectedArtist={setSelectedArtist}
+                />
+              }
             />
             <Route path="/terms" element={<Terms />} />
             <Route

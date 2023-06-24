@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "../../App.css";
 import "./artist.css";
 import { Sidebar } from "./Sidebar";
@@ -10,12 +10,10 @@ import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
-import { NftService } from "@liquality/wallet-sdk";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
-import { getNFTsByLevel, getPublicKey } from "../../utils";
-import { CHAIN_ID } from "../../data/contract_data";
 import Faq from "../../components/Faq";
+import { DataContext } from "../../DataContext";
 import { SpinningLoader } from "../../components/SpinningLoader";
 
 export const Artist = (props) => {
@@ -26,26 +24,23 @@ export const Artist = (props) => {
   const [showTrade, setShowTrade] = useState(false);
   const [showSend, setShowSend] = useState(false);
   const [currentGame, setCurrentGame] = useState(null);
-
   const [selectedLevel, setSelectedLevel] = useState(1);
   const [tradeLevel, setTradeLevel] = useState(1);
+  const {
+    nfts,
+    nftCount,
+    setNfts,
+    setNftCount,
+    currentLevel,
+    collectibleCount,
+  } = useContext(DataContext);
+
   const {
     setShowPickArtistModal,
     setChooseArtistView,
     setSelectedArtist,
     userGames,
   } = props;
-  const [nftOwners, setNftOwners] = useState(null);
-  const [nfts, setNfts] = useState(null);
-  const [nftCount, setNftCount] = useState(null);
-  const [collectibleCount, setCollectibleCount] = useState(0);
-  const [currentLevel, setCurrentLevel] = useState(0);
-
-  const fetchNfts = async (address, chainId) => {
-    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
-    return nfts;
-  };
-
 
   const fetchArtist = async (id) => {
     try {
@@ -97,23 +92,6 @@ export const Artist = (props) => {
           .default;
         const currentGame = await fetchCurrentGame(_artist?.number_id);
 
-        if (!nfts) {
-          const nftData = await fetchNfts();
-          setNfts(nftData);
-        }
-
-        if (!nftOwners) {
-          /*   const _nftOwners = await getNFTOwnersCount(_artist.number_id);
-          setNftOwners(_nftOwners); */
-        }
-
-        if (_artist.number_id && nfts && !nftCount) {
-          const nftData = getNFTsByLevel(nfts, _artist.number_id);
-          setNftCount(nftData.levels);
-          setCollectibleCount(nftData.totalCollectibles);
-          setCurrentLevel(nftData.currentLevel);
-        }
-
         setImage(_image);
         setCurrentGame(currentGame);
       }
@@ -123,7 +101,7 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, [artistId, userGames, nfts, nftCount, nftOwners]);
+  }, [artistId, userGames]);
 
   return (
     <div className="container mx-auto">
@@ -182,7 +160,8 @@ export const Artist = (props) => {
                 <Leaderboard
                   setShowSendModal={setShowSend}
                   artist={artist}
-                  nftCount={nftCount} />
+                  nftCount={nftCount}
+                />
                 <Faq />{" "}
               </div>
             </div>

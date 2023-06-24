@@ -1,13 +1,20 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { ReactComponent as ModalCloseX } from "../images/modal_close_x.svg";
 import { PoweredByLiquality } from "./PoweredByLiquality";
 import Crossmint from "../images/powered_by_crossmintPNG.png";
+import { DataContext } from "../DataContext";
 
 export const CustomModal = (props) => {
   const { content, setShow, show, modalHeaderText, type, txStatus } = props;
+  const { setNfts, setNftCount } = useContext(DataContext);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    //To rerender nfts and count, set to null so useeffect hook can fetch again in parent components
+    setNfts(null);
+    setNftCount(null);
+  };
 
   useEffect(() => {});
 
@@ -34,11 +41,12 @@ export const CustomModal = (props) => {
         onHide={handleClose}
         dialogClassName="custom-modal"
       >
-        {( content !== "processingSend" || (content === "processingSend" && txStatus.hash)?
-        <button className="modal-close-x" onClick={handleClose}>
-          <ModalCloseX />
-        </button>
-        : null )}
+        {content !== "processingSend" ||
+        (content === "processingSend" && txStatus.hash) ? (
+          <button className="modal-close-x" onClick={handleClose}>
+            <ModalCloseX />
+          </button>
+        ) : null}
 
         <div className="modal-header-text">
           {modalHeaderText ? (

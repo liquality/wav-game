@@ -9,7 +9,7 @@ export const Level1 = (props) => {
     onGetMoreClick,
     nftCount,
     burnStatus,
-    currentLevel
+    currentLevel,
   } = props;
   const status = getLevelsStatuses(currentLevel || 1)[1];
   const level1Count = nftCount["level1"] || 0;
@@ -35,7 +35,6 @@ export const Level1 = (props) => {
     });
   }
 
-  console.log(burnStatus, "burnstatus?");
   if (burnStatus) {
     actions.push({
       onActionClick: (level) => onGetMoreClick(level),
