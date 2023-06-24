@@ -72,8 +72,6 @@ export const Artist = (props) => {
     return nfts;
   };
 
-  console.log(nfts, "NFTS in artist", nftCount);
-
   const onTradeClick = (level) => {
     setTradeLevel(level);
     console.log("onTradeClick level ", level);
@@ -117,7 +115,6 @@ export const Artist = (props) => {
       //any cleanup
     };
   }, [artistId, userGames]);
-  console.log(image, artist, currentGame, nftCount, "ALL OF THEM");
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (
