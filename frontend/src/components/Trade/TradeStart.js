@@ -1,25 +1,17 @@
-import NftPreview from "../../images/nft_preview.png";
-import NftBigPreview from "../../images/nft_preview_big.png";
-import NoImage from "../../images/noImage.png";
-
 import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
-import * as React from "react";
 import { useState, useEffect } from "react";
 import CustomButton from "../Button";
 import {
   CHAIN_ID,
   WAV_NFT_ADDRESS,
-  WAV_PROXY_ABI,
   WAV_PROXY_ADDRESS,
 } from "../../data/contract_data";
 import {
   fetchSession,
-  filterArrayByIdStartingWith,
   getGameIdBasedOnHref,
   getPrivateKey,
   getPublicKey,
 } from "../../utils";
-import { ethers } from "ethers";
 import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import UserService from "../../services/UserService";
 
@@ -78,13 +70,13 @@ export const TradeStart = (props) => {
     };
 
     init();
-  }, [game, userNfts, tokenIdForNewLevel, tokenIdForCurrentLevel]);
+  }, [game, userNfts, tokenIdForNewLevel, tokenIdForCurrentLevel, level]);
 
   //LVL UP: A trade makes a player level up both in contract & in db
   const startTrade = async (data) => {
     try {
       setContent("processingTrade");
-      
+
       const artist = await getArtist();
       const privateKey = getPrivateKey();
 

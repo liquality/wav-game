@@ -1,37 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { CustomModal } from "../Modal";
 import { TradeStart } from "./TradeStart";
 import { ProcessingTrade } from "./ProcessingTrade";
 import { ethers } from "ethers";
 import {
-  CHAIN_ID,
   WAV_NFT_ABI,
   WAV_NFT_ADDRESS,
   WAV_PROXY_ABI,
   WAV_PROXY_ADDRESS,
 } from "../../data/contract_data";
-import { NftService } from "@liquality/wallet-sdk";
-import { getPublicKey } from "../../utils";
+import { DataContext } from "../../DataContext";
 
 export const TradeModal = (props) => {
-  const { show, setShow, level, setLevel} = props;
+  const { show, setShow, level, setLevel } = props;
   const [content, setContent] = useState("tradeStart");
   const [headerText, setHeaderText] = useState("Trade");
   const [nftContract, setNftContract] = useState(null);
   const [gameContract, setGameContract] = useState(null);
-  const [userNfts, setUserNfts] = useState(null);
+  const { nfts } = useContext(DataContext);
 
   const [txStatus, setTxStatus] = useState({
     hash: null,
     submited: false,
-    approval: false
+    approval: false,
   });
 
   const showTradeModal = () => {
-    setShow(!show)
-    setLevel(level)
-  }
+    setShow(!show);
+    setLevel(level);
+  };
 
   useEffect(() => {
     const initializeContract = async () => {
@@ -53,15 +51,12 @@ export const TradeModal = (props) => {
         );
         setNftContract(_nftContract);
         setGameContract(_gameContract);
-        
-        const userNfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
-        setUserNfts(userNfts);
       } catch (error) {
         console.error("Error initializing contract:", error);
       }
     };
 
-    if(!gameContract || !nftContract) {
+    if (!gameContract || !nftContract) {
       initializeContract();
     }
   }, [gameContract, nftContract]);
@@ -70,7 +65,7 @@ export const TradeModal = (props) => {
     if (content === "tradeStart") {
       return (
         <TradeStart
-          userNfts={userNfts}
+          userNfts={nfts}
           setContent={setContent}
           gameContract={gameContract}
           nftContract={nftContract}

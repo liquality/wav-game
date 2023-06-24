@@ -82,7 +82,6 @@ class User {
                   public_address,
                 } = user;
                 const token = jwt.sign({ id, public_address }, "my-secret");
-                console.log(id, "ID user ");
                 resolve({
                   id,
                   serviceprovider_name,
