@@ -2,11 +2,11 @@ import { DataContext } from "./DataContext";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import { Route, Routes, useParams } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Terms } from "./pages/Terms";
 import {
-  countNFTsByLevel,
-  getNFTsByLevel,
+  getCurrentLevel,
+  getNFTCountPerLevelAndTotalCollectibles,
   getPublicKey,
   setupSDK,
 } from "./utils";
@@ -18,7 +18,6 @@ import { fetchSession } from "./utils";
 import { SpinningLoader } from "./components/SpinningLoader";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "./data/contract_data";
-import StaticDataService from "./services/StaticDataService";
 import { getGameIdBasedOnHref } from "./utils";
 
 function App() {
@@ -80,18 +79,20 @@ function App() {
 
       if (_artist?.number_id && nfts && !nftCount) {
         console.log("FETCHING COUNT AGAIN!");
-        const nftData = getNFTsByLevel(nfts, _artist.number_id);
-        setNftCount(nftData.levels);
-        setCollectibleCount(nftData.totalCollectibles);
-        setCurrentLevel(nftData.currentLevel);
+        const countNftsAndTotal = await getNFTCountPerLevelAndTotalCollectibles(
+          nfts,
+          _artist.number_id
+        );
+        const _currentLevel = await getCurrentLevel(nfts, _artist.number_id);
+        setNftCount(countNftsAndTotal.levels);
+        setCollectibleCount(countNftsAndTotal.totalCollectibles);
+        setCurrentLevel(_currentLevel.currentLevel);
       }
     };
 
     fetchData();
     return () => {};
   }, [nfts, nftCount]);
-
-  console.log(nftCount, collectibleCount, "Nft count, collectible");
 
   return (
     <div className="stretched device-xl no-transition">
