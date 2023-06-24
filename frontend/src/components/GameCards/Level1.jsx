@@ -35,7 +35,6 @@ export const Level1 = (props) => {
     });
   }
 
-  console.log(burnStatus, "burnstatus?");
   if (burnStatus) {
     actions.push({
       onActionClick: (level) => onGetMoreClick(level),

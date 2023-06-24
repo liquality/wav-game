@@ -188,7 +188,6 @@ export const getDifferenceBetweenDates = (startDate: any, endDate: any) => {
 export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
     const tokenIdArray = await generateTokenIdArray(artistNumberId / 1000);
     const nftObject = await fetchNFTOwners();
-    console.log(nftObject, 'fetch nft owners BÄ')
     const countByTokenId = {};
 
     for (const item of nftObject.result) {

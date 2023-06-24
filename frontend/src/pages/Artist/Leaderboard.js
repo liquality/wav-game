@@ -36,8 +36,6 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
     };
   }, [artist, leaderboardData]);
 
-  console.log(nftCount, "leaderboard data?");
-
   const activeToggleStyle = {
     borderBottom: "1px solid #f251bc",
     color: "#f251bc",
