@@ -61,6 +61,8 @@ function App() {
     } else return {};
   };
 
+  console.log(nfts, "NFTS", nftCount);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);

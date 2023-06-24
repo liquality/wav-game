@@ -10,11 +10,13 @@ import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
-import { fetchSession } from "../../utils";
+import { fetchSession, getPublicKey } from "../../utils";
 import UserService from "../../services/UserService";
 import Faq from "../../components/Faq";
 import { DataContext } from "../../DataContext";
 import { SpinningLoader } from "../../components/SpinningLoader";
+import { NftService } from "@liquality/wallet-sdk";
+import { CHAIN_ID } from "../../data/contract_data";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -65,6 +67,13 @@ export const Artist = (props) => {
     }
   };
 
+  const fetchNfts = async (address, chainId) => {
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+    return nfts;
+  };
+
+  console.log(nfts, "NFTS in artist", nftCount);
+
   const onTradeClick = (level) => {
     setTradeLevel(level);
     console.log("onTradeClick level ", level);
@@ -95,6 +104,12 @@ export const Artist = (props) => {
         setImage(_image);
         setCurrentGame(currentGame);
       }
+
+      if (!nfts) {
+        console.log("FETCHING NFTS AGAIN!");
+        const nftData = await fetchNfts();
+        setNfts(nftData);
+      }
     };
 
     fetchData();
@@ -102,7 +117,7 @@ export const Artist = (props) => {
       //any cleanup
     };
   }, [artistId, userGames]);
-
+  console.log(image, artist, currentGame, nftCount, "ALL OF THEM");
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (
