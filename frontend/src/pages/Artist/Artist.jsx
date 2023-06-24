@@ -26,8 +26,14 @@ export const Artist = (props) => {
   const [currentGame, setCurrentGame] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(1);
   const [tradeLevel, setTradeLevel] = useState(1);
-  const { nfts, nftCount, setNfts, setNftCount, collectibleCount } =
-    useContext(DataContext);
+  const {
+    nfts,
+    nftCount,
+    setNfts,
+    setNftCount,
+    currentLevel,
+    collectibleCount,
+  } = useContext(DataContext);
 
   const {
     setShowPickArtistModal,
@@ -113,7 +119,7 @@ export const Artist = (props) => {
             <div className="flex flex-col items-center md:ml-20 grow">
               <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
                 <div className="game-header-level">
-                  LEVEL: {currentGame?.level || "0"}{" "}
+                  LEVEL: {currentLevel || "0"}{" "}
                 </div>
                 <div className="game-header-title">
                   {artist?.name?.toUpperCase()}'s GAME_
@@ -127,12 +133,14 @@ export const Artist = (props) => {
                   selectedLevel={selectedLevel}
                   currentGame={currentGame}
                   onLevelSelected={onLevelSelected}
+                  currentLevel={currentLevel}
                 />
                 <GameCards
                   onTradeClick={onTradeClick}
                   onGetMoreClick={onGetMoreClick}
                   onLevelSelected={onLevelSelected}
                   selectedLevel={selectedLevel}
+                  currentLevel={currentLevel}
                   currentGame={currentGame}
                   nftCount={nftCount}
                 />

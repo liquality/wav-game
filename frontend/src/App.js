@@ -4,7 +4,12 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import { Route, Routes, useParams } from "react-router-dom";
 import { Terms } from "./pages/Terms";
-import { countNFTsByLevel, getPublicKey, setupSDK } from "./utils";
+import {
+  countNFTsByLevel,
+  getNFTsByLevel,
+  getPublicKey,
+  setupSDK,
+} from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
 import { useState, useEffect } from "react";
@@ -27,6 +32,7 @@ function App() {
   const [nfts, setNfts] = useState(null);
   const [nftCount, setNftCount] = useState(null);
   const [collectibleCount, setCollectibleCount] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState(0);
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
@@ -74,9 +80,10 @@ function App() {
 
       if (_artist?.number_id && nfts && !nftCount) {
         console.log("FETCHING COUNT AGAIN!");
-        const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
-        setNftCount(_nftCount.levels);
-        setCollectibleCount(_nftCount.totalCollectibles);
+        const nftData = getNFTsByLevel(nfts, _artist.number_id);
+        setNftCount(nftData.levels);
+        setCollectibleCount(nftData.totalCollectibles);
+        setCurrentLevel(nftData.currentLevel);
       }
     };
 
@@ -103,6 +110,8 @@ function App() {
           setNfts: setNfts,
           nftCount: nftCount,
           collectibleCount: collectibleCount,
+          setCurrentLevel: setCurrentLevel,
+          currentLevel: currentLevel,
         }}
       >
         {" "}

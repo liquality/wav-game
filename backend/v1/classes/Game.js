@@ -262,28 +262,6 @@ class Game {
     return promise;
   };
 
-  levelUpTrade = async (userId, gameNumberId) => {
-    const promise = new Promise((resolve, reject) => {
-      MySQL.pool.getConnection((err, db) => {
-        db.query(
-          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ?",
-          [userId, gameNumberId],
-          (err, gameResults, fields) => {
-            if (err) {
-              reject(new ApiError(500, err));
-            } else if (gameResults.affectedRows < 1) {
-              reject(new ApiError(404, "Game with given user_id not found!"));
-            } else {
-              resolve(gameResults);
-            }
-            db.release();
-          }
-        );
-      });
-    });
-    return promise;
-  };
-
   readUserByWalletAddress = async (address) => {
     const promise = new Promise((resolve, reject) => {
       if (address) {
@@ -306,49 +284,6 @@ class Game {
       } else {
         reject(new ApiError(500, "Missing wallet address"));
       }
-    });
-    return promise;
-  };
-
-  levelUpOnboarding = async (address, artistNumberId) => {
-    const game = this;
-    const user = await this.readUserByWalletAddress(address);
-    const promise = new Promise((resolve, reject) => {
-      MySQL.pool.getConnection((err, db) => {
-        if (err) {
-          reject(new ApiError(500, err));
-          return;
-        }
-
-        console.log(
-          address,
-          "address",
-          artistNumberId,
-          "artistnr id",
-          "USERID:",
-          user.id
-        );
-        // Update game table
-        db.query(
-          "UPDATE `game` SET level = IFNULL(level + 1, 1) WHERE user_id = ? AND game_symbol_id = ? AND level IS NULL",
-          [user.id, artistNumberId],
-          (err, gameResults, fields) => {
-            if (err) {
-              reject(new ApiError(500, err));
-            } else if (gameResults.affectedRows < 1) {
-              reject(
-                new ApiError(
-                  404,
-                  "Game with given user_id and game_symbol_id not found!, if this game level is not NULL, you can ignore this error"
-                )
-              );
-            } else {
-              resolve(game);
-            }
-            db.release();
-          }
-        );
-      });
     });
     return promise;
   };

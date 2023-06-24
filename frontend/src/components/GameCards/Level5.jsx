@@ -3,9 +3,9 @@ import { LevelCard } from "../LevelCard/LevelCard";
 import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
 
 export const Level5 = (props) => {
-    const { selectedLevel, game, onSetLevel, onTradeClick, nftCount, burnStatus } = props;
+    const { selectedLevel, currentLevel, onSetLevel, onTradeClick, nftCount, burnStatus } = props;
     const level5Count = nftCount['level5'] || 0;
-    const status = getLevelsStatuses(game?.level || 1)[5];
+    const status = getLevelsStatuses(currentLevel || 1)[5];
     let instructions = '';
     let tradeActionText = '';
     let edition = '';
@@ -25,23 +25,28 @@ export const Level5 = (props) => {
             }
         } else {
          // count down
-         const unlockDate = new Date(game?.created_at);
-         unlockDate.setDate(unlockDate.getDate() + 5);
-         const today = new Date();
-         if (unlockDate > today) {
-             // show the timer
-             noActions = true;
-             const difference = getDifferenceBetweenDates(today, unlockDate);
-             actionDisabled = true;
-             tradeActionText = 'Level locked';
-             title = 'Countdown to unlock';
-             instructions = `${difference.days}DAYS:${difference.hours}HRS:${difference.minutes}MIN`;
-        } else {
-            if (burnStatus) {
-                tradeActionText =  'Trade More'; 
-            }  else {
-                tradeActionText =  'Start Trading';
-            }
+        //  const unlockDate = new Date(game?.created_at);
+        //  unlockDate.setDate(unlockDate.getDate() + 5);
+        //  const today = new Date();
+        //  if (unlockDate > today) {
+        //      // show the timer
+        //      noActions = true;
+        //      const difference = getDifferenceBetweenDates(today, unlockDate);
+        //      actionDisabled = true;
+        //      tradeActionText = 'Level locked';
+        //      title = 'Countdown to unlock';
+        //      instructions = `${difference.days}DAYS:${difference.hours}HRS:${difference.minutes}MIN`;
+        // } else {
+        //     if (burnStatus) {
+        //         tradeActionText =  'Trade More'; 
+        //     }  else {
+        //         tradeActionText =  'Start Trading';
+        //     }
+        // }
+        if (burnStatus) {
+            tradeActionText =  'Trade More'; 
+        }  else {
+            tradeActionText =  'Start Trading';
         }
        
     }

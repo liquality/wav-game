@@ -124,21 +124,7 @@ export const TradeStart = (props) => {
         approval: true,
       });
 
-      if (txHashLevelUp) {
-        //Lvl up in DB
-        await UserService.levelUpTrade(
-          {
-            userId: fetchSession().id,
-            gameId: artist?.number_id,
-          },
-          fetchSession().token
-        );
-        setTxStatus({
-          txHash: txHashLevelUp,
-          submited: true,
-          approval: true,
-        });
-      } else {
+      if (!txHashLevelUp) {
         //Set transaction failed error msg
         setError("Transaction failed, please check the logs");
       }
