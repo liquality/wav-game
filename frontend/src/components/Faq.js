@@ -211,10 +211,10 @@ const Faq = () => {
   };
 
   const handleShowMoreRows = () => {
-    if (showMoreRows === 4) {
+    if (showMoreRows === 5) {
       setShowMoreRows(11);
     } else {
-      setShowMoreRows(4);
+      setShowMoreRows(5);
     }
   };
 
@@ -237,7 +237,7 @@ const Faq = () => {
         onClick={() => handleShowMoreRows()}
         className="lightPink mt-3 ml-3"
       >
-        SHOW {showMoreRows === 4 ? "MORE" : "LESS"}
+        SHOW {showMoreRows === 5 ? "MORE" : "LESS"}
       </button>
     </div>
   );

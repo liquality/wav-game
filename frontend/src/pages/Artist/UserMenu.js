@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import {
   fetchSession,
   getPublicKey,
@@ -8,6 +8,7 @@ import {
 import UserService from "../../services/UserService";
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { useNavigate } from "react-router-dom";
+import { DataContext } from "../../DataContext";
 
 const AvatarComponent = ({ avatar }) => {
   return (
@@ -28,6 +29,7 @@ const UserMenu = ({
 
   const [user, setUser] = useState({});
   const [games, setGames] = useState([]);
+  const { setNfts, setNftCount } = useContext(DataContext);
 
   const navigate = useNavigate();
 
@@ -111,6 +113,9 @@ const UserMenu = ({
 
   const handleGameSelected = (game) => {
     navigate(`/artist/${game.artist_name}`);
+    //To rerender nfts and count, set to null so useeffect hook can fetch again in parent components
+    setNfts(null);
+    setNftCount(null);
     onClose();
   };
 
@@ -145,7 +150,10 @@ const UserMenu = ({
         {user?.avatar ? <AvatarComponent avatar={user.avatar} /> : null}
       </button>
       {isOpen && (
-        <div className="absolute right-24 w-64 h-418  z-50 userMenuDiv">
+        <div
+          style={{ zIndex: "9999" }}
+          className="absolute right-24 w-64 h-418   z-9999 userMenuDiv"
+        >
           <b>
             <p className="pl-3 pt-4 userMenuText">Hello {user?.username}</p>
           </b>
