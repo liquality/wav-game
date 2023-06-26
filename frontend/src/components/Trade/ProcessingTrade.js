@@ -5,16 +5,26 @@ import { ReactComponent as GreenCheckmark } from "../../images/green_checkmark.s
 import ProcessingTx from "../ProcessingTx";
 
 export const ProcessingTrade = (props) => {
-  const { setContent, txStatus } = props;
+  const { setContent, txStatus, setHeaderText } = props;
 
   //Psuedo code for now
   useEffect(() => {
-    const fetchData = async () => {};
+    const fetchData = async () => {
+      if (txStatus.submited && txStatus.approval) {
+        console.log("INSIDE TRADE SUCCESS");
+        setTimeout(function () {
+          setContent("tradeSuccess");
+          setHeaderText("Your Collectible");
+        }, 4000);
+      }
+    };
 
     fetchData();
 
     return () => {};
-  }, []);
+  }, [txStatus]);
+
+  console.log(txStatus, "txstatuus?");
 
   return (
     <div className="contentView flex">
@@ -23,8 +33,8 @@ export const ProcessingTrade = (props) => {
           <ProcessingTx txStatus={txStatus} />
           <div className="flex">
             <p className="flexDirectionRow">
-            {txStatus.approval ? (
-                <GreenCheckmark /> 
+              {txStatus.approval ? (
+                <GreenCheckmark />
               ) : (
                 <GreenDots className="mr-3 mt-3.5" />
               )}{" "}
@@ -35,8 +45,8 @@ export const ProcessingTrade = (props) => {
 
           <div className="flex">
             <p className="flexDirectionRow">
-            {txStatus.approval ? (
-                <GreenCheckmark /> 
+              {txStatus.approval ? (
+                <GreenCheckmark />
               ) : (
                 <GreenDots className="mr-3 mt-3.5" />
               )}{" "}
