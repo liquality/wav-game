@@ -12,7 +12,7 @@ export const Level1 = (props) => {
     currentLevel,
   } = props;
   const status = getLevelsStatuses(currentLevel || 1)[1];
-  const level1Count = nftCount["level1"] || 0;
+  const level1Count = nftCount["1"] || 0;
   const instructions = `You have ${level1Count === -1 ? 0 : level1Count} NFTs.`;
   let tradeActionText = "";
 

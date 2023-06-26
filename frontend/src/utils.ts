@@ -94,7 +94,7 @@ export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId, lev
 }
 
 
-export const getCurrentLevel = (nfts: any[], artistId: number) => {
+export const getCurrentLevel = async (nfts: any[], artistId: number) => {
     const artist = artistId.toString();
     return nfts.reduce((acum: any, curr: any) => {
         if (curr.id[0] === artist[0] &&
@@ -112,7 +112,7 @@ export const getCurrentLevel = (nfts: any[], artistId: number) => {
     }, { levels: {}, totalCollectibles: 0, currentLevel: 0 });
 }
 
-export const getNFTCountPerLevelAndTotalCollectibles = async (nfts, artistNumberId) => {
+/* export const getNFTCountPerLevelAndTotalCollectibles = async (nfts, artistNumberId) => {
     const levels = {};
     let totalCollectibles = 0;
     let artistNrString = artistNumberId.toString();
@@ -128,7 +128,7 @@ export const getNFTCountPerLevelAndTotalCollectibles = async (nfts, artistNumber
     });
     return { levels, totalCollectibles };
 }
-
+ */
 
 
 export const getLevelsStatuses = (currentLevel: number) => {
