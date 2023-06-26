@@ -117,6 +117,7 @@ export const TradeSuccess = ({ setContent, userNfts, handleClose, level }) => {
           Congratulations! We will reach out to you to make arrangements.
         </p>
 
+        {/* TODO: if user doesnt have more nfts to trade, we should disable this */}
         <div className="flexDirectionRow mb-3 mt-3">
           <CustomButton pink type="big" onClick={tradeMore}>
             TRADE MORE
