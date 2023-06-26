@@ -4,12 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import { Terms } from "./pages/Terms";
-import {
-  getCurrentLevel,
-  getNFTCountPerLevelAndTotalCollectibles,
-  getPublicKey,
-  setupSDK,
-} from "./utils";
+import { getCurrentLevel, getPublicKey, setupSDK } from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
 import { useState, useEffect } from "react";
@@ -79,7 +74,7 @@ function App() {
 
       if (_artist?.number_id && nfts && !nftCount) {
         console.log("FETCHING COUNT AGAIN!");
-        const _currentLevel = getCurrentLevel(nfts, _artist.number_id);
+        const _currentLevel = await getCurrentLevel(nfts, _artist.number_id);
         setNftCount(_currentLevel.levels);
         setCollectibleCount(_currentLevel.totalCollectibles);
         setCurrentLevel(_currentLevel.currentLevel);

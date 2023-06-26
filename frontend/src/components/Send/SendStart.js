@@ -11,6 +11,7 @@ export const SendStart = ({
   setSelectedNft,
   setContent,
   handleClose,
+  setHeaderText,
 }) => {
   const [nfts, setNfts] = useState(null);
   const [loadingNfts, setLoadingNfts] = useState(false);
@@ -33,6 +34,11 @@ export const SendStart = ({
 
     fetchData();
   }, [selectedNft, nfts]);
+
+  const handleNewContent = () => {
+    setContent("prepareSend");
+    setHeaderText("Selected Collectible");
+  };
 
   return (
     <div className="contentView flex justify-center">
@@ -69,7 +75,7 @@ export const SendStart = ({
                 disabled={selectedNft === null ? true : false}
                 pink
                 type="big"
-                onClick={() => setContent("prepareSend")}
+                onClick={() => handleNewContent()}
               >
                 CONTINUE
               </CustomButton>

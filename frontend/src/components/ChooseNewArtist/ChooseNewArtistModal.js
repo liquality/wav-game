@@ -23,7 +23,11 @@ export const ChooseNewArtistModal = (props) => {
   };
 
   useEffect(() => {
-    const init = async () => {};
+    const init = async () => {
+      if (chooseArtistView === "gameIncentives") {
+        setHeaderText("Game Incentives");
+      }
+    };
 
     init();
   }, []);

@@ -69,31 +69,25 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
                 scope="row"
                 className="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
               >
-                NFTs
+                Collectibles
               </th>
               <td className="px-6 py-4">
-                {" "}
-                {nftCount?.level1 ? nftCount?.level1 : "--"}
+                {nftCount?.[1] ? nftCount?.[1] : "--"}
               </td>
               <td className="px-6 py-4">
-                {" "}
-                {nftCount?.level2 ? nftCount?.level2 : "--"}
+                {nftCount?.[2] ? nftCount?.[2] : "--"}
               </td>
               <td className="px-6 py-4">
-                {" "}
-                {nftCount?.level3 ? nftCount?.level3 : "--"}
+                {nftCount?.[3] ? nftCount?.[3] : "--"}
               </td>
               <td className="px-6 py-4">
-                {" "}
-                {nftCount?.level4 ? nftCount?.level4 : "--"}
+                {nftCount?.[4] ? nftCount?.[4] : "--"}
               </td>
               <td className="px-6 py-4">
-                {" "}
-                {nftCount?.level5 ? nftCount?.level5 : "--"}
+                {nftCount?.[5] ? nftCount?.[5] : "--"}
               </td>
               <td className="px-6 py-4">
-                {" "}
-                {nftCount?.level6 ? nftCount?.level6 : "--"}
+                {nftCount?.[6] ? nftCount?.[6] : "--"}
               </td>
             </tr>
           </tbody>
@@ -184,7 +178,7 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
         style={showNfts ? activeToggleStyle : null}
         className="mt-3 mb-5 absolute nftsToggle"
       >
-        <button onClick={() => setShowNfts(true)}>NFTs</button>
+        <button onClick={() => setShowNfts(true)}>COLLECTIBLES</button>
       </div>
 
       <div className="mt-3 mb-5">
