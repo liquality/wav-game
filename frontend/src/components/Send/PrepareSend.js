@@ -16,7 +16,7 @@ export const PrepareSend = ({
   handleClose,
 }) => {
   const [addressInput, setAddressInput] = useState("");
-  const [nftAmount, setNftAmount] = useState(0);
+  const [nftAmount, setNftAmount] = useState(1);
   const [errorMsg, setErrorMsg] = useState("");
 
   const sendNft = async () => {
@@ -66,6 +66,27 @@ export const PrepareSend = ({
           alt={selectedNft.metadata?.name}
           className="nftImagePrepared w-full h-full object-cover m-auto"
         />
+        <div className="nftImagePrepared w-full h-full object-cover m-auto">
+          {" "}
+          <p className="mt-3 greyUpperCaseText ">
+            {selectedNft.contract?.type}
+          </p>
+          <a
+            href="https://www.sound.xyz/tk/faster"
+            target="blank"
+            className="flexDirectionRow  lightPink hover:no-underline hover:decoration-none no-underline"
+          >
+            sound.xyz/tk/faster <SmallPinkArrow className="ml-2 mt-1" />
+          </a>
+          <a
+            href={`https://testnets.opensea.io/${selectedNft.contract.address}`}
+            target="blank"
+            className=" flexDirectionRow  lightPink hover:no-underline hover:decoration-none no-underline"
+          >
+            {shortenAddress(selectedNft.contract.address)}{" "}
+            <SmallPinkArrow className="ml-2 mt-1" />
+          </a>
+        </div>
         <div style={{ marginLeft: -260 }} className="">
           <p className="greyUpperCaseText mb-1">{selectedNft.contract?.type}</p>
 
@@ -156,7 +177,7 @@ export const PrepareSend = ({
 
         <div className="flexDirectionRow mb-3 mt-3">
           <CustomButton
-            disabled={!addressInput && !nftAmount ? true : false}
+            disabled={!addressInput ? true : false}
             pink
             type="big"
             onClick={sendNft}
