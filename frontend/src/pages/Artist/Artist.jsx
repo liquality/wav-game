@@ -103,11 +103,10 @@ export const Artist = (props) => {
         setCurrentGame(currentGame);
       }
 
-      if (!nfts && nftCount) {
+      if (!nfts && !nftCount) {
         console.log("FETCHING NFTS AGAIN!");
-        //const nftData = await fetchNfts();
-        setNfts(null);
-        setNftCount(null);
+        const nftData = await fetchNfts();
+        setNfts(nftData);
       }
     };
 
@@ -117,7 +116,7 @@ export const Artist = (props) => {
     };
   }, [artistId, userGames, nfts, setNfts]);
 
-  console.log(image, artist, currentGame, nftCount, "bru wats");
+  console.log(image, artist, currentGame, nftCount, "bruuuu wats");
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (
