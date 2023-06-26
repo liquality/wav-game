@@ -36,6 +36,7 @@ userHandler.create = function (req, res) {
 
   user.set(req.body); // should be a user object
   // Send the JWT token as a response to save in client localstorage
+  console.log(req.body, "req body when creating user");
 
   user.create().then(
     (result) => {
