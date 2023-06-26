@@ -7,6 +7,10 @@ body {
   background-color: #1e1e1e;
   color: #e0e0e0;
   font-family: "Sora";
+  font-size: 14px;
+
+  letter-spacing: 0.5px;
+  font-weight: 400;
 }
 
 ::selection {

@@ -10,11 +10,13 @@ import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
-import { fetchSession } from "../../utils";
+import { fetchSession, getPublicKey } from "../../utils";
 import UserService from "../../services/UserService";
 import Faq from "../../components/Faq";
 import { DataContext } from "../../DataContext";
 import { SpinningLoader } from "../../components/SpinningLoader";
+import { NftService } from "@liquality/wallet-sdk";
+import { CHAIN_ID } from "../../data/contract_data";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -26,8 +28,14 @@ export const Artist = (props) => {
   const [currentGame, setCurrentGame] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(1);
   const [tradeLevel, setTradeLevel] = useState(1);
-  const { nfts, nftCount, setNfts, setNftCount, collectibleCount } =
-    useContext(DataContext);
+  const {
+    nfts,
+    nftCount,
+    setNftCount,
+    setNfts,
+    currentLevel,
+    collectibleCount,
+  } = useContext(DataContext);
 
   const {
     setShowPickArtistModal,
@@ -57,6 +65,11 @@ export const Artist = (props) => {
       console.log(err, "Error fetching user");
       return null;
     }
+  };
+
+  const fetchNfts = async (address, chainId) => {
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+    return nfts;
   };
 
   const onTradeClick = (level) => {
@@ -89,14 +102,21 @@ export const Artist = (props) => {
         setImage(_image);
         setCurrentGame(currentGame);
       }
+
+      if (!nfts && !nftCount) {
+        console.log("FETCHING NFTS AGAIN!");
+        const nftData = await fetchNfts();
+        setNfts(nftData);
+      }
     };
 
     fetchData();
     return () => {
       //any cleanup
     };
-  }, [artistId, userGames]);
+  }, [artistId, userGames, nfts, setNfts]);
 
+  console.log(image, artist, currentGame, nftCount, "bruuuu wats");
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (
@@ -113,7 +133,7 @@ export const Artist = (props) => {
             <div className="flex flex-col items-center md:ml-20 grow">
               <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
                 <div className="game-header-level">
-                  LEVEL: {currentGame?.level || "0"}{" "}
+                  LEVEL: {currentLevel || "0"}{" "}
                 </div>
                 <div className="game-header-title">
                   {artist?.name?.toUpperCase()}'s GAME_
@@ -127,12 +147,14 @@ export const Artist = (props) => {
                   selectedLevel={selectedLevel}
                   currentGame={currentGame}
                   onLevelSelected={onLevelSelected}
+                  currentLevel={currentLevel}
                 />
                 <GameCards
                   onTradeClick={onTradeClick}
                   onGetMoreClick={onGetMoreClick}
                   onLevelSelected={onLevelSelected}
                   selectedLevel={selectedLevel}
+                  currentLevel={currentLevel}
                   currentGame={currentGame}
                   nftCount={nftCount}
                 />

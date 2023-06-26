@@ -92,14 +92,6 @@ endpoints.deleteGame = {
   description: "delete game",
 };
 
-endpoints.levelUpTrade = {
-  url: "/v1/gamelevelup",
-  method: "put",
-  middleware: [middleware.authenticateJWT],
-  handler: gameHandler.levelUpTrade,
-  description: "level up game based on userid + gameid",
-};
-
 /*WEBHOOK EVENTS FROM CROSSMINT*/
 
 endpoints.listenToWebhook = {
@@ -108,5 +100,13 @@ endpoints.listenToWebhook = {
   middleware: [],
   handler: gameHandler.webhook,
   description: "listen to crossmint webhook",
+};
+
+endpoints.getLevelSettings = {
+  url: "/v1/level-settings",
+  method: "get",
+  middleware: [],
+  handler: gameHandler.getLevelSettings,
+  description: "Get all level settings",
 };
 module.exports = endpoints;

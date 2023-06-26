@@ -79,7 +79,7 @@ export const PickArtist = (props) => {
     setSelectedId(artist);
     setShouldNavigate(_navigate);
 
-    if (game && game.level) {
+    if (game) {
       navigate(`/artist/${game.artist_name}`);
     }
   };

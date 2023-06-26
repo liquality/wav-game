@@ -11,6 +11,7 @@ import {
   WAV_PROXY_ADDRESS,
 } from "../../data/contract_data";
 import { DataContext } from "../../DataContext";
+import { TradeSuccess } from "./TradeSuccess";
 
 export const TradeModal = (props) => {
   const { show, setShow, level, setLevel } = props;
@@ -59,7 +60,7 @@ export const TradeModal = (props) => {
     if (!gameContract || !nftContract) {
       initializeContract();
     }
-  }, [gameContract, nftContract]);
+  }, [gameContract, nftContract, txStatus]);
 
   const whichContentToRender = () => {
     if (content === "tradeStart") {
@@ -71,11 +72,22 @@ export const TradeModal = (props) => {
           nftContract={nftContract}
           setTxStatus={setTxStatus}
           level={level}
+          txStatus={txStatus}
         />
       );
     } else if (content === "processingTrade") {
       return (
         <ProcessingTrade
+          txStatus={txStatus}
+          setHeaderText={setHeaderText}
+          setContent={setContent}
+        />
+      );
+    } else if (content === "tradeSuccess") {
+      return (
+        <TradeSuccess
+          userNfts={nfts}
+          level={level}
           txStatus={txStatus}
           setHeaderText={setHeaderText}
           setContent={setContent}

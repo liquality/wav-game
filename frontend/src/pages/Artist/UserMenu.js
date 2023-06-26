@@ -150,7 +150,10 @@ const UserMenu = ({
         {user?.avatar ? <AvatarComponent avatar={user.avatar} /> : null}
       </button>
       {isOpen && (
-        <div className="absolute right-24 w-64 h-418  z-50 userMenuDiv">
+        <div
+          style={{ zIndex: "9999" }}
+          className="absolute right-24 w-64 h-418   z-9999 userMenuDiv"
+        >
           <b>
             <p className="pl-3 pt-4 userMenuText">Hello {user?.username}</p>
           </b>

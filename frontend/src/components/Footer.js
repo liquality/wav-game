@@ -49,12 +49,27 @@ const Footer = () => {
           style={{ fontSize: "12px", color: "#BDBDBD" }}
         >
           {" "}
-          Copyright WAVwrld_ 2023. All Rights Reserved. Privacy Policy | Terms
-          of Use
+          Copyright WAVwrld_ 2023. All Rights Reserved.{" "}
+          <a
+            style={{ fontSize: "12px", color: "#BDBDBD" }}
+            className="hover:no-underline hover:text-decoration-none no-underline "
+            href="https://docs.google.com/document/d/1SE21HhexF_X-QaDiRQO8u66FG5C_wnevAXMVIb6fpOk/edit?usp=sharing"
+            target="blank"
+          >
+            Privacy Policy
+          </a>{" "}
+          |{" "}
+          <a
+            style={{ fontSize: "12px", color: "#BDBDBD" }}
+            className="hover:no-underline hover:text-decoration-none no-underline "
+            href="/terms"
+          >
+            Terms of Use
+          </a>
         </div>
       </div>
     </footer>
   );
 };
-
+//https://docs.google.com/document/d/1SE21HhexF_X-QaDiRQO8u66FG5C_wnevAXMVIb6fpOk/edit?usp=sharing
 export default Footer;

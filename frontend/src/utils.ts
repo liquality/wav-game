@@ -94,11 +94,28 @@ export const filterArrayByIdStartingWith = async (nftsArray, artistNumberId, lev
 }
 
 
-export const countNFTsByLevel = async (nfts, artistNumberId) => {
+export const getCurrentLevel = async (nfts: any[], artistId: number) => {
+    const artist = artistId.toString();
+    return nfts.reduce((acum: any, curr: any) => {
+        if (curr.id[0] === artist[0] &&
+            ethers.getAddress(curr.contract.address) ===
+            ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS)) {
+            const level = parseInt(curr.id.slice(-1));
+            acum.levels[level] = curr.balance;
+            if (level > acum.currentLevel) {
+                acum.currentLevel = level
+            }
+            acum.totalCollectibles += curr.balance;
+        }
+
+        return acum;
+    }, { levels: {}, totalCollectibles: 0, currentLevel: 0 });
+}
+
+/* export const getNFTCountPerLevelAndTotalCollectibles = async (nfts, artistNumberId) => {
     const levels = {};
     let totalCollectibles = 0;
     let artistNrString = artistNumberId.toString();
-    console.log('nfts', nfts)
     nfts.forEach((nft: any) => {
         if (nft.id[0] === artistNrString[0] &&
             ethers.getAddress(nft.contract.address) ===
@@ -111,6 +128,7 @@ export const countNFTsByLevel = async (nfts, artistNumberId) => {
     });
     return { levels, totalCollectibles };
 }
+ */
 
 
 export const getLevelsStatuses = (currentLevel: number) => {
@@ -170,7 +188,6 @@ export const getDifferenceBetweenDates = (startDate: any, endDate: any) => {
 export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
     const tokenIdArray = await generateTokenIdArray(artistNumberId / 1000);
     const nftObject = await fetchNFTOwners();
-    console.log(nftObject, 'fetch nft owners BÄ')
     const countByTokenId = {};
 
     for (const item of nftObject.result) {

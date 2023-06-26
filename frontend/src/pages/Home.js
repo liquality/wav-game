@@ -77,7 +77,7 @@ export default function Home(props) {
         return g.artist_name === selectedArtistItem?.id
       });
 
-      if (game && game.level) {
+      if (game) {
         navigate(`/artist/${game.artist_name}`);
       } else {
         setSelectedArtist(selectedArtistItem);

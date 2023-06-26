@@ -23,6 +23,7 @@ export const TradeStart = (props) => {
     setTxStatus,
     userNfts,
     level,
+    txStatus,
   } = props;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
@@ -70,7 +71,14 @@ export const TradeStart = (props) => {
     };
 
     init();
-  }, [game, userNfts, tokenIdForNewLevel, tokenIdForCurrentLevel, level]);
+  }, [
+    game,
+    userNfts,
+    tokenIdForNewLevel,
+    tokenIdForCurrentLevel,
+    level,
+    txStatus,
+  ]);
 
   //LVL UP: A trade makes a player level up both in contract & in db
   const startTrade = async (data) => {
@@ -124,21 +132,7 @@ export const TradeStart = (props) => {
         approval: true,
       });
 
-      if (txHashLevelUp) {
-        //Lvl up in DB
-        await UserService.levelUpTrade(
-          {
-            userId: fetchSession().id,
-            gameId: artist?.number_id,
-          },
-          fetchSession().token
-        );
-        setTxStatus({
-          txHash: txHashLevelUp,
-          submited: true,
-          approval: true,
-        });
-      } else {
+      if (!txHashLevelUp) {
         //Set transaction failed error msg
         setError("Transaction failed, please check the logs");
       }

@@ -2,9 +2,9 @@ import { DataContext } from "./DataContext";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import { Route, Routes, useParams } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Terms } from "./pages/Terms";
-import { countNFTsByLevel, getPublicKey, setupSDK } from "./utils";
+import { getCurrentLevel, getPublicKey, setupSDK } from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
 import { useState, useEffect } from "react";
@@ -13,7 +13,6 @@ import { fetchSession } from "./utils";
 import { SpinningLoader } from "./components/SpinningLoader";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "./data/contract_data";
-import StaticDataService from "./services/StaticDataService";
 import { getGameIdBasedOnHref } from "./utils";
 
 function App() {
@@ -27,6 +26,7 @@ function App() {
   const [nfts, setNfts] = useState(null);
   const [nftCount, setNftCount] = useState(null);
   const [collectibleCount, setCollectibleCount] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState(0);
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
@@ -74,17 +74,16 @@ function App() {
 
       if (_artist?.number_id && nfts && !nftCount) {
         console.log("FETCHING COUNT AGAIN!");
-        const _nftCount = await countNFTsByLevel(nfts, _artist.number_id);
-        setNftCount(_nftCount.levels);
-        setCollectibleCount(_nftCount.totalCollectibles);
+        const _currentLevel = await getCurrentLevel(nfts, _artist.number_id);
+        setNftCount(_currentLevel.levels);
+        setCollectibleCount(_currentLevel.totalCollectibles);
+        setCurrentLevel(_currentLevel.currentLevel);
       }
     };
 
     fetchData();
     return () => {};
   }, [nfts, nftCount]);
-
-  console.log(nftCount, collectibleCount, "Nft count, collectible");
 
   return (
     <div className="stretched device-xl no-transition">
@@ -103,6 +102,8 @@ function App() {
           setNfts: setNfts,
           nftCount: nftCount,
           collectibleCount: collectibleCount,
+          setCurrentLevel: setCurrentLevel,
+          currentLevel: currentLevel,
         }}
       >
         {" "}
