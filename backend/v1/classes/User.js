@@ -132,7 +132,7 @@ class User {
   update = async () => {
     const user = this;
     const promise = new Promise((resolve, reject) => {
-      this.MySQL.pool.getConnection((err, db) => {
+      MySQL.pool.getConnection((err, db) => {
         db.query(
           "update `user` set serviceprovider_name=?, username=?, avatar=?, public_address=? where id=?;",
           [

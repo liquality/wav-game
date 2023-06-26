@@ -1,9 +1,11 @@
 "use strict";
 
 var Game = require("../classes/Game");
+var Burn = require("../classes/Burn");
 var ApiError = require("../classes/ApiError");
 const { helperFindArtistNumberIdByTokenId } = require("../helper");
 const LevelSetting = require("../classes/LevelSetting");
+const {getBurnStatus} = require("../services/contractService")
 
 var gameHandler = {};
 
@@ -154,5 +156,60 @@ gameHandler.getLevelSettings = async function (req, res) {
     res.status(400).send(error);
   }
 };
+
+gameHandler.getBurnStatus = async function (req, res) {
+  const { id, levelId, userAddress } = req.params;
+  // Check DB for burn status
+  try {
+    
+    var burn = new Burn();
+    const burnRecord = await burn.getLevelBurnStatus(id, levelId, userAddress)
+    if (!burnRecord.status) {
+      console.log("after lookUp > burnRecord not seen ")
+      try {
+        const {status, lastBlock} = await getBurnStatus(id, levelId, userAddress)
+        // Save to DB => Update last block_number and new burn status
+        burn.set({status, lastBlock, 
+          userAddress: userAddress,
+          levelId: levelId,
+          gameId: id
+        })
+        console.log("after lookUp > burnRecord not seen ", lastBlock)
+        await burn.updateLevelBurnStatus()
+        console.log("after lookUp > burnRecord not seen; after db update ")
+        return res.status(200).send(status);
+      } catch (error) {
+        console.log("after lookUp > burnRecord not seen ", error)
+        return res.status(400).send(new ApiError(400, error.message+"--"));
+      }
+    }
+    console.log("after lookUp > burnRecord saw ", burnRecord.status)
+    return res.status(200).send((burnRecord.status == 1) ? true : false );
+  } catch (error) {
+    if (error.ApiErrorcode == 404) {
+      // Query chain event
+      try {
+        console.log("beforw getBurnStatus")
+        const {status, lastBlock} = await getBurnStatus(id, levelId, userAddress)
+        
+        console.log("after getBurnStatus > ", lastBlock)
+        // Save to DB => Update last block_number and new burn status
+        burn.status = status
+        burn.lastBlock = lastBlock
+        burn.userAddress = userAddress
+        burn.levelId = levelId
+        burn.gameId = id
+        console.log("before createLevelBurnStatus")
+        await burn.createLevelBurnStatus()
+        console.log("after createLevelBurnStatus")
+        return res.status(200).send(status);
+      } catch (error) {
+        return res.status(400).send(new ApiError(400, error.message+"---"));
+      }
+    }
+    return res.status(400).send(new ApiError(400, error.message+"----"));
+  }
+};
+
 
 module.exports = gameHandler;
