@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api/*"
-  to = "https://wav-game-staging.liquality.io/:splat"
+  to = "https://API_DOMAIN_PLACEHOLDER/:splat"
   status = 200
   force = true
 
@@ -11,5 +11,7 @@
   [redirects.headers]
     Pragma = "no-cache"
     Cache-Control = "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+
 [build]
+  command = "sed -i \"s|API_DOMAIN_PLACEHOLDER|${API_DOMAIN}|g\" netlify.toml && yarn build"
   environment = { CI = "false" }
