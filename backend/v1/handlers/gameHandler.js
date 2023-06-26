@@ -3,6 +3,7 @@
 var Game = require("../classes/Game");
 var ApiError = require("../classes/ApiError");
 const { helperFindArtistNumberIdByTokenId } = require("../helper");
+const LevelSetting = require("../classes/LevelSetting");
 
 var gameHandler = {};
 
@@ -140,6 +141,17 @@ gameHandler.webhook = async function (req, res) {
     console.log(artistNumberId, "artist nr id");
   } else {
     res.status(400).send(new ApiError(400, reason));
+  }
+};
+
+gameHandler.getLevelSettings = async function (req, res) {
+  var levelSetting = new LevelSetting();
+  try {
+    const settings = await levelSetting.getAll();
+    res.status(200).send(settings);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send(error);
   }
 };
 

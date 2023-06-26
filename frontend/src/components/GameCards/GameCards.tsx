@@ -1,4 +1,4 @@
-import { getPublicKey } from "../../utils";
+import { fetchSession, getPublicKey } from "../../utils";
 import ContractService from "../../services/contractService";
 import "./game-cards.css";
 import { Level1 } from "./Level1";
@@ -8,6 +8,7 @@ import { Level4 } from "./Level4";
 import { Level5 } from "./Level5";
 import { Level6 } from "./Level6";
 import { useState, useEffect } from "react";
+import UserService from "../../services/UserService";
 
 interface GameCardsProps {
   /**
@@ -42,6 +43,7 @@ export const GameCards = (props: GameCardsProps) => {
     nftCount,
   } = props;
   const [burnStatus, setBurnStatus] = useState({});
+  const [levelSettings, setLevelSettings] = useState({});
 
   async function onSetLevel(levelId?: number) {
     onLevelSelected(levelId || currentLevel || 1);
@@ -65,7 +67,19 @@ export const GameCards = (props: GameCardsProps) => {
 
       setBurnStatus(_burnStatus);
     }
+
+    async function getLevelSettings() {
+      try {
+        const token = fetchSession()?.token;
+        const settings = await UserService.getLevelSettings(token);
+        setLevelSettings(settings);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     getBurnStatus();
+    getLevelSettings();
   }, [currentGame]);
 
   return (
@@ -78,6 +92,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[1]}
         currentLevel={currentLevel}
+        levelSettings={levelSettings[1]}
       />
       <Level2
         selectedLevel={selectedLevel}
@@ -87,6 +102,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[2]}
         currentLevel={currentLevel}
+        levelSettings={levelSettings[2]}
       />
       <Level3
         selectedLevel={selectedLevel}
@@ -96,6 +112,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[3]}
         currentLevel={currentLevel}
+        levelSettings={levelSettings[3]}
       />
       <Level4
         selectedLevel={selectedLevel}
@@ -105,6 +122,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[4]}
         currentLevel={currentLevel}
+        levelSettings={levelSettings[4]}
       />
       <Level5
         selectedLevel={selectedLevel}
@@ -114,6 +132,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[5]}
         currentLevel={currentLevel}
+        levelSettings={levelSettings[5]}
       />
       <Level6
         selectedLevel={selectedLevel}
@@ -123,6 +142,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[6]}
         currentLevel={currentLevel}
+        levelSettings={levelSettings[6]}
       />
     </div>
   );
