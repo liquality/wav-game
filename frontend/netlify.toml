@@ -13,5 +13,5 @@
     Cache-Control = "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
 
 [build]
-  command = "sed -i \"s|API_DOMAIN_PLACEHOLDER|${API_DOMAIN}|g\" netlify.toml && yarn build"
+  command = "sed -i \"s|API_DOMAIN_PLACEHOLDER|${API_DOMAIN}|g\" netlify.toml && npm run build"
   environment = { CI = "false" }
