@@ -26,10 +26,17 @@ export const Level1 = (props) => {
   if (level1Count < 2 && !burnStatus) {
     tradeActionText = "Get Artist Collectibles";
   }
+
   let actions = [];
-  if (level1Count >= 2 || (level1Count <= 2 && !burnStatus)) {
+  if (level1Count >= 2) {
     actions.push({
       onActionClick: (level) => onTradeClick(level),
+      label: tradeActionText,
+      mode: "default",
+    });
+  } else if (level1Count <= 2 && !burnStatus) {
+    actions.push({
+      onActionClick: (level) => onGetMoreClick(level),
       label: tradeActionText,
       mode: "default",
     });
