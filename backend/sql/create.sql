@@ -45,3 +45,13 @@ ADD COLUMN `created_at` DATETIME NOT NULL DEFAULT (UTC_TIMESTAMP()) AFTER `game_
 ALTER TABLE `user`
 ADD COLUMN `created_at` DATETIME NOT NULL DEFAULT (UTC_TIMESTAMP()) AFTER `public_address`;
 
+
+CREATE TABLE `level_burn_status` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `status` INT(11) NOT NULL DEFAULT 0,
+  `user_address` VARCHAR(200) NOT NULL,
+  `level_id` INT(11) NOT NULL,
+  `game_id` INT(11) NOT NULL,
+  `last_block` INT(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
