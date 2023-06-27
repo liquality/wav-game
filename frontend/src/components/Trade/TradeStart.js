@@ -127,7 +127,7 @@ export const TradeStart = (props) => {
         CHAIN_ID
       );
       setTxStatus({
-        txHash: null,
+        txHash: txHashLevelUp,
         submited: true,
         approval: true,
       });
