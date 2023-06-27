@@ -135,7 +135,7 @@ export const Artist = (props) => {
               setShowPickArtistModal={setShowPickArtistModal}
             />
             <div className="flex flex-col items-center md:ml-20 grow">
-              <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
+              <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-3">
                 <div className="game-header-level">
                   LEVEL: {currentLevel || "0"}{" "}
                 </div>
