@@ -56,8 +56,7 @@ export const CreditcardPayment = (props) => {
         <p className="lineNoCenter mt-5 mb-4" style={{ width: "50%" }}></p>
 
         <p className="mb-4" style={{ width: "50%" }}>
-          We made two special NFTs. You are going to hold randomized amounts of
-          both NFTs. To move through each level, you will need:
+          To move through each level, you will need:
         </p>
         <p className="mb-4">
           • 4 items to get to level 3 <br></br>• 8 to level 4 <br></br>• 16 to
