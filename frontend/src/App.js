@@ -66,15 +66,13 @@ function App() {
       const _artist = await fetchArtist();
       console.log(_artist, "artist?");
 
-      if (!nfts) {
+      if (!nfts && _artist?.number_id) {
         console.log("FETCHING NFTS AGAIN!");
         const nftData = await fetchNfts();
         setNfts(nftData);
-      }
 
-      if (_artist?.number_id && nfts && !nftCount) {
         console.log("FETCHING COUNT AGAIN!");
-        const _currentLevel = await getCurrentLevel(nfts, _artist.number_id);
+        const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
         setNftCount(_currentLevel.levels);
         setCollectibleCount(_currentLevel.totalCollectibles);
         setCurrentLevel(_currentLevel.currentLevel);

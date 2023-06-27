@@ -196,7 +196,7 @@ class User {
             if (err) {
               reject(new ApiError(500, err));
             } else if (results.length < 1) {
-              resolve({});
+              resolve(null);
             } else {
               const storedUser = results[0];
               const {

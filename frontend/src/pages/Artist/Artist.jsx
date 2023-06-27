@@ -10,7 +10,7 @@ import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
-import { fetchSession, getPublicKey } from "../../utils";
+import { fetchSession, getCurrentLevel, getPublicKey } from "../../utils";
 import UserService from "../../services/UserService";
 import Faq from "../../components/Faq";
 import { DataContext } from "../../DataContext";
@@ -103,9 +103,19 @@ export const Artist = (props) => {
         setCurrentGame(currentGame);
       }
 
-      if (!nfts && !nftCount) {
-        console.log("FETCHING NFTS AGAIN!");
+      console.log(
+        !nfts && !nftCount && _artist,
+        "!nfts && !nftCount && _artist",
+        nfts,
+        nftCount,
+        _artist
+      );
+      if (!nfts && !nftCount && _artist) {
+        console.log("FETCHING NFTS AGAIN! BÄ");
         const nftData = await fetchNfts();
+        const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
+        console.log(_currentLevel, "currentLevel? BÄÄ");
+        setNftCount(_currentLevel.levels);
         setNfts(nftData);
       }
     };
@@ -114,9 +124,9 @@ export const Artist = (props) => {
     return () => {
       //any cleanup
     };
-  }, [artistId, userGames, nfts, setNfts]);
+  }, [artistId, userGames, nfts, setNfts, nftCount]);
 
-  console.log(image, artist, currentGame, nftCount, "bruuuu wats");
+  console.log(image, artist?.number_id, currentGame?.id, nftCount, nfts, "BÄÄ");
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (

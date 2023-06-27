@@ -12,12 +12,9 @@ const UserService = {
   getGameByUserId: async function (userId, artist_number_id, jwt) {
     let url = `/v1/games/${userId}`;
     if (artist_number_id) {
-      url = `${url}/${artist_number_id}`
+      url = `${url}/${artist_number_id}`;
     }
-    return NetworkService.getResourceWithAuth(
-      url,
-      jwt
-    );
+    return NetworkService.getResourceWithAuth(url, jwt);
   },
 
   createGame: async function (gameObject, jwt) {
