@@ -11,6 +11,7 @@ export const Level6 = (props) => {
     nftCount,
   } = props;
   const level6Count = nftCount["6"] || 0;
+  const level5Count = nftCount["5"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[6];
   let instructions = "";
   let tradeActionText = "";
@@ -53,7 +54,11 @@ export const Level6 = (props) => {
         actionDisabled = true;
       }
     } else {
-      if (level6Count >= 2) {
+      //TODO: level5Count >= 2 instead makes you lvl 6 and have won (DONE)
+      //TODO if you are the first one to win , there is one design (already implemented)
+      //TODO: need to calculate if you are the first winner
+      //TODO if you are full set holder there is another design
+      if (level5Count >= 2) {
         noActions = true;
         tradeActionText = "";
         instructions = "";
