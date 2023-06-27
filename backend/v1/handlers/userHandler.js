@@ -96,11 +96,9 @@ userHandler.delete = function (req, res) {
 
 userHandler.loginUser = function (req, res) {
   var serviceprovider_name = req.params.serviceprovider_name;
-  console.log("BÅÅ,", serviceprovider_name);
   var user = new User();
   user.loginUser(serviceprovider_name).then(
     (result) => {
-      console.log(result, "BÅÅ result");
       res.status(200).send(result);
     },
     (reason) => {

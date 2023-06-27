@@ -51,7 +51,6 @@ class User {
     const user = this;
     return new Promise((resolve, reject) => {
       MySQL.pool.getConnection((error, db) => {
-        console.log(error, "Error in DB?");
         if (!error) {
           db.query(
             `INSERT INTO user (serviceprovider_name, username, avatar, public_address)

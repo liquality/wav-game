@@ -59,7 +59,6 @@ export const LoginModal = (props) => {
   const loginUser = async (serviceprovider_name) => {
     try {
       const response = await UserService.loginUser(serviceprovider_name);
-      console.log("debug login user BÅ", serviceprovider_name);
       localStorage.setItem("session", JSON.stringify(response));
       return response;
     } catch (err) {
@@ -89,10 +88,8 @@ export const LoginModal = (props) => {
     const canUserLogin = await loginUser(
       response.loginResponse?.userInfo?.email
     );
-    console.log(canUserLogin, "can user login? BÅ");
 
     if (canUserLogin) {
-      console.log("inside can user login BÅ");
       setLoading(true);
       localStorage.setItem("loginResponse", JSON.stringify(response));
       setLoginResponse(response);
@@ -116,13 +113,10 @@ export const LoginModal = (props) => {
         window.location.reload();
       }
     } else {
-      console.log(canUserLogin, "inside new user creation BÅ");
-
       setLoading(true);
       localStorage.setItem("loginResponse", JSON.stringify(response));
       setLoginResponse(response);
       setLoading(false);
-      //TODO: create user in db here
       setContent("pickAvatar");
       setHeaderText("Pick An Avatar");
     }
