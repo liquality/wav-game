@@ -189,7 +189,6 @@ class Game {
   };
 
   readGameByUserId = async (userId, gameNumberId, helper) => {
-    console.log(userId, gameNumberId, "BÄÄÄÄ userid and game nr id");
     const game = this;
     const promise = new Promise((resolve, reject) => {
       if (userId) {

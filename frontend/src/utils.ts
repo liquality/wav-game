@@ -195,6 +195,7 @@ export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
         const amount = Number(item.amount);
 
         if (tokenIdArray.includes(tokenId)) {
+            //console.log(tokenIdArray, 'array', tokenId, amount, 'BÄ TOKEN ID sent in')
             if (amount >= 1) {
                 const level = tokenIdArray.indexOf(tokenId) + 1;
                 if (countByTokenId[level]) {

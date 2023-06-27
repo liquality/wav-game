@@ -64,7 +64,6 @@ function App() {
       setLoading(false);
 
       const _artist = await fetchArtist();
-      console.log(_artist, "artist?");
 
       if (!nfts && _artist?.number_id) {
         console.log("FETCHING NFTS AGAIN!");

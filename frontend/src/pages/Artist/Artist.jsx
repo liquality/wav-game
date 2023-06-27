@@ -105,18 +105,10 @@ export const Artist = (props) => {
         setCurrentGame(currentGame);
       }
 
-      console.log(
-        !nfts && !nftCount && _artist,
-        "!nfts && !nftCount && _artist",
-        nfts,
-        nftCount,
-        _artist
-      );
       if (!nfts && !nftCount && _artist) {
         console.log("FETCHING NFTS AGAIN! BÄ");
         const nftData = await fetchNfts();
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
-        console.log(_currentLevel, "currentLevel? BÄÄ");
         setNftCount(_currentLevel.levels);
         setCollectibleCount(_currentLevel.totalCollectibles);
         setCurrentLevel(_currentLevel.currentLevel);
@@ -129,7 +121,6 @@ export const Artist = (props) => {
     };
   }, [artistId, userGames, nfts, setNfts, nftCount]);
 
-  console.log(image, artist?.number_id, currentGame?.id, nftCount, nfts, "BÄÄ");
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (
