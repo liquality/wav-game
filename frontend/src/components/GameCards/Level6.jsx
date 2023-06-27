@@ -49,7 +49,9 @@ export const Level6 = (props) => {
         tradeActionText = "Level locked";
         actionDisabled = true;
       } else {
-        instructions = "Get 1 more from past level to trade.";
+        instructions = `You have ${
+          level6Count === -1 ? 0 : level6Count
+        } NFTs. Get 1 more to trade for next level.`;
         tradeActionText = "Level locked";
         actionDisabled = true;
       }
