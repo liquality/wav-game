@@ -35,6 +35,8 @@ export const Artist = (props) => {
     setNfts,
     currentLevel,
     collectibleCount,
+    setCollectibleCount,
+    setCurrentLevel,
   } = useContext(DataContext);
 
   const {
@@ -116,10 +118,11 @@ export const Artist = (props) => {
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
         console.log(_currentLevel, "currentLevel? BÄÄ");
         setNftCount(_currentLevel.levels);
+        setCollectibleCount(_currentLevel.totalCollectibles);
+        setCurrentLevel(_currentLevel.currentLevel);
         setNfts(nftData);
       }
     };
-
     fetchData();
     return () => {
       //any cleanup

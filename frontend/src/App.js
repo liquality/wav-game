@@ -101,6 +101,7 @@ function App() {
           nftCount: nftCount,
           collectibleCount: collectibleCount,
           setCurrentLevel: setCurrentLevel,
+          setCollectibleCount: setCollectibleCount,
           currentLevel: currentLevel,
         }}
       >
