@@ -12,3 +12,11 @@
     background-color: #211C1C !important;
   }
 
+
+ul.list {
+    list-style: disc;
+    list-style-position: inside;
+}
+ul.list li {
+    margin-bottom: 1rem;
+}
