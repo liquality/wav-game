@@ -55,9 +55,12 @@ export const Level6 = (props) => {
       }
     } else {
       //TODO: level5Count >= 2 instead makes you lvl 6 and have won (DONE)
-      //TODO if you are the first one to win , there is one design (already implemented)
-      //TODO: need to calculate if you are the first winner
+      //TODO if you are the first one to win , there is one design (already implemented design)
+      //TODO: need to calculate if you are the first winner (earlyBirdCollector from smart contract)
       //TODO if you are full set holder there is another design
+      //TODO: FULL SET HOLDER = holding 1 or more of every card at the end of the game
+      //If you are in lvl 6 but not full set holder, another design (so 3 different designs total)
+
       if (level5Count >= 2) {
         noActions = true;
         tradeActionText = "";
