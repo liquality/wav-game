@@ -1,7 +1,7 @@
-import { setup } from "@liquality/wallet-sdk";
+import { NftService, setup } from "@liquality/wallet-sdk";
 import StaticDataService from "./services/StaticDataService";
 import { ethers } from "ethers";
-import { WAV_NFT_ABI, WAV_NFT_ADDRESS, WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "./data/contract_data";
+import { CHAIN_ID, WAV_NFT_ABI, WAV_NFT_ADDRESS, WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "./data/contract_data";
 import { nft } from "@liquality/wallet-sdk/dist/typechain-types/contracts";
 
 export function setupSDK() {
@@ -107,7 +107,7 @@ export const getCurrentLevel = async (nfts: any[], artistId: number) => {
             }
             acum.totalCollectibles += curr.balance;
         }
-        
+
         return acum;
     }, { levels: {}, totalCollectibles: 0, currentLevel: 0 });
 }
@@ -254,3 +254,25 @@ export const generateTokenIdArray = async (artistNumberId) => {
 
     return result;
 }
+
+export const checkIfFullSetHolder = async (artistNumberId) => {
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+    const tokenIdArray = await generateTokenIdArray(artistNumberId / 1000);
+    //const tokenIdArray = [301, 302, 304]
+
+    const userNfts = nfts.filter((nft) => {
+        return (
+            ethers.getAddress(nft.contract.address) ===
+            ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS) &&
+            tokenIdArray.includes(Number(nft.id))
+        );
+    });
+
+    if (userNfts.length === tokenIdArray.length) {
+        // user has at least one of each NFT in the tokenIdArray (is full set holder)
+        return true
+    } else {
+        // user is missing some NFTs from the tokenIdArray
+        return false
+    }
+};

@@ -4,7 +4,12 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import { Terms } from "./pages/Terms";
-import { getCurrentLevel, getPublicKey, setupSDK } from "./utils";
+import {
+  checkIfFullSetHolder,
+  getCurrentLevel,
+  getPublicKey,
+  setupSDK,
+} from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
 import { useState, useEffect } from "react";
@@ -27,6 +32,7 @@ function App() {
   const [nftCount, setNftCount] = useState(null);
   const [collectibleCount, setCollectibleCount] = useState(0);
   const [currentLevel, setCurrentLevel] = useState(0);
+  const [userIsFullSetHolder, setUserIsFullSetHolder] = useState(null);
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
@@ -75,6 +81,9 @@ function App() {
         setNftCount(_currentLevel.levels);
         setCollectibleCount(_currentLevel.totalCollectibles);
         setCurrentLevel(_currentLevel.currentLevel);
+
+        const isFullSetHolder = await checkIfFullSetHolder(_artist?.number_id);
+        setUserIsFullSetHolder(isFullSetHolder);
       }
     };
 
@@ -102,6 +111,8 @@ function App() {
           setCurrentLevel: setCurrentLevel,
           setCollectibleCount: setCollectibleCount,
           currentLevel: currentLevel,
+          setUserIsFullSetHolder,
+          userIsFullSetHolder,
         }}
       >
         {" "}
