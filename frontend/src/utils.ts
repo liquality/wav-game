@@ -40,6 +40,8 @@ export function getPublicKey(): string {
 }
 
 export function seeIfUserCanLogIn() {
+    console.log('came to seeIfUserCanLogIn function');
+
     for (var i = 0; i < localStorage.length; i++) {
         var key = localStorage.key(i);
         var storedValue = localStorage.getItem(key);

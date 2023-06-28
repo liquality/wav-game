@@ -7,7 +7,7 @@ import { PickArtist } from "./PickArtist";
 import { CreditcardPayment } from "./CreditcardPayment";
 import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
-import { fetchSession, seeIfUserCanLogIn } from "../../utils";
+import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 
 const verifierMap = {
@@ -113,6 +113,7 @@ export const LoginModal = (props) => {
         window.location.reload();
       }
     } else {
+      console.log('Came to create  wallet');
       setLoading(true);
       localStorage.setItem("loginResponse", JSON.stringify(response));
       setLoginResponse(response);
@@ -124,6 +125,7 @@ export const LoginModal = (props) => {
 
   const whichContentToRender = () => {
     if (content === "loginOrRegister") {
+      console.log('came to loginOrRegister');
       return (
         <LoginOrRegister
           setHeaderText={setHeaderText}
@@ -133,6 +135,8 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "pickAvatar") {
+      console.log('came to pickAvatar');
+
       return (
         <PickAvatar
           setHeaderText={setHeaderText}
@@ -142,6 +146,8 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "pickArtist") {
+      console.log('came to pickArtist');
+
       return (
         <PickArtist
           selectedId={selectedId}
@@ -153,6 +159,8 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "creditcardPayment") {
+      console.log('came to creditcardPayment');
+
       return (
         <CreditcardPayment
           selectedId={selectedId}
@@ -161,6 +169,8 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "completedPayment") {
+      console.log('came to completedPayment');
+
       return (
         <CompletedPayment
           setHeaderText={setHeaderText}

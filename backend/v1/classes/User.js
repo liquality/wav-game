@@ -48,6 +48,7 @@ class User {
   /* CRUD OPERATIONS  */
   /*                  */
   create = async () => {
+    console.log('came to create  user');
     const user = this;
     return new Promise((resolve, reject) => {
       MySQL.pool.getConnection((error, db) => {
@@ -69,10 +70,17 @@ class User {
             ],
             (err, insertResult) => {
               if (err) {
+                
+                console.log('came to create  user error -> ',err);
+
                 reject(new ApiError(500, err));
               } else if (insertResult.affectedRows < 1) {
+                console.log('User not saved!');
+
                 reject(new ApiError(500, "User not saved!"));
               } else {
+                console.log('User Saved!');
+
                 const id = insertResult.insertId; // Retrieve the generated ID directly
 
                 const {
@@ -188,6 +196,7 @@ class User {
   loginUser = async (serviceprovider_name) => {
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
+        console.log('Error => ', err);
         db.query(
           "SELECT * FROM `user` WHERE serviceprovider_name = ? LIMIT 1;",
           [serviceprovider_name],

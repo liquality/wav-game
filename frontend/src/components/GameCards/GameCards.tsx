@@ -1,5 +1,4 @@
 import { fetchSession, getPublicKey } from "../../utils";
-import ContractService from "../../services/contractService";
 import "./game-cards.css";
 import { Level1 } from "./Level1";
 import { Level2 } from "./Level2";
@@ -51,13 +50,13 @@ export const GameCards = (props: GameCardsProps) => {
 
   useEffect(() => {
     async function getBurnStatus() {
-      const _burnStatus = await [1, 2, 3, 4, 5, 6].reduce(
+      const _burnStatus = await [1,2,3,4,5,6].reduce(
         async (prev, level) => {
           const accum = await prev;
-          const status = await ContractService.getBurnStatus(
+          const status = await UserService.getLevelBurnStatus(
             currentGame.game_symbol_id,
+            level,
             getPublicKey(),
-            level
           );
           accum[level] = status;
           return accum;

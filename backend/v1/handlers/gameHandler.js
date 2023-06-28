@@ -158,21 +158,22 @@ gameHandler.getLevelSettings = async function (req, res) {
 };
 
 gameHandler.getBurnStatus = async function (req, res) {
-  const { id, levelId, userAddress } = req.params;
+  const { gameId, levelId, userAddress } = req.params;
+  console.log("Params ==> ", { gameId, levelId, userAddress } );
   // Check DB for burn status
   try {
     
     var burn = new Burn();
-    const burnRecord = await burn.getLevelBurnStatus(id, levelId, userAddress)
+    const burnRecord = await burn.getLevelBurnStatus(gameId, levelId, userAddress)
     if (!burnRecord.status) {
       console.log("after lookUp > burnRecord not seen ")
       try {
-        const {status, lastBlock} = await getBurnStatus(id, levelId, userAddress)
+        const {status, lastBlock} = await getBurnStatus(gameId, levelId, userAddress, burnRecord.last_block)
         // Save to DB => Update last block_number and new burn status
         burn.set({status, lastBlock, 
           userAddress: userAddress,
           levelId: levelId,
-          gameId: id
+          gameId
         })
         console.log("after lookUp > burnRecord not seen ", lastBlock)
         await burn.updateLevelBurnStatus()
@@ -190,7 +191,8 @@ gameHandler.getBurnStatus = async function (req, res) {
       // Query chain event
       try {
         console.log("beforw getBurnStatus")
-        const {status, lastBlock} = await getBurnStatus(id, levelId, userAddress)
+        console.log('really cam e here');
+        const {status, lastBlock} = await getBurnStatus(gameId, levelId, userAddress, 0);
         
         console.log("after getBurnStatus > ", lastBlock)
         // Save to DB => Update last block_number and new burn status
@@ -198,7 +200,7 @@ gameHandler.getBurnStatus = async function (req, res) {
         burn.lastBlock = lastBlock
         burn.userAddress = userAddress
         burn.levelId = levelId
-        burn.gameId = id
+        burn.gameId = gameId
         console.log("before createLevelBurnStatus")
         await burn.createLevelBurnStatus()
         console.log("after createLevelBurnStatus")
