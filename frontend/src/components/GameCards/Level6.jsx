@@ -51,8 +51,8 @@ export const Level6 = (props) => {
 
   const checkEarlyBird = async () => {
     //TODO: use dynamic artist_id instead of hardcoded 3000 (get from props)
-    let isEarlyBird = await gameContract.isEarlyBirdCollector(3000, 6);
-    return isEarlyBird;
+    //let isEarlyBird = await gameContract.isEarlyBirdCollector(3000, 6);
+    //return isEarlyBird;
   };
 
   useEffect(() => {
