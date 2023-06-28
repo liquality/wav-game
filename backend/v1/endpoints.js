@@ -93,7 +93,7 @@ endpoints.deleteGame = {
 };
 
 endpoints.getBurnStatus = {
-  url: "/v1/game/:id/:levelId/:userAddress/burn-status",
+  url: "/v1/game/burn-status/:gameId/:levelId/:userAddress",
   method: "get",
   middleware: [],
   handler: gameHandler.getBurnStatus,

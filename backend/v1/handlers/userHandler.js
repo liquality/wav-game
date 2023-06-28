@@ -98,9 +98,11 @@ userHandler.loginUser = function (req, res) {
   var user = new User();
   user.loginUser(serviceprovider_name).then(
     (result) => {
+      console.log('resultoflogin => ', result)
       res.status(200).send(result);
     },
     (reason) => {
+      console.log('reasoon => ', reason);
       res.status(400).send(new ApiError(400, reason));
     }
   );

@@ -49,5 +49,9 @@ const UserService = {
   loginUser: async function (userEmail) {
     return NetworkService.getResourceWithAuth("/v1/user/login/" + userEmail);
   },
+
+  getLevelBurnStatus: async function (gameId, levelId, userAddress) {
+    return NetworkService.getResourceWithAuth(`/v1/game/burn-status/${gameId}/${levelId}/${userAddress}`);
+  },
 };
 export default UserService;
