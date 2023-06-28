@@ -48,7 +48,7 @@ export const Level6 = (props) => {
         tradeActionText = "Level locked";
         actionDisabled = true;
       } else {
-        instructions = "Get 1 more from past level to trade.";
+        instructions = "You have 1 collectible. Get 1 more from past level to trade.";
         tradeActionText = "Level locked";
         actionDisabled = true;
       }
