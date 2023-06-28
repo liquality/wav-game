@@ -47,8 +47,10 @@ export const Level6 = (props) => {
     return false;
   }
 
-  const checkEarlyBird = async (address, chainId) => {
-    let txHash = await gameContract.isEarlyBirdCollector(3000, 3000 / 10 + 6);
+  const checkEarlyBird = async () => {
+    //TODO: use dynamic artist_id instead of hardcoded 3000 (get from props)
+    let isEarlyBird = await gameContract.isEarlyBirdCollector(3000, 6);
+    return isEarlyBird;
   };
 
   useEffect(() => {
@@ -92,7 +94,9 @@ export const Level6 = (props) => {
       //TODO if you are full set holder there is another design
       //TODO: FULL SET HOLDER = holding 1 or more of every card at the end of the game
       //If you are in lvl 6 but not full set holder, another design (so 3 different designs total)
-
+      //TODO: if earlyBirdCollector state is true, render concert won
+      //Else if check for full set holder and render 'congrats you won and are a full set holder'
+      //Else render 'you won but are not a full set holder yet'...
       if (level5Count >= 2) {
         noActions = true;
         tradeActionText = "";
