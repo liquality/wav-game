@@ -108,7 +108,21 @@ export const Sidebar = ({
           <WaveGraphic className="artist-wave-graphic" />
           <div className="flex flex-col mt-4 px-5 gap-5">
             <div className="mt-3 artist-content">
-              <p>{artist.quote}</p>
+              <p>
+                {" "}
+                {artist.quote?.slice(0, 130)}{" "}
+                {artist.quote?.length > 130 ? "... " : " "}
+                {artist.quote?.length > 130 ? (
+                  <Button
+                    size="small"
+                    onClick={() => handleChangeArtistClick()}
+                    link
+                    mode="pink"
+                  >
+                    Read More
+                  </Button>
+                ) : null}
+              </p>
             </div>
             <div className="flex flex-row items-center">
               {artist && artist.socials
@@ -133,13 +147,23 @@ export const Sidebar = ({
             <p>
               {artist.bio?.slice(0, 180)}{" "}
               {artist.bio?.length > 180 ? "..." : ""}
-              <a
-                className="hover:no-underline hover:text-decoration-none no-underline lightPink"
-                href={artist.socials.twitter}
-                target="blank"
+              <Button
+                size="small"
+                onClick={() => handleChangeArtistClick()}
+                link
+                mode="pink"
               >
                 Read More
-              </a>
+              </Button>
+              {artist.bio?.length > 180 ? (
+                <a
+                  className="hover:no-underline hover:text-decoration-none no-underline lightPink"
+                  href={artist.socials.twitter}
+                  target="blank"
+                >
+                  Read More
+                </a>
+              ) : null}
             </p>
           </div>
           {artist.funFact ? (

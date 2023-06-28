@@ -20,6 +20,7 @@ export const Level4 = (props) => {
   let edition = ""; //100/100 CLAIMED
   let title = "Get 1 limited physical item";
   actionDisabled = false;
+  let actionLocked = false;
   instructions = `You have ${level4Count === -1 ? 0 : level4Count} NFTs.`;
   // count down
   function applyCountDown() {
@@ -36,6 +37,7 @@ export const Level4 = (props) => {
         const difference = getDifferenceBetweenDates(today, unlockDate);
         actionDisabled = true;
         tradeActionText = "Level locked";
+        actionLocked = true;
         title = "Countdown to unlock";
         instructions = `${difference.days}DAYS:${difference.hours}HRS:${difference.minutes}MIN`;
         return true;
@@ -55,6 +57,7 @@ export const Level4 = (props) => {
       if (level4Count === 0) {
         instructions = "You need 2 Artist collectibles to trade for this.";
         tradeActionText = "Level locked";
+        actionLocked = true;
         actionDisabled = true;
       } else {
         instructions = `You have ${
@@ -72,7 +75,7 @@ export const Level4 = (props) => {
         {
           onActionClick: (level) => onTradeClick(level),
           label: tradeActionText,
-          mode: "default",
+          mode: actionLocked ? "pinkStroke" : "default",
           disabled: actionDisabled,
           useIcon: actionDisabled,
         },

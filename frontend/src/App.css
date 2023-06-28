@@ -412,6 +412,15 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #ffa3da !important;
 }
 
+.choose-artist-title {
+  font-family: "Alba";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 3.125rem;
+  line-height: 4.913rem;
+  text-align: center;
+  color: #FFA3DA;
+}
 .defaultArtistBtn {
   background: #4b1f3e;
   /* WaveWrld/Cards/completed stroke */

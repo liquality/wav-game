@@ -86,8 +86,8 @@ export const LevelCard = ({
   };
   return (
     <div
-      onMouseOver={() => (setLevel ? setLevel(id) : () => {})}
-      onMouseLeave={() => (setLevel ? setLevel(null) : () => {})}
+      onMouseOver={() => (setLevel ? setLevel(id) : () => { })}
+      onMouseLeave={() => (setLevel ? setLevel(null) : () => { })}
       className={classNames({
         "level-card flex flex-col justify-between": true,
         [`level-card--display--${current}--${id}`]: true,
@@ -97,7 +97,10 @@ export const LevelCard = ({
     >
       <div className="flex flex-col justify-between">
         <div className="level-card-level">LEVEL {id}</div>
-        <div className="level-card-title">{title}</div>
+        <div className={classNames({
+          "level-card-title": true,
+          'level-card-title-small': id === 6
+        })}>{title}</div>
         <div className="level-card-edition">{edition}</div>
       </div>
       <div className="flex flex-col justify-between">

@@ -15,6 +15,7 @@ export const Level1 = (props) => {
   const level1Count = nftCount["1"] || 0;
   const instructions = `You have ${level1Count === -1 ? 0 : level1Count} NFTs.`;
   let tradeActionText = "";
+  let actionLocked = false;
 
   if (level1Count >= 2) {
     if (burnStatus) {
@@ -32,7 +33,7 @@ export const Level1 = (props) => {
     actions.push({
       onActionClick: (level) => onTradeClick(level),
       label: tradeActionText,
-      mode: "default",
+      mode: actionLocked ? 'pinkStroke' : 'default',
     });
   } else if (level1Count <= 2 && !burnStatus) {
     actions.push({

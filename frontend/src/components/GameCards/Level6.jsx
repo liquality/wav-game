@@ -13,12 +13,13 @@ export const Level6 = (props) => {
   const level6Count = nftCount["6"] || 0;
   const level5Count = nftCount["5"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[6];
+  let actionLocked = false;
   let instructions = "";
   let tradeActionText = "";
   let edition = "";
   let actionDisabled = false;
   let noActions = false;
-  let title = "A chance to win a 1:1 trip + concert experience";
+  let title = "Congrats, you won a 1:1 trip + concert experience";
 
   function applyCountDown() {
     if (levelSettings && levelSettings.countdown_ends > 0) {
@@ -31,6 +32,7 @@ export const Level6 = (props) => {
         // show the timer
         noActions = true;
         status = "locked";
+        actionLocked = true;
         const difference = getDifferenceBetweenDates(today, unlockDate);
         actionDisabled = true;
         tradeActionText = "Level locked";
@@ -47,12 +49,14 @@ export const Level6 = (props) => {
       if (level6Count === 0) {
         instructions = "You need to start with 32 Game collectibles.";
         tradeActionText = "Level locked";
+        actionLocked = true;
         actionDisabled = true;
       } else {
         instructions = `You have ${
           level6Count === -1 ? 0 : level6Count
         } NFTs. Get 1 more to trade for next level.`;
         tradeActionText = "Level locked";
+        actionLocked = true;
         actionDisabled = true;
       }
     } else {
@@ -68,6 +72,8 @@ export const Level6 = (props) => {
         tradeActionText = "";
         instructions = "";
         status = "won";
+        actionDisabled = true;
+        actionLocked = false;
       } else {
         actionDisabled = false;
         instructions = `You have ${level6Count === -1 ? 0 : level6Count} NFTs.`;
@@ -88,14 +94,13 @@ export const Level6 = (props) => {
       }
     }
   }
-
   const actions = noActions
     ? []
     : [
         {
           onActionClick: (level) => onTradeClick(level),
           label: tradeActionText,
-          mode: "default",
+          mode: actionLocked ? "pinkStroke" : "default",
           disabled: actionDisabled,
           useIcon: actionDisabled,
         },
