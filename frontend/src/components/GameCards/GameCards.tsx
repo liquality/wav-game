@@ -47,7 +47,7 @@ export const GameCards = (props: GameCardsProps) => {
   const [levelSettings, setLevelSettings] = useState({});
 
   async function getBurnStatus() {
-    const _burnStatus = await UserService.getBurnStatus(currentGame.game_symbol_id, selectedLevel, getPublicKey())
+    const _burnStatus = await UserService.getLevelBurnStatus(currentGame.game_symbol_id, selectedLevel, getPublicKey())
     console.log("selectedLevel >> ", selectedLevel, " || _burnStatus > ", _burnStatus)
     setBurnStatus(_burnStatus)
   }
