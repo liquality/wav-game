@@ -28,6 +28,12 @@ const config: HardhatUserConfig = {
         mnemonic: process.env.MNEMONIC,
       },
     },
+    polygonMainnet: {
+      url: process.env.POLYGON_RPC,
+      accounts: {
+        mnemonic: process.env.MNEMONIC,
+      },
+    },
   },
   etherscan: {
     apiKey: {
