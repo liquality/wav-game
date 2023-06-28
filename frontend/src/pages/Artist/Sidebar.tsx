@@ -67,6 +67,8 @@ export const Sidebar = ({
   setChooseArtistView,
 }: Props) => {
   const [showArtistBioModal, setShowArtistBioModal] = useState(false);
+  const [readMoreQuote, setReadMoreQuote] = useState(false);
+
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, (e) => {
     setOpen(false);
@@ -75,6 +77,14 @@ export const Sidebar = ({
     setChooseArtistView("chooseArtistStart");
     setShowPickArtistModal(true);
   };
+
+  const handleShowArtistBioModal = (artistQuote?) => {
+    if (artistQuote) {
+      setReadMoreQuote(true);
+    }
+    setShowArtistBioModal(true);
+  };
+
   return (
     <div
       className={classNames({
@@ -90,6 +100,7 @@ export const Sidebar = ({
         show={showArtistBioModal}
         setShow={setShowArtistBioModal}
         artist={artist}
+        readMoreQuote={readMoreQuote}
         image={image}
       />
       <div className="flex flex-col place-items-end side-bar">
@@ -115,7 +126,7 @@ export const Sidebar = ({
                 {artist.quote?.length > 130 ? (
                   <Button
                     size="small"
-                    onClick={() => handleChangeArtistClick()}
+                    onClick={() => handleShowArtistBioModal(artist.quote)}
                     link
                     mode="pink"
                   >
@@ -147,22 +158,15 @@ export const Sidebar = ({
             <p>
               {artist.bio?.slice(0, 180)}{" "}
               {artist.bio?.length > 180 ? "..." : ""}
-              <Button
-                size="small"
-                onClick={() => handleChangeArtistClick()}
-                link
-                mode="pink"
-              >
-                Read More
-              </Button>
               {artist.bio?.length > 180 ? (
-                <a
-                  className="hover:no-underline hover:text-decoration-none no-underline lightPink"
-                  href={artist.socials.twitter}
-                  target="blank"
+                <Button
+                  size="small"
+                  onClick={() => handleShowArtistBioModal()}
+                  link
+                  mode="pink"
                 >
                   Read More
-                </a>
+                </Button>
               ) : null}
             </p>
           </div>
