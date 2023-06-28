@@ -26,6 +26,7 @@
   color: #F251BC;
   border: none;
   text-transform: uppercase;
+  padding: 0;
 }
 
 .wave-link:active, 
@@ -109,7 +110,7 @@
 .wave-link--small,
 .wave-button--small {
   font-size: 0.55rem;
-  padding: 0 0.313rem;
+  padding: 0;
   min-width: 4.375;
   min-height: 1.625rem;
 }
