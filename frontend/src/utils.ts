@@ -107,7 +107,7 @@ export const getCurrentLevel = async (nfts: any[], artistId: number) => {
             }
             acum.totalCollectibles += curr.balance;
         }
-
+        
         return acum;
     }, { levels: {}, totalCollectibles: 0, currentLevel: 0 });
 }

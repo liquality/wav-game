@@ -36,6 +36,11 @@ div:has(> .level-card) {
   margin-bottom: 2rem;
 }
 
+.level-card-title-small {
+  margin-bottom: 0.8rem;
+  font-size: 1.77rem !important;
+}
+
 .level-card-edition {
   font-family: 'Sora';
   font-style: normal;

@@ -18,6 +18,7 @@ export const Level5 = (props) => {
   let edition = "";
   let actionDisabled = false;
   let noActions = false;
+  let actionLocked = false;
   let title = "Get 1 custom-made song";
 
   // count down
@@ -35,6 +36,7 @@ export const Level5 = (props) => {
         const difference = getDifferenceBetweenDates(today, unlockDate);
         actionDisabled = true;
         tradeActionText = "Level locked";
+        actionLocked = true;
         title = "Countdown to unlock";
         instructions = `${difference.days}DAYS:${difference.hours}HRS:${difference.minutes}MIN`;
         return true;
@@ -54,6 +56,7 @@ export const Level5 = (props) => {
       if (level5Count === 0) {
         instructions = "You need 2 physical items to trade for this.";
         tradeActionText = "Level locked";
+        actionLocked = true;
         actionDisabled = true;
       } else {
         instructions = "You have 1 collectible. Get 1 more from past level to trade.";
@@ -69,7 +72,7 @@ export const Level5 = (props) => {
         {
           onActionClick: (level) => onTradeClick(level),
           label: tradeActionText,
-          mode: "default",
+          mode: actionLocked ? 'pinkStroke' : 'default',
           disabled: actionDisabled,
           useIcon: actionDisabled,
         },
