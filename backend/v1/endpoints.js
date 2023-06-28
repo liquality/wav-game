@@ -92,6 +92,14 @@ endpoints.deleteGame = {
   description: "delete game",
 };
 
+endpoints.getBurnStatus = {
+  url: "/v1/game/burn-status/:gameId/:levelId/:userAddress",
+  method: "get",
+  middleware: [],
+  handler: gameHandler.getBurnStatus,
+  description: "Get burn status of a user in a game level",
+};
+
 /*WEBHOOK EVENTS FROM CROSSMINT*/
 
 endpoints.listenToWebhook = {
