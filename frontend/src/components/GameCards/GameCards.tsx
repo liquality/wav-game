@@ -1,4 +1,7 @@
-import { fetchSession, getPublicKey } from "../../utils";
+
+import { getPublicKey } from "../../utils";
+import UserService from "../../services/UserService";
+
 import "./game-cards.css";
 import { Level1 } from "./Level1";
 import { Level2 } from "./Level2";
@@ -44,42 +47,37 @@ export const GameCards = (props: GameCardsProps) => {
   const [burnStatus, setBurnStatus] = useState({});
   const [levelSettings, setLevelSettings] = useState({});
 
-  async function onSetLevel(levelId?: number) {
-    onLevelSelected(levelId || currentLevel || 1);
+  async function getBurnStatus() {
+    const _burnStatus = await UserService.getBurnStatus(currentGame.game_symbol_id, selectedLevel, getPublicKey())
+    console.log("selectedLevel >> ", selectedLevel, " || _burnStatus > ", _burnStatus)
+    setBurnStatus(_burnStatus)
   }
 
-  useEffect(() => {
-    async function getBurnStatus() {
-      const _burnStatus = await [1,2,3,4,5,6].reduce(
-        async (prev, level) => {
-          const accum = await prev;
-          const status = await UserService.getLevelBurnStatus(
-            currentGame.game_symbol_id,
-            level,
-            getPublicKey(),
-          );
-          accum[level] = status;
-          return accum;
-        },
-        Promise.resolve({})
-      );
+  async function onSetLevel(levelId?: number) {
+    onLevelSelected(levelId || currentLevel || 1);
+    await getBurnStatus()
+  }
 
-      setBurnStatus(_burnStatus);
-    }
+  // useEffect(() => {
+  //   async function getBurnStatus() {
+  //     const _burnStatus = await [1, 2, 3, 4, 5, 6].reduce(
+  //       async (prev, level) => {
+  //         const accum = await prev;
+  //         const status = await ContractService.getBurnStatus(
+  //           currentGame.game_symbol_id,
+  //           getPublicKey(),
+  //           level
+  //         );
+  //         accum[level] = status;
+  //         return accum;
+  //       },
+  //       Promise.resolve({})
+  //     );
 
-    async function getLevelSettings() {
-      try {
-        const token = fetchSession()?.token;
-        const settings = await UserService.getLevelSettings(token);
-        setLevelSettings(settings);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    getBurnStatus();
-    getLevelSettings();
-  }, [currentGame]);
+  //     setBurnStatus(_burnStatus);
+  //   }
+  //   getBurnStatus();
+  // }, [currentGame]);
 
   return (
     <div className="mt-5 game-cards">
@@ -89,7 +87,7 @@ export const GameCards = (props: GameCardsProps) => {
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
-        burnStatus={burnStatus[1]}
+        burnStatus={burnStatus}
         currentLevel={currentLevel}
         levelSettings={levelSettings[1]}
       />
@@ -99,7 +97,7 @@ export const GameCards = (props: GameCardsProps) => {
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
-        burnStatus={burnStatus[2]}
+        burnStatus={getBurnStatus}
         currentLevel={currentLevel}
         levelSettings={levelSettings[2]}
       />
@@ -109,7 +107,7 @@ export const GameCards = (props: GameCardsProps) => {
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
-        burnStatus={burnStatus[3]}
+        burnStatus={getBurnStatus}
         currentLevel={currentLevel}
         levelSettings={levelSettings[3]}
       />
@@ -119,7 +117,7 @@ export const GameCards = (props: GameCardsProps) => {
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
-        burnStatus={burnStatus[4]}
+        burnStatus={getBurnStatus}
         currentLevel={currentLevel}
         levelSettings={levelSettings[4]}
       />
@@ -129,7 +127,7 @@ export const GameCards = (props: GameCardsProps) => {
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
-        burnStatus={burnStatus[5]}
+        burnStatus={getBurnStatus}
         currentLevel={currentLevel}
         levelSettings={levelSettings[5]}
       />
@@ -139,7 +137,7 @@ export const GameCards = (props: GameCardsProps) => {
         onTradeClick={onTradeClick}
         onGetMoreClick={onGetMoreClick}
         nftCount={nftCount}
-        burnStatus={burnStatus[6]}
+        burnStatus={getBurnStatus}
         currentLevel={currentLevel}
         levelSettings={levelSettings[6]}
       />

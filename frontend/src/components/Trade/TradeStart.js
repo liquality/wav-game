@@ -170,8 +170,9 @@ export const TradeStart = (props) => {
         privateKey,
         CHAIN_ID
       );
+      console.log("txHashLevelUp >> ", txHashLevelUp)
       setTxStatus({
-        txHash: null,
+        txHash: txHashLevelUp,
         submited: true,
         approval: true,
       });

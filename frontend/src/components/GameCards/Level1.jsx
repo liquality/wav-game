@@ -17,6 +17,7 @@ export const Level1 = (props) => {
   let tradeActionText = "";
   let actionLocked = false;
 
+  console.log("burnStatus >> ", burnStatus)
   if (level1Count >= 2) {
     if (burnStatus) {
       tradeActionText = "Trade More";
