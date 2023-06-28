@@ -14,7 +14,6 @@ import {
 } from "../../utils";
 import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import UserService from "../../services/UserService";
-import ContractService from "../../services/contractService";
 
 const subtitleText = {
   1: { from: 'Trade 2 Live Songs', to: 'Get 1 Top Live Song' },
@@ -94,10 +93,10 @@ export const TradeStart = (props) => {
       }
 
       if (game) {
-        const _burnStatus = await ContractService.getBurnStatus(
+        const _burnStatus = await UserService.getLevelBurnStatus(
           game.game_symbol_id,
-          getPublicKey(),
-          level
+          level,
+          getPublicKey()
         );
 
         setBurnStatus(_burnStatus);
@@ -122,6 +121,7 @@ export const TradeStart = (props) => {
     tokenIdForCurrentLevel,
     level,
     txStatus,
+    burnStatus
   ]);
 
   //LVL UP: A trade makes a player level up both in contract & in db

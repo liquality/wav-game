@@ -1,3 +1,4 @@
+import 'ethers';
 import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
 import '@openzeppelin/hardhat-upgrades';
@@ -23,6 +24,12 @@ const config: HardhatUserConfig = {
     },
     polygonMumbai: {
       url: process.env.MUMBAI_RPC,
+      accounts: {
+        mnemonic: process.env.MNEMONIC,
+      },
+    },
+    polygonMainnet: {
+      url: process.env.POLYGON_RPC,
       accounts: {
         mnemonic: process.env.MNEMONIC,
       },
