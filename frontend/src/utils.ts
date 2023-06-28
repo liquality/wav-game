@@ -185,35 +185,31 @@ export const getDifferenceBetweenDates = (startDate: any, endDate: any) => {
 };
 
 
+
+
+
 export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
-    const tokenIdArray = await generateTokenIdArray(artistNumberId / 1000);
     const nftObject = await fetchNFTOwners();
-    const countByTokenId = {};
+    const filteredArray = nftObject.result.filter((item) => item.token_id.startsWith(artistNumberId / 1000));
+    const levelCounts = {};
 
-    for (const item of nftObject.result) {
-        const tokenId = Number(item.token_id);
-        const amount = Number(item.amount);
+    filteredArray.forEach((item, index) => {
+        const tokenId = parseInt(item.token_id);
+        const owner = item.owner_of;
 
-        if (tokenIdArray.includes(tokenId)) {
-            //console.log(tokenIdArray, 'array', tokenId, amount, 'BÄ TOKEN ID sent in')
-            if (amount >= 1) {
-                const level = tokenIdArray.indexOf(tokenId) + 1;
-                if (countByTokenId[level]) {
-                    countByTokenId[level]++;
-                } else {
-                    countByTokenId[level] = 1;
-                }
-            }
+        if (!levelCounts[`level${tokenId}`]) {
+            levelCounts[`level${tokenId}`] = new Set();
         }
-    }
 
-    const resultObject = {};
-    for (let i = 0; i < tokenIdArray.length; i++) {
-        const level = `level${i + 1}`;
-        resultObject[level] = countByTokenId[i + 1] || 0;
-    }
+        levelCounts[`level${tokenId}`].add(owner);
+    });
 
-    return resultObject;
+    const result = {};
+    Object.keys(levelCounts).forEach((level) => {
+        result[level] = levelCounts[level].size;
+    });
+
+    return result;
 };
 
 
