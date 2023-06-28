@@ -67,7 +67,6 @@ export const Sidebar = ({
   setChooseArtistView,
 }: Props) => {
   const [showArtistBioModal, setShowArtistBioModal] = useState(false);
-  const [readMoreQuote, setReadMoreQuote] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, (e) => {
@@ -78,10 +77,7 @@ export const Sidebar = ({
     setShowPickArtistModal(true);
   };
 
-  const handleShowArtistBioModal = (artistQuote?) => {
-    if (artistQuote) {
-      setReadMoreQuote(true);
-    }
+  const handleShowArtistBioModal = () => {
     setShowArtistBioModal(true);
   };
 
@@ -100,7 +96,6 @@ export const Sidebar = ({
         show={showArtistBioModal}
         setShow={setShowArtistBioModal}
         artist={artist}
-        readMoreQuote={readMoreQuote}
         image={image}
       />
       <div className="flex flex-col place-items-end side-bar">
@@ -126,7 +121,7 @@ export const Sidebar = ({
                 {artist.quote?.length > 130 ? (
                   <Button
                     size="small"
-                    onClick={() => handleShowArtistBioModal(artist.quote)}
+                    onClick={() => handleShowArtistBioModal()}
                     link
                     mode="pink"
                   >
