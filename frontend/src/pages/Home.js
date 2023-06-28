@@ -109,15 +109,9 @@ export default function Home(props) {
       </div>
       {/* Artists text */}
       <div className="lineCoral mb-5 mt-5"></div>
-      <div className="flex justify-center items-center">
-        {" "}
-        <ArtistText />
+      <div className="flex justify-center items-center choose-artist-title mb-5">
+        Choose Artist
       </div>
-
-      <p className="text-center softPink mb-5">
-        We are at the the intersection of music and Web3, giving meaning to
-        <br></br>creators’ collective experiences.
-      </p>
 
       {/* Artist grid */}
       <ArtistGrid
@@ -136,7 +130,7 @@ export default function Home(props) {
           mode={'pink'}
           onClick={handleChooseArtist}
         >
-          CHOOSE ARTIST
+          Start Game
         </Button>
 
       </div>
@@ -275,16 +269,15 @@ export default function Home(props) {
         <div className="flex justify-center items-center relative mt-5">
           <RewardsTout className="mt-5" />
 
-          <div style={{ left: "34%", top: "35%" }} className="absolute">
-            <span className="lightCoral">
-              EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS
-            </span>
+          <div style={{ left: "37%", top: "39%" }} className="absolute">
+            <div className="lightCoral flex">
+            EPIC PRIZES FOR FULL SET HOLDERS
+            </div>
           </div>
-          <div style={{ left: "34%", top: "58%" }} className="absolute">
-            <span className="text-xs">
-              Didn’t win the final prize? Don’t fret, as a full set <br></br>
-              holder you will still be rewarded.
-            </span>
+          <div style={{ left: "37%", top: "58%", width: '23rem' }} className="absolute flex w-full">
+            <p className="text-xs">
+            In order to win as a full set holder, keep at least one NFT at each level. You'll need a total of 63 to start with.
+            </p>
           </div>
         </div>
         <div className="mt-24 mb-24 flex justify-center items-center">
@@ -313,7 +306,7 @@ export default function Home(props) {
 
         <a
           className="hover:no-underline hover:text-decoration-none"
-          href="https://discord.com/invite/35yAGaQ3gx"
+          href="https://discord.gg/6cq3jwB2"
           target="blank"
           rel="noreferrer"
         >

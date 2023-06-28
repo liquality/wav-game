@@ -167,10 +167,15 @@ export const Artist = (props) => {
                 <div className="flex flex-col justify-center items-center  mb-24 relative">
                   <RewardsTout className="mt-5" />
 
-                  <div style={{ left: "20%", top: "35%" }} className="absolute">
-                    <span className="lightCoral">
-                      EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS!
-                    </span>
+                  <div style={{ left: "15%", top: "39%" }} className="absolute">
+                    <div className="lightCoral flex">
+                      EPIC PRIZES FOR FULL SET HOLDERS
+                    </div>
+                  </div>
+                  <div style={{ left: "15%", top: "58%", width: '23rem' }} className="absolute flex w-full">
+                    <p className="text-xs">
+                      In order to win as a full set holder, keep at least one NFT at each level. You'll need a total of 63 to start with.
+                    </p>
                   </div>
                 </div>
               </div>

@@ -14,6 +14,26 @@ import {
 } from "../../utils";
 import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import UserService from "../../services/UserService";
+import ContractService from "../../services/contractService";
+
+const subtitleText = {
+  1: { from: 'Trade 2 Live Songs', to: 'Get 1 Top Live Song' },
+  2: { from: 'Trade 2 Top Live Songs', to: 'Get 1 Unreleased Song + Listening Room' },
+  3: {
+    from: 'Trade 2 Unreleased Songs', to: 'Get 1 Limited Physical Item',
+    claimed: 'All of this level\'s prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.'
+  },
+  4: {
+    from: 'Trade 2 Physical Items', to: 'Get 1 Unreleased Track Performance or Listening Party',
+    claimed: 'All of this level\'s prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.'
+  },
+  5: {
+    from: 'Trade 2 Unreleased Track Performances', to: 'Your Chance to Win',
+    claimed: 'A winner for the 1-on-1 trip + concert has been claimed already! Keep trading for your chance to win the full set holder reward.'
+  },
+
+}
+
 
 export const TradeStart = (props) => {
   const {
@@ -29,34 +49,37 @@ export const TradeStart = (props) => {
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
+  const [fromSubtitle, setFromSubtitle] = useState('');
+  const [toSubtitle, setToSubtitle] = useState('');
+  const [burnStatus, setBurnStatus] = useState(false);
 
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();
     return artist;
   };
 
-  const fetchGameByUserIdAndArtistId = async () => {
-    const artist = await getArtist();
-    try {
-      const user = await UserService.getGameByUserId(
-        fetchSession().id, //userid
-        artist?.number_id,
-        fetchSession().token
-      );
-
-      return user;
-    } catch (err) {
-      console.log(err, "Error fetching user");
-    }
-  };
-
-  const getWhichTokenIdForLevel = async (levelUp) => {
-    const artist = await getArtist();
-    let firstChar = artist.number_id.toString()[0];
-    return firstChar + 0 + levelUp;
-  };
-
   useEffect(() => {
+    const fetchGameByUserIdAndArtistId = async () => {
+      const artist = await getArtist();
+      try {
+        const user = await UserService.getGameByUserId(
+          fetchSession().id, //userid
+          artist?.number_id,
+          fetchSession().token
+        );
+
+        return user;
+      } catch (err) {
+        console.log(err, "Error fetching user");
+      }
+    };
+
+    const getWhichTokenIdForLevel = async (levelUp) => {
+      const artist = await getArtist();
+      let firstChar = artist.number_id.toString()[0];
+      return firstChar + 0 + levelUp;
+    };
+
     const init = async () => {
       if (userNfts) {
         const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(level);
@@ -64,11 +87,32 @@ export const TradeStart = (props) => {
         setTokenIdForNewLevel(_tokenIdForNewLevel);
         setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
       }
+
       if (!game) {
         const _game = await fetchGameByUserIdAndArtistId();
         setGame(_game);
       }
+
+      if (game) {
+        const _burnStatus = await ContractService.getBurnStatus(
+          game.game_symbol_id,
+          getPublicKey(),
+          level
+        );
+
+        setBurnStatus(_burnStatus);
+      }
     };
+
+    const subtitles = subtitleText[level];
+    if (burnStatus) {
+      setFromSubtitle(subtitles.claimed);
+    } else {
+
+      setFromSubtitle(subtitles.from);
+    }
+    setToSubtitle(subtitles.to);
+
 
     init();
   }, [
@@ -149,7 +193,7 @@ export const TradeStart = (props) => {
           <div className="flexDirectionRow">
             <div className="flexDirectionColumn">
               <p className="webfont coral text-2xl">Level {level}</p>
-              <p className=" mb-3">Trade 2 top live songs</p>
+              <p className=" mb-3">{fromSubtitle}</p>
 
               {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
 
@@ -187,7 +231,7 @@ export const TradeStart = (props) => {
             </div>
             <div className="pr-5 flexDirectionColumn ">
               <p className="webfont coral text-2xl">Level {level + 1}</p>
-              <p className="mb-3">Trade 2 top live songs</p>
+              <p className="mb-3">{toSubtitle}</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (
                 <img

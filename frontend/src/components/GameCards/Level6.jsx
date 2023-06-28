@@ -16,12 +16,13 @@ export const Level6 = (props) => {
   const level6Count = nftCount["6"] || 0;
   const level5Count = nftCount["5"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[6];
+  let actionLocked = false;
   let instructions = "";
   let tradeActionText = "";
   let edition = "";
   let actionDisabled = false;
   let noActions = false;
-  let title = "A chance to win a 1:1 trip + concert experience";
+  let title = "Congrats, you won a 1:1 trip + concert experience";
   const [earlyBirdCollector, setEarlyBirdCollector] = useState(null);
   const [gameContract, setGameContract] = useState(null);
 
@@ -36,6 +37,7 @@ export const Level6 = (props) => {
         // show the timer
         noActions = true;
         status = "locked";
+        actionLocked = true;
         const difference = getDifferenceBetweenDates(today, unlockDate);
         actionDisabled = true;
         tradeActionText = "Level locked";
@@ -79,12 +81,14 @@ export const Level6 = (props) => {
       if (level6Count === 0) {
         instructions = "You need to start with 32 Game collectibles.";
         tradeActionText = "Level locked";
+        actionLocked = true;
         actionDisabled = true;
       } else {
         instructions = `You have ${
           level6Count === -1 ? 0 : level6Count
         } NFTs. Get 1 more to trade for next level.`;
         tradeActionText = "Level locked";
+        actionLocked = true;
         actionDisabled = true;
       }
     } else {
@@ -92,7 +96,7 @@ export const Level6 = (props) => {
       //TODO if you are the first one to win , there is one design (already implemented design)
       //TODO: need to calculate if you are the first winner (earlyBirdCollector from smart contract)
       //TODO if you are full set holder there is another design
-      //TODO: FULL SET HOLDER = holding 1 or more of every card at the end of the game
+      //TODO: FULL SET HOLDER = holding 1 or more of every NFT for artist_id at the end of the game
       //If you are in lvl 6 but not full set holder, another design (so 3 different designs total)
       //TODO: if earlyBirdCollector state is true, render concert won
       //Else if check for full set holder and render 'congrats you won and are a full set holder'
@@ -102,6 +106,8 @@ export const Level6 = (props) => {
         tradeActionText = "";
         instructions = "";
         status = "won";
+        actionDisabled = true;
+        actionLocked = false;
       } else {
         actionDisabled = false;
         instructions = `You have ${level6Count === -1 ? 0 : level6Count} NFTs.`;
@@ -122,14 +128,13 @@ export const Level6 = (props) => {
       }
     }
   }
-
   const actions = noActions
     ? []
     : [
         {
           onActionClick: (level) => onTradeClick(level),
           label: tradeActionText,
-          mode: "default",
+          mode: actionLocked ? "pinkStroke" : "default",
           disabled: actionDisabled,
           useIcon: actionDisabled,
         },
