@@ -1,17 +1,9 @@
 import { SpinningLoader } from "../SpinningLoader";
 import CustomButton from "../Button";
 import { PoweredByLiquality } from "../PoweredByLiquality";
-import { useNavigate } from "react-router-dom";
 
 export const LoginOrRegister = (props) => {
-  const { createNewWallet, loading, handleClose } = props;
-  const navigate = useNavigate();
-
-  const handleTermsClick = () => {
-    navigate("/terms");
-    handleClose();
-  };
-
+  const { createNewWallet, loading } = props;
   return (
     <>
       {loading ? (
@@ -62,12 +54,12 @@ export const LoginOrRegister = (props) => {
               </div>
 
               <PoweredByLiquality notCenter={true} />
-              <button
-                onClick={() => handleTermsClick()}
+              <a
                 className="modalTerms mt-3"
-              >
-                Terms & Conditions
-              </button>
+                href="/terms"
+                target="blank"
+                rel="noreferrer"
+              > Terms & Conditions</a>
             </div>
           </div>
         </div>
