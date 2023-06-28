@@ -15,6 +15,7 @@ export const Level3 = (props) => {
   let instructions = "";
   let tradeActionText = "";
   let actionDisbled = false;
+  let actionLocked = false;
 
   actionDisbled = false;
   instructions = `You have ${level3Count === -1 ? 0 : level3Count} NFTs.`;
@@ -22,9 +23,10 @@ export const Level3 = (props) => {
     if (level3Count === 0) {
       instructions = "You need 2 Artist collectibles to trade for this.";
       tradeActionText = "Level locked";
+      actionLocked = true;
       actionDisbled = true;
     } else {
-      instructions = "Get 1 more to trade for next level.";
+      instructions = "You have 1 collectible. Get 1 more from past level to trade.";
       tradeActionText = "Start Trading";
       actionDisbled = true;
     }
@@ -40,7 +42,7 @@ export const Level3 = (props) => {
     {
       onActionClick: (level) => onTradeClick(level),
       label: tradeActionText,
-      mode: "default",
+      mode: actionLocked ? 'pinkStroke' : 'default',
       disabled: actionDisbled,
       useIcon: actionDisbled,
     },

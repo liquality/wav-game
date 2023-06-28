@@ -1,18 +1,9 @@
 import { SpinningLoader } from "../SpinningLoader";
 import CustomButton from "../Button";
 import { PoweredByLiquality } from "../PoweredByLiquality";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export const LoginOrRegister = (props) => {
-  const { createNewWallet, loading, handleClose } = props;
-  const navigate = useNavigate();
-
-  const handleTermsClick = () => {
-    navigate("/terms");
-    handleClose();
-  };
-
+  const { createNewWallet, loading } = props;
   return (
     <>
       {loading ? (
@@ -44,27 +35,31 @@ export const LoginOrRegister = (props) => {
           </div>
           <div className="rightModalContainer ">
             {" "}
-            <div style={{ width: "18rem" }}>
+            <div style={{ width: "80%" }}>
               <div className="mt-4 mb-48">
                 <p className="eyebrowLg mt-5">
                   <b>WELCOME</b>
                 </p>
                 <p className="rightSubHeadingTextSmall mt-3">
-                  Your registration creates a wallet to securely hold your NFTs.
+                  Your registration creates a wallet to securely hold your collectibles.
                 </p>
-                <p className="rightSubHeadingTextSmall mt-5">
-                  To find your games in progress you must log-in with the same
-                  credentials you registered with.
-                </p>
+                <div className="rightSubHeadingTextSmall mt-5">
+                  <ul className="list">
+                    <li>optimized for Chrome</li>
+                    <li>log-in with the same account to play games in progress</li>
+                    <li>use one Google account per browser only</li>
+                    <li>all payments in USD</li>
+                  </ul>
+                </div>
               </div>
 
               <PoweredByLiquality notCenter={true} />
-              <button
-                onClick={() => handleTermsClick()}
+              <a
                 className="modalTerms mt-3"
-              >
-                Terms & Conditions
-              </button>
+                href="/terms"
+                target="blank"
+                rel="noreferrer"
+              > Terms & Conditions</a>
             </div>
           </div>
         </div>

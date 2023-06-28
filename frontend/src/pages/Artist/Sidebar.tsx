@@ -67,10 +67,10 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal, 
   useOnClickOutside(ref, (e) => {
     setOpen(false);
   });
- const handleChangeArtistClick = () => {
-  setChooseArtistView('chooseArtistStart');
-  setShowPickArtistModal(true);
- };
+  const handleChangeArtistClick = () => {
+    setChooseArtistView('chooseArtistStart');
+    setShowPickArtistModal(true);
+  };
   return (
     <div
       className={classNames({
@@ -82,10 +82,10 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal, 
       })}
       ref={ref}
     >
-      <ArtistBioModal show={showArtistBioModal} 
-                      setShow={setShowArtistBioModal} 
-                      artist={artist} 
-                      image={image} />
+      <ArtistBioModal show={showArtistBioModal}
+        setShow={setShowArtistBioModal}
+        artist={artist}
+        image={image} />
       <div className="flex flex-col place-items-end side-bar">
         <div className="flex flex-col w-full px-5 gap-4 mt-5">
           <div className="artist-name">{artist.name}</div>
@@ -100,7 +100,14 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal, 
           <WaveGraphic className="artist-wave-graphic" />
           <div className="flex flex-col mt-4 px-5 gap-5">
             <div className="mt-3 artist-content">
-              <p>{artist.quote}</p>
+              <p> {artist.quote?.slice(0, 130)} {artist.quote?.length > 130 ? '... ' : ' '}
+                {artist.quote?.length > 130 ? <Button
+                  size="small"
+                  onClick={() => handleChangeArtistClick()}
+                  link
+                  mode="pink">
+                  Read More</Button> : null}
+              </p>
             </div>
             <div className="flex flex-row items-center">
               {artist && artist.socials ? Object.keys(artist.socials).map((network) => {
@@ -111,7 +118,7 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal, 
                 );
               }) : null}
             </div>
-            <div className="artist-image mt-3 mb-5" style={{backgroundImage: `url(${image})`}} />
+            <div className="artist-image mt-3 mb-5" style={{ backgroundImage: `url(${image})` }} />
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">
             <h2>BIO</h2>
@@ -123,6 +130,12 @@ export const Sidebar = ({ open, setOpen, artist, image, setShowPickArtistModal, 
                 link
                 mode="pink">
                 Read More</Button>
+              {artist.bio?.length > 180 ? <Button
+                size="small"
+                onClick={() => handleChangeArtistClick()}
+                link
+                mode="pink">
+                Read More</Button> : null}
             </p>
           </div>
           {artist.funFact ? <div className="flex flex-col p-5 gap-1 artist-info">
