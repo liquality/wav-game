@@ -39,27 +39,6 @@ export function getPublicKey(): string {
     return JSON.parse(localStorage.getItem("loginResponse")!)?.loginResponse?.publicAddress;
 }
 
-export function seeIfUserCanLogIn() {
-    console.log('came to seeIfUserCanLogIn function');
-
-    for (var i = 0; i < localStorage.length; i++) {
-        var key = localStorage.key(i);
-        var storedValue = localStorage.getItem(key);
-
-        try {
-            var storedValueInJsonFormat = JSON.parse(storedValue);
-            if (storedValueInJsonFormat && storedValueInJsonFormat.hasOwnProperty('share')) {
-                return true;
-            }
-        } catch (error) {
-            // Handle invalid JSON
-            console.error('BÄ Error parsing stored value as JSON:', error);
-
-        }
-    }
-    return false; // If no matching value is found
-}
-
 
 export const fetchSession = () => {
     const sessionString = localStorage.getItem('session');
