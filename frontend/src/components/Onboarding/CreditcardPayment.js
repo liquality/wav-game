@@ -83,8 +83,8 @@ export const CreditcardPayment = (props) => {
 
         <CrossmintPayButton
           onClick={handleDoneWithCheckout}
-          clientId="d40b03b9-09a3-4ad8-a4f8-15fef67cad21"
-          environment="staging"
+          clientId={process.env.REACT_APP_CROSSMINT_CLIENT_ID}
+          environment={process.env.REACT_APP_CROSSMINT_ENVIRONMENT}
           className="xmint-btn"
           mintTo={getPublicKey()}
           mintConfig={{
