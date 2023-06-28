@@ -275,16 +275,15 @@ export default function Home(props) {
         <div className="flex justify-center items-center relative mt-5">
           <RewardsTout className="mt-5" />
 
-          <div style={{ left: "34%", top: "35%" }} className="absolute">
-            <span className="lightCoral">
-              EXCLUSIVE REWARDS FOR <br></br> FULL SET HOLDERS
-            </span>
+          <div style={{ left: "37%", top: "39%" }} className="absolute">
+            <div className="lightCoral flex">
+            EPIC PRIZES FOR FULL SET HOLDERS
+            </div>
           </div>
-          <div style={{ left: "34%", top: "58%" }} className="absolute">
-            <span className="text-xs">
-              Didn’t win the final prize? Don’t fret, as a full set <br></br>
-              holder you will still be rewarded.
-            </span>
+          <div style={{ left: "37%", top: "58%", width: '23rem' }} className="absolute flex w-full">
+            <p className="text-xs">
+            In order to win as a full set holder, keep at least one NFT at each level. You'll need a total of 63 to start with.
+            </p>
           </div>
         </div>
         <div className="mt-24 mb-24 flex justify-center items-center">
