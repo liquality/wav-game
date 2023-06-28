@@ -4,7 +4,12 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import { Terms } from "./pages/Terms";
-import { getCurrentLevel, getPublicKey, setupSDK } from "./utils";
+import {
+  checkIfFullSetHolder,
+  getCurrentLevel,
+  getPublicKey,
+  setupSDK,
+} from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
 import { useState, useEffect } from "react";
@@ -27,6 +32,7 @@ function App() {
   const [nftCount, setNftCount] = useState(null);
   const [collectibleCount, setCollectibleCount] = useState(0);
   const [currentLevel, setCurrentLevel] = useState(0);
+  const [userIsFullSetHolder, setUserIsFullSetHolder] = useState(null);
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
@@ -64,20 +70,20 @@ function App() {
       setLoading(false);
 
       const _artist = await fetchArtist();
-      console.log(_artist, "artist?");
 
-      if (!nfts) {
+      if (!nfts && _artist?.number_id) {
         console.log("FETCHING NFTS AGAIN!");
         const nftData = await fetchNfts();
         setNfts(nftData);
-      }
 
-      if (_artist?.number_id && nfts && !nftCount) {
         console.log("FETCHING COUNT AGAIN!");
-        const _currentLevel = await getCurrentLevel(nfts, _artist.number_id);
+        const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
         setNftCount(_currentLevel.levels);
         setCollectibleCount(_currentLevel.totalCollectibles);
         setCurrentLevel(_currentLevel.currentLevel);
+
+        const isFullSetHolder = await checkIfFullSetHolder(_artist?.number_id);
+        setUserIsFullSetHolder(isFullSetHolder);
       }
     };
 
@@ -103,7 +109,10 @@ function App() {
           nftCount: nftCount,
           collectibleCount: collectibleCount,
           setCurrentLevel: setCurrentLevel,
+          setCollectibleCount: setCollectibleCount,
           currentLevel: currentLevel,
+          setUserIsFullSetHolder,
+          userIsFullSetHolder,
         }}
       >
         {" "}

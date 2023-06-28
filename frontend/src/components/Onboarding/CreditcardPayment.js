@@ -56,8 +56,7 @@ export const CreditcardPayment = (props) => {
         <p className="lineNoCenter mt-5 mb-4" style={{ width: "50%" }}></p>
 
         <p className="mb-4" style={{ width: "50%" }}>
-          We made two special NFTs. You are going to hold randomized amounts of
-          both NFTs. To move through each level, you will need:
+          To move through each level, you will need:
         </p>
         <p className="mb-4">
           • 4 items to get to level 3 <br></br>• 8 to level 4 <br></br>• 16 to
@@ -84,8 +83,8 @@ export const CreditcardPayment = (props) => {
 
         <CrossmintPayButton
           onClick={handleDoneWithCheckout}
-          clientId="d40b03b9-09a3-4ad8-a4f8-15fef67cad21"
-          environment="staging"
+          clientId={process.env.REACT_APP_CROSSMINT_CLIENT_ID}
+          environment={process.env.REACT_APP_CROSSMINT_ENVIRONMENT}
           className="xmint-btn"
           mintTo={getPublicKey()}
           mintConfig={{

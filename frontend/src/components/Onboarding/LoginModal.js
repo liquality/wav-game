@@ -22,9 +22,7 @@ const verifierMap = {
 
 // 1. Setup Service Provider
 const directParams = {
-  baseUrl: window.location.href.startsWith("http://localhost:3005")
-    ? `http://localhost:3005/serviceworker`
-    : `https://wav-game-staging-public.liquality.io/serviceworker`,
+  baseUrl: window.location.origin + "/serviceworker",
   enableLogging: true,
   networkUrl: "https://goerli.infura.io/v3/a8684b771e9e4997a567bbd7189e0b27",
   network: "testnet",
@@ -62,6 +60,7 @@ export const LoginModal = (props) => {
     try {
       const response = await UserService.loginUser(serviceprovider_name);
       localStorage.setItem("session", JSON.stringify(response));
+      return response;
     } catch (err) {
       console.log("Error logging in user");
     }
@@ -85,11 +84,14 @@ export const LoginModal = (props) => {
 
   const createNewWallet = async () => {
     //Dont create new wallet if user has localstorage shares
-    if (seeIfUserCanLogIn()) {
+    const response = await AuthService.createWallet(tKey, verifierMap);
+    const canUserLogin = await loginUser(
+      response.loginResponse?.userInfo?.email
+    );
+
+    if (canUserLogin) {
       setLoading(true);
-      const response = await AuthService.loginUsingSSO(tKey, verifierMap);
       localStorage.setItem("loginResponse", JSON.stringify(response));
-      await loginUser(response.loginResponse?.userInfo?.email);
       setLoginResponse(response);
 
       // get the games and redirect to the latest created
@@ -112,11 +114,9 @@ export const LoginModal = (props) => {
       }
     } else {
       setLoading(true);
-      const response = await AuthService.createWallet(tKey, verifierMap);
       localStorage.setItem("loginResponse", JSON.stringify(response));
       setLoginResponse(response);
       setLoading(false);
-      //TODO: create user in db here
       setContent("pickAvatar");
       setHeaderText("Pick An Avatar");
     }

@@ -15,4 +15,8 @@
 [build]
   command = "sed -i \"s|API_DOMAIN_PLACEHOLDER|${API_DOMAIN}|g\" netlify.toml && npm run build"
   environment = { CI = "false" }
+<<<<<<< HEAD
+
+=======
   
+>>>>>>> origin/main

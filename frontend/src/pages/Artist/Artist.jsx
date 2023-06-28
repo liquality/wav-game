@@ -7,10 +7,18 @@ import { GameCards } from "../../components/GameCards/GameCards";
 import { GameTabs } from "../../components/GameTabs/GameTabs";
 import Leaderboard from "./Leaderboard";
 import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
+import { ReactComponent as FullSetBannerWinner } from "../../images/winner_full_set_holder.svg";
+import { ReactComponent as FullSetBannerNotEligable } from "../../images/full_set_banner_not_eligable.svg";
+
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
-import { fetchSession, getPublicKey } from "../../utils";
+import {
+  checkIfFullSetHolder,
+  fetchSession,
+  getCurrentLevel,
+  getPublicKey,
+} from "../../utils";
 import UserService from "../../services/UserService";
 import Faq from "../../components/Faq";
 import { DataContext } from "../../DataContext";
@@ -35,6 +43,10 @@ export const Artist = (props) => {
     setNfts,
     currentLevel,
     collectibleCount,
+    setCollectibleCount,
+    setCurrentLevel,
+    setUserIsFullSetHolder,
+    userIsFullSetHolder,
   } = useContext(DataContext);
 
   const {
@@ -103,20 +115,25 @@ export const Artist = (props) => {
         setCurrentGame(currentGame);
       }
 
-      if (!nfts && !nftCount) {
-        console.log("FETCHING NFTS AGAIN!");
+      if (!nfts && !nftCount && _artist) {
+        console.log("FETCHING NFTS AGAIN! BÄ");
         const nftData = await fetchNfts();
+        const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
+        const isFullSetHolder = await checkIfFullSetHolder(_artist?.number_id);
+
+        setNftCount(_currentLevel.levels);
+        setCollectibleCount(_currentLevel.totalCollectibles);
+        setCurrentLevel(_currentLevel.currentLevel);
         setNfts(nftData);
+        setUserIsFullSetHolder(isFullSetHolder);
       }
     };
-
     fetchData();
     return () => {
       //any cleanup
     };
-  }, [artistId, userGames, nfts, setNfts]);
+  }, [artistId, userGames, nfts, setNfts, nftCount, userIsFullSetHolder]);
 
-  console.log(image, artist, currentGame, nftCount, "bruuuu wats");
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (
@@ -131,7 +148,7 @@ export const Artist = (props) => {
               setShowPickArtistModal={setShowPickArtistModal}
             />
             <div className="flex flex-col items-center md:ml-20 grow">
-              <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-20">
+              <div className="flex flex-col md:flex-row w-full justify-between items-center game-header text-white pt-3">
                 <div className="game-header-level">
                   LEVEL: {currentLevel || "0"}{" "}
                 </div>
@@ -161,18 +178,11 @@ export const Artist = (props) => {
               </div>
               <div className="flex flex-col   pt-24 mt-12">
                 <div className="flex flex-col justify-center items-center  mb-24 relative">
-                  <RewardsTout className="mt-5" />
-
-                  <div style={{ left: "15%", top: "39%" }} className="absolute">
-                    <div className="lightCoral flex">
-                      EPIC PRIZES FOR FULL SET HOLDERS
-                    </div>
-                  </div>
-                  <div style={{ left: "15%", top: "58%", width: '23rem' }} className="absolute flex w-full">
-                    <p className="text-xs">
-                      In order to win as a full set holder, keep at least one NFT at each level. You'll need a total of 63 to start with.
-                    </p>
-                  </div>
+                  {userIsFullSetHolder ? (
+                    <FullSetBannerWinner />
+                  ) : (
+                    <FullSetBannerNotEligable />
+                  )}
                 </div>
               </div>
               <div className="flexDirectionCol">
