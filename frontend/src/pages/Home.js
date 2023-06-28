@@ -306,7 +306,7 @@ export default function Home(props) {
 
         <a
           className="hover:no-underline hover:text-decoration-none"
-          href="https://discord.com/invite/35yAGaQ3gx"
+          href="https://discord.gg/6cq3jwB2"
           target="blank"
           rel="noreferrer"
         >
