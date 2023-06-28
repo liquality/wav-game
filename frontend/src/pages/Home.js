@@ -109,15 +109,9 @@ export default function Home(props) {
       </div>
       {/* Artists text */}
       <div className="lineCoral mb-5 mt-5"></div>
-      <div className="flex justify-center items-center">
-        {" "}
-        <ArtistText />
+      <div className="flex justify-center items-center choose-artist-title mb-5">
+        Choose Artist
       </div>
-
-      <p className="text-center softPink mb-5">
-        We are at the the intersection of music and Web3, giving meaning to
-        <br></br>creators’ collective experiences.
-      </p>
 
       {/* Artist grid */}
       <ArtistGrid
@@ -136,7 +130,7 @@ export default function Home(props) {
           mode={'pink'}
           onClick={handleChooseArtist}
         >
-          CHOOSE ARTIST
+          Start Game
         </Button>
 
       </div>
