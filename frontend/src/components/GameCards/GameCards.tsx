@@ -1,6 +1,5 @@
 
 import { getPublicKey } from "../../utils";
-import UserService from "../../services/UserService";
 
 import "./game-cards.css";
 import { Level1 } from "./Level1";
