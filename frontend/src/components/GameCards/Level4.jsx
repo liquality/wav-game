@@ -21,7 +21,7 @@ export const Level4 = (props) => {
   let title = "Get 1 limited physical item";
   actionDisabled = false;
   let actionLocked = false;
-  instructions = `You have ${level4Count === -1 ? 0 : level4Count} NFTs.`;
+  instructions = `You have ${level4Count === -1 ? 0 : level4Count} collectibles.`;
   // count down
   function applyCountDown() {
     if (levelSettings && levelSettings.countdown_ends > 0) {
@@ -62,7 +62,7 @@ export const Level4 = (props) => {
       } else {
         instructions = `You have ${
           level4Count === -1 ? 0 : level4Count
-        } NFTs. Get 1 more to trade for next level.`;
+        } collectibles. Get 1 more to trade for next level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }

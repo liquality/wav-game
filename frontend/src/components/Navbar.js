@@ -36,7 +36,7 @@ const Navbar = (props) => {
           setShow={setShowPickArtistModal}
         />
       ) : null}
-      <nav className=" sticky top-0  mt-1 z-10">
+      <nav style={{ zIndex: 10000 }} className="relative top-0  mt-1 z-9999">
         <div className="container flex flex-wrap justify-between">
           <a href="/" className="block py-2 logo-text" aria-current="page">
             WavGame <div className="logo-addon">Beta</div>

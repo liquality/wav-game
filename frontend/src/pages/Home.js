@@ -306,7 +306,7 @@ export default function Home(props) {
 
         <a
           className="hover:no-underline hover:text-decoration-none"
-          href="https://discord.gg/6cq3jwB2"
+          href="https://t.me/+QtvBTQK24iw5Mzcx"
           target="blank"
           rel="noreferrer"
         >
@@ -316,7 +316,7 @@ export default function Home(props) {
               lineHeight: 1.4,
             }}
           >
-            CONNECT ON DISCORD <SmallPinkArrow className="ml-2" />
+            CONNECT ON TELEGRAM <SmallPinkArrow className="ml-2" />
           </p>
         </a>
 

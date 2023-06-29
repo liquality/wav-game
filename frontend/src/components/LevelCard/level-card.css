@@ -11,7 +11,7 @@ div:has(> .level-card) {
   cursor: pointer;
   height: 32.5rem;
   width: 20.313rem;
-  padding: 3.125rem;
+  padding: 2.5rem;
 }
 
 .level-card-level {

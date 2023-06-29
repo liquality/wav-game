@@ -83,7 +83,7 @@ export const getCurrentLevel = async (nfts: any[], artistId: number) => {
             ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS)) {
             const level = parseInt(curr.id.slice(-1));
             acum.levels[level] = curr.balance;
-            if (level > acum.currentLevel) {
+            if (level > acum.currentLevel && curr.balance > 0) {
                 acum.currentLevel = level
             }
             acum.totalCollectibles += curr.balance;
