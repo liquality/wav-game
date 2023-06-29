@@ -1,5 +1,8 @@
 import { LevelCard } from "../LevelCard/LevelCard";
+import { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
+import { WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "../../data/contract_data";
 
 export const Level5 = (props) => {
   const {
@@ -10,6 +13,7 @@ export const Level5 = (props) => {
     onTradeClick,
     nftCount,
     burnStatus,
+    currentGame
   } = props;
   const level5Count = nftCount["5"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[5];
@@ -20,6 +24,47 @@ export const Level5 = (props) => {
   let noActions = false;
   let actionLocked = false;
   let title = "Get 1 custom-made song";
+  let earlyBirdLimit = 10;
+  const [isEarlyBird, setIsEarlyBird] = useState(null);
+  const [earlyBirds, setEarlyBirds] = useState([])
+  const [gameContract, setGameContract] = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("ame here >>>>>>>>>")
+      const provider = new ethers.JsonRpcProvider(
+        process.env.REACT_APP_RPC_URL
+      );
+      // Create a new instance of the contract using the ABI and address
+
+      const _gameContract = new ethers.Contract(
+        WAV_PROXY_ADDRESS,
+        WAV_PROXY_ABI,
+        provider
+      );
+      setGameContract(_gameContract);
+
+      const isEarlyBird = await checkEarlyBird();
+      const earlyBirds = await fetchEarlyBirds();
+      console.log("isEarlyBird >> ", isEarlyBird)
+      console.log("earlyBirds >> ", earlyBirds)
+      setIsEarlyBird(isEarlyBird);
+      setEarlyBirds(earlyBirds);
+    };
+
+    fetchData();
+  }, []);
+
+
+  const checkEarlyBird = async () => {
+    let isEarlyBird = await gameContract.isEarlyBirdCollector(currentGame.game_symbol_id, 6);
+    return isEarlyBird
+  };
+
+  const fetchEarlyBirds = async () => {
+    return await gameContract.fetchEarlyBirdCollectors(currentGame.game_symbol_id, 6);
+  }
 
   // count down
   function applyCountDown() {
@@ -92,6 +137,8 @@ export const Level5 = (props) => {
         edition,
         instructions,
       }}
+      earlyBirdCount={earlyBirds.length}
+      earlyBirdLimit={earlyBirdLimit}
     />
   );
 };

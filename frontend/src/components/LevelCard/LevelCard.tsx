@@ -36,6 +36,7 @@ interface Level {
    * The level instructions
    */
   instructions: string;
+
 }
 
 interface CardProps {
@@ -63,6 +64,10 @@ interface CardProps {
    * Set the current level temporary
    */
   setLevel?: (level?: number) => void;
+
+  earlyBirdCount: number;
+
+  earlyBirdLimit: number;
 }
 
 /**
@@ -76,7 +81,9 @@ export const LevelCard = ({
   const {
     setLevel,
     current,
-    level: { edition, title, instructions, id },
+    level: { edition, title, instructions, id},
+    earlyBirdCount, 
+    earlyBirdLimit
   } = props;
   const active = current === id;
   const handleActionClick = (action: LevelActionProps) => {
@@ -102,6 +109,9 @@ export const LevelCard = ({
           'level-card-title-small': id === 6
         })}>{title}</div>
         <div className="level-card-edition">{edition}</div>
+        {earlyBirdLimit > 0? ( 
+        <p>{earlyBirdCount} of {earlyBirdLimit} claimed</p>
+        ): null}
       </div>
       <div className="flex flex-col justify-between">
         <div

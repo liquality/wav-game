@@ -33,6 +33,7 @@ export interface WavNFTInterface extends utils.Interface {
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "burn(address,uint256,uint256)": FunctionFragment;
     "burnBatch(address,uint256[],uint256[])": FunctionFragment;
+    "contractURI()": FunctionFragment;
     "getTrustedForwarder()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
@@ -45,6 +46,7 @@ export interface WavNFTInterface extends utils.Interface {
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
+    "setContractURI(string)": FunctionFragment;
     "setTrustedForwarder(address)": FunctionFragment;
     "setURI(string)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
@@ -59,6 +61,7 @@ export interface WavNFTInterface extends utils.Interface {
       | "balanceOfBatch"
       | "burn"
       | "burnBatch"
+      | "contractURI"
       | "getTrustedForwarder"
       | "isApprovedForAll"
       | "isTrustedForwarder"
@@ -71,6 +74,7 @@ export interface WavNFTInterface extends utils.Interface {
       | "safeBatchTransferFrom"
       | "safeTransferFrom"
       | "setApprovalForAll"
+      | "setContractURI"
       | "setTrustedForwarder"
       | "setURI"
       | "supportsInterface"
@@ -102,6 +106,10 @@ export interface WavNFTInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BigNumberish>[]
     ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "contractURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getTrustedForwarder",
@@ -165,6 +173,10 @@ export interface WavNFTInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setContractURI",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setTrustedForwarder",
     values: [PromiseOrValue<string>]
   ): string;
@@ -193,6 +205,10 @@ export interface WavNFTInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burnBatch", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "contractURI",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getTrustedForwarder",
     data: BytesLike
@@ -224,6 +240,10 @@ export interface WavNFTInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setApprovalForAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setContractURI",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -388,6 +408,8 @@ export interface WavNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    contractURI(overrides?: CallOverrides): Promise<[string]>;
+
     getTrustedForwarder(
       overrides?: CallOverrides
     ): Promise<[string] & { forwarder: string }>;
@@ -455,6 +477,11 @@ export interface WavNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setContractURI(
+      _contractURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setTrustedForwarder(
       _trustedForwarder: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -510,6 +537,8 @@ export interface WavNFT extends BaseContract {
     values: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  contractURI(overrides?: CallOverrides): Promise<string>;
 
   getTrustedForwarder(overrides?: CallOverrides): Promise<string>;
 
@@ -576,6 +605,11 @@ export interface WavNFT extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setContractURI(
+    _contractURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setTrustedForwarder(
     _trustedForwarder: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -631,6 +665,8 @@ export interface WavNFT extends BaseContract {
       values: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
+
+    contractURI(overrides?: CallOverrides): Promise<string>;
 
     getTrustedForwarder(overrides?: CallOverrides): Promise<string>;
 
@@ -690,6 +726,11 @@ export interface WavNFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setContractURI(
+      _contractURI: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -812,6 +853,8 @@ export interface WavNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    contractURI(overrides?: CallOverrides): Promise<BigNumber>;
+
     getTrustedForwarder(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
@@ -877,6 +920,11 @@ export interface WavNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setContractURI(
+      _contractURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setTrustedForwarder(
       _trustedForwarder: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -933,6 +981,8 @@ export interface WavNFT extends BaseContract {
       values: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getTrustedForwarder(
       overrides?: CallOverrides
@@ -998,6 +1048,11 @@ export interface WavNFT extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setContractURI(
+      _contractURI: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

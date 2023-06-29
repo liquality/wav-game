@@ -95,6 +95,7 @@ export interface WavGameInterface extends utils.Interface {
     "getLevel(uint256,uint256)": FunctionFragment;
     "getTreasury(uint256)": FunctionFragment;
     "getTrustedForwarder()": FunctionFragment;
+    "highestLevelCollector()": FunctionFragment;
     "initialize(address,address,uint256)": FunctionFragment;
     "isEarlyBirdCollector(uint256,uint256)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
@@ -133,6 +134,7 @@ export interface WavGameInterface extends utils.Interface {
       | "getLevel"
       | "getTreasury"
       | "getTrustedForwarder"
+      | "highestLevelCollector"
       | "initialize"
       | "isEarlyBirdCollector"
       | "isTrustedForwarder"
@@ -214,6 +216,10 @@ export interface WavGameInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getTrustedForwarder",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "highestLevelCollector",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -332,6 +338,10 @@ export interface WavGameInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getTrustedForwarder",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "highestLevelCollector",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -644,6 +654,8 @@ export interface WavGame extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string] & { forwarder: string }>;
 
+    highestLevelCollector(overrides?: CallOverrides): Promise<[string]>;
+
     initialize(
       _wavNFT: PromiseOrValue<string>,
       _trustedForwarder: PromiseOrValue<string>,
@@ -812,6 +824,8 @@ export interface WavGame extends BaseContract {
 
   getTrustedForwarder(overrides?: CallOverrides): Promise<string>;
 
+  highestLevelCollector(overrides?: CallOverrides): Promise<string>;
+
   initialize(
     _wavNFT: PromiseOrValue<string>,
     _trustedForwarder: PromiseOrValue<string>,
@@ -977,6 +991,8 @@ export interface WavGame extends BaseContract {
     ): Promise<string>;
 
     getTrustedForwarder(overrides?: CallOverrides): Promise<string>;
+
+    highestLevelCollector(overrides?: CallOverrides): Promise<string>;
 
     initialize(
       _wavNFT: PromiseOrValue<string>,
@@ -1253,6 +1269,8 @@ export interface WavGame extends BaseContract {
 
     getTrustedForwarder(overrides?: CallOverrides): Promise<BigNumber>;
 
+    highestLevelCollector(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
       _wavNFT: PromiseOrValue<string>,
       _trustedForwarder: PromiseOrValue<string>,
@@ -1421,6 +1439,10 @@ export interface WavGame extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getTrustedForwarder(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    highestLevelCollector(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
