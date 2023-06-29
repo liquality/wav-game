@@ -49,7 +49,7 @@ websocketService.addConnectionListener = (expressServer) => {
 
 websocketService.checkAuth = async (req, callback) => {
   const userId = req.url.split("?userid=")[1];
-  console.log(userId, "userid?? BÄÄÄ");
+  console.log(userId, "Userid in websocket Auth");
 
   if (userId) {
     try {
@@ -66,7 +66,6 @@ websocketService.checkAuth = async (req, callback) => {
 websocketService.send = (recipientId, messageType, messageContent) => {
   recipientId.forEach((id) => {
     const client = clients[id];
-    console.log(id, "wats ID?? Bää", client);
 
     if (client?.sockets) {
       const data = { type: messageType, content: messageContent };
@@ -76,22 +75,6 @@ websocketService.send = (recipientId, messageType, messageContent) => {
       });
     }
   });
-};
-
-module.exports = websocketService;
-
-// Function to send events/messages to a specific user
-websocketService.sendToUser = (userId, messageType, messageContent) => {
-  const ws = clients.get(userId);
-  if (ws && ws.readyState === WebSocket.OPEN) {
-    const message = JSON.stringify({
-      type: messageType,
-      content: messageContent,
-    });
-    ws.send(message);
-  } else {
-    console.log(`Unable to send message to user ${userId}`);
-  }
 };
 
 module.exports = websocketService;
