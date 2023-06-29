@@ -1,83 +1,48 @@
-const WebSocket = require("ws").WebSocket;
-const queryString = require("query-string");
-const Session = require("../classes/Session");
-const User = require("../classes/User");
-const logger = require("../../logger").child({ name: "websockets" });
-
-const wss = new WebSocket.Server({
-  noServer: true,
-  path: "/websockets",
-});
-
-const clients = {};
-
-wss.on("connection", function connection(socket, userid) {
-  logger.debug(socket, "WebSocket connected!");
-
-  if (!clients[userid]) {
-    clients[userid] = {};
-  }
-  if (clients[userid].sockets) {
-    clients[userid].sockets.push(socket);
-  } else {
-    clients[userid].sockets = [socket];
-  }
-
-  socket.on("message", function message(message) {});
-
-  socket.on("close", function close() {
-    logger.debug(socket, "WebSocket connection closed!");
-    const socketIndex = clients[userid].sockets.findIndex((s) => s === socket);
-    clients[userid].sockets.splice(socketIndex, 1);
-  });
-});
+const WebSocket = require("ws");
 
 const websocketService = {};
 
-websocketService.addConnectionListener = (expressServer) => {
-  expressServer.on("upgrade", (request, socket, head) => {
-    websocketService.checkAuth(request, (userid) => {
-      if (!userid) {
-        logger.debug("Unauthorized WebSocket connection. Destroying socket...");
-        socket.write("HTTP/1.1 401 Unauthorized\r\n\r\n");
-        socket.destroy();
-      } else {
-        wss.handleUpgrade(request, socket, head, (websocket) => {
-          wss.emit("connection", websocket, userid);
-        });
-      }
+// Create a WebSocket server instance
+const wss = new WebSocket.Server({ noServer: true, path: "/websockets" });
+
+// Map to store user IDs and their corresponding WebSocket connections
+const clients = new Map();
+
+// WebSocket connection event listener
+wss.on("connection", (ws, req) => {
+  // Extract user ID from request, assuming it is sent in the query string
+  const userId = req.url.split("?userId=")[1];
+
+  // Store the WebSocket connection with the associated user ID
+  //TODO: you can do some auth here, use User.read(userid) function
+  clients.set(userId, ws);
+
+  // Handle incoming messages
+  ws.on("message", (message) => {
+    // Process the incoming message
+    console.log(`Received message from user ${userId}:`, message);
+  });
+
+  // Handle WebSocket close event
+  ws.on("close", () => {
+    // Remove the WebSocket connection when a client disconnects
+    clients.delete(userId);
+    console.log(`WebSocket connection closed for user ${userId}`);
+  });
+});
+
+// Function to send events/messages to a specific user
+websocketService.sendToUser = (userId, messageType, messageContent) => {
+  const ws = clients.get(userId);
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    const message = JSON.stringify({
+      type: messageType,
+      content: messageContent,
     });
-  });
-};
-
-websocketService.checkAuth = async (request, callback) => {
-  const [_path, query] = request?.url?.split("?");
-  const queryObj = queryString.parse(query);
-
-  if (queryObj.session) {
-    try {
-      const session = await new Session().read(queryObj.session);
-      const user = await new User().read(session.userid);
-      callback(user.id);
-      return;
-    } catch (error) {
-      logger.warn({ error }, "Failed to check socket authentication.");
-    }
+    ws.send(message);
+  } else {
+    console.log(`Unable to send message to user ${userId}`);
   }
-  callback();
-};
-
-websocketService.send = (recipientId, messageType, messageContent) => {
-  recipientId.forEach((id) => {
-    const client = clients[id];
-
-    if (client?.sockets) {
-      const data = { type: messageType, content: messageContent };
-      client.sockets.forEach((socket) => {
-        socket.send(JSON.stringify(data));
-      });
-    }
-  });
 };
 
 module.exports = websocketService;

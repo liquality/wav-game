@@ -182,7 +182,7 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
           </p>
           <a
             className="flex hover:no-underline lightPink  hover:text-decoration-none"
-            href={`${process.env.REACT_APP_OPENSEA_URL}/${getPublicKey()}`}
+            href={`${process.env.REACT_APP_OPENSEA_URL}${getPublicKey()}`}
             target="_blank"
             rel="noreferrer"
           >
