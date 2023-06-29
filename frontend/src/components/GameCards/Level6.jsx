@@ -12,7 +12,7 @@ export const Level6 = (props) => {
     onSetLevel,
     onTradeClick,
     nftCount,
-    currentGame
+    currentGame,
   } = props;
   const level6Count = nftCount["6"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[6];
@@ -25,7 +25,7 @@ export const Level6 = (props) => {
   let noActions = false;
   let title = "Congrats, you won a 1:1 trip + concert experience";
   const [isEarlyBird, setIsEarlyBird] = useState(null);
-  const [earlyBirds, setEarlyBirds] = useState([])
+  const [earlyBirds, setEarlyBirds] = useState([]);
   const [gameContract, setGameContract] = useState(null);
 
   function applyCountDown() {
@@ -53,7 +53,7 @@ export const Level6 = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("ame here >>>>>>>>>")
+      console.log("ame here >>>>>>>>>");
       const provider = new ethers.JsonRpcProvider(
         process.env.REACT_APP_RPC_URL
       );
@@ -68,8 +68,8 @@ export const Level6 = (props) => {
 
       const isEarlyBird = await checkEarlyBird();
       const earlyBirds = await gameContract.highestLevelCollector();
-      console.log("isEarlyBird >> ", isEarlyBird)
-      console.log("earlyBirds >> ", earlyBirds)
+      console.log("isEarlyBird >> ", isEarlyBird);
+      console.log("earlyBirds >> ", earlyBirds);
       setIsEarlyBird(isEarlyBird);
       setEarlyBirds(earlyBirds);
     };
@@ -78,8 +78,11 @@ export const Level6 = (props) => {
   }, []);
 
   const checkEarlyBird = async () => {
-    let isEarlyBird = await gameContract.isEarlyBirdCollector(currentGame.game_symbol_id, 6);
-    return isEarlyBird
+    let isEarlyBird = await gameContract?.isEarlyBirdCollector(
+      currentGame.game_symbol_id,
+      6
+    );
+    return isEarlyBird;
   };
 
   if (!applyCountDown()) {
@@ -116,8 +119,10 @@ export const Level6 = (props) => {
         actionLocked = false;
       } else {
         actionDisabled = false;
-        instructions = `You have ${level6Count === -1 ? 0 : level6Count} collectibles.`;
-            tradeActionText = "Trade More";
+        instructions = `You have ${
+          level6Count === -1 ? 0 : level6Count
+        } collectibles.`;
+        tradeActionText = "Trade More";
       }
     }
   }
@@ -143,7 +148,7 @@ export const Level6 = (props) => {
         id: 6,
         title,
         edition,
-        instructions
+        instructions,
       }}
       earlyBirdCount={earlyBirds.length}
       earlyBirdLimit={earlyBirdLimit}

@@ -13,7 +13,7 @@ export const Level5 = (props) => {
     onTradeClick,
     nftCount,
     burnStatus,
-    currentGame
+    currentGame,
   } = props;
   const level5Count = nftCount["5"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[5];
@@ -26,13 +26,12 @@ export const Level5 = (props) => {
   let title = "Get 1 custom-made song";
   let earlyBirdLimit = 10;
   const [isEarlyBird, setIsEarlyBird] = useState(null);
-  const [earlyBirds, setEarlyBirds] = useState([])
+  const [earlyBirds, setEarlyBirds] = useState([]);
   const [gameContract, setGameContract] = useState(null);
-
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("ame here >>>>>>>>>")
+      console.log("ame here >>>>>>>>>");
       const provider = new ethers.JsonRpcProvider(
         process.env.REACT_APP_RPC_URL
       );
@@ -47,8 +46,8 @@ export const Level5 = (props) => {
 
       const isEarlyBird = await checkEarlyBird();
       const earlyBirds = await fetchEarlyBirds();
-      console.log("isEarlyBird >> ", isEarlyBird)
-      console.log("earlyBirds >> ", earlyBirds)
+      console.log("isEarlyBird >> ", isEarlyBird);
+      console.log("earlyBirds >> ", earlyBirds);
       setIsEarlyBird(isEarlyBird);
       setEarlyBirds(earlyBirds);
     };
@@ -56,15 +55,20 @@ export const Level5 = (props) => {
     fetchData();
   }, []);
 
-
   const checkEarlyBird = async () => {
-    let isEarlyBird = await gameContract.isEarlyBirdCollector(currentGame.game_symbol_id, 6);
-    return isEarlyBird
+    let isEarlyBird = await gameContract?.isEarlyBirdCollector(
+      currentGame.game_symbol_id,
+      6
+    );
+    return isEarlyBird;
   };
 
   const fetchEarlyBirds = async () => {
-    return await gameContract.fetchEarlyBirdCollectors(currentGame.game_symbol_id, 6);
-  }
+    return await gameContract?.fetchEarlyBirdCollectors(
+      currentGame.game_symbol_id,
+      6
+    );
+  };
 
   // count down
   function applyCountDown() {
