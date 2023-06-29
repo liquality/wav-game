@@ -67,7 +67,7 @@ export const Level6 = (props) => {
       setGameContract(_gameContract);
 
       const isEarlyBird = await checkEarlyBird();
-      const earlyBirds = await gameContract.highestLevelCollector();
+      const earlyBirds = await gameContract?.highestLevelCollector();
       console.log("isEarlyBird >> ", isEarlyBird);
       console.log("earlyBirds >> ", earlyBirds);
       setIsEarlyBird(isEarlyBird);
@@ -150,7 +150,7 @@ export const Level6 = (props) => {
         edition,
         instructions,
       }}
-      earlyBirdCount={earlyBirds.length}
+      earlyBirdCount={earlyBirds?.length}
       earlyBirdLimit={earlyBirdLimit}
     />
   );

@@ -141,7 +141,7 @@ export const Level5 = (props) => {
         edition,
         instructions,
       }}
-      earlyBirdCount={earlyBirds.length}
+      earlyBirdCount={earlyBirds?.length}
       earlyBirdLimit={earlyBirdLimit}
     />
   );

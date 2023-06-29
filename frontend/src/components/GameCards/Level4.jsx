@@ -13,7 +13,7 @@ export const Level4 = (props) => {
     onTradeClick,
     nftCount,
     burnStatus,
-    currentGame
+    currentGame,
   } = props;
   const level4Count = nftCount["4"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[4];
@@ -25,15 +25,17 @@ export const Level4 = (props) => {
   let title = "Get 1 limited physical item";
   actionDisabled = false;
   let actionLocked = false;
-  instructions = `You have ${level4Count === -1 ? 0 : level4Count} collectibles.`;
+  instructions = `You have ${
+    level4Count === -1 ? 0 : level4Count
+  } collectibles.`;
   let earlyBirdLimit = 20;
   const [isEarlyBird, setIsEarlyBird] = useState(null);
-  const [earlyBirds, setEarlyBirds] = useState([])
+  const [earlyBirds, setEarlyBirds] = useState([]);
   const [gameContract, setGameContract] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("ame here >>>>>>>>>")
+      console.log("ame here >>>>>>>>>");
       const provider = new ethers.JsonRpcProvider(
         process.env.REACT_APP_RPC_URL
       );
@@ -48,8 +50,8 @@ export const Level4 = (props) => {
 
       const isEarlyBird = await checkEarlyBird();
       const earlyBirds = await fetchEarlyBirds();
-      console.log("isEarlyBird >> ", isEarlyBird)
-      console.log("earlyBirds >> ", earlyBirds)
+      console.log("isEarlyBird >> ", isEarlyBird);
+      console.log("earlyBirds >> ", earlyBirds);
       setIsEarlyBird(isEarlyBird);
       setEarlyBirds(earlyBirds);
     };
@@ -58,13 +60,19 @@ export const Level4 = (props) => {
   }, []);
 
   const checkEarlyBird = async () => {
-    let isEarlyBird = await gameContract.isEarlyBirdCollector(currentGame.game_symbol_id, 6);
-    return isEarlyBird
+    let isEarlyBird = await gameContract?.isEarlyBirdCollector(
+      currentGame.game_symbol_id,
+      6
+    );
+    return isEarlyBird;
   };
 
   const fetchEarlyBirds = async () => {
-    return await gameContract.fetchEarlyBirdCollectors(currentGame.game_symbol_id, 6);
-  }
+    return await gameContract?.fetchEarlyBirdCollectors(
+      currentGame.game_symbol_id,
+      6
+    );
+  };
   // count down
   function applyCountDown() {
     if (levelSettings && levelSettings.countdown_ends > 0) {
@@ -136,7 +144,7 @@ export const Level4 = (props) => {
         edition,
         instructions,
       }}
-      earlyBirdCount={earlyBirds.length}
+      earlyBirdCount={earlyBirds?.length}
       earlyBirdLimit={earlyBirdLimit}
     />
   );
