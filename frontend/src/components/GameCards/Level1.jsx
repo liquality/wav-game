@@ -13,7 +13,7 @@ export const Level1 = (props) => {
   } = props;
   const status = getLevelsStatuses(currentLevel || 1)[1];
   const level1Count = nftCount["1"] || 0;
-  const instructions = `You have ${level1Count === -1 ? 0 : level1Count} NFTs.`;
+  const instructions = `You have ${level1Count === -1 ? 0 : level1Count} collectibles.`;
   let tradeActionText = "";
   let actionLocked = false;
 
@@ -35,6 +35,14 @@ export const Level1 = (props) => {
       label: tradeActionText,
       mode: actionLocked ? 'pinkStroke' : 'default',
     });
+    if (!burnStatus) {
+      actions.push({
+        onActionClick: (level) => onGetMoreClick(level),
+        label: 'Get more',
+        mode: "default",
+      });
+    }
+
   } else if (level1Count <= 2 && !burnStatus) {
     actions.push({
       onActionClick: (level) => onGetMoreClick(level),
@@ -43,14 +51,6 @@ export const Level1 = (props) => {
     });
   }
 
-  if (burnStatus) {
-    actions.push({
-      onActionClick: (level) => onGetMoreClick(level),
-      label: "Get More",
-      mode: "default",
-      link: true,
-    });
-  }
 
   return (
     <LevelCard

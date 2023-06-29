@@ -99,6 +99,9 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
   };
 
   const renderLeaderboardToggled = () => {
+    let artistTokenId = artist?.number_id / 100;
+    console.log(leaderboardData, "leaderboard data bä");
+
     return (
       <div className="">
         <table className="text-sm text-left text-white-500 dark:text-white-400">
@@ -125,22 +128,34 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
                 Players
               </th>
               <td className="px-6 py-4">
-                {leaderboardData?.level1 ? leaderboardData?.level1 : "--"}
+                {leaderboardData?.[`level${artistTokenId}1`]
+                  ? leaderboardData?.[`level${artistTokenId}1`]
+                  : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData?.level2 ? leaderboardData?.level2 : "--"}
+                {leaderboardData?.[`level${artistTokenId}2`]
+                  ? leaderboardData?.[`level${artistTokenId}2`]
+                  : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData?.level3 ? leaderboardData?.level3 : "--"}
+                {leaderboardData?.[`level${artistTokenId}3`]
+                  ? leaderboardData?.[`level${artistTokenId}3`]
+                  : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData?.level4 ? leaderboardData?.level4 : "--"}
+                {leaderboardData?.[`level${artistTokenId}4`]
+                  ? leaderboardData?.[`level${artistTokenId}4`]
+                  : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData?.level5 ? leaderboardData?.level5 : "--"}
+                {leaderboardData?.[`level${artistTokenId}5`]
+                  ? leaderboardData?.[`level${artistTokenId}5`]
+                  : "--"}
               </td>
               <td className="px-6 py-4">
-                {leaderboardData?.level6 ? leaderboardData?.level6 : "--"}
+                {leaderboardData?.[`level${artistTokenId}6`]
+                  ? leaderboardData?.[`level${artistTokenId}6`]
+                  : "--"}
               </td>
             </tr>
           </tbody>

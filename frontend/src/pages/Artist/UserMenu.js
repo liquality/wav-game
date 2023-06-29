@@ -151,7 +151,6 @@ const UserMenu = ({
       </button>
       {isOpen && (
         <div
-          style={{ zIndex: "9999" }}
           className="absolute right-24 w-64 h-418   z-9999 userMenuDiv"
         >
           <b>

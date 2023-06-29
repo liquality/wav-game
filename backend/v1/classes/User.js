@@ -48,6 +48,7 @@ class User {
   /* CRUD OPERATIONS  */
   /*                  */
   create = async () => {
+    console.log('came to create  user');
     const user = this;
     return new Promise((resolve, reject) => {
       MySQL.pool.getConnection((error, db) => {
@@ -69,10 +70,17 @@ class User {
             ],
             (err, insertResult) => {
               if (err) {
+                
+                console.log('came to create  user error -> ',err);
+
                 reject(new ApiError(500, err));
               } else if (insertResult.affectedRows < 1) {
+                console.log('User not saved!');
+
                 reject(new ApiError(500, "User not saved!"));
               } else {
+                console.log('User Saved!');
+
                 const id = insertResult.insertId; // Retrieve the generated ID directly
 
                 const {
@@ -105,22 +113,26 @@ class User {
     const user = this;
     const promise = new Promise((resolve, reject) => {
       if (id) {
-        MySQL.pool.getConnection((err, db) => {
-          db.execute(
-            "select * from `user` where id = ?",
-            [id],
-            (err, results, fields) => {
-              if (err) {
-                reject(new ApiError(500, err));
-              } else if (results.length < 1) {
-                reject(new ApiError(404, "User not found"));
-              } else {
-                user.set(results[0]);
-                resolve(user);
+        MySQL.pool.getConnection((error, db) => {
+          if(!error) {
+            db.execute(
+              "select * from `user` where id = ?",
+              [id],
+              (err, results, fields) => {
+                if (err) {
+                  reject(new ApiError(500, err));
+                } else if (results.length < 1) {
+                  reject(new ApiError(404, "User not found"));
+                } else {
+                  user.set(results[0]);
+                  resolve(user);
+                }
+                db.release();
               }
-              db.release();
-            }
-          );
+            );
+          } else {
+            reject(new ApiError(500, error));
+          }
         });
       } else {
         reject(new ApiError(500, "Missing user id"));
@@ -132,7 +144,7 @@ class User {
   update = async () => {
     const user = this;
     const promise = new Promise((resolve, reject) => {
-      this.MySQL.pool.getConnection((err, db) => {
+      MySQL.pool.getConnection((err, db) => {
         db.query(
           "update `user` set serviceprovider_name=?, username=?, avatar=?, public_address=? where id=?;",
           [
@@ -188,6 +200,7 @@ class User {
   loginUser = async (serviceprovider_name) => {
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
+        console.log('Error => ', err);
         db.query(
           "SELECT * FROM `user` WHERE serviceprovider_name = ? LIMIT 1;",
           [serviceprovider_name],

@@ -22,7 +22,7 @@ import { getGameIdBasedOnHref } from "./utils";
 
 function App() {
   setupSDK();
-
+  console.log("Starting app..");
   const [showPickArtistModal, setShowPickArtistModal] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);

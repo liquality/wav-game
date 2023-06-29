@@ -131,7 +131,7 @@ class Game {
   update = async () => {
     const game = this;
     const promise = new Promise((resolve, reject) => {
-      this.MySQL.pool.getConnection((err, db) => {
+      MySQL.pool.getConnection((err, db) => {
         db.query(
           "UPDATE `game` SET status=?, user_id=?, level=?, artist_name=?, level_4_claimed_prizes=?, level_5_claimed_prizes=?, level_6_claimed_main_prize=?, claimable_prize_count=? game_symbol_id=? WHERE id=?;",
           [
@@ -283,6 +283,62 @@ class Game {
       } else {
         reject(new ApiError(500, "Missing wallet address"));
       }
+    });
+    return promise;
+  };
+
+  getLevelBurnStatus = async (gameId, levelId, userAddress) => {
+    const promise = new Promise((resolve, reject) => {
+      if (gameId > 0 && levelId > 0 && userAddress != "") {
+        MySQL.pool.getConnection((err, db) => {
+          db.execute(
+            "SELECT * FROM `level_burn_status` WHERE user_address = ? AND level_id = ? AND game_id = ?;",
+            [userAddress, levelId, gameId],
+            (err, results, fields) => {
+              if (err) {
+                reject(new ApiError(500, err));
+              } else if (results.length < 1) {
+                reject(new ApiError(404, "Burn status not found for request"));
+              } else {
+                resolve(results[0]);
+              }
+              db.release();
+            }
+          );
+        });
+      } else {
+        reject(new ApiError(500, "Params not valid"));
+      }
+    });
+    return promise;
+    
+  }
+
+  updateLevelBurnStatus = async () => {
+    const levelBurnData = this;
+    const promise = new Promise((resolve, reject) => {
+      this.MySQL.pool.getConnection((err, db) => {
+        db.query(
+          "UPDATE `level_burn_status` SET status=?, last_block=?, WHERE WHERE user_address = ? AND level_id = ? AND game_id = ?;",
+          [
+            levelBurnData.status,
+            levelBurnData.lastBlock,
+            levelBurnData.userAddress,
+            levelBurnData.levelId,
+            levelBurnData.gameId
+          ],
+          (err, results, fields) => {
+            if (err) {
+              reject(new ApiError(500, err));
+            } else if (results.affectedRows < 1) {
+              reject(new ApiError(404, "Record not found!"));
+            } else {
+              resolve(game);
+            }
+            db.release();
+          }
+        );
+      });
     });
     return promise;
   };

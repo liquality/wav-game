@@ -61,7 +61,7 @@ export const Level5 = (props) => {
       } else {
         instructions = `You have ${
           level5Count === -1 ? 0 : level5Count
-        } NFTs. Get 1 more to trade for next level.`;
+        } collectibles. Get 1 more to trade for next level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }

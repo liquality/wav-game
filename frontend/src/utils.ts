@@ -39,25 +39,6 @@ export function getPublicKey(): string {
     return JSON.parse(localStorage.getItem("loginResponse")!)?.loginResponse?.publicAddress;
 }
 
-export function seeIfUserCanLogIn() {
-    for (var i = 0; i < localStorage.length; i++) {
-        var key = localStorage.key(i);
-        var storedValue = localStorage.getItem(key);
-
-        try {
-            var storedValueInJsonFormat = JSON.parse(storedValue);
-            if (storedValueInJsonFormat && storedValueInJsonFormat.hasOwnProperty('share')) {
-                return true;
-            }
-        } catch (error) {
-            // Handle invalid JSON
-            console.error('BÄ Error parsing stored value as JSON:', error);
-
-        }
-    }
-    return false; // If no matching value is found
-}
-
 
 export const fetchSession = () => {
     const sessionString = localStorage.getItem('session');
@@ -102,7 +83,7 @@ export const getCurrentLevel = async (nfts: any[], artistId: number) => {
             ethers.getAddress(process.env.REACT_APP_WAV_NFT_ADDRESS)) {
             const level = parseInt(curr.id.slice(-1));
             acum.levels[level] = curr.balance;
-            if (level > acum.currentLevel) {
+            if (level > acum.currentLevel && curr.balance > 0) {
                 acum.currentLevel = level
             }
             acum.totalCollectibles += curr.balance;
@@ -185,35 +166,31 @@ export const getDifferenceBetweenDates = (startDate: any, endDate: any) => {
 };
 
 
+
+
+
 export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
-    const tokenIdArray = await generateTokenIdArray(artistNumberId / 1000);
     const nftObject = await fetchNFTOwners();
-    const countByTokenId = {};
+    const filteredArray = nftObject.result.filter((item) => item.token_id.startsWith(artistNumberId / 1000));
+    const levelCounts = {};
 
-    for (const item of nftObject.result) {
-        const tokenId = Number(item.token_id);
-        const amount = Number(item.amount);
+    filteredArray.forEach((item, index) => {
+        const tokenId = parseInt(item.token_id);
+        const owner = item.owner_of;
 
-        if (tokenIdArray.includes(tokenId)) {
-            //console.log(tokenIdArray, 'array', tokenId, amount, 'BÄ TOKEN ID sent in')
-            if (amount >= 1) {
-                const level = tokenIdArray.indexOf(tokenId) + 1;
-                if (countByTokenId[level]) {
-                    countByTokenId[level]++;
-                } else {
-                    countByTokenId[level] = 1;
-                }
-            }
+        if (!levelCounts[`level${tokenId}`]) {
+            levelCounts[`level${tokenId}`] = new Set();
         }
-    }
 
-    const resultObject = {};
-    for (let i = 0; i < tokenIdArray.length; i++) {
-        const level = `level${i + 1}`;
-        resultObject[level] = countByTokenId[i + 1] || 0;
-    }
+        levelCounts[`level${tokenId}`].add(owner);
+    });
 
-    return resultObject;
+    const result = {};
+    Object.keys(levelCounts).forEach((level) => {
+        result[level] = levelCounts[level].size;
+    });
+
+    return result;
 };
 
 
