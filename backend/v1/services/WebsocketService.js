@@ -66,10 +66,12 @@ websocketService.checkAuth = async (req, callback) => {
 websocketService.send = (recipientId, messageType, messageContent) => {
   recipientId.forEach((id) => {
     const client = clients[id];
+    console.log(id, "wats ID?? Bää", client);
 
     if (client?.sockets) {
       const data = { type: messageType, content: messageContent };
       client.sockets.forEach((socket) => {
+        console.log(data, "sending WS data in backend BÄ");
         socket.send(JSON.stringify(data));
       });
     }

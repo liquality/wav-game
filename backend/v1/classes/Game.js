@@ -1,4 +1,5 @@
 const MySQL = require("../../MySQL");
+const websocketService = require("../services/WebsocketService");
 const ApiError = require("./ApiError");
 
 class Game {
@@ -192,6 +193,10 @@ class Game {
     const game = this;
     const promise = new Promise((resolve, reject) => {
       if (userId) {
+        websocketService.send([userId], "crossmint_success", {
+          ok: "data from WS everything OK",
+        });
+
         MySQL.pool.getConnection((err, db) => {
           if (gameNumberId) {
             db.execute(
@@ -311,8 +316,7 @@ class Game {
       }
     });
     return promise;
-    
-  }
+  };
 
   updateLevelBurnStatus = async () => {
     const levelBurnData = this;
@@ -325,7 +329,7 @@ class Game {
             levelBurnData.lastBlock,
             levelBurnData.userAddress,
             levelBurnData.levelId,
-            levelBurnData.gameId
+            levelBurnData.gameId,
           ],
           (err, results, fields) => {
             if (err) {

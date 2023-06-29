@@ -25,6 +25,8 @@ import { DataContext } from "../../DataContext";
 import { SpinningLoader } from "../../components/SpinningLoader";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "../../data/contract_data";
+import eventBus from "../../services/Websocket/EventBus";
+import { messageTypes } from "../../services/Websocket/MessageHandler";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -102,6 +104,11 @@ export const Artist = (props) => {
     setSelectedLevel(level);
   };
 
+  const listenToCrossmintSuccess = (data, sender) => {
+    //do smth here
+    console.log("Websocket event sent BÄÄ", data);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const _artist = await fetchArtist(artistId);
@@ -127,14 +134,13 @@ export const Artist = (props) => {
         setNfts(nftData);
         setUserIsFullSetHolder(isFullSetHolder);
       }
+      eventBus.on(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
     };
     fetchData();
     return () => {
       //any cleanup
     };
   }, [artistId, userGames, nfts, setNfts, nftCount, userIsFullSetHolder]);
-
-  console.log(nfts, "NFTS from alchemy");
 
   return (
     <div className="container mx-auto">

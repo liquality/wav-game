@@ -100,7 +100,6 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
 
   const renderLeaderboardToggled = () => {
     let artistTokenId = artist?.number_id / 100;
-    console.log(leaderboardData, "leaderboard data bä");
 
     return (
       <div className="">

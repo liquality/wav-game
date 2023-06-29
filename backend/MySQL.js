@@ -11,8 +11,6 @@ const mysqlConfig = !process.env.MYSQLDATABASE
       port: process.env.MYSQLPORT,
     };
 
-console.log(mysqlConfig);
-
 var pool = mysql.createPool(mysqlConfig);
 
 module.exports.pool = pool;

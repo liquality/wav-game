@@ -37,7 +37,7 @@ const UserMenu = ({
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        console.log("Text copied to clipboard: ", text);
+        //("Text copied to clipboard: ", text);
       })
       .catch((error) => {
         console.error("Failed to copy text: ", error);
