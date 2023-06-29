@@ -47,7 +47,7 @@ export const TradeSuccess = ({ setContent, userNfts, handleClose, level }) => {
       {" "}
       <div className="p-4 w-1/2 flex-col justify-center items-center ">
         <img
-          src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
+          src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.svg`}
           alt={selectedNft?.metadata?.name}
           className="nftImagePrepared w-full h-full object-cover m-auto"
         />

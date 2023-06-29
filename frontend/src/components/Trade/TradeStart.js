@@ -16,23 +16,30 @@ import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import UserService from "../../services/UserService";
 
 const subtitleText = {
-  1: { from: 'Trade 2 Live Songs', to: 'Get 1 Top Live Song' },
-  2: { from: 'Trade 2 Top Live Songs', to: 'Get 1 Unreleased Song + Listening Room' },
+  1: { from: "Trade 2 Live Songs", to: "Get 1 Top Live Song" },
+  2: {
+    from: "Trade 2 Top Live Songs",
+    to: "Get 1 Unreleased Song + Listening Room",
+  },
   3: {
-    from: 'Trade 2 Unreleased Songs', to: 'Get 1 Limited Physical Item',
-    claimed: 'All of this level\'s prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.'
+    from: "Trade 2 Unreleased Songs",
+    to: "Get 1 Limited Physical Item",
+    claimed:
+      "All of this level's prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.",
   },
   4: {
-    from: 'Trade 2 Physical Items', to: 'Get 1 Unreleased Track Performance or Listening Party',
-    claimed: 'All of this level\'s prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.'
+    from: "Trade 2 Physical Items",
+    to: "Get 1 Unreleased Track Performance or Listening Party",
+    claimed:
+      "All of this level's prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.",
   },
   5: {
-    from: 'Trade 2 Unreleased Track Performances', to: 'Your Chance to Win',
-    claimed: 'A winner for the 1-on-1 trip + concert has been claimed already! Keep trading for your chance to win the full set holder reward.'
+    from: "Trade 2 Unreleased Track Performances",
+    to: "Your Chance to Win",
+    claimed:
+      "A winner for the 1-on-1 trip + concert has been claimed already! Keep trading for your chance to win the full set holder reward.",
   },
-
-}
-
+};
 
 export const TradeStart = (props) => {
   const {
@@ -48,8 +55,8 @@ export const TradeStart = (props) => {
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
-  const [fromSubtitle, setFromSubtitle] = useState('');
-  const [toSubtitle, setToSubtitle] = useState('');
+  const [fromSubtitle, setFromSubtitle] = useState("");
+  const [toSubtitle, setToSubtitle] = useState("");
   const [burnStatus, setBurnStatus] = useState(false);
 
   const getArtist = async () => {
@@ -107,11 +114,9 @@ export const TradeStart = (props) => {
     if (burnStatus) {
       setFromSubtitle(subtitles.claimed);
     } else {
-
       setFromSubtitle(subtitles.from);
     }
     setToSubtitle(subtitles.to);
-
 
     init();
   }, [
@@ -121,7 +126,7 @@ export const TradeStart = (props) => {
     tokenIdForCurrentLevel,
     level,
     txStatus,
-    burnStatus
+    burnStatus,
   ]);
 
   //LVL UP: A trade makes a player level up both in contract & in db
@@ -201,12 +206,12 @@ export const TradeStart = (props) => {
               {tokenIdForCurrentLevel ? (
                 <div className="flexDirectionRow">
                   <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
                     className="mr-1 nftPreviewTrade "
                     alt="NFT Preview"
                   />
                   <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
                     className="mr-1 nftPreviewTrade "
                     alt="NFT Preview"
                   />
@@ -236,7 +241,7 @@ export const TradeStart = (props) => {
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (
                 <img
-                  src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
+                  src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.svg`}
                   className="nftBigPreviewTrade"
                   alt="NFT Preview"
                 />

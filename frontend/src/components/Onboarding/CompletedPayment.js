@@ -24,7 +24,7 @@ export const CompletedPayment = ({
       //any cleanup
     };
     //todo rerender session here
-  }, [artist]);
+  }, [artist, crossmintData]);
 
   const buyMore = async () => {
     setContent("creditcardPayment");
@@ -36,7 +36,7 @@ export const CompletedPayment = ({
       {" "}
       <div className="p-4 w-1/2 flex-col justify-center items-center ">
         <img
-          src={`https://wavgame-data.netlify.app/images/${crossmintData?.tokenId[0]}.png`}
+          src={`https://wavgame-data.netlify.app/images/${crossmintData?.tokenId[0]}.svg`}
           alt={selectedNft?.metadata?.name}
           className="nftImagePrepared w-full h-full object-cover m-auto"
         />
