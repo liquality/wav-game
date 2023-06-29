@@ -22,6 +22,8 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
           console.log(err, "Error fetching the leaderboard");
         }
       }
+
+      //TODO when component mounts, add currentLevel in db
     };
 
     const fetchData = async () => {
