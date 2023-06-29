@@ -110,7 +110,9 @@ export const Level6 = (props) => {
         actionLocked = false;
       } else {
         actionDisabled = false;
-        instructions = `You have ${level6Count === -1 ? 0 : level6Count} collectibles.`;
+        instructions = `You have ${
+          level6Count === -1 ? 0 : level6Count
+        } collectibles.`;
         switch (level6Count) {
           case -1:
             tradeActionText = "Trade Now";

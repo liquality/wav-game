@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 
 var { expressjwt: jwt } = require("express-jwt");
+const { addConnectionListener } = require("./v1/services/WebsocketService");
 
 //TODO: store better secret in hidden config file
 const secret = process.env.JWT_SECRET || "my-secret";
@@ -25,4 +26,5 @@ app.use(
 console.log(
   "\n\nIF THIS THROWS AN ERROR -\nMAKE SURE YOU ARE ALLOWED TO OPEN PORT 3000!\n\n"
 );
-app.listen(appPort);
+const server = app.listen(appPort);
+addConnectionListener(server);

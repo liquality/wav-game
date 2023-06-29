@@ -25,6 +25,9 @@ import { DataContext } from "../../DataContext";
 import { SpinningLoader } from "../../components/SpinningLoader";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "../../data/contract_data";
+import eventBus from "../../services/Websocket/EventBus";
+import { messageTypes } from "../../services/Websocket/MessageHandler";
+import websocketService from "../../services/Websocket/WebsocketService";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -126,6 +129,7 @@ export const Artist = (props) => {
         setCurrentLevel(_currentLevel.currentLevel);
         setNfts(nftData);
         setUserIsFullSetHolder(isFullSetHolder);
+        websocketService.connect(fetchSession().id);
       }
     };
     fetchData();

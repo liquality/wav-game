@@ -5,23 +5,18 @@ import { useEffect, useState } from "react";
 import CustomButton from "../Button";
 import { getGameIdBasedOnHref, shortenAddress } from "../../utils";
 
-const imagePlaceholder =
-  "https://flowbite.com/docs/images/examples/image-4@2x.jpg";
-
 export const TradeSuccess = ({ setContent, userNfts, handleClose, level }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [artist, setArtist] = useState("");
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
 
-  console.log("inside trade succsess");
   useEffect(() => {
     const fetchData = async () => {
       const _artist = await getGameIdBasedOnHref();
       setArtist(_artist);
 
       if (userNfts) {
-        console.log(userNfts, "USERNFTS?");
         const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(level);
         const _tokenIdForNewLevel = await getWhichTokenIdForLevel(level + 1);
         setTokenIdForNewLevel(_tokenIdForNewLevel);
@@ -35,8 +30,6 @@ export const TradeSuccess = ({ setContent, userNfts, handleClose, level }) => {
     //todo rerender session here
   }, [userNfts, tokenIdForCurrentLevel, tokenIdForNewLevel, artist]);
 
-  console.log(tokenIdForNewLevel);
-
   const getWhichTokenIdForLevel = async (levelUp) => {
     if (artist) {
       let firstChar = artist.number_id.toString()[0];
@@ -48,14 +41,13 @@ export const TradeSuccess = ({ setContent, userNfts, handleClose, level }) => {
     setContent("tradeStart");
   };
 
-  console.log(artist, "artist img?");
   let selectedNft = {};
   return (
     <div className="contentView flex justify-center">
       {" "}
       <div className="p-4 w-1/2 flex-col justify-center items-center ">
         <img
-          src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
+          src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.svg`}
           alt={selectedNft?.metadata?.name}
           className="nftImagePrepared w-full h-full object-cover m-auto"
         />

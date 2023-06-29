@@ -20,7 +20,9 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^2.3.0",
     "node-fetch": "^3.3.0",
-    "web3": "^1.8.1"
+    "query-string": "^8.1.0",
+    "web3": "^1.8.1",
+    "ws": "^8.13.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
