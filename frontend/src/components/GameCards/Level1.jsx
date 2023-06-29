@@ -35,6 +35,14 @@ export const Level1 = (props) => {
       label: tradeActionText,
       mode: actionLocked ? 'pinkStroke' : 'default',
     });
+    if (!burnStatus) {
+      actions.push({
+        onActionClick: (level) => onGetMoreClick(level),
+        label: 'Get more',
+        mode: "default",
+      });
+    }
+
   } else if (level1Count <= 2 && !burnStatus) {
     actions.push({
       onActionClick: (level) => onGetMoreClick(level),
@@ -43,14 +51,6 @@ export const Level1 = (props) => {
     });
   }
 
-  if (burnStatus) {
-    actions.push({
-      onActionClick: (level) => onGetMoreClick(level),
-      label: "Get More",
-      mode: "default",
-      link: true,
-    });
-  }
 
   return (
     <LevelCard

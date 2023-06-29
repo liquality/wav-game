@@ -7,6 +7,7 @@ export const Level2 = (props) => {
     currentLevel,
     onSetLevel,
     onTradeClick,
+    onGetMoreClick,
     nftCount,
     burnStatus,
   } = props;
@@ -44,8 +45,18 @@ export const Level2 = (props) => {
       mode: actionLocked ? "pinkStroke" : "default",
       disabled: actionDisbled,
       useIcon: actionDisbled,
-    },
+    }
   ];
+
+  if(level2Count >= 2 && !burnStatus) {
+    actions.push({
+      onActionClick: (level) => onGetMoreClick(level),
+      label: 'Get More',
+      mode: actionLocked ? "pinkStroke" : "default",
+      disabled: actionDisbled,
+      useIcon: actionDisbled,
+    });
+  }
 
   return (
     <LevelCard
