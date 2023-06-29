@@ -122,6 +122,7 @@ export const GameCards = (props: GameCardsProps) => {
         burnStatus={burnStatus[4]}
         currentLevel={currentLevel}
         levelSettings={levelSettings[4]}
+        currentGame={currentGame}
       />
       <Level5
         selectedLevel={selectedLevel}
@@ -132,6 +133,7 @@ export const GameCards = (props: GameCardsProps) => {
         burnStatus={burnStatus[5]}
         currentLevel={currentLevel}
         levelSettings={levelSettings[5]}
+        currentGame={currentGame}
       />
       <Level6
         selectedLevel={selectedLevel}
@@ -142,6 +144,7 @@ export const GameCards = (props: GameCardsProps) => {
         burnStatus={burnStatus[6]}
         currentLevel={currentLevel}
         levelSettings={levelSettings[6]}
+        currentGame={currentGame}
       />
     </div>
   );

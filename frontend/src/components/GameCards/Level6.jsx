@@ -12,18 +12,20 @@ export const Level6 = (props) => {
     onSetLevel,
     onTradeClick,
     nftCount,
+    currentGame
   } = props;
   const level6Count = nftCount["6"] || 0;
-  const level5Count = nftCount["5"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[6];
   let actionLocked = false;
+  let earlyBirdLimit = 1;
   let instructions = "";
   let tradeActionText = "";
   let edition = "";
   let actionDisabled = false;
   let noActions = false;
   let title = "Congrats, you won a 1:1 trip + concert experience";
-  const [earlyBirdCollector, setEarlyBirdCollector] = useState(null);
+  const [isEarlyBird, setIsEarlyBird] = useState(null);
+  const [earlyBirds, setEarlyBirds] = useState([])
   const [gameContract, setGameContract] = useState(null);
 
   function applyCountDown() {
@@ -49,14 +51,9 @@ export const Level6 = (props) => {
     return false;
   }
 
-  const checkEarlyBird = async () => {
-    //TODO: use dynamic artist_id instead of hardcoded 3000 (get from props)
-    //let isEarlyBird = await gameContract.isEarlyBirdCollector(3000, 6);
-    //return isEarlyBird;
-  };
-
   useEffect(() => {
     const fetchData = async () => {
+      console.log("ame here >>>>>>>>>")
       const provider = new ethers.JsonRpcProvider(
         process.env.REACT_APP_RPC_URL
       );
@@ -69,12 +66,21 @@ export const Level6 = (props) => {
       );
       setGameContract(_gameContract);
 
-      const earlyBird = await checkEarlyBird();
-      setEarlyBirdCollector(earlyBird);
+      const isEarlyBird = await checkEarlyBird();
+      const earlyBirds = await gameContract.highestLevelCollector();
+      console.log("isEarlyBird >> ", isEarlyBird)
+      console.log("earlyBirds >> ", earlyBirds)
+      setIsEarlyBird(isEarlyBird);
+      setEarlyBirds(earlyBirds);
     };
 
     fetchData();
   }, []);
+
+  const checkEarlyBird = async () => {
+    let isEarlyBird = await gameContract.isEarlyBirdCollector(currentGame.game_symbol_id, 6);
+    return isEarlyBird
+  };
 
   if (!applyCountDown()) {
     if (level6Count < 2) {
@@ -101,7 +107,7 @@ export const Level6 = (props) => {
       //TODO: if earlyBirdCollector state is true, render concert won
       //Else if check for full set holder and render 'congrats you won and are a full set holder'
       //Else render 'you won but are not a full set holder yet'...
-      if (level5Count >= 2) {
+      if (isEarlyBird) {
         noActions = true;
         tradeActionText = "";
         instructions = "";
@@ -110,23 +116,8 @@ export const Level6 = (props) => {
         actionLocked = false;
       } else {
         actionDisabled = false;
-        instructions = `You have ${
-          level6Count === -1 ? 0 : level6Count
-        } collectibles.`;
-        switch (level6Count) {
-          case -1:
-            tradeActionText = "Trade Now";
-            break;
-          case 0:
-            tradeActionText = "Trade Now";
-            break;
-          case 1:
+        instructions = `You have ${level6Count === -1 ? 0 : level6Count} collectibles.`;
             tradeActionText = "Trade More";
-            break;
-          default:
-            tradeActionText = "Trade More";
-            break;
-        }
       }
     }
   }
@@ -152,8 +143,10 @@ export const Level6 = (props) => {
         id: 6,
         title,
         edition,
-        instructions,
+        instructions
       }}
+      earlyBirdCount={earlyBirds.length}
+      earlyBirdLimit={earlyBirdLimit}
     />
   );
 };
