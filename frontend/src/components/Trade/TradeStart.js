@@ -13,7 +13,9 @@ import {
   getPublicKey,
 } from "../../utils";
 import { NftService, TransactionService } from "@liquality/wallet-sdk";
+import ContractService from "../../services/ContractService";
 import UserService from "../../services/UserService";
+
 
 const subtitleText = {
   1: { from: "Trade 2 Live Songs", to: "Get 1 Top Live Song" },
@@ -55,9 +57,9 @@ export const TradeStart = (props) => {
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
-  const [fromSubtitle, setFromSubtitle] = useState("");
-  const [toSubtitle, setToSubtitle] = useState("");
-  const [burnStatus, setBurnStatus] = useState(false);
+  const [fromSubtitle, setFromSubtitle] = useState('');
+  const [toSubtitle, setToSubtitle] = useState('');
+  const [earlyBirdOpen, setEarlyBirdOpen] = useState(false);
 
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();
@@ -100,23 +102,19 @@ export const TradeStart = (props) => {
       }
 
       if (game) {
-        const _burnStatus = await UserService.getLevelBurnStatus(
-          game.game_symbol_id,
-          level,
-          getPublicKey()
-        );
+        const _earlyBirdOpen = await ContractService.canBecomeEarlyBirdCollector(game.game_symbol_id,level);
 
-        setBurnStatus(_burnStatus);
+        setEarlyBirdOpen(_earlyBirdOpen);
       }
     };
 
     const subtitles = subtitleText[level];
-    if (burnStatus) {
-      setFromSubtitle(subtitles.claimed);
+    if (earlyBirdOpen) {
+      setToSubtitle(subtitles.claimed);
     } else {
-      setFromSubtitle(subtitles.from);
+      setToSubtitle(subtitles.to);
     }
-    setToSubtitle(subtitles.to);
+    setFromSubtitle(subtitles.from);
 
     init();
   }, [
@@ -126,7 +124,7 @@ export const TradeStart = (props) => {
     tokenIdForCurrentLevel,
     level,
     txStatus,
-    burnStatus,
+    earlyBirdOpen
   ]);
 
   //LVL UP: A trade makes a player level up both in contract & in db
