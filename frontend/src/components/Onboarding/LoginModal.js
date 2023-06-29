@@ -9,6 +9,7 @@ import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
+import websocketService from "../../services/Websocket/WebsocketService";
 
 const verifierMap = {
   google: {
@@ -60,7 +61,9 @@ export const LoginModal = (props) => {
     try {
       const response = await UserService.loginUser(serviceprovider_name);
       localStorage.setItem("session", JSON.stringify(response));
-      return response;
+      websocketService.connect(response.id);
+      if (response) return response;
+      else return null;
     } catch (err) {
       console.log("Error logging in user");
     }
@@ -113,7 +116,7 @@ export const LoginModal = (props) => {
         window.location.reload();
       }
     } else {
-      console.log('Came to create  wallet');
+      console.log("Came to create  wallet");
       setLoading(true);
       localStorage.setItem("loginResponse", JSON.stringify(response));
       setLoginResponse(response);
@@ -125,7 +128,7 @@ export const LoginModal = (props) => {
 
   const whichContentToRender = () => {
     if (content === "loginOrRegister") {
-      console.log('came to loginOrRegister');
+      console.log("came to loginOrRegister");
       return (
         <LoginOrRegister
           setHeaderText={setHeaderText}
@@ -135,7 +138,7 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "pickAvatar") {
-      console.log('came to pickAvatar');
+      console.log("came to pickAvatar");
 
       return (
         <PickAvatar
@@ -146,7 +149,7 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "pickArtist") {
-      console.log('came to pickArtist');
+      console.log("came to pickArtist");
 
       return (
         <PickArtist
@@ -159,7 +162,7 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "creditcardPayment") {
-      console.log('came to creditcardPayment');
+      console.log("came to creditcardPayment");
 
       return (
         <CreditcardPayment
@@ -169,7 +172,7 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "completedPayment") {
-      console.log('came to completedPayment');
+      console.log("came to completedPayment");
 
       return (
         <CompletedPayment

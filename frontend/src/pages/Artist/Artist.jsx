@@ -134,6 +134,8 @@ export const Artist = (props) => {
     };
   }, [artistId, userGames, nfts, setNfts, nftCount, userIsFullSetHolder]);
 
+  console.log(nfts, "NFTS from alchemy");
+
   return (
     <div className="container mx-auto">
       {image && artist && currentGame && nftCount ? (
