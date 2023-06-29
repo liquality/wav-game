@@ -120,7 +120,7 @@ export const CreditcardPayment = (props) => {
           environment={process.env.REACT_APP_CROSSMINT_ENVIRONMENT}
           className="xmint-btn"
           mintTo={getPublicKey()}
-          whPassThroughArgs={whArgsSerialized}
+          whPassThroughArgs={whArgs}
           mintConfig={{
             type: "erc-1155",
             _amount: nftAmount,

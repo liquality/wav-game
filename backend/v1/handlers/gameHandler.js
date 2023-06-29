@@ -151,9 +151,6 @@ gameHandler.webhook = async function (req, res) {
       walletAddress,
       txId,
     });
-
-    //const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
-    //console.log(artistNumberId, "artist nr id");
     res.status(200).send({});
   } else {
     res.status(400).send(new ApiError(400, reason));
