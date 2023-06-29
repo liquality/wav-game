@@ -15,7 +15,7 @@ websocketService.getWS = (userid) => {
       //TODO add ws uri to env variables
       console.log("BÄÄ establishing connection");
       websocketService._ws = new WebSocket(
-        `ws://${wsUri}/websockets?userid=${userid}`
+        `wss://${wsUri}/websockets?userid=${userid}`
       );
     }
 
