@@ -54,7 +54,12 @@ export const CreditcardPayment = (props) => {
     id: fetchSession().id,
   };
   const whArgsSerialized = JSON.stringify(whArgs);
-  console.log(whArgsSerialized, "wh args serialized");
+  console.log(
+    whArgsSerialized,
+    "wh args serialized",
+    whArgs.toString(),
+    fetchSession().id.toString()
+  );
 
   return (
     <div className=" contentView flex">
@@ -120,7 +125,7 @@ export const CreditcardPayment = (props) => {
           environment={process.env.REACT_APP_CROSSMINT_ENVIRONMENT}
           className="xmint-btn"
           mintTo={getPublicKey()}
-          whPassThroughArgs={whArgs}
+          whPassThroughArgs={fetchSession().id.toString()}
           mintConfig={{
             type: "erc-1155",
             _amount: nftAmount,
