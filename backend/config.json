@@ -286,6 +286,19 @@
     },
     {
       "inputs": [],
+      "name": "contractURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "getTrustedForwarder",
       "outputs": [
         {
@@ -523,6 +536,19 @@
     {
       "inputs": [
         {
+          "internalType": "string",
+          "name": "_contractURI",
+          "type": "string"
+        }
+      ],
+      "name": "setContractURI",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "_trustedForwarder",
           "type": "address"
@@ -636,11 +662,11 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "gameID",
+          "name": "artistID",
           "type": "uint256"
         }
       ],
-      "name": "InvalidGameID",
+      "name": "InvalidArtistID",
       "type": "error"
     },
     {
@@ -661,7 +687,7 @@
     },
     {
       "inputs": [],
-      "name": "IslandNotFound",
+      "name": "LevelNotFound",
       "type": "error"
     },
     {
@@ -687,6 +713,11 @@
     },
     {
       "inputs": [],
+      "name": "TooManyLevels",
+      "type": "error"
+    },
+    {
+      "inputs": [],
       "name": "WavNftNotSet",
       "type": "error"
     },
@@ -696,7 +727,26 @@
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "gameID",
+          "name": "artistID",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "levelID",
+          "type": "uint256"
+        }
+      ],
+      "name": "ArtistGameSet",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "artistID",
           "type": "uint256"
         },
         {
@@ -744,25 +794,6 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "gameID",
-          "type": "uint256"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "islandID",
-          "type": "uint256"
-        }
-      ],
-      "name": "GameSet",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
           "indexed": false,
           "internalType": "uint8",
           "name": "version",
@@ -778,17 +809,17 @@
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "gameID",
+          "name": "artistID",
           "type": "uint256"
         },
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "islandID",
+          "name": "levelID",
           "type": "uint256"
         }
       ],
-      "name": "IslandUpdated",
+      "name": "LevelUpdated",
       "type": "event"
     },
     {
@@ -797,7 +828,7 @@
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "gameID",
+          "name": "artistID",
           "type": "uint256"
         },
         {
@@ -809,7 +840,7 @@
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "newIslandID",
+          "name": "newLevelID",
           "type": "uint256"
         },
         {
@@ -860,7 +891,7 @@
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "gameID",
+          "name": "artistID",
           "type": "uint256"
         },
         {
@@ -885,7 +916,7 @@
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "gameID",
+          "name": "artistID",
           "type": "uint256"
         },
         {
@@ -916,7 +947,7 @@
         {
           "indexed": true,
           "internalType": "uint256",
-          "name": "gameID",
+          "name": "artistID",
           "type": "uint256"
         },
         {
@@ -964,6 +995,44 @@
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "artistIDs",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "availablePayments",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "_recipient",
           "type": "address"
@@ -988,7 +1057,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         },
         {
@@ -1024,12 +1093,12 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "_islandID",
+          "name": "_levelID",
           "type": "uint256"
         }
       ],
@@ -1048,7 +1117,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         }
       ],
@@ -1073,12 +1142,12 @@
             },
             {
               "internalType": "uint256",
-              "name": "mintable",
+              "name": "mintID",
               "type": "uint256"
             },
             {
               "internalType": "uint256",
-              "name": "burnable",
+              "name": "burnID",
               "type": "uint256"
             },
             {
@@ -1092,7 +1161,7 @@
               "type": "uint256"
             }
           ],
-          "internalType": "struct IWavGame.Island[]",
+          "internalType": "struct IWavGame.Level[]",
           "name": "",
           "type": "tuple[]"
         },
@@ -1116,7 +1185,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         }
       ],
@@ -1148,16 +1217,16 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "_islandID",
+          "name": "_levelID",
           "type": "uint256"
         }
       ],
-      "name": "getIsland",
+      "name": "getLevel",
       "outputs": [
         {
           "components": [
@@ -1178,12 +1247,12 @@
             },
             {
               "internalType": "uint256",
-              "name": "mintable",
+              "name": "mintID",
               "type": "uint256"
             },
             {
               "internalType": "uint256",
-              "name": "burnable",
+              "name": "burnID",
               "type": "uint256"
             },
             {
@@ -1197,7 +1266,7 @@
               "type": "uint256"
             }
           ],
-          "internalType": "struct IWavGame.Island",
+          "internalType": "struct IWavGame.Level",
           "name": "",
           "type": "tuple"
         }
@@ -1209,7 +1278,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         }
       ],
@@ -1231,6 +1300,19 @@
         {
           "internalType": "address",
           "name": "forwarder",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "highestLevelCollector",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
           "type": "address"
         }
       ],
@@ -1264,12 +1346,12 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "_islandID",
+          "name": "_levelID",
           "type": "uint256"
         }
       ],
@@ -1307,12 +1389,12 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "_newIslandID",
+          "name": "_newLevelID",
           "type": "uint256"
         }
       ],
@@ -1388,20 +1470,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_feePerMint",
-          "type": "uint256"
-        }
-      ],
-      "name": "setFeePerMint",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         },
         {
@@ -1423,21 +1492,34 @@
             },
             {
               "internalType": "uint256",
-              "name": "mintable",
+              "name": "mintID",
               "type": "uint256"
             },
             {
               "internalType": "uint256",
-              "name": "burnable",
+              "name": "burnID",
               "type": "uint256"
             }
           ],
-          "internalType": "struct IWavGame.IslandParam[]",
-          "name": "_islands",
+          "internalType": "struct IWavGame.LevelParam[]",
+          "name": "_levels",
           "type": "tuple[]"
         }
       ],
-      "name": "setGame",
+      "name": "setArtistGame",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_feePerMint",
+          "type": "uint256"
+        }
+      ],
+      "name": "setFeePerMint",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -1446,7 +1528,7 @@
       "inputs": [
         {
           "internalType": "uint256[]",
-          "name": "_gameIDs",
+          "name": "_artistIDs",
           "type": "uint256[]"
         },
         {
@@ -1542,12 +1624,12 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "_islandID",
+          "name": "_levelID",
           "type": "uint256"
         },
         {
@@ -1569,21 +1651,21 @@
             },
             {
               "internalType": "uint256",
-              "name": "mintable",
+              "name": "mintID",
               "type": "uint256"
             },
             {
               "internalType": "uint256",
-              "name": "burnable",
+              "name": "burnID",
               "type": "uint256"
             }
           ],
-          "internalType": "struct IWavGame.IslandParam",
-          "name": "_islandParam",
+          "internalType": "struct IWavGame.LevelParam",
+          "name": "_levelParam",
           "type": "tuple"
         }
       ],
-      "name": "updateIsland",
+      "name": "updateLevel",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -1592,12 +1674,12 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_gameID",
+          "name": "_artistID",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
-          "name": "_islandID",
+          "name": "_levelID",
           "type": "uint256"
         },
         {

@@ -21,7 +21,7 @@ const ContractService = {
                 provider
             );
 
-            const levelInfo = await wavGame.getIsland(gameId, level);
+            const levelInfo = await wavGame.getLevel(gameId, level);
 
             const wavNft = new ethers.Contract(
                 config.wav_nft_address,
