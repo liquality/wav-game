@@ -9,7 +9,7 @@ const wss = new WebSocket.Server({
 const clients = {};
 
 wss.on("connection", function connection(socket, userid) {
-  console.log(socket, "WebSocket connected!");
+  console.log("WebSocket connected!");
 
   if (!clients[userid]) {
     clients[userid] = {};
