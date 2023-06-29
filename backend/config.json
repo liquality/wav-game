@@ -15,7 +15,7 @@
   },
   "isProd" : false,
   "wav_proxy_address": "0xf841133409aE6B44780F9F5bfdA694cCE72c252e",
-  "wav_nft_address": "0x581C430ad952D518b03a05d67BE1a45B02D4a4ba",
+  "wav_nft_address": "0x3611bB3DA6Fb531917ad3683FFDEa427dA5bA791",
   "wav_nft_abi": [
     {
       "inputs": [
