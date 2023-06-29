@@ -146,6 +146,7 @@ export const TradeStart = (props) => {
             WAV_PROXY_ADDRESS,
             true
           );
+
         await TransactionService.sendGaslessly(
           WAV_NFT_ADDRESS,
           approvalTx.data,

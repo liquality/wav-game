@@ -21,12 +21,6 @@ const ContractService = {
 
       const levelInfo = await wavGame.getIsland(gameId, level);
 
-      const wavNft = new ethers.Contract(
-        config.wav_nft_address,
-        config.wav_nft_abi,
-        provider
-      );
-
       const eventFilter = wavNft.filters.TransferSingle(
         config.wav_proxy_address,
         user,
