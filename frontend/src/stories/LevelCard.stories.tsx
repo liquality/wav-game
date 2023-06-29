@@ -17,7 +17,7 @@ export const ActiveActive: Story = {
       id: 3,
       title: 'Get 1 Unreleased Song',
       edition: '100/100 Claimed',
-      instructions: 'You have 1 NFT. Get 1 more from past levels to continue.',
+      instructions: 'You have 1 collectible. Get 1 more from past levels to continue.',
     },
     current: 3,
     actions: [
@@ -37,7 +37,7 @@ export const ActiveOff: Story = {
       id: 3,
       title: 'Get 1 Unreleased Song',
       edition: '100/100 Claimed',
-      instructions: 'You have 1 NFT. Get 1 more from past levels to continue.'
+      instructions: 'You have 1 collectible. Get 1 more from past levels to continue.'
     },
     current: 1,
     actions: [
@@ -55,7 +55,7 @@ export const CompletedActive: Story = {
     level: {
       id: 1,
       title: 'Game NFT name goes here',
-      instructions: 'You have 20 NFTs.'
+      instructions: 'You have 20 collectibles.'
     },
     current: 1,
     actions: [
@@ -79,7 +79,7 @@ export const CompletedOff: Story = {
     level: {
       id: 1,
       title: 'Game NFT name goes here',
-      instructions: 'You have 20 NFTs.'
+      instructions: 'You have 20 collectibles.'
     },
     current: 3,
     actions: [

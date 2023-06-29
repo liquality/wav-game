@@ -18,7 +18,7 @@ export const Level3 = (props) => {
   let actionLocked = false;
 
   actionDisbled = false;
-  instructions = `You have ${level3Count === -1 ? 0 : level3Count} NFTs.`;
+  instructions = `You have ${level3Count === -1 ? 0 : level3Count} collectibles.`;
   if (level3Count < 2) {
     if (level3Count === 0) {
       instructions = "You need 2 Artist collectibles to trade for this.";

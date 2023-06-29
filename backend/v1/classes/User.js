@@ -113,22 +113,26 @@ class User {
     const user = this;
     const promise = new Promise((resolve, reject) => {
       if (id) {
-        MySQL.pool.getConnection((err, db) => {
-          db.execute(
-            "select * from `user` where id = ?",
-            [id],
-            (err, results, fields) => {
-              if (err) {
-                reject(new ApiError(500, err));
-              } else if (results.length < 1) {
-                reject(new ApiError(404, "User not found"));
-              } else {
-                user.set(results[0]);
-                resolve(user);
+        MySQL.pool.getConnection((error, db) => {
+          if(!error) {
+            db.execute(
+              "select * from `user` where id = ?",
+              [id],
+              (err, results, fields) => {
+                if (err) {
+                  reject(new ApiError(500, err));
+                } else if (results.length < 1) {
+                  reject(new ApiError(404, "User not found"));
+                } else {
+                  user.set(results[0]);
+                  resolve(user);
+                }
+                db.release();
               }
-              db.release();
-            }
-          );
+            );
+          } else {
+            reject(new ApiError(500, error));
+          }
         });
       } else {
         reject(new ApiError(500, "Missing user id"));

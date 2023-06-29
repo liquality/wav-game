@@ -18,7 +18,7 @@ export const Level2 = (props) => {
   let actionLocked = false;
 
   actionDisbled = false;
-  instructions = `You have ${level2Count === -1 ? 0 : level2Count} NFTs.`;
+  instructions = `You have ${level2Count === -1 ? 0 : level2Count} collectibles.`;
   if (level2Count === 0) {
     instructions = "You need 2 Artist collectibles to trade for this.";
     tradeActionText = "Level locked";
