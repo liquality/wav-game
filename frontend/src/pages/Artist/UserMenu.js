@@ -144,13 +144,14 @@ const UserMenu = ({
   return (
     <ul
       ref={wrapperRef}
-      className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700"
+      className="relative flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700"
     >
       <button onClick={() => setUserMenuOpen(!isOpen)}>
         {user?.avatar ? <AvatarComponent avatar={user.avatar} /> : null}
       </button>
       {isOpen && (
         <div
+          style={{ zIndex: 10000 }}
           className="absolute right-24 w-64 h-418   z-9999 userMenuDiv"
         >
           <b>
