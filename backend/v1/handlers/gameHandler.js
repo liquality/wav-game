@@ -142,7 +142,8 @@ gameHandler.webhook = async function (req, res) {
   const { status, tokenIds, passThroughArgs, walletAddress, txId } = req.body;
   console.log(passThroughArgs, "PASS THRY ARYGS");
   const argsDeserialized = JSON.parse(passThroughArgs);
-  const userId = argsDeserialized.id;
+  console.log(argsDeserialized, "decentralized ARGS");
+  const userId = argsDeserialized;
   console.log(userId, "USERID??");
   if (status === "success") {
     websocketService.send([userId], "crossmint_success", {
