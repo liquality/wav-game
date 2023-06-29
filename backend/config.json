@@ -9,10 +9,10 @@
   "rpc_urls": {
     "mainnet_eth": "https://mainnet.infura.io/v3/a2ad6f8c0e57453ca4918331f16de87d",
     "mainnet_bsc": "https://bsc-dataseed2.binance.org/",
-    "mainnet_matic":"",
-    "mumbia_matic":"https://polygon-mumbai.g.alchemy.com/v2/cgkNW5QlsKZ8D_64-ggyUUj2aYGJqejc"
+    "mainnet_matic": "",
+    "mumbia_matic": "https://polygon-mumbai.g.alchemy.com/v2/cgkNW5QlsKZ8D_64-ggyUUj2aYGJqejc"
   },
-  "isProd" : false,
+  "isProd": false,
   "wav_proxy_address": "0xf841133409aE6B44780F9F5bfdA694cCE72c252e",
   "wav_nft_address": "0x3611bB3DA6Fb531917ad3683FFDEa427dA5bA791",
   "wav_nft_abi": [
