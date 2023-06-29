@@ -6,6 +6,7 @@ var ApiError = require("../classes/ApiError");
 const { helperFindArtistNumberIdByTokenId } = require("../helper");
 const LevelSetting = require("../classes/LevelSetting");
 const { getBurnStatus } = require("../services/contractService");
+const websocketService = require("../services/WebsocketService");
 
 var gameHandler = {};
 
@@ -137,10 +138,23 @@ gameHandler.delete = function (req, res) {
 
 gameHandler.webhook = async function (req, res) {
   console.log(req.body, "req body???");
-  const { status, tokenIds } = req.body;
+
+  const { status, tokenIds, whPassThroughArgs, walletAddress, txId } = req.body;
+  console.log(whPassThroughArgs, "PASS THRY ARYGS");
+  const whArgsDeserialized = JSON.parse(whPassThroughArgs);
+  const userId = whArgsDeserialized.id;
+  console.log(userId, "USERID??");
   if (status === "success") {
-    const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
-    console.log(artistNumberId, "artist nr id");
+    websocketService.send([userId], "crossmint_success", {
+      tokenId: tokenIds,
+      status,
+      walletAddress,
+      txId,
+    });
+
+    //const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
+    //console.log(artistNumberId, "artist nr id");
+    res.status(200).send({});
   } else {
     res.status(400).send(new ApiError(400, reason));
   }

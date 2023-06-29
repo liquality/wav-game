@@ -40,6 +40,8 @@ export const LoginModal = (props) => {
   const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
   const [selectedId, setSelectedId] = useState(null);
+  const [crossmintData, setCrossmintData] = useState(null);
+
   const navigate = useNavigate();
   const handleClose = () => setShow(false);
 
@@ -161,6 +163,8 @@ export const LoginModal = (props) => {
           selectedId={selectedId}
           setHeaderText={setHeaderText}
           setContent={setContent}
+          setCrossmintData={setCrossmintData}
+          crossmintData={crossmintData}
         />
       );
     } else if (content === "completedPayment") {
@@ -168,6 +172,9 @@ export const LoginModal = (props) => {
         <CompletedPayment
           setHeaderText={setHeaderText}
           handleClose={handleClose}
+          setCrossmintData={setCrossmintData}
+          crossmintData={crossmintData}
+          setContent={setContent}
         />
       );
     } else return null;

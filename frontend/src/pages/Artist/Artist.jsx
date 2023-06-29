@@ -27,6 +27,7 @@ import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "../../data/contract_data";
 import eventBus from "../../services/Websocket/EventBus";
 import { messageTypes } from "../../services/Websocket/MessageHandler";
+import websocketService from "../../services/Websocket/WebsocketService";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -104,11 +105,6 @@ export const Artist = (props) => {
     setSelectedLevel(level);
   };
 
-  const listenToCrossmintSuccess = (data, sender) => {
-    //do smth here
-    console.log("Websocket event sent BÄÄ", data);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       const _artist = await fetchArtist(artistId);
@@ -133,8 +129,8 @@ export const Artist = (props) => {
         setCurrentLevel(_currentLevel.currentLevel);
         setNfts(nftData);
         setUserIsFullSetHolder(isFullSetHolder);
+        websocketService.connect(fetchSession().id);
       }
-      eventBus.on(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
     };
     fetchData();
     return () => {

@@ -1,38 +1,113 @@
-import { ReactComponent as Congrats } from "../../images/congrats.svg";
+import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
+import Tk from "../../images/artists/tk.jpg";
 
-export const CompletedPayment = (props) => {
-  const { handleClose } = props;
+import { useEffect, useState } from "react";
+import CustomButton from "../Button";
+import { getGameIdBasedOnHref, shortenAddress } from "../../utils";
 
+export const CompletedPayment = ({
+  setContent,
+  handleClose,
+  setCrossmintData,
+  crossmintData,
+}) => {
+  const [errorMsg, setErrorMsg] = useState("");
+  const [artist, setArtist] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const _artist = await getGameIdBasedOnHref();
+      setArtist(_artist);
+    };
+    fetchData();
+    return () => {
+      //any cleanup
+    };
+    //todo rerender session here
+  }, [artist]);
+
+  const buyMore = async () => {
+    setContent("creditcardPayment");
+  };
+
+  let selectedNft = {};
   return (
-    <div className="text-center mx-auto">
-      <div className="flexDirectionRow mt-4">
-        <p className="modalTitle mb-3">Completed. Congratulations</p>
-        <Congrats />
-      </div>
+    <div className="contentView flex justify-center">
+      {" "}
+      <div className="p-4 w-1/2 flex-col justify-center items-center ">
+        <img
+          src={`https://wavgame-data.netlify.app/images/${crossmintData?.tokenId[0]}.png`}
+          alt={selectedNft?.metadata?.name}
+          className="nftImagePrepared w-full h-full object-cover m-auto"
+        />
 
-      <div className="flex justify-center items-center mt-3 mb-2">
-        <div
-          style={{
-            width: "55%",
-            height: "35vh",
-            backgroundColor: "grey",
-            color: "white",
-          }}
-        >
-          NFT placeholder IMG
+        <div style={{ marginLeft: -260 }} className="">
+          <p className="greyUpperCaseText mb-1">
+            {selectedNft?.contract?.type}
+          </p>
+
+          <a
+            className="hover:no-underline hover:text-decoration-none"
+            href={`https://mumbai.polygonscan.com/address/${crossmintData?.walletAddress}`}
+            target="blank"
+            rel="noreferrer"
+          >
+            <p className="greyUpperCaseText  lightPink flexDirectionRow ">
+              {shortenAddress(crossmintData?.walletAddress)}
+
+              <SmallPinkArrow className="ml-2 mt-1" />
+            </p>
+          </a>
         </div>
       </div>
-      <p style={{ color: "#646F85" }} className="rightSubHeadingTextSmall ">
-        NFT Name
-      </p>
+      <div className="w-1/2 flex flex-col justify-center">
+        <div className="flexDirectionRow">
+          {" "}
+          {artist.image ? (
+            <img
+              className="avatarImage ml-2 object-cover"
+              src={require(`../../images/artists/${artist?.image}`)}
+              alt="Artist Avatar"
+            />
+          ) : null}
+          <p className="mt-2">{artist.name}</p>
+        </div>
+        <div className="mt-12 mb-4">
+          {" "}
+          <p className="mt-3 greyUpperCaseText ">ERC-1155</p>
+          <a
+            href={`https://www.sound.xyz/${artist.id}`}
+            target="blank"
+            className="flexDirectionRow  lightPink hover:no-underline hover:decoration-none no-underline"
+          >
+            {`sound.xyz/${artist.id}`} <SmallPinkArrow className="ml-2 mt-1" />
+          </a>
+          <a
+            href={`${process.env.REACT_APP_EXPLORER_URL}/tx/${crossmintData?.txId}`}
+            target="blank"
+            className=" flexDirectionRow  lightPink hover:no-underline hover:decoration-none no-underline"
+          >
+            {shortenAddress(crossmintData?.txId)}{" "}
+            <SmallPinkArrow className="ml-2 mt-1" />
+          </a>
+        </div>
 
-      <button
-        style={{ width: "90%" }}
-        className="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full  px-4 py-2 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 navBarStartBtn mt-4 mb-1 px-4"
-        onClick={() => handleClose()}
-      >
-        Start earning rare NFTs
-      </button>
+        <p className="lineNoCenter mt-2 " style={{ width: "50%" }}></p>
+
+        <p className=" mt-24 greySmallText" style={{ width: "50%" }}>
+          Congratulations! Your collectible purchase was successfull. You can
+          now start playing the game.
+        </p>
+
+        <div className="flexDirectionRow mb-3 mt-3">
+          <CustomButton pink type="big" onClick={buyMore}>
+            BUY MORE
+          </CustomButton>
+          <button className="ml-5 mr-5" onClick={handleClose}>
+            CANCEL
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

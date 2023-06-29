@@ -1,11 +1,19 @@
 import { ReactComponent as NftTiles } from "../../images/OneNftTile.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
-import { getPublicKey } from "../../utils";
+import { fetchSession, getPublicKey } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { messageTypes } from "../../services/Websocket/MessageHandler";
+import eventBus from "../../services/Websocket/EventBus";
 
 export const CreditcardPayment = (props) => {
-  const { setContent, selectedId } = props;
+  const {
+    selectedId,
+    setHeaderText,
+    setCrossmintData,
+    crossmintData,
+    setContent,
+  } = props;
   const [nftAmount, setNftAmount] = useState(1);
 
   const navigate = useNavigate();
@@ -14,6 +22,7 @@ export const CreditcardPayment = (props) => {
     navigate(`/artist/${selectedId.id}`);
   };
 
+  console.log(crossmintData, "crossmint data?");
   const handleAmountChange = (event) => {
     const { name, value } = event.target;
     //prevent negative nrs
@@ -21,7 +30,32 @@ export const CreditcardPayment = (props) => {
     setNftAmount(inputValue);
   };
 
+  const listenToCrossmintSuccess = (data, sender) => {
+    //do smth here
+    setContent("completedPayment");
+    setHeaderText("COMPLETED PURCHASE, CONGRATS!");
+    setCrossmintData(data);
+    console.log("Websocket event sent BÄÄ", data);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      eventBus.on(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
+    };
+    fetchData();
+    return () => {
+      //any cleanup
+      eventBus.remove(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
+    };
+  }, []);
+
   let totalNFTsPrice = (0.0005 * nftAmount).toString();
+  const whArgs = {
+    id: fetchSession().id,
+  };
+  const whArgsSerialized = JSON.stringify(whArgs);
+  console.log(whArgsSerialized, "wh args serialized");
+
   return (
     <div className=" contentView flex">
       <div className="p-4 w-1/2 flex justify-center items-center margin-auto">
@@ -86,6 +120,7 @@ export const CreditcardPayment = (props) => {
           environment={process.env.REACT_APP_CROSSMINT_ENVIRONMENT}
           className="xmint-btn"
           mintTo={getPublicKey()}
+          whPassThroughArgs={whArgsSerialized}
           mintConfig={{
             type: "erc-1155",
             _amount: nftAmount,

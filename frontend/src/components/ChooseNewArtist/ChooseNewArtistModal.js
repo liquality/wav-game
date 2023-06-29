@@ -5,6 +5,7 @@ import { CustomModal } from "../Modal";
 
 import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
 import { GameIncentives } from "./GameIncentives";
+import { CompletedPayment } from "../Onboarding/CompletedPayment";
 
 export const ChooseNewArtistModal = (props) => {
   const {
@@ -17,6 +18,7 @@ export const ChooseNewArtistModal = (props) => {
   } = props;
 
   const [headerText, setHeaderText] = useState("Change artist");
+  const [crossmintData, setCrossmintData] = useState(null);
   const handleClose = () => {
     setShow(false);
     setChooseArtistView("chooseArtistStart");
@@ -56,6 +58,18 @@ export const ChooseNewArtistModal = (props) => {
         <CreditcardPayment
           selectedId={selectedArtist}
           setHeaderText={setHeaderText}
+          setContent={setChooseArtistView}
+          setCrossmintData={setCrossmintData}
+          crossmintData={crossmintData}
+        />
+      );
+    } else if (chooseArtistView === "completedPayment") {
+      return (
+        <CompletedPayment
+          setHeaderText={setHeaderText}
+          handleClose={handleClose}
+          setCrossmintData={setCrossmintData}
+          crossmintData={crossmintData}
           setContent={setChooseArtistView}
         />
       );

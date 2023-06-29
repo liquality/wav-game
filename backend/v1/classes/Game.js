@@ -193,10 +193,6 @@ class Game {
     const game = this;
     const promise = new Promise((resolve, reject) => {
       if (userId) {
-        websocketService.send([userId], "crossmint_success", {
-          ok: "data from WS everything OK",
-        });
-
         MySQL.pool.getConnection((err, db) => {
           if (gameNumberId) {
             db.execute(
