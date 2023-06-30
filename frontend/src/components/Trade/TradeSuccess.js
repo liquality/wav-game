@@ -112,7 +112,8 @@ export const TradeSuccess = ({
         <p className="lineNoCenter mt-2 " style={{ width: "50%" }}></p>
 
         <p className=" mt-48 greySmallText" style={{ width: "50%" }}>
-          Congratulations! We will reach out to you to make arrangements.
+          Congratulations!{" "}
+          {level > 4 ? "We will reach out to you to make arrangements." : null}
         </p>
 
         {/* TODO: if user doesnt have more nfts to trade, we should disable this */}
