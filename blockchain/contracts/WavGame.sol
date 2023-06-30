@@ -271,9 +271,7 @@ contract WavGame is
         if (_levelParam.burnID > 0) {
             wavGames[_artistID].levels[levelIndex].burnID = _levelParam.burnID;
         }
-        if (_levelParam.earlyBirdCutOff > 0) {
-            wavGames[_artistID].levels[levelIndex].earlyBirdCutOff = _levelParam.earlyBirdCutOff;
-        }
+        wavGames[_artistID].levels[levelIndex].earlyBirdCutOff = _levelParam.earlyBirdCutOff;
         emit LevelUpdated(_artistID, _levelID);
     }
 

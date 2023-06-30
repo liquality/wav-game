@@ -102,14 +102,15 @@ export const TradeStart = (props) => {
       }
 
       if (game) {
-        const _earlyBirdOpen = await ContractService.canBecomeEarlyBirdCollector(game.game_symbol_id,level);
+
+        const _earlyBirdOpen = await ContractService.canBecomeEarlyBirdCollector(game.game_symbol_id,level+1);
 
         setEarlyBirdOpen(_earlyBirdOpen);
       }
     };
 
     const subtitles = subtitleText[level];
-    if (earlyBirdOpen) {
+    if (!earlyBirdOpen) {
       setToSubtitle(subtitles.claimed);
     } else {
       setToSubtitle(subtitles.to);

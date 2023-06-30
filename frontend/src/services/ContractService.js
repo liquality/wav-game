@@ -13,7 +13,7 @@ const EARLY_BIRD_COLLECTORS_MAX = {
 
 const ContractService = {
 
-    canBecomeEarlyBirdCollector : async (gameId, user, level) => {
+    canBecomeEarlyBirdCollector : async (gameId, level) => {
         try {
             const provider = new ethers.JsonRpcProvider(
                 process.env.REACT_APP_RPC_URL
@@ -29,7 +29,9 @@ const ContractService = {
                 return collector === ZERO_ADDRESS;
             }else{
                 const collectors = await wavGame.fetchEarlyBirdCollectors(gameId, level);
+
                 return collectors.length < EARLY_BIRD_COLLECTORS_MAX[level];
+
             }
             
         } catch (error) {
