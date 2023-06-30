@@ -1,6 +1,7 @@
 import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import CustomButton from "../Button";
+import { DataContext } from "../../DataContext";
 import {
   CHAIN_ID,
   WAV_NFT_ADDRESS,
@@ -52,6 +53,8 @@ export const TradeStart = (props) => {
     level,
     txStatus,
   } = props;
+  const { levelSettings } = useContext(DataContext);
+
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
@@ -100,18 +103,18 @@ export const TradeStart = (props) => {
         setGame(_game);
       }
 
-      if (game && level) {
+      if (game) {
         const _earlyBirdOpen =
           await ContractService.canBecomeEarlyBirdCollector(
             game.game_symbol_id,
-            level
+            level + 1
           );
         setEarlyBirdOpen(_earlyBirdOpen);
       }
     };
 
     const subtitles = subtitleText[level];
-    if (earlyBirdOpen) {
+    if (!earlyBirdOpen) {
       setToSubtitle(subtitles.claimed);
     } else {
       setToSubtitle(subtitles.to);
