@@ -81,7 +81,8 @@ const UserMenu = ({
       if (
         wrapperRef &&
         wrapperRef.current &&
-        !wrapperRef.current.contains(event.target)
+        !wrapperRef.current.contains(event.target) &&
+        event.type === "mousedown"
       ) {
         onClose();
       }
@@ -151,8 +152,8 @@ const UserMenu = ({
       </button>
       {isOpen && (
         <div
-          style={{ zIndex: 10000 }}
-          className="absolute right-24 w-64 h-418   z-9999 userMenuDiv"
+          style={{ zIndex: 10000, right: 18 }}
+          className="absolute  w-64 h-418   z-9999 userMenuDiv"
         >
           <b>
             <p className="pl-3 pt-4 userMenuText">Hello {user?.username}</p>
