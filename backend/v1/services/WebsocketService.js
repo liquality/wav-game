@@ -8,8 +8,11 @@ const wss = new WebSocket.Server({
 
 const clients = {};
 
-wss.on("connection", function connection(socket, userid) {
+wss.on("connection", function connection(socket) {
   console.log("WebSocket connected!");
+  const userid = new URL(request.url, "http://localhost").searchParams.get(
+    "userid"
+  );
 
   if (!clients[userid]) {
     clients[userid] = {};
@@ -66,8 +69,10 @@ websocketService.checkAuth = async (req, callback) => {
 websocketService.send = (recipientId, messageType, messageContent) => {
   recipientId.forEach((id) => {
     const client = clients[id];
+    console.log(id, "iD in send msg", clients, typeof id);
 
     if (client?.sockets) {
+      console.log("Inside here client and socket exist BÄÄ");
       const data = { type: messageType, content: messageContent };
       client.sockets.forEach((socket) => {
         console.log(data, "sending WS data in backend BÄ");
