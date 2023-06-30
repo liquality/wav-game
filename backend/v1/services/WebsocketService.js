@@ -51,7 +51,7 @@ websocketService.checkAuth = async (req, callback) => {
   const userId = req.url.split("?userid=")[1];
   console.log(userId, "Userid in websocket Auth");
 
-  if (userId) {
+  if (userId && userId !== 0) {
     try {
       const user = await new User().read(userId);
       callback(user.id);
