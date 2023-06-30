@@ -17,7 +17,7 @@ export const Level6 = (props) => {
   const level6Count = nftCount["6"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[6];
   let actionLocked = false;
-  let earlyBirdLimit = 1;
+  let earlyBirdLimit = levelSettings?.claim_amount || 0;
   let instructions = "";
   let tradeActionText = "";
   let edition = "";

@@ -24,7 +24,7 @@ export const Level5 = (props) => {
   let noActions = false;
   let actionLocked = false;
   let title = "Get 1 custom-made song";
-  let earlyBirdLimit = 10;
+  let earlyBirdLimit = levelSettings?.claim_amount || 0;
   const [earlyBirds, setEarlyBirds] = useState([]);
   const [gameContract, setGameContract] = useState(null);
 
