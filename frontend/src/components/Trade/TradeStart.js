@@ -53,8 +53,8 @@ export const TradeStart = (props) => {
     level,
     txStatus,
   } = props;
-  const { levelSettings } = useContext(DataContext);
-
+  
+  const toLevel = level + 1;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
@@ -63,12 +63,14 @@ export const TradeStart = (props) => {
   const [toSubtitle, setToSubtitle] = useState("");
   const [earlyBirdOpen, setEarlyBirdOpen] = useState(false);
 
+  const subtitles = subtitleText[level];
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();
     return artist;
   };
 
   useEffect(() => {
+
     const fetchGameByUserIdAndArtistId = async () => {
       const artist = await getArtist();
       try {
@@ -93,7 +95,7 @@ export const TradeStart = (props) => {
     const init = async () => {
       if (userNfts) {
         const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(level);
-        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(level + 1);
+        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(toLevel);
         setTokenIdForNewLevel(_tokenIdForNewLevel);
         setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
       }
@@ -107,17 +109,16 @@ export const TradeStart = (props) => {
         const _earlyBirdOpen =
           await ContractService.canBecomeEarlyBirdCollector(
             game.game_symbol_id,
-            level + 1
+            toLevel
           );
         setEarlyBirdOpen(_earlyBirdOpen);
       }
     };
 
-    const subtitles = subtitleText[level];
-    if (!earlyBirdOpen) {
-      setToSubtitle(subtitles.claimed);
-    } else {
+    if (earlyBirdOpen) {
       setToSubtitle(subtitles.to);
+    } else {
+      setToSubtitle(subtitles.claimed || subtitles.to);
     }
     setFromSubtitle(subtitles.from);
 
@@ -200,11 +201,11 @@ export const TradeStart = (props) => {
   };
 
   return (
-    <div className="contentView flex justify-around">
-      <div className="p-4 ml-5 flexDirectionRow ">
-        <div>
+    <div className="contentView flex justify-around container">
+      <div className="p-4 flexDirectionRow">
+        <div className="">
           {" "}
-          <div className="flexDirectionRow">
+          <div className="grid grid-cols-3">
             <div className="flexDirectionColumn">
               <p className="webfont coral text-2xl">Level {level}</p>
               <p className=" mb-3">{fromSubtitle}</p>
@@ -244,7 +245,7 @@ export const TradeStart = (props) => {
               <DoubleArrow className="m-auto" />
             </div>
             <div className="pr-5 flexDirectionColumn ">
-              <p className="webfont coral text-2xl">Level {level + 1}</p>
+              <p className="webfont coral text-2xl">Level {toLevel}</p>
               <p className="mb-3">{toSubtitle}</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (

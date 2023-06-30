@@ -26,7 +26,7 @@ export const Level4 = (props) => {
   instructions = `You have ${level4Count === -1 ? 0 : level4Count
     } collectibles.`;
 
-  let earlyBirdLimit = 20;
+  let earlyBirdLimit = levelSettings?.claim_amount || 0;;
   instructions = `You have ${
     level4Count === -1 ? 0 : level4Count
   } collectibles.`;
