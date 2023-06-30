@@ -53,12 +53,8 @@ export const TradeStart = (props) => {
     level,
     txStatus,
   } = props;
-  const { levelSettings } = useContext(DataContext);
-
+  
   const toLevel = level + 1;
-  let earlyBirdLimitFrom = levelSettings[level]?.claim_amount || 0;;
-  let earlyBirdLimitTo = levelSettings[toLevel]?.claim_amount || 0;;
-
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
