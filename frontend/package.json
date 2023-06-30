@@ -6,7 +6,7 @@
     "@crossmint/client-sdk-react-ui": "^0.2.7-alpha.27",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@liquality/wallet-sdk": "^2.4.1",
+    "@liquality/wallet-sdk": "^2.4.3",
     "@marker.io/browser": "^0.16.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -109,7 +109,12 @@
     ]
   },
   "overrides": {
-    "react-refresh": "0.11.0"
+    "react-refresh": "0.11.0",
+    "@liquality/wallet-sdk":{
+      "@gelatonetwork/relay-sdk": {
+        "axios": "^0.26.1"
+      }
+    }
   },
   "readme": "ERROR: No README data found!",
   "_id": "WAVGAME@0.1.0"

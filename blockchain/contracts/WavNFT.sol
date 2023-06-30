@@ -14,10 +14,14 @@ import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
 contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable  {
     using Strings for uint256;
-
+    string public contractURI;
+    
     // solhint-disable-next-line
     constructor(string memory _uri) ERC1155(_uri){
 
+    }
+    function setContractURI(string  memory _contractURI) public onlyOwner {
+        contractURI = _contractURI;
     }
 
     function supportsInterface(bytes4 interfaceId) public view override returns (bool) {

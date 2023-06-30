@@ -1,4 +1,5 @@
 const MySQL = require("../../MySQL");
+const websocketService = require("../services/WebsocketService");
 const ApiError = require("./ApiError");
 
 class Game {
@@ -311,8 +312,7 @@ class Game {
       }
     });
     return promise;
-    
-  }
+  };
 
   updateLevelBurnStatus = async () => {
     const levelBurnData = this;
@@ -325,7 +325,7 @@ class Game {
             levelBurnData.lastBlock,
             levelBurnData.userAddress,
             levelBurnData.levelId,
-            levelBurnData.gameId
+            levelBurnData.gameId,
           ],
           (err, results, fields) => {
             if (err) {

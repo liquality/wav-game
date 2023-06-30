@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.0;
 
-import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-
 interface IWavGame {
     struct SetParam {
         bool status;
@@ -62,3 +60,4 @@ interface IWavGame {
 
     function wavMint(uint256 _artistID, uint256 _levelID, address _recipient, uint256 _amount) external;
 }
+

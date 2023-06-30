@@ -9,6 +9,7 @@ import { CompletedPayment } from "./CompletedPayment";
 import { CustomModal } from "../Modal";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
+import websocketService from "../../services/Websocket/WebsocketService";
 
 const verifierMap = {
   google: {
@@ -39,6 +40,8 @@ export const LoginModal = (props) => {
   const [loading, setLoading] = useState(false);
   const [loginResponse, setLoginResponse] = useState({});
   const [selectedId, setSelectedId] = useState(null);
+  const [crossmintData, setCrossmintData] = useState(null);
+
   const navigate = useNavigate();
   const handleClose = () => setShow(false);
 
@@ -60,7 +63,9 @@ export const LoginModal = (props) => {
     try {
       const response = await UserService.loginUser(serviceprovider_name);
       localStorage.setItem("session", JSON.stringify(response));
-      return response;
+      websocketService.connect(response.id);
+      if (response) return response;
+      else return null;
     } catch (err) {
       console.log("Error logging in user");
     }
@@ -113,7 +118,6 @@ export const LoginModal = (props) => {
         window.location.reload();
       }
     } else {
-      console.log('Came to create  wallet');
       setLoading(true);
       localStorage.setItem("loginResponse", JSON.stringify(response));
       setLoginResponse(response);
@@ -125,7 +129,6 @@ export const LoginModal = (props) => {
 
   const whichContentToRender = () => {
     if (content === "loginOrRegister") {
-      console.log('came to loginOrRegister');
       return (
         <LoginOrRegister
           setHeaderText={setHeaderText}
@@ -135,8 +138,6 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "pickAvatar") {
-      console.log('came to pickAvatar');
-
       return (
         <PickAvatar
           setHeaderText={setHeaderText}
@@ -146,8 +147,6 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "pickArtist") {
-      console.log('came to pickArtist');
-
       return (
         <PickArtist
           selectedId={selectedId}
@@ -159,22 +158,23 @@ export const LoginModal = (props) => {
         />
       );
     } else if (content === "creditcardPayment") {
-      console.log('came to creditcardPayment');
-
       return (
         <CreditcardPayment
           selectedId={selectedId}
           setHeaderText={setHeaderText}
           setContent={setContent}
+          setCrossmintData={setCrossmintData}
+          crossmintData={crossmintData}
         />
       );
     } else if (content === "completedPayment") {
-      console.log('came to completedPayment');
-
       return (
         <CompletedPayment
           setHeaderText={setHeaderText}
           handleClose={handleClose}
+          setCrossmintData={setCrossmintData}
+          crossmintData={crossmintData}
+          setContent={setContent}
         />
       );
     } else return null;

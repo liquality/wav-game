@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ReactComponent as AvatarPlaceholder } from "../../images/avatar_placeholder.svg";
 import UserService from "../../services/UserService";
 import CustomButton from "../Button";
+import websocketService from "../../services/Websocket/WebsocketService";
 
 export const PickAvatar = (props) => {
   const { serviceproviderName, publicAddress, setContent, setHeaderText } =
@@ -35,6 +36,7 @@ export const PickAvatar = (props) => {
           const response = await UserService.createUser(payload);
           // Set session
           localStorage.setItem("session", JSON.stringify(response));
+          websocketService.connect(response.id);
 
           if (response) {
             setContent("pickArtist");
