@@ -6,7 +6,6 @@ import { TradeModal } from "../../components/Trade/TradeModal";
 import { GameCards } from "../../components/GameCards/GameCards";
 import { GameTabs } from "../../components/GameTabs/GameTabs";
 import Leaderboard from "./Leaderboard";
-import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import { ReactComponent as FullSetBannerWinner } from "../../images/winner_full_set_holder.svg";
 import { ReactComponent as FullSetBannerNotEligable } from "../../images/full_set_banner_not_eligable.svg";
 
@@ -25,8 +24,6 @@ import { DataContext } from "../../DataContext";
 import { SpinningLoader } from "../../components/SpinningLoader";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "../../data/contract_data";
-import eventBus from "../../services/Websocket/EventBus";
-import { messageTypes } from "../../services/Websocket/MessageHandler";
 import websocketService from "../../services/Websocket/WebsocketService";
 
 export const Artist = (props) => {

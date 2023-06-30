@@ -126,6 +126,7 @@ export const Level6 = (props) => {
       }
     }
   }
+
   const actions = noActions
     ? []
     : [
@@ -150,8 +151,6 @@ export const Level6 = (props) => {
         edition,
         instructions,
       }}
-      earlyBirdCount={earlyBirds?.length}
-      earlyBirdLimit={earlyBirdLimit}
     />
   );
 };

@@ -28,7 +28,8 @@ export const Level4 = (props) => {
   instructions = `You have ${
     level4Count === -1 ? 0 : level4Count
   } collectibles.`;
-  let earlyBirdLimit = 20;
+
+  let earlyBirdLimit = levelSettings?.claim_amount || 0;
   const [isEarlyBird, setIsEarlyBird] = useState(null);
   const [earlyBirds, setEarlyBirds] = useState([]);
   const [gameContract, setGameContract] = useState(null);
@@ -120,6 +121,10 @@ export const Level4 = (props) => {
     }
   }
 
+  if(earlyBirdLimit > 0) {
+    edition = `${earlyBirds?.length || 0}/${earlyBirdLimit} claimed`;
+  }
+
   const actions = noActions
     ? []
     : [
@@ -144,8 +149,6 @@ export const Level4 = (props) => {
         edition,
         instructions,
       }}
-      earlyBirdCount={earlyBirds?.length}
-      earlyBirdLimit={earlyBirdLimit}
     />
   );
 };
