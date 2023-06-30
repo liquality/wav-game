@@ -55,6 +55,10 @@ export const TradeStart = (props) => {
   } = props;
   const { levelSettings } = useContext(DataContext);
 
+  const toLevel = level + 1;
+  let earlyBirdLimitFrom = levelSettings[level]?.claim_amount || 0;;
+  let earlyBirdLimitTo = levelSettings[toLevel]?.claim_amount || 0;;
+
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
@@ -93,7 +97,7 @@ export const TradeStart = (props) => {
     const init = async () => {
       if (userNfts) {
         const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(level);
-        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(level + 1);
+        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(toLevel);
         setTokenIdForNewLevel(_tokenIdForNewLevel);
         setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
       }
@@ -107,14 +111,14 @@ export const TradeStart = (props) => {
         const _earlyBirdOpen =
           await ContractService.canBecomeEarlyBirdCollector(
             game.game_symbol_id,
-            level + 1
+            toLevel
           );
         setEarlyBirdOpen(_earlyBirdOpen);
       }
     };
 
     const subtitles = subtitleText[level];
-    if (!earlyBirdOpen) {
+    if (true) {
       setToSubtitle(subtitles.claimed);
     } else {
       setToSubtitle(subtitles.to);
