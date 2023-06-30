@@ -142,8 +142,17 @@ gameHandler.webhook = async function (req, res) {
   const { status, tokenIds, passThroughArgs, walletAddress, txId } = req.body;
   console.log(passThroughArgs, "PASS THRY ARYGS");
   const argsDeserialized = JSON.parse(passThroughArgs);
-  console.log(argsDeserialized, "decentralized ARGS");
-  const userId = argsDeserialized;
+  const argsDeseralisedSecond = JSON.parse(argsDeserialized);
+  const argsDeseralisedThird = JSON.parse(argsDeseralisedSecond);
+
+  console.log(
+    argsDeserialized,
+    "decentralized",
+    typeof argsDeseralisedSecond,
+    typeof argsDeseralisedThird,
+    argsDeseralisedThird
+  );
+  const userId = argsDeseralisedThird.id;
   console.log(userId, "USERID??");
   if (status === "success") {
     websocketService.send([userId], "crossmint_success", {
@@ -152,6 +161,9 @@ gameHandler.webhook = async function (req, res) {
       walletAddress,
       txId,
     });
+
+    //const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
+    //console.log(artistNumberId, "artist nr id");
     res.status(200).send({});
   } else {
     res.status(400).send(new ApiError(400, reason));
