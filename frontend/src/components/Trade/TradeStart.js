@@ -1,5 +1,5 @@
 import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import CustomButton from "../Button";
 import { DataContext } from "../../DataContext";
 import {
@@ -16,7 +16,6 @@ import {
 import { NftService, TransactionService } from "@liquality/wallet-sdk";
 import ContractService from "../../services/ContractService";
 import UserService from "../../services/UserService";
-
 
 const subtitleText = {
   1: { from: "Trade 2 Live Songs", to: "Get 1 Top Live Song" },
@@ -54,16 +53,14 @@ export const TradeStart = (props) => {
     level,
     txStatus,
   } = props;
-  const {
-    levelSettings,
-  } = useContext(DataContext);
+  const { levelSettings } = useContext(DataContext);
 
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
-  const [fromSubtitle, setFromSubtitle] = useState('');
-  const [toSubtitle, setToSubtitle] = useState('');
+  const [fromSubtitle, setFromSubtitle] = useState("");
+  const [toSubtitle, setToSubtitle] = useState("");
   const [earlyBirdOpen, setEarlyBirdOpen] = useState(false);
 
   const getArtist = async () => {
@@ -72,7 +69,6 @@ export const TradeStart = (props) => {
   };
 
   useEffect(() => {
-    
     const fetchGameByUserIdAndArtistId = async () => {
       const artist = await getArtist();
       try {
@@ -108,7 +104,11 @@ export const TradeStart = (props) => {
       }
 
       if (game) {
-        const _earlyBirdOpen = await ContractService.canBecomeEarlyBirdCollector(game.game_symbol_id,level+1);
+        const _earlyBirdOpen =
+          await ContractService.canBecomeEarlyBirdCollector(
+            game.game_symbol_id,
+            level + 1
+          );
         setEarlyBirdOpen(_earlyBirdOpen);
       }
     };
@@ -129,7 +129,7 @@ export const TradeStart = (props) => {
     tokenIdForCurrentLevel,
     level,
     txStatus,
-    earlyBirdOpen
+    earlyBirdOpen,
   ]);
 
   //LVL UP: A trade makes a player level up both in contract & in db
@@ -147,6 +147,7 @@ export const TradeStart = (props) => {
         WAV_PROXY_ADDRESS,
         CHAIN_ID
       );
+      console.log(approved, "approved bä");
 
       if (!approved) {
         const approvalTx =
@@ -161,6 +162,7 @@ export const TradeStart = (props) => {
           privateKey,
           CHAIN_ID
         );
+        console.log(approvalTx, "approval tx bä");
       }
       setTxStatus({
         txHash: null,
@@ -172,6 +174,7 @@ export const TradeStart = (props) => {
         artist?.number_id,
         level + 1
       );
+      console.log(levelUpTx, "levelupTx bä");
 
       let txHashLevelUp = await TransactionService.sendGaslessly(
         WAV_PROXY_ADDRESS,
@@ -179,6 +182,8 @@ export const TradeStart = (props) => {
         privateKey,
         CHAIN_ID
       );
+      console.log(txHashLevelUp, "levelupTx HASH bä");
+
       setTxStatus({
         txHash: txHashLevelUp,
         submited: true,

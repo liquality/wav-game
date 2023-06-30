@@ -13,10 +13,17 @@ export const Level1 = (props) => {
   } = props;
   const status = getLevelsStatuses(currentLevel || 1)[1];
   const level1Count = nftCount["1"] || 0;
-  const instructions = `You have ${level1Count === -1 ? 0 : level1Count} collectibles.`;
+  const instructions = `You have ${
+    level1Count === -1 ? 0 : level1Count
+  } collectibles.`;
   let tradeActionText = "";
   let actionLocked = false;
+  let lessThan2NftsAndBurnt = level1Count < 2 && burnStatus;
+  let lessThan2NftsAndNeverBurnt = level1Count < 2 && !burnStatus;
+  let twoOrMoreNftsAndNeverBurnt = level1Count >= 2 && !burnStatus;
+  let twoOrMoreNftsAndBurnt = level1Count >= 2 && burnStatus;
 
+  console.log(tradeActionText, "tradeaction text");
   if (level1Count >= 2) {
     if (burnStatus) {
       tradeActionText = "Trade More";
@@ -24,8 +31,13 @@ export const Level1 = (props) => {
       tradeActionText = "Start Trading";
     }
   }
-  if (level1Count < 2 && !burnStatus) {
-    tradeActionText = "Get Artist Collectibles";
+
+  if (
+    lessThan2NftsAndBurnt ||
+    lessThan2NftsAndNeverBurnt ||
+    level1Count === 0
+  ) {
+    tradeActionText = "Get Collectibles";
   }
 
   let actions = [];
@@ -33,24 +45,29 @@ export const Level1 = (props) => {
     actions.push({
       onActionClick: (level) => onTradeClick(level),
       label: tradeActionText,
-      mode: actionLocked ? 'pinkStroke' : 'default',
+      mode: actionLocked ? "pinkStroke" : "default",
     });
-    if (!burnStatus) {
+    if (!burnStatus || burnStatus) {
       actions.push({
         onActionClick: (level) => onGetMoreClick(level),
-        label: 'Get more',
+        label: "Get more",
         mode: "default",
+        link: true,
       });
     }
-
-  } else if (level1Count <= 2 && !burnStatus) {
+  } else if (level1Count === 0) {
+    actions.push({
+      onActionClick: (level) => onGetMoreClick(level),
+      label: tradeActionText,
+      mode: "default",
+    });
+  } else if (lessThan2NftsAndBurnt || lessThan2NftsAndNeverBurnt) {
     actions.push({
       onActionClick: (level) => onGetMoreClick(level),
       label: tradeActionText,
       mode: "default",
     });
   }
-
 
   return (
     <LevelCard
