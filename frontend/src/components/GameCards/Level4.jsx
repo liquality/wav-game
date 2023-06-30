@@ -30,7 +30,6 @@ export const Level4 = (props) => {
   } collectibles.`;
 
   let earlyBirdLimit = levelSettings?.claim_amount || 0;
-  const [isEarlyBird, setIsEarlyBird] = useState(null);
   const [earlyBirds, setEarlyBirds] = useState([]);
   const [gameContract, setGameContract] = useState(null);
 
@@ -49,24 +48,14 @@ export const Level4 = (props) => {
       );
       setGameContract(_gameContract);
 
-      const isEarlyBird = await checkEarlyBird();
       const earlyBirds = await fetchEarlyBirds();
-      console.log("isEarlyBird >> ", isEarlyBird);
       console.log("earlyBirds >> ", earlyBirds);
-      setIsEarlyBird(isEarlyBird);
       setEarlyBirds(earlyBirds);
     };
 
     fetchData();
   }, []);
 
-  const checkEarlyBird = async () => {
-    let isEarlyBird = await gameContract?.isEarlyBirdCollector(
-      currentGame.game_symbol_id,
-      6
-    );
-    return isEarlyBird;
-  };
 
   const fetchEarlyBirds = async () => {
     return await gameContract?.fetchEarlyBirdCollectors(
