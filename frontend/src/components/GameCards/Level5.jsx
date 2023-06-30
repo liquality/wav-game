@@ -1,8 +1,6 @@
 import { LevelCard } from "../LevelCard/LevelCard";
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
 import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
-import { WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "../../data/contract_data";
+import { useEarlyBirdInfo } from "../../hooks/useEarlyBirdCount";
 
 export const Level5 = (props) => {
   const {
@@ -25,37 +23,8 @@ export const Level5 = (props) => {
   let actionLocked = false;
   let title = "Get 1 custom-made song";
   let earlyBirdLimit = 10;
-  const [earlyBirds, setEarlyBirds] = useState([]);
-  const [gameContract, setGameContract] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const provider = new ethers.JsonRpcProvider(
-        process.env.REACT_APP_RPC_URL
-      );
-      // Create a new instance of the contract using the ABI and address
-
-      const _gameContract = new ethers.Contract(
-        WAV_PROXY_ADDRESS,
-        WAV_PROXY_ABI,
-        provider
-      );
-      setGameContract(_gameContract);
-
-      const earlyBirds = await fetchEarlyBirds();
-      console.log("earlyBirds >> ", earlyBirds);
-      setEarlyBirds(earlyBirds);
-    };
-
-    fetchData();
-  }, []);
-
-  const fetchEarlyBirds = async () => {
-    return await gameContract?.fetchEarlyBirdCollectors(
-      currentGame.game_symbol_id,
-      6
-    );
-  };
+  const {earlyBirdCount, isEarlyBird} = useEarlyBirdInfo(currentGame.game_symbol_id, 5);
 
   // count down
   function applyCountDown() {
@@ -108,9 +77,8 @@ export const Level5 = (props) => {
       - when max number is reached, switch title to:: All custom made songs claimed
       - when max number is reached, switch counter to:: Keep playing for other rewards.
       */
-      const earlyBirdsCount = earlyBirds?.length || 0;
-      if (earlyBirdsCount < earlyBirdLimit) {
-        edition = `${earlyBirds?.length || 0}/${earlyBirdLimit} CLAIMED`;
+      if (earlyBirdCount < earlyBirdLimit) {
+        edition = `${earlyBirdCount || 0}/${earlyBirdLimit} CLAIMED`;
       } else {
         title = 'All custom made songs claimed';
         edition = 'Keep playing for other rewards';
