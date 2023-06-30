@@ -139,10 +139,20 @@ gameHandler.delete = function (req, res) {
 gameHandler.webhook = async function (req, res) {
   console.log(req.body, "req body???");
 
-  const { status, tokenIds, whPassThroughArgs, walletAddress, txId } = req.body;
-  console.log(whPassThroughArgs, "PASS THRY ARYGS");
-  const whArgsDeserialized = JSON.parse(whPassThroughArgs);
-  const userId = whArgsDeserialized.id;
+  const { status, tokenIds, passThroughArgs, walletAddress, txId } = req.body;
+  console.log(passThroughArgs, "PASS THRY ARYGS");
+  const argsDeserialized = JSON.parse(passThroughArgs);
+  const argsDeseralisedSecond = JSON.parse(argsDeserialized);
+  const argsDeseralisedThird = JSON.parse(argsDeseralisedSecond);
+
+  console.log(
+    argsDeserialized,
+    "decentralized",
+    typeof argsDeseralisedSecond,
+    typeof argsDeseralisedThird,
+    argsDeseralisedThird
+  );
+  const userId = argsDeseralisedThird.id;
   console.log(userId, "USERID??");
   if (status === "success") {
     websocketService.send([userId], "crossmint_success", {

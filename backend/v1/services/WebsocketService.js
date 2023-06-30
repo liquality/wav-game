@@ -9,7 +9,7 @@ const wss = new WebSocket.Server({
 const clients = {};
 
 wss.on("connection", function connection(socket, userid) {
-  console.log(socket, "WebSocket connected!");
+  console.log("WebSocket connected!");
 
   if (!clients[userid]) {
     clients[userid] = {};
@@ -23,7 +23,7 @@ wss.on("connection", function connection(socket, userid) {
   socket.on("message", function message(message) {});
 
   socket.on("close", function close() {
-    console.log(socket, "WebSocket connection closed!");
+    console.log("WebSocket connection closed!");
     const socketIndex = clients[userid].sockets.findIndex((s) => s === socket);
     clients[userid].sockets.splice(socketIndex, 1);
   });
