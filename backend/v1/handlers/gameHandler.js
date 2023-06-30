@@ -96,10 +96,11 @@ gameHandler.update = function (req, res) {
   var game = new Game();
   game.set(req.body);
   const userid = Number(req.params.userid);
-  const userIdFromSession = req.user.id;
-  if (userid == userIdFromSession) {
+  //const userIdFromSession = req.user.id;
+  if (userid) {
     game.update().then(
       (game) => {
+        console.log(game, "successfully updated game");
         res.status(200).send(game);
       },
       (reject) => {
@@ -142,16 +143,26 @@ gameHandler.webhook = async function (req, res) {
   const { status, tokenIds, passThroughArgs, walletAddress, txId } = req.body;
   console.log(passThroughArgs, "PASS THRY ARYGS");
   const argsDeserialized = JSON.parse(passThroughArgs);
-  console.log(argsDeserialized, "decentralized ARGS");
-  const userId = argsDeserialized;
+  const argsDeseralisedSecond = JSON.parse(argsDeserialized);
+  const argsDeseralisedThird = JSON.parse(argsDeseralisedSecond);
+
+  console.log(
+    argsDeserialized,
+    "decentralized",
+    typeof argsDeseralisedSecond,
+    typeof argsDeseralisedThird,
+    argsDeseralisedThird
+  );
+  const userId = argsDeseralisedThird.id;
   console.log(userId, "USERID??");
   if (status === "success") {
-    websocketService.send([Number(userId)], "crossmint_success", {
+    websocketService.send([userId], "crossmint_success", {
       tokenId: tokenIds,
       status,
       walletAddress,
       txId,
     });
+
     res.status(200).send({});
   } else {
     res.status(400).send(new ApiError(400, reason));

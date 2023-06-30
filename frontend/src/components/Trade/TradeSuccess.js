@@ -5,7 +5,13 @@ import { useEffect, useState } from "react";
 import CustomButton from "../Button";
 import { getGameIdBasedOnHref, shortenAddress } from "../../utils";
 
-export const TradeSuccess = ({ setContent, userNfts, handleClose, level }) => {
+export const TradeSuccess = ({
+  setContent,
+  userNfts,
+  handleClose,
+  level,
+  txStatus,
+}) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [artist, setArtist] = useState("");
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
@@ -98,7 +104,7 @@ export const TradeSuccess = ({ setContent, userNfts, handleClose, level }) => {
             target="blank"
             className=" flexDirectionRow  lightPink hover:no-underline hover:decoration-none no-underline"
           >
-            {shortenAddress("0x0000000000000000000000")}{" "}
+            {shortenAddress(txStatus?.hash)}{" "}
             <SmallPinkArrow className="ml-2 mt-1" />
           </a>
         </div>
@@ -106,7 +112,8 @@ export const TradeSuccess = ({ setContent, userNfts, handleClose, level }) => {
         <p className="lineNoCenter mt-2 " style={{ width: "50%" }}></p>
 
         <p className=" mt-48 greySmallText" style={{ width: "50%" }}>
-          Congratulations! We will reach out to you to make arrangements.
+          Congratulations!{" "}
+          {level > 4 ? "We will reach out to you to make arrangements." : null}
         </p>
 
         {/* TODO: if user doesnt have more nfts to trade, we should disable this */}

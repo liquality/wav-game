@@ -20,37 +20,14 @@ export const ArtistGrid = (props) => {
   const renderButtons = (startHere, endHere) => {
     if (artistData.length > 0) {
       return artistData.slice(startHere, endHere).map((item, index) => {
-        const level = games?.find((game) => {
-          if (game.artist_name === item.id) return game.level;
-        });
+        const level = getArtistLevel(item.id);
         const userIsOnHrefArtist = item?.id === artistFromHref?.id;
+        const buttonStyle = getButtonStyle(item);
+        const isDisabled = isButtonDisabled(item, level);
+        const renderLevel = getRenderLevel(level, isDisabled);
 
-        //I am sorry for this convoluted and messy logic,
-        //will refactor one day maybe lmao
-        let buttonStyle;
-        if (selectedId?.number_id === item.number_id) {
-          buttonStyle = { color: "white", backgroundColor: "#E61EA3" };
-        }
-        const finished = games?.find((game) => {
-          if (game.artist_name === item.id)
-            return game.level_6_claimed_main_prize;
-        });
-        let isDisabled;
-        let renderLevel;
-        if (level?.level && !finished?.level_6_claimed_main_prize) {
-          renderLevel = `Level ${level?.level}`;
-        } else if (level?.level === 6 && finished.level_6_claimed_main_prize) {
-          isDisabled = true;
-          renderLevel = "Game ended";
-          buttonStyle = {
-            backgroundColor: "#3D2A38",
-            borderColor: "#4F4F4F",
-          };
-        } else {
-          renderLevel = "Start game";
-        }
+        const shouldNavigate = userIsOnHrefArtist || level;
 
-        let shouldNavigate = userIsOnHrefArtist || level;
         return (
           <div className="flexDirectionRow  mb-3" key={index}>
             <button
@@ -88,6 +65,41 @@ export const ArtistGrid = (props) => {
       });
     } else {
       return null;
+    }
+  };
+
+  const getArtistLevel = (artistId) => {
+    return games?.find((game) => {
+      if (game.artist_name === artistId) return game.level;
+    });
+  };
+
+  const getButtonStyle = (item) => {
+    if (selectedId?.number_id === item.number_id) {
+      return { color: "white", backgroundColor: "#E61EA3" };
+    }
+    const finished = games?.find((game) => game.artist_name === item.id);
+    if (finished?.level === 6) {
+      return {
+        backgroundColor: "#3D2A38",
+        borderColor: "#4F4F4F",
+      };
+    }
+    return {};
+  };
+
+  const isButtonDisabled = (item, level) => {
+    const finished = games?.find((game) => game.artist_name === item.id);
+    return level?.level === 6 && finished?.level_6_claimed_main_prize;
+  };
+
+  const getRenderLevel = (level, isDisabled) => {
+    if (level?.level && !isDisabled) {
+      return `Level ${level.level}`;
+    } else if (level?.level === 6 && isDisabled) {
+      return "Game ended";
+    } else {
+      return "Start game";
     }
   };
 

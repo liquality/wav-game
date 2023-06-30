@@ -34,7 +34,6 @@ export const Level4 = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("ame here >>>>>>>>>");
       const provider = new ethers.JsonRpcProvider(
         process.env.REACT_APP_RPC_URL
       );
