@@ -49,7 +49,6 @@ websocketService.addConnectionListener = (expressServer) => {
 
 websocketService.checkAuth = async (req, callback) => {
   const userId = req.url.split("?userid=")[1];
-  console.log(userId, "Userid in websocket Auth");
 
   if (userId && userId !== 0) {
     try {
@@ -66,13 +65,11 @@ websocketService.checkAuth = async (req, callback) => {
 websocketService.send = (recipientId, messageType, messageContent) => {
   recipientId.forEach((id) => {
     const client = clients[id];
-    console.log(id, "iD in send msg", clients, typeof id);
 
     if (client?.sockets) {
-      console.log("Inside here client and socket exist BÄÄ");
       const data = { type: messageType, content: messageContent };
       client.sockets.forEach((socket) => {
-        console.log(data, "sending WS data in backend BÄ");
+        console.log(data, "sending WS data in backend");
         socket.send(JSON.stringify(data));
       });
     }

@@ -194,6 +194,8 @@ export const Artist = (props) => {
                   setShowSendModal={setShowSend}
                   artist={artist}
                   nftCount={nftCount}
+                  currentLevel={currentLevel}
+                  currentGame={currentGame}
                 />
                 <Faq />{" "}
               </div>

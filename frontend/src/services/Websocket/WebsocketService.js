@@ -13,7 +13,6 @@ websocketService.getWS = (userid) => {
 
     if (!ws || ws.readyState === 3) {
       //TODO add ws uri to env variables
-      console.log("BÄÄ establishing connection");
       websocketService._ws = new WebSocket(
         `wss://${wsUri}/websockets?userid=${userid}`
       );
@@ -28,11 +27,10 @@ websocketService.getWS = (userid) => {
 websocketService.reconnectAttempts = 0;
 
 websocketService.connect = (userid) => {
-  console.log("Inside BÄÄ connect", userid);
   const ws = websocketService.getWS(userid);
 
   ws.onopen = () => {
-    console.log("WebSocket connected. BÄÄ");
+    console.log("WebSocket connected. ");
     // Reset reconnectAttempts on connection opening
     websocketService.reconnectAttempts = 0;
   };

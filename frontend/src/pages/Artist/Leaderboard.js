@@ -2,10 +2,20 @@ import "../../App.css";
 import { useState, useEffect, useContext } from "react";
 import "./artist.css";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
-import { getHowManyPlayersAreInEachLevel, getPublicKey } from "../../utils";
+import {
+  fetchSession,
+  getHowManyPlayersAreInEachLevel,
+  getPublicKey,
+} from "../../utils";
 import { DataContext } from "../../DataContext";
+import UserService from "../../services/UserService";
 
-const Leaderboard = ({ setShowSendModal, artist }) => {
+const Leaderboard = ({
+  setShowSendModal,
+  artist,
+  currentLevel,
+  currentGame,
+}) => {
   const [showNfts, setShowNfts] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState(null);
   const { nftCount } = useContext(DataContext);
@@ -22,14 +32,44 @@ const Leaderboard = ({ setShowSendModal, artist }) => {
           console.log(err, "Error fetching the leaderboard");
         }
       }
-
-      //TODO when component mounts, add currentLevel in db
     };
 
     const fetchData = async () => {
       if (!leaderboardData) {
         const _leaderboardData = await getLeaderboardData();
         setLeaderboardData(_leaderboardData);
+      }
+
+      if (currentGame.level !== currentLevel) {
+        const {
+          id,
+          status,
+          user_id,
+          level,
+          artist_name,
+          level_4_claimed_prizes,
+          level_5_claimed_prizes,
+          level_6_claimed_main_prize,
+          claimable_prize_count,
+          game_symbol_id,
+        } = currentGame;
+        await UserService.updateGame(
+          fetchSession().id,
+          {
+            id,
+            status,
+            user_id,
+            level: currentLevel,
+            artist_name,
+            level_4_claimed_prizes,
+            level_5_claimed_prizes,
+            level_6_claimed_main_prize,
+            claimable_prize_count,
+            game_symbol_id,
+          },
+          fetchSession().token
+        );
+        //TODO when component mounts, add currentLevel in db
       }
     };
     fetchData();

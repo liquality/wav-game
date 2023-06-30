@@ -96,10 +96,11 @@ gameHandler.update = function (req, res) {
   var game = new Game();
   game.set(req.body);
   const userid = Number(req.params.userid);
-  const userIdFromSession = req.user.id;
-  if (userid == userIdFromSession) {
+  //const userIdFromSession = req.user.id;
+  if (userid) {
     game.update().then(
       (game) => {
+        console.log(game, "successfully updated game");
         res.status(200).send(game);
       },
       (reject) => {
@@ -162,8 +163,6 @@ gameHandler.webhook = async function (req, res) {
       txId,
     });
 
-    //const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
-    //console.log(artistNumberId, "artist nr id");
     res.status(200).send({});
   } else {
     res.status(400).send(new ApiError(400, reason));

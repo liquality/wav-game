@@ -127,10 +127,10 @@ const UserMenu = ({
         return (
           <div key={index} className="pr-5 mt-3">
             <button
-              className="pl-3 pb-3 userMenuText"
+              className="pl-3 pb-2 userMenuText"
               onClick={() => handleGameSelected(game)}
             >
-              Game: {game.artist_name}
+              {game.artist_name.toUpperCase()}
             </button>
           </div>
         );
@@ -167,7 +167,7 @@ const UserMenu = ({
           <div style={{ width: "100%" }} className="line"></div>
 
           {renderNumberOfActiveGames()}
-          <div style={{ width: "100%" }} className="line"></div>
+          <div style={{ width: "100%" }} className="line mt-2"></div>
           <button
             className="pl-3 pt-4 userMenuText"
             onClick={() => handleChooseNewArtist()}
