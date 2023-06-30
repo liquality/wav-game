@@ -25,9 +25,8 @@ export const Level4 = (props) => {
   let title = "Get 1 limited physical item";
   actionDisabled = false;
   let actionLocked = false;
-  instructions = `You have ${
-    level4Count === -1 ? 0 : level4Count
-  } collectibles.`;
+  instructions = `You have ${level4Count === -1 ? 0 : level4Count
+    } collectibles.`;
 
   let earlyBirdLimit = levelSettings?.claim_amount || 0;
   const [earlyBirds, setEarlyBirds] = useState([]);
@@ -101,30 +100,41 @@ export const Level4 = (props) => {
         actionLocked = true;
         actionDisabled = true;
       } else {
-        instructions = `You have ${
-          level4Count === -1 ? 0 : level4Count
-        } collectibles. Get 1 more to trade for next level.`;
+        instructions = `You have ${level4Count === -1 ? 0 : level4Count
+          } collectibles. Get 1 more to trade for next level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }
     }
-  }
 
-  if(earlyBirdLimit > 0) {
-    edition = `${earlyBirds?.length || 0}/${earlyBirdLimit} claimed`;
+    if (earlyBirdLimit > 0) {
+      // #DWAV-190 
+      /**
+      - add counter:: [n]/20 claimed
+      - when max number is reached, switch title to:: All physical items claimed
+      - when max number is reached, switch counter to:: Keep playing for other rewards.
+      */
+      const earlyBirdsCount = earlyBirds?.length || 0;
+      if (earlyBirdsCount < earlyBirdLimit) {
+        edition = `${earlyBirds?.length || 0}/${earlyBirdLimit} CLAIMED`;
+      } else {
+        title = 'All physical items claimed';
+        edition = 'Keep playing for other rewards';
+      }
+    }
   }
 
   const actions = noActions
     ? []
     : [
-        {
-          onActionClick: (level) => onTradeClick(level),
-          label: tradeActionText,
-          mode: actionLocked ? "pinkStroke" : "default",
-          disabled: actionDisabled,
-          useIcon: actionDisabled,
-        },
-      ];
+      {
+        onActionClick: (level) => onTradeClick(level),
+        label: tradeActionText,
+        mode: actionLocked ? "pinkStroke" : "default",
+        disabled: actionDisabled,
+        useIcon: actionDisabled,
+      },
+    ];
 
   return (
     <LevelCard

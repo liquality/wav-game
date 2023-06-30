@@ -102,12 +102,22 @@ export const Level5 = (props) => {
         actionDisabled = true;
       }
     }
+
+    // #DWAV-190 
+      /**
+      - add counter:: [n]/20 claimed
+      - when max number is reached, switch title to:: All custom made songs claimed
+      - when max number is reached, switch counter to:: Keep playing for other rewards.
+      */
+      const earlyBirdsCount = earlyBirds?.length || 0;
+      if (earlyBirdsCount < earlyBirdLimit) {
+        edition = `${earlyBirds?.length || 0}/${earlyBirdLimit} CLAIMED`;
+      } else {
+        title = 'All custom made songs claimed';
+        edition = 'Keep playing for other rewards';
+      }
   }
 
-  if (earlyBirdLimit > 0) {
-    edition = `${earlyBirds?.length || 0}/${earlyBirdLimit} claimed`;
-  }
-  
   const actions = noActions
     ? []
     : [
