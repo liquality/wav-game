@@ -51,7 +51,6 @@ div:has(> .level-card) {
   align-items: center;
   margin-bottom: 3rem;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
 }
 
 .level-card-instructions {

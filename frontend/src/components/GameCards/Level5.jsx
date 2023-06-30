@@ -25,7 +25,6 @@ export const Level5 = (props) => {
   let actionLocked = false;
   let title = "Get 1 custom-made song";
   let earlyBirdLimit = 10;
-  const [isEarlyBird, setIsEarlyBird] = useState(null);
   const [earlyBirds, setEarlyBirds] = useState([]);
   const [gameContract, setGameContract] = useState(null);
 
@@ -43,24 +42,13 @@ export const Level5 = (props) => {
       );
       setGameContract(_gameContract);
 
-      const isEarlyBird = await checkEarlyBird();
       const earlyBirds = await fetchEarlyBirds();
-      console.log("isEarlyBird >> ", isEarlyBird);
       console.log("earlyBirds >> ", earlyBirds);
-      setIsEarlyBird(isEarlyBird);
       setEarlyBirds(earlyBirds);
     };
 
     fetchData();
   }, []);
-
-  const checkEarlyBird = async () => {
-    let isEarlyBird = await gameContract?.isEarlyBirdCollector(
-      currentGame.game_symbol_id,
-      6
-    );
-    return isEarlyBird;
-  };
 
   const fetchEarlyBirds = async () => {
     return await gameContract?.fetchEarlyBirdCollectors(
@@ -107,26 +95,39 @@ export const Level5 = (props) => {
         actionLocked = true;
         actionDisabled = true;
       } else {
-        instructions = `You have ${
-          level5Count === -1 ? 0 : level5Count
-        } collectibles. Get 1 more to trade for next level.`;
+        instructions = `You have ${level5Count === -1 ? 0 : level5Count
+          } collectibles. Get 1 more to trade for next level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }
     }
+
+    // #DWAV-190 
+      /**
+      - add counter:: [n]/20 claimed
+      - when max number is reached, switch title to:: All custom made songs claimed
+      - when max number is reached, switch counter to:: Keep playing for other rewards.
+      */
+      const earlyBirdsCount = earlyBirds?.length || 0;
+      if (earlyBirdsCount < earlyBirdLimit) {
+        edition = `${earlyBirds?.length || 0}/${earlyBirdLimit} CLAIMED`;
+      } else {
+        title = 'All custom made songs claimed';
+        edition = 'Keep playing for other rewards';
+      }
   }
 
   const actions = noActions
     ? []
     : [
-        {
-          onActionClick: (level) => onTradeClick(level),
-          label: tradeActionText,
-          mode: actionLocked ? "pinkStroke" : "default",
-          disabled: actionDisabled,
-          useIcon: actionDisabled,
-        },
-      ];
+      {
+        onActionClick: (level) => onTradeClick(level),
+        label: tradeActionText,
+        mode: actionLocked ? "pinkStroke" : "default",
+        disabled: actionDisabled,
+        useIcon: actionDisabled,
+      },
+    ];
 
   return (
     <LevelCard
@@ -140,8 +141,6 @@ export const Level5 = (props) => {
         edition,
         instructions,
       }}
-      earlyBirdCount={earlyBirds?.length}
-      earlyBirdLimit={earlyBirdLimit}
     />
   );
 };
