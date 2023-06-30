@@ -8,11 +8,8 @@ const wss = new WebSocket.Server({
 
 const clients = {};
 
-wss.on("connection", function connection(socket) {
+wss.on("connection", function connection(socket, userid) {
   console.log("WebSocket connected!");
-  const userid = new URL(request.url, "http://localhost").searchParams.get(
-    "userid"
-  );
 
   if (!clients[userid]) {
     clients[userid] = {};
