@@ -1,8 +1,6 @@
 import { LevelCard } from "../LevelCard/LevelCard";
 import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
-import { useEffect, useState } from "react";
-import { WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "../../data/contract_data";
-import { ethers } from "ethers";
+import { useEarlyBirdInfo } from "../../hooks/useEarlyBirdCount";
 
 export const Level6 = (props) => {
   const {
@@ -24,9 +22,8 @@ export const Level6 = (props) => {
   let actionDisabled = false;
   let noActions = false;
   let title = "Congrats, you won a 1:1 trip + concert experience";
-  const [isEarlyBird, setIsEarlyBird] = useState(null);
-  const [earlyBirds, setEarlyBirds] = useState([]);
-  const [gameContract, setGameContract] = useState(null);
+
+  const {earlyBirdCount, isEarlyBird} = useEarlyBirdInfo(currentGame.game_symbol_id, 6);
 
   function applyCountDown() {
     if (levelSettings && levelSettings.countdown_ends > 0) {
@@ -50,39 +47,6 @@ export const Level6 = (props) => {
     }
     return false;
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const provider = new ethers.JsonRpcProvider(
-        process.env.REACT_APP_RPC_URL
-      );
-      // Create a new instance of the contract using the ABI and address
-
-      const _gameContract = new ethers.Contract(
-        WAV_PROXY_ADDRESS,
-        WAV_PROXY_ABI,
-        provider
-      );
-      setGameContract(_gameContract);
-
-      const isEarlyBird = await checkEarlyBird();
-      const earlyBirds = await gameContract?.highestLevelCollector();
-      console.log("isEarlyBird >> ", isEarlyBird);
-      console.log("earlyBirds >> ", earlyBirds);
-      setIsEarlyBird(isEarlyBird);
-      setEarlyBirds(earlyBirds);
-    };
-
-    fetchData();
-  }, []);
-
-  const checkEarlyBird = async () => {
-    let isEarlyBird = await gameContract?.isEarlyBirdCollector(
-      currentGame.game_symbol_id,
-      6
-    );
-    return isEarlyBird;
-  };
 
   if (!applyCountDown()) {
     if (level6Count < 2) {

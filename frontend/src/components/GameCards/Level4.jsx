@@ -1,8 +1,6 @@
 import { LevelCard } from "../LevelCard/LevelCard";
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
 import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
-import { WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "../../data/contract_data";
+import { useEarlyBirdInfo } from "../../hooks/useEarlyBirdCount";
 
 export const Level4 = (props) => {
   const {
@@ -28,39 +26,13 @@ export const Level4 = (props) => {
   instructions = `You have ${level4Count === -1 ? 0 : level4Count
     } collectibles.`;
 
-  let earlyBirdLimit = levelSettings?.claim_amount || 0;
-  const [earlyBirds, setEarlyBirds] = useState([]);
-  const [gameContract, setGameContract] = useState(null);
+  let earlyBirdLimit = 20;
+  instructions = `You have ${
+    level4Count === -1 ? 0 : level4Count
+  } collectibles.`;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const provider = new ethers.JsonRpcProvider(
-        process.env.REACT_APP_RPC_URL
-      );
-      // Create a new instance of the contract using the ABI and address
+  const {earlyBirdCount, isEarlyBird} = useEarlyBirdInfo(currentGame.game_symbol_id, 4);
 
-      const _gameContract = new ethers.Contract(
-        WAV_PROXY_ADDRESS,
-        WAV_PROXY_ABI,
-        provider
-      );
-      setGameContract(_gameContract);
-
-      const earlyBirds = await fetchEarlyBirds();
-      console.log("earlyBirds >> ", earlyBirds);
-      setEarlyBirds(earlyBirds);
-    };
-
-    fetchData();
-  }, []);
-
-
-  const fetchEarlyBirds = async () => {
-    return await gameContract?.fetchEarlyBirdCollectors(
-      currentGame.game_symbol_id,
-      6
-    );
-  };
   // count down
   function applyCountDown() {
     if (levelSettings && levelSettings.countdown_ends > 0) {
@@ -106,6 +78,7 @@ export const Level4 = (props) => {
       }
     }
 
+    console.log('Early bird limit of level 4 => ', earlyBirdLimit);
     if (earlyBirdLimit > 0) {
       // #DWAV-190 
       /**
@@ -113,9 +86,8 @@ export const Level4 = (props) => {
       - when max number is reached, switch title to:: All physical items claimed
       - when max number is reached, switch counter to:: Keep playing for other rewards.
       */
-      const earlyBirdsCount = earlyBirds?.length || 0;
-      if (earlyBirdsCount < earlyBirdLimit) {
-        edition = `${earlyBirds?.length || 0}/${earlyBirdLimit} CLAIMED`;
+      if (earlyBirdCount < earlyBirdLimit) {
+        edition = `${earlyBirdCount || 0}/${earlyBirdLimit} CLAIMED`;
       } else {
         title = 'All physical items claimed';
         edition = 'Keep playing for other rewards';
