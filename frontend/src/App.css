@@ -943,6 +943,11 @@ div.background {
   display: block;
 }
 
+.nft-game-incentives {
+  width: 406px;
+  height: 515px;
+}
+
 .nft-game-incentives::before {
   content: "";
   position: absolute;
