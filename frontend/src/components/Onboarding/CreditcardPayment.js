@@ -1,11 +1,12 @@
 import { ReactComponent as NftTiles } from "../../images/OneNftTile.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 import { fetchSession, getPublicKey } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { messageTypes } from "../../services/Websocket/MessageHandler";
 import eventBus from "../../services/Websocket/EventBus";
 import StaticDataService from "../../services/StaticDataService";
+import { DataContext } from "../../DataContext";
 
 export const CreditcardPayment = (props) => {
   const {
@@ -15,13 +16,17 @@ export const CreditcardPayment = (props) => {
     crossmintData,
     setContent,
   } = props;
+  const {
+    getMoreLevel
+  } = useContext(DataContext);
+
   const [nftAmount, setNftAmount] = useState(1);
 
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
-  const getWhichTokenIdForLevel1 = async () => {
+  const getWhichTokenIdForLevel = async () => {
     const artist = await StaticDataService.findArtistById(selectedId.id);
     let firstChar = artist.number_id.toString()[0];
-    return firstChar + 0 + 1;
+    return firstChar + 0 + getMoreLevel;
   };
 
   const navigate = useNavigate();
@@ -49,7 +54,7 @@ export const CreditcardPayment = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       eventBus.on(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
-      const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel1();
+      const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel();
       setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
     };
     fetchData();
@@ -83,15 +88,15 @@ export const CreditcardPayment = (props) => {
         >
           {" "}
           {tokenIdForCurrentLevel ? (
-                <div className="flexDirectionRow nft-game-incentives">
-                  <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
-                    className="mr-1 nftPreviewTrade "
-                    alt="NFT Preview"
-                  />
-                </div>
-              ) : 
-              <NftTiles style={{ width: "406px", height: "515px" }} />}
+            <div className="flexDirectionRow nft-game-incentives">
+              <img
+                src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
+                className="mr-1 nftPreviewTrade "
+                alt="NFT Preview"
+              />
+            </div>
+          ) :
+            <NftTiles style={{ width: "406px", height: "515px" }} />}
         </div>
       </div>
       <div className="w-1/2 flex flex-col justify-center">
