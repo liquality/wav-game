@@ -79,7 +79,9 @@ export const Level6 = (props) => {
       title = 'We got a winner! You still have a change to qualify as a full set holder.'
     }
   } 
-
+  instructions = '';
+  status = 'won';
+  title = 'CONGRATS, YOU WON A 1:1 TRIP + CONVERT EXPERIENCE';
   return (
     <LevelCard
       status={status}

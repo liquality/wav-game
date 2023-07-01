@@ -235,7 +235,8 @@ div:has(> .level-card) {
   min-height: 10rem;
 }
 
-.level-card--won::before {
+.level-card--won::before,
+.level-card--won.active::before {
   content: "";
   position: absolute;
   display: block;
