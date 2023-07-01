@@ -13,15 +13,13 @@ export const Level1 = (props) => {
   } = props;
   const status = getLevelsStatuses(currentLevel || 1)[1];
   const level1Count = nftCount["1"] || 0;
-  const instructions = `You have ${
+  let instructions = `You have ${
     level1Count === -1 ? 0 : level1Count
   } collectibles.`;
   let tradeActionText = "";
   let actionLocked = false;
   let lessThan2NftsAndBurnt = level1Count < 2 && burnStatus;
   let lessThan2NftsAndNeverBurnt = level1Count < 2 && !burnStatus;
-  let twoOrMoreNftsAndNeverBurnt = level1Count >= 2 && !burnStatus;
-  let twoOrMoreNftsAndBurnt = level1Count >= 2 && burnStatus;
 
   console.log(tradeActionText, "tradeaction text");
   if (level1Count >= 2) {
@@ -30,6 +28,10 @@ export const Level1 = (props) => {
     } else {
       tradeActionText = "Start Trading";
     }
+  }
+
+  if(level1Count === 1) {
+    instructions = 'You have 1 collectible. Buy 1 more to continue';
   }
 
   if (
