@@ -80,6 +80,7 @@ export const Level1 = (props) => {
         title: "Game Collectible",
         edition: "",
         instructions,
+        useEmtpyActionsStyle: false
       }}
     />
   );

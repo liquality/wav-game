@@ -30,6 +30,7 @@ export const Level4 = (props) => {
   instructions = `You have ${
     level4Count === -1 ? 0 : level4Count
   } collectibles.`;
+  let useEmtpyActionsStyle = false;
 
   const {earlyBirdCount, isEarlyBird} = useEarlyBirdInfo(currentGame.game_symbol_id, 4);
 
@@ -64,6 +65,7 @@ export const Level4 = (props) => {
   }
 
   if (!applyCountDown()) {
+    useEmtpyActionsStyle = true;
     if (level4Count < 2) {
       if (level4Count === 0) {
         instructions = "You need 2 Artist collectibles to trade for this.";
@@ -118,6 +120,7 @@ export const Level4 = (props) => {
         title,
         edition,
         instructions,
+        useEmtpyActionsStyle
       }}
     />
   );

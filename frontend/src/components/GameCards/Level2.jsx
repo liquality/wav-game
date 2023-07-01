@@ -69,6 +69,7 @@ export const Level2 = (props) => {
         title: "Get 1 top live song",
         edition: "",
         instructions,
+        useEmtpyActionsStyle: false
       }}
     />
   );
