@@ -66,20 +66,29 @@ export const Level4 = (props) => {
 
   if (!applyCountDown()) {
     useEmtpyActionsStyle = true;
+    
     if (level4Count < 2) {
       if (level4Count === 0) {
+        // UC 1 - user has 0 NFT in that level, then show copytext 'You need 2 Artist collectibles to trade for this.' - no button. card color depending if it is [completed], or [next] level.
         instructions = "You need 2 Artist collectibles to trade for this.";
-        tradeActionText = "Level locked";
-        actionLocked = true;
-        actionDisabled = true;
+        noActions = true;
       } else {
         instructions = `You have ${level4Count === -1 ? 0 : level4Count
           } collectibles. Get 1 more to trade for next level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }
+    } else {
+      // UC 4 - user has >/= 2 NFTs and burnt before show button 'Trade more'. card color depending if it is [completed], [active], or [next] level.
+      if (burnStatus) {
+        tradeActionText = "Trade More";
+      } else {
+        // UC 3 - user has >/= 2 NFTs and never burnt before show button 'Trade now'. card color depending if it is [completed], [active], or [next] level.
+        tradeActionText = "Trade now";
+      }
     }
 
+    
     console.log('Early bird limit of level 4 => ', earlyBirdLimit);
     if (earlyBirdLimit > 0) {
       // #DWAV-190 
