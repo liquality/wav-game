@@ -11,7 +11,6 @@ export const ProcessingTrade = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       if (txStatus.submited && txStatus.approval) {
-        console.log("INSIDE TRADE SUCCESS");
         setTimeout(function () {
           setContent("tradeSuccess");
           setHeaderText("Your Collectible");
@@ -23,8 +22,6 @@ export const ProcessingTrade = (props) => {
 
     return () => {};
   }, [txStatus]);
-
-  console.log(txStatus, "txstatuus?");
 
   return (
     <div className="contentView flex">

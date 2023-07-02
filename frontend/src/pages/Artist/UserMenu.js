@@ -37,7 +37,7 @@ const UserMenu = ({
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        console.log("Text copied to clipboard: ", text);
+        //("Text copied to clipboard: ", text);
       })
       .catch((error) => {
         console.error("Failed to copy text: ", error);
@@ -81,7 +81,8 @@ const UserMenu = ({
       if (
         wrapperRef &&
         wrapperRef.current &&
-        !wrapperRef.current.contains(event.target)
+        !wrapperRef.current.contains(event.target) &&
+        event.type === "mousedown"
       ) {
         onClose();
       }
@@ -126,10 +127,10 @@ const UserMenu = ({
         return (
           <div key={index} className="pr-5 mt-3">
             <button
-              className="pl-3 pb-3 userMenuText"
+              className="pl-3 pb-2 userMenuText"
               onClick={() => handleGameSelected(game)}
             >
-              Game: {game.artist_name}
+              {game.artist_name.toUpperCase()}
             </button>
           </div>
         );
@@ -144,14 +145,15 @@ const UserMenu = ({
   return (
     <ul
       ref={wrapperRef}
-      className="flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700"
+      className="relative flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700"
     >
       <button onClick={() => setUserMenuOpen(!isOpen)}>
         {user?.avatar ? <AvatarComponent avatar={user.avatar} /> : null}
       </button>
       {isOpen && (
         <div
-          className="absolute right-24 w-64 h-418   z-9999 userMenuDiv"
+          style={{ zIndex: 10000, right: 18 }}
+          className="absolute  w-64 h-418   z-9999 userMenuDiv"
         >
           <b>
             <p className="pl-3 pt-4 userMenuText">Hello {user?.username}</p>
@@ -165,7 +167,7 @@ const UserMenu = ({
           <div style={{ width: "100%" }} className="line"></div>
 
           {renderNumberOfActiveGames()}
-          <div style={{ width: "100%" }} className="line"></div>
+          <div style={{ width: "100%" }} className="line mt-2"></div>
           <button
             className="pl-3 pt-4 userMenuText"
             onClick={() => handleChooseNewArtist()}

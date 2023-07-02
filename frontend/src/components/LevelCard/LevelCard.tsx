@@ -36,6 +36,9 @@ interface Level {
    * The level instructions
    */
   instructions: string;
+
+  useEmtpyActionsStyle?: boolean;
+
 }
 
 interface CardProps {
@@ -63,6 +66,10 @@ interface CardProps {
    * Set the current level temporary
    */
   setLevel?: (level?: number) => void;
+
+  earlyBirdCount: number;
+
+  earlyBirdLimit: number;
 }
 
 /**
@@ -76,7 +83,7 @@ export const LevelCard = ({
   const {
     setLevel,
     current,
-    level: { edition, title, instructions, id },
+    level: { edition, title, instructions, id, useEmtpyActionsStyle }
   } = props;
   const active = current === id;
   const handleActionClick = (action: LevelActionProps) => {
@@ -92,6 +99,7 @@ export const LevelCard = ({
         "level-card flex flex-col justify-between": true,
         [`level-card--display--${current}--${id}`]: true,
         [`level-card--${status}`]: true,
+        [`level-card--6`]: id === 6,
         active,
       })}
     >
@@ -106,9 +114,8 @@ export const LevelCard = ({
       <div className="flex flex-col justify-between">
         <div
           className={classNames({
-            "level-card-instructions-empty-actions":
-              !actions || actions.length <= 0,
-            "level-card-instructions": true,
+            "level-card-instructions-empty-actions": !useEmtpyActionsStyle && (!actions || actions.length <= 0),
+            "level-card-instructions": !useEmtpyActionsStyle,
             active,
           })}
         >

@@ -20,3 +20,19 @@ VALUES(5, '2023-06-24 17:52:47', 432000000); -- 5 days
 -- level 6
 INSERT INTO `level_setting` (`level`, `countdown_start_at`, `countdown_ends`)
 VALUES(6, '2023-06-24 17:52:47', 604800000); -- 7 days
+
+-- claim amount
+ALTER TABLE `level_setting`
+ADD COLUMN `claim_amount` INT(11) NOT NULL DEFAULT(0) AFTER `countdown_ends`;
+
+UPDATE `level_setting`
+SET `claim_amount` = 20
+WHERE `level`  = 4;
+
+UPDATE `level_setting`
+SET `claim_amount` = 10
+WHERE `level`  = 5;
+
+UPDATE `level_setting`
+SET `claim_amount` = 1
+WHERE `level`  = 6;

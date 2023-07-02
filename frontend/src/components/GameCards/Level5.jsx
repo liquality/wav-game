@@ -1,5 +1,6 @@
 import { LevelCard } from "../LevelCard/LevelCard";
 import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
+import { useEarlyBirdInfo } from "../../hooks/useEarlyBirdCount";
 
 export const Level5 = (props) => {
   const {
@@ -10,6 +11,7 @@ export const Level5 = (props) => {
     onTradeClick,
     nftCount,
     burnStatus,
+    currentGame,
   } = props;
   const level5Count = nftCount["5"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[5];
@@ -20,6 +22,10 @@ export const Level5 = (props) => {
   let noActions = false;
   let actionLocked = false;
   let title = "Get 1 custom-made song";
+  let earlyBirdLimit = levelSettings?.claim_amount || 0;
+  let useEmtpyActionsStyle = false;
+
+  const {earlyBirdCount, isEarlyBird} = useEarlyBirdInfo(currentGame.game_symbol_id, 5);
 
   // count down
   function applyCountDown() {
@@ -52,6 +58,7 @@ export const Level5 = (props) => {
   }
 
   if (!applyCountDown()) {
+    useEmtpyActionsStyle = true;
     if (level5Count < 2) {
       if (level5Count === 0) {
         instructions = "You need 2 physical items to trade for this.";
@@ -59,26 +66,38 @@ export const Level5 = (props) => {
         actionLocked = true;
         actionDisabled = true;
       } else {
-        instructions = `You have ${
-          level5Count === -1 ? 0 : level5Count
-        } collectibles. Get 1 more to trade for next level.`;
+        instructions = `You have ${level5Count === -1 ? 0 : level5Count
+          } collectibles. Get 1 more to trade for next level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }
     }
+
+    // #DWAV-190 
+      /**
+      - add counter:: [n]/20 claimed
+      - when max number is reached, switch title to:: All custom made songs claimed
+      - when max number is reached, switch counter to:: Keep playing for other rewards.
+      */
+      if (earlyBirdCount < earlyBirdLimit) {
+        edition = `${earlyBirdCount || 0}/${earlyBirdLimit} CLAIMED`;
+      } else {
+        title = 'All custom made songs claimed';
+        edition = 'Keep playing for other rewards';
+      }
   }
 
   const actions = noActions
     ? []
     : [
-        {
-          onActionClick: (level) => onTradeClick(level),
-          label: tradeActionText,
-          mode: actionLocked ? "pinkStroke" : "default",
-          disabled: actionDisabled,
-          useIcon: actionDisabled,
-        },
-      ];
+      {
+        onActionClick: (level) => onTradeClick(level),
+        label: tradeActionText,
+        mode: actionLocked ? "pinkStroke" : "default",
+        disabled: actionDisabled,
+        useIcon: actionDisabled,
+      },
+    ];
 
   return (
     <LevelCard
@@ -91,6 +110,7 @@ export const Level5 = (props) => {
         title,
         edition,
         instructions,
+        useEmtpyActionsStyle
       }}
     />
   );

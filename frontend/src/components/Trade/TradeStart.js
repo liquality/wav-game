@@ -1,6 +1,7 @@
 import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import CustomButton from "../Button";
+import { DataContext } from "../../DataContext";
 import {
   CHAIN_ID,
   WAV_NFT_ADDRESS,
@@ -13,26 +14,34 @@ import {
   getPublicKey,
 } from "../../utils";
 import { NftService, TransactionService } from "@liquality/wallet-sdk";
+import ContractService from "../../services/ContractService";
 import UserService from "../../services/UserService";
 
 const subtitleText = {
-  1: { from: 'Trade 2 Live Songs', to: 'Get 1 Top Live Song' },
-  2: { from: 'Trade 2 Top Live Songs', to: 'Get 1 Unreleased Song + Listening Room' },
+  1: { from: "Trade 2 Live Songs", to: "Get 1 Top Live Song" },
+  2: {
+    from: "Trade 2 Top Live Songs",
+    to: "Get 1 Unreleased Song + Listening Room",
+  },
   3: {
-    from: 'Trade 2 Unreleased Songs', to: 'Get 1 Limited Physical Item',
-    claimed: 'All of this level\'s prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.'
+    from: "Trade 2 Unreleased Songs",
+    to: "Get 1 Limited Physical Item",
+    claimed:
+      "All of this level's prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.",
   },
   4: {
-    from: 'Trade 2 Physical Items', to: 'Get 1 Unreleased Track Performance or Listening Party',
-    claimed: 'All of this level\'s prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.'
+    from: "Trade 2 Physical Items",
+    to: "Get 1 Unreleased Track Performance or Listening Party",
+    claimed:
+      "All of this level's prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.",
   },
   5: {
-    from: 'Trade 2 Unreleased Track Performances', to: 'Your Chance to Win',
-    claimed: 'A winner for the 1-on-1 trip + concert has been claimed already! Keep trading for your chance to win the full set holder reward.'
+    from: "Trade 2 Unreleased Track Performances",
+    to: "Your Chance to Win",
+    claimed:
+      "A winner for the 1-on-1 trip + concert has been claimed already! Keep trading for your chance to win the full set holder reward.",
   },
-
-}
-
+};
 
 export const TradeStart = (props) => {
   const {
@@ -44,20 +53,24 @@ export const TradeStart = (props) => {
     level,
     txStatus,
   } = props;
+  
+  const toLevel = level + 1;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
-  const [fromSubtitle, setFromSubtitle] = useState('');
-  const [toSubtitle, setToSubtitle] = useState('');
-  const [burnStatus, setBurnStatus] = useState(false);
+  const [fromSubtitle, setFromSubtitle] = useState("");
+  const [toSubtitle, setToSubtitle] = useState("");
+  const [earlyBirdOpen, setEarlyBirdOpen] = useState(false);
 
+  const subtitles = subtitleText[level];
   const getArtist = async () => {
     const artist = await getGameIdBasedOnHref();
     return artist;
   };
 
   useEffect(() => {
+
     const fetchGameByUserIdAndArtistId = async () => {
       const artist = await getArtist();
       try {
@@ -82,7 +95,7 @@ export const TradeStart = (props) => {
     const init = async () => {
       if (userNfts) {
         const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(level);
-        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(level + 1);
+        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(toLevel);
         setTokenIdForNewLevel(_tokenIdForNewLevel);
         setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
       }
@@ -93,25 +106,21 @@ export const TradeStart = (props) => {
       }
 
       if (game) {
-        const _burnStatus = await UserService.getLevelBurnStatus(
-          game.game_symbol_id,
-          level,
-          getPublicKey()
-        );
-
-        setBurnStatus(_burnStatus);
+        const _earlyBirdOpen =
+          await ContractService.canBecomeEarlyBirdCollector(
+            game.game_symbol_id,
+            toLevel
+          );
+        setEarlyBirdOpen(_earlyBirdOpen);
       }
     };
 
-    const subtitles = subtitleText[level];
-    if (burnStatus) {
-      setFromSubtitle(subtitles.claimed);
+    if (earlyBirdOpen) {
+      setToSubtitle(subtitles.to);
     } else {
-
-      setFromSubtitle(subtitles.from);
+      setToSubtitle(subtitles.claimed || subtitles.to);
     }
-    setToSubtitle(subtitles.to);
-
+    setFromSubtitle(subtitles.from);
 
     init();
   }, [
@@ -121,7 +130,7 @@ export const TradeStart = (props) => {
     tokenIdForCurrentLevel,
     level,
     txStatus,
-    burnStatus
+    earlyBirdOpen,
   ]);
 
   //LVL UP: A trade makes a player level up both in contract & in db
@@ -139,6 +148,7 @@ export const TradeStart = (props) => {
         WAV_PROXY_ADDRESS,
         CHAIN_ID
       );
+      console.log(approved, "approved bä");
 
       if (!approved) {
         const approvalTx =
@@ -146,12 +156,14 @@ export const TradeStart = (props) => {
             WAV_PROXY_ADDRESS,
             true
           );
+
         await TransactionService.sendGaslessly(
           WAV_NFT_ADDRESS,
           approvalTx.data,
           privateKey,
           CHAIN_ID
         );
+        console.log(approvalTx, "approval tx bä");
       }
       setTxStatus({
         txHash: null,
@@ -163,6 +175,7 @@ export const TradeStart = (props) => {
         artist?.number_id,
         level + 1
       );
+      console.log(levelUpTx, "levelupTx bä");
 
       let txHashLevelUp = await TransactionService.sendGaslessly(
         WAV_PROXY_ADDRESS,
@@ -170,6 +183,8 @@ export const TradeStart = (props) => {
         privateKey,
         CHAIN_ID
       );
+      console.log(txHashLevelUp, "levelupTx HASH bä");
+
       setTxStatus({
         txHash: txHashLevelUp,
         submited: true,
@@ -186,11 +201,11 @@ export const TradeStart = (props) => {
   };
 
   return (
-    <div className="contentView flex justify-around">
-      <div className="p-4 ml-5 flexDirectionRow ">
-        <div>
+    <div className="contentView flex justify-around container">
+      <div className="p-4 flexDirectionRow">
+        <div className="">
           {" "}
-          <div className="flexDirectionRow">
+          <div className="grid grid-cols-3">
             <div className="flexDirectionColumn">
               <p className="webfont coral text-2xl">Level {level}</p>
               <p className=" mb-3">{fromSubtitle}</p>
@@ -200,12 +215,12 @@ export const TradeStart = (props) => {
               {tokenIdForCurrentLevel ? (
                 <div className="flexDirectionRow">
                   <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
                     className="mr-1 nftPreviewTrade "
                     alt="NFT Preview"
                   />
                   <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
                     className="mr-1 nftPreviewTrade "
                     alt="NFT Preview"
                   />
@@ -230,12 +245,12 @@ export const TradeStart = (props) => {
               <DoubleArrow className="m-auto" />
             </div>
             <div className="pr-5 flexDirectionColumn ">
-              <p className="webfont coral text-2xl">Level {level + 1}</p>
+              <p className="webfont coral text-2xl">Level {toLevel}</p>
               <p className="mb-3">{toSubtitle}</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (
                 <img
-                  src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
+                  src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.svg`}
                   className="nftBigPreviewTrade"
                   alt="NFT Preview"
                 />

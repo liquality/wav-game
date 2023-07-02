@@ -5,7 +5,8 @@ var Burn = require("../classes/Burn");
 var ApiError = require("../classes/ApiError");
 const { helperFindArtistNumberIdByTokenId } = require("../helper");
 const LevelSetting = require("../classes/LevelSetting");
-const {getBurnStatus} = require("../services/contractService")
+const { getBurnStatus } = require("../services/contractService");
+const websocketService = require("../services/WebsocketService");
 
 var gameHandler = {};
 
@@ -95,10 +96,11 @@ gameHandler.update = function (req, res) {
   var game = new Game();
   game.set(req.body);
   const userid = Number(req.params.userid);
-  const userIdFromSession = req.user.id;
-  if (userid == userIdFromSession) {
+  //const userIdFromSession = req.user.id;
+  if (userid) {
     game.update().then(
       (game) => {
+        console.log(game, "successfully updated game");
         res.status(200).send(game);
       },
       (reject) => {
@@ -137,10 +139,31 @@ gameHandler.delete = function (req, res) {
 
 gameHandler.webhook = async function (req, res) {
   console.log(req.body, "req body???");
-  const { status, tokenIds } = req.body;
+
+  const { status, tokenIds, passThroughArgs, walletAddress, txId } = req.body;
+  console.log(passThroughArgs, "PASS THRY ARYGS");
+  const argsDeserialized = JSON.parse(passThroughArgs);
+  const argsDeseralisedSecond = JSON.parse(argsDeserialized);
+  const argsDeseralisedThird = JSON.parse(argsDeseralisedSecond);
+
+  console.log(
+    argsDeserialized,
+    "decentralized",
+    typeof argsDeseralisedSecond,
+    typeof argsDeseralisedThird,
+    argsDeseralisedThird
+  );
+  const userId = argsDeseralisedThird.id;
+  console.log(userId, "USERID??");
   if (status === "success") {
-    const artistNumberId = await helperFindArtistNumberIdByTokenId(tokenIds);
-    console.log(artistNumberId, "artist nr id");
+    websocketService.send([userId], "crossmint_success", {
+      tokenId: tokenIds,
+      status,
+      walletAddress,
+      txId,
+    });
+
+    res.status(200).send({});
   } else {
     res.status(400).send(new ApiError(400, reason));
   }
@@ -159,59 +182,69 @@ gameHandler.getLevelSettings = async function (req, res) {
 
 gameHandler.getBurnStatus = async function (req, res) {
   const { gameId, levelId, userAddress } = req.params;
-  console.log("Params ==> ", { gameId, levelId, userAddress } );
   // Check DB for burn status
   try {
-    
     var burn = new Burn();
-    const burnRecord = await burn.getLevelBurnStatus(gameId, levelId, userAddress)
+    const burnRecord = await burn.getLevelBurnStatus(
+      gameId,
+      levelId,
+      userAddress
+    );
     if (!burnRecord.status) {
-      console.log("after lookUp > burnRecord not seen ")
+      //("after lookUp > burnRecord not seen ")
       try {
-        const {status, lastBlock} = await getBurnStatus(gameId, levelId, userAddress, burnRecord.last_block)
+        const { status, lastBlock } = await getBurnStatus(
+          gameId,
+          levelId,
+          userAddress,
+          burnRecord.last_block
+        );
         // Save to DB => Update last block_number and new burn status
-        burn.set({status, lastBlock, 
+        burn.set({
+          status,
+          lastBlock,
           userAddress: userAddress,
           levelId: levelId,
-          gameId
-        })
-        console.log("after lookUp > burnRecord not seen ", lastBlock)
-        await burn.updateLevelBurnStatus()
-        console.log("after lookUp > burnRecord not seen; after db update ")
+          gameId,
+        });
+        //("after lookUp > burnRecord not seen ", lastBlock)
+        await burn.updateLevelBurnStatus();
+        //("after lookUp > burnRecord not seen; after db update ")
         return res.status(200).send(status);
       } catch (error) {
-        console.log("after lookUp > burnRecord not seen ", error)
-        return res.status(400).send(new ApiError(400, error.message+"--"));
+        console.log("after lookUp > burnRecord not seen ", error);
+        return res.status(400).send(new ApiError(400, error.message + "--"));
       }
     }
-    console.log("after lookUp > burnRecord saw ", burnRecord.status)
-    return res.status(200).send((burnRecord.status == 1) ? true : false );
+    //("after lookUp > burnRecord saw ", burnRecord.status)
+    return res.status(200).send(burnRecord.status == 1 ? true : false);
   } catch (error) {
     if (error.ApiErrorcode == 404) {
       // Query chain event
       try {
-        console.log("beforw getBurnStatus")
-        console.log('really cam e here');
-        const {status, lastBlock} = await getBurnStatus(gameId, levelId, userAddress, 0);
-        
-        console.log("after getBurnStatus > ", lastBlock)
+        const { status, lastBlock } = await getBurnStatus(
+          gameId,
+          levelId,
+          userAddress,
+          0
+        );
+
+        //("after getBurnStatus > ", lastBlock)
         // Save to DB => Update last block_number and new burn status
-        burn.status = status
-        burn.lastBlock = lastBlock
-        burn.userAddress = userAddress
-        burn.levelId = levelId
-        burn.gameId = gameId
-        console.log("before createLevelBurnStatus")
-        await burn.createLevelBurnStatus()
-        console.log("after createLevelBurnStatus")
+        burn.status = status;
+        burn.lastBlock = lastBlock;
+        burn.userAddress = userAddress;
+        burn.levelId = levelId;
+        burn.gameId = gameId;
+        //("before createLevelBurnStatus")
+        await burn.createLevelBurnStatus();
         return res.status(200).send(status);
       } catch (error) {
-        return res.status(400).send(new ApiError(400, error.message+"---"));
+        return res.status(400).send(new ApiError(400, error.message + "---"));
       }
     }
-    return res.status(400).send(new ApiError(400, error.message+"----"));
+    return res.status(400).send(new ApiError(400, error.message + "----"));
   }
 };
-
 
 module.exports = gameHandler;

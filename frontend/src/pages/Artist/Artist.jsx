@@ -6,7 +6,6 @@ import { TradeModal } from "../../components/Trade/TradeModal";
 import { GameCards } from "../../components/GameCards/GameCards";
 import { GameTabs } from "../../components/GameTabs/GameTabs";
 import Leaderboard from "./Leaderboard";
-import { ReactComponent as RewardsTout } from "../../images/rewards_tout.svg";
 import { ReactComponent as FullSetBannerWinner } from "../../images/winner_full_set_holder.svg";
 import { ReactComponent as FullSetBannerNotEligable } from "../../images/full_set_banner_not_eligable.svg";
 
@@ -25,6 +24,7 @@ import { DataContext } from "../../DataContext";
 import { SpinningLoader } from "../../components/SpinningLoader";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "../../data/contract_data";
+import websocketService from "../../services/Websocket/WebsocketService";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -36,6 +36,7 @@ export const Artist = (props) => {
   const [currentGame, setCurrentGame] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(1);
   const [tradeLevel, setTradeLevel] = useState(1);
+
   const {
     nfts,
     nftCount,
@@ -45,6 +46,7 @@ export const Artist = (props) => {
     collectibleCount,
     setCollectibleCount,
     setCurrentLevel,
+    setGetMoreLevel,
     setUserIsFullSetHolder,
     userIsFullSetHolder,
   } = useContext(DataContext);
@@ -93,6 +95,7 @@ export const Artist = (props) => {
   const onGetMoreClick = (level) => {
     console.log("onGetMoreClick", level, artist);
     setSelectedArtist(artist);
+    setGetMoreLevel(level);
     setChooseArtistView("gameIncentives");
     setShowPickArtistModal(true);
   };
@@ -126,6 +129,7 @@ export const Artist = (props) => {
         setCurrentLevel(_currentLevel.currentLevel);
         setNfts(nftData);
         setUserIsFullSetHolder(isFullSetHolder);
+        websocketService.connect(fetchSession().id);
       }
     };
     fetchData();
@@ -167,6 +171,7 @@ export const Artist = (props) => {
                   currentLevel={currentLevel}
                 />
                 <GameCards
+                  userIsFullSetHolder={userIsFullSetHolder}
                   onTradeClick={onTradeClick}
                   onGetMoreClick={onGetMoreClick}
                   onLevelSelected={onLevelSelected}
@@ -190,6 +195,8 @@ export const Artist = (props) => {
                   setShowSendModal={setShowSend}
                   artist={artist}
                   nftCount={nftCount}
+                  currentLevel={currentLevel}
+                  currentGame={currentGame}
                 />
                 <Faq />{" "}
               </div>

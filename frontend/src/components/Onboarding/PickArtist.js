@@ -3,8 +3,9 @@ import UserService from "../../services/UserService";
 import { ArtistGrid } from "../ArtistGrid";
 import { Button } from "../Button/Button";
 import StaticDataService from "../../services/StaticDataService";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DataContext } from "../../DataContext";
 export const PickArtist = (props) => {
   const {
     type,
@@ -19,6 +20,7 @@ export const PickArtist = (props) => {
   const [games, setGames] = useState([]);
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const navigate = useNavigate();
+  const { setNfts, setNftCount } = useContext(DataContext);
 
   async function createGame() {
     try {
@@ -80,6 +82,7 @@ export const PickArtist = (props) => {
     setShouldNavigate(_navigate);
 
     if (game) {
+      setNfts(null);
       navigate(`/artist/${game.artist_name}`);
     }
   };

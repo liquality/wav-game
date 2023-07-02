@@ -62,6 +62,7 @@ export const Level3 = (props) => {
         title: "Get 1 unreleased song",
         edition: "",
         instructions,
+        useEmtpyActionsStyle: false
       }}
     />
   );

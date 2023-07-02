@@ -22,7 +22,6 @@ import { getGameIdBasedOnHref } from "./utils";
 
 function App() {
   setupSDK();
-  console.log("Starting app..");
   const [showPickArtistModal, setShowPickArtistModal] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
@@ -33,6 +32,18 @@ function App() {
   const [collectibleCount, setCollectibleCount] = useState(0);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [userIsFullSetHolder, setUserIsFullSetHolder] = useState(null);
+  const [levelSettings, setLevelSettings] = useState({});
+  const [getMoreLevel, setGetMoreLevel] = useState(1);
+
+  async function getLevelSettings() {
+    try {
+      const token = fetchSession()?.token;
+      return await UserService.getLevelSettings(token);
+    } catch (error) {
+      console.error(error);
+      return {};
+    }
+  }
 
   const fetchNfts = async (address, chainId) => {
     const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
@@ -65,9 +76,13 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+
       const user = await fetchUser();
       setUser(user);
-      setLoading(false);
+
+      const settings = await getLevelSettings();
+      console.log('settings', settings)
+      setLevelSettings(settings);
 
       const _artist = await fetchArtist();
 
@@ -84,11 +99,14 @@ function App() {
 
         const isFullSetHolder = await checkIfFullSetHolder(_artist?.number_id);
         setUserIsFullSetHolder(isFullSetHolder);
+
       }
+
+      setLoading(false);
     };
 
     fetchData();
-    return () => {};
+    return () => { };
   }, [nfts, nftCount]);
 
   return (
@@ -113,6 +131,9 @@ function App() {
           currentLevel: currentLevel,
           setUserIsFullSetHolder,
           userIsFullSetHolder,
+          levelSettings,
+          getMoreLevel, 
+          setGetMoreLevel
         }}
       >
         {" "}

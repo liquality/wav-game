@@ -1,5 +1,7 @@
 var mysql = require("mysql2");
 var config = require("./config.json");
+var dotenv = require("dotenv")
+dotenv.config();
 
 const mysqlConfig = !process.env.MYSQLDATABASE
   ? config.database_connection
@@ -9,9 +11,8 @@ const mysqlConfig = !process.env.MYSQLDATABASE
       database: process.env.MYSQLDATABASE,
       password: process.env.MYSQLPASSWORD,
       port: process.env.MYSQLPORT,
+      ...(process.env.SOCKETPATH && {socketPath: process.env.SOCKETPATH})
     };
-
-console.log(mysqlConfig);
 
 var pool = mysql.createPool(mysqlConfig);
 

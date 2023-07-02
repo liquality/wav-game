@@ -27,12 +27,15 @@ contract WavGame is
 
     uint256 public feePerMint; // In wei
     uint256 internal constant ENTRY_LEVEL = 1;
+    uint256 internal constant HIGHEST_LEVEL = 6;
     IWavNFT public wavNFT;
 
     uint256[] public artistIDs;
     mapping(uint256 => uint256) public availablePayments;
+    
     mapping(uint256 => ArtistGame) internal wavGames;
-    mapping(uint256 => mapping(uint256 => EnumerableSetUpgradeable.AddressSet)) internal collectors; // Collectors per levels per game
+    mapping(uint256 => mapping(uint256 => EnumerableSetUpgradeable.AddressSet)) internal collectors; // Collectors per levels per game except highest level
+    address public highestLevelCollector; // Collector for highest level
 
     event LeveledUp(
         uint256 indexed artistID,
@@ -56,6 +59,7 @@ contract WavGame is
     error ParametersMisMatch();
     error PaymentRequired();
     error LevelNotFound();
+    error TooManyLevels();
     error WavNftNotSet();
     error AmountCannotBeZero();
     error RequiredBurnNotMet(uint8 requiredBurn);
@@ -66,7 +70,6 @@ contract WavGame is
         }
         _;
     }
-
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
@@ -113,7 +116,7 @@ contract WavGame is
         uint256 _artistID,
         uint256 _newLevelID
     ) external override whenNotPaused nonReentrant onlyValidLevel(_artistID, _newLevelID) {
-        if (_newLevelID <= ENTRY_LEVEL) {
+        if (_newLevelID <= ENTRY_LEVEL || _newLevelID > HIGHEST_LEVEL) {
             revert InvalidNextLevel();
         }
         IWavGame.Level memory newLevel = wavGames[_artistID].levels[Helper.getLevelIndex(_newLevelID)];
@@ -228,7 +231,9 @@ contract WavGame is
     //This function always adds a new level to the specified artist game, only call this function when adding new levels to a given artist game
     function setArtistGame(uint256 _artistID, IWavGame.LevelParam[] calldata _levels) external onlyOwner {
         _assertValidArtistID(_artistID);
-        if (wavGames[_artistID].levels.length == 0) {
+        uint256 existingLevelCount = wavGames[_artistID].levels.length;
+        if(existingLevelCount + _levels.length > HIGHEST_LEVEL) revert TooManyLevels();
+        if (existingLevelCount == 0) {
             artistIDs.push(_artistID);
         }
         _setArtistGame(_artistID, _levels);
@@ -266,9 +271,7 @@ contract WavGame is
         if (_levelParam.burnID > 0) {
             wavGames[_artistID].levels[levelIndex].burnID = _levelParam.burnID;
         }
-        if (_levelParam.earlyBirdCutOff > 0) {
-            wavGames[_artistID].levels[levelIndex].earlyBirdCutOff = _levelParam.earlyBirdCutOff;
-        }
+        wavGames[_artistID].levels[levelIndex].earlyBirdCutOff = _levelParam.earlyBirdCutOff;
         emit LevelUpdated(_artistID, _levelID);
     }
 
@@ -288,14 +291,14 @@ contract WavGame is
         uint256 levelIndex = Helper.getLevelIndex(_levelID);
         Level memory level = wavGames[_artistID].levels[levelIndex];
         wavGames[_artistID].levels[levelIndex].mintCount += _mintCount;
-        if (
-            collectors[_artistID][_levelID].length() < level.earlyBirdCutOff &&
-            !collectors[_artistID][_levelID].contains(_recipient)
-        ) {
+        if(_levelID == HIGHEST_LEVEL){
+            if(highestLevelCollector == address(0)) highestLevelCollector = _recipient;
+        } 
+        else if (collectors[_artistID][_levelID].length() < level.earlyBirdCutOff) {
             collectors[_artistID][_levelID].add(_recipient);
         }
     }
-
+    
     function _msgSender()
         internal
         view
@@ -344,3 +347,4 @@ contract WavGame is
         }
     }
 }
+

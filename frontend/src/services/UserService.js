@@ -21,8 +21,12 @@ const UserService = {
     return NetworkService.postResourceWithAuth("/v1/game/", gameObject, jwt);
   },
 
-  updateGame: async function (gameObject, jwt) {
-    return NetworkService.putResourceWithAuth("/v1/game/", gameObject, jwt);
+  updateGame: async function (userid, gameObject, jwt) {
+    return NetworkService.putResourceWithAuth(
+      "/v1/game/" + userid,
+      gameObject,
+      jwt
+    );
   },
 
   getLeaderboardData: async function (gameID, jwt) {
@@ -48,7 +52,9 @@ const UserService = {
   },
 
   getLevelBurnStatus: async function (gameId, levelId, userAddress) {
-    return NetworkService.getResourceWithAuth(`/v1/game/burn-status/${gameId}/${levelId}/${userAddress}`);
+    return NetworkService.getResourceWithAuth(
+      `/v1/game/burn-status/${gameId}/${levelId}/${userAddress}`
+    );
   },
 };
 export default UserService;

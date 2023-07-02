@@ -32,6 +32,10 @@ export const TradeModal = (props) => {
     setLevel(level);
   };
 
+  const handleClose = () => {
+    setShow(false);
+  };
+
   useEffect(() => {
     const initializeContract = async () => {
       try {
@@ -91,6 +95,7 @@ export const TradeModal = (props) => {
           txStatus={txStatus}
           setHeaderText={setHeaderText}
           setContent={setContent}
+          handleClose={handleClose}
         />
       );
     } else return null;

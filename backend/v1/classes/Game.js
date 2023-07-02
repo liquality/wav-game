@@ -1,4 +1,5 @@
 const MySQL = require("../../MySQL");
+const websocketService = require("../services/WebsocketService");
 const ApiError = require("./ApiError");
 
 class Game {
@@ -133,7 +134,7 @@ class Game {
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
         db.query(
-          "UPDATE `game` SET status=?, user_id=?, level=?, artist_name=?, level_4_claimed_prizes=?, level_5_claimed_prizes=?, level_6_claimed_main_prize=?, claimable_prize_count=? game_symbol_id=? WHERE id=?;",
+          "UPDATE `game` SET status=?, user_id=?, level=?, artist_name=?, level_4_claimed_prizes=?, level_5_claimed_prizes=?, level_6_claimed_main_prize=?, claimable_prize_count=?, game_symbol_id=? WHERE id=?;",
           [
             game.status,
             game.user_id,
@@ -143,6 +144,7 @@ class Game {
             game.level_5_claimed_prizes,
             game.level_6_claimed_main_prize,
             game.claimable_prize_count,
+            game.game_symbol_id,
             game.id,
           ],
           (err, results, fields) => {
@@ -311,8 +313,7 @@ class Game {
       }
     });
     return promise;
-    
-  }
+  };
 
   updateLevelBurnStatus = async () => {
     const levelBurnData = this;
@@ -325,7 +326,7 @@ class Game {
             levelBurnData.lastBlock,
             levelBurnData.userAddress,
             levelBurnData.levelId,
-            levelBurnData.gameId
+            levelBurnData.gameId,
           ],
           (err, results, fields) => {
             if (err) {

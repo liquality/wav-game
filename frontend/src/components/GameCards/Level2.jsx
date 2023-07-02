@@ -57,6 +57,7 @@ export const Level2 = (props) => {
       useIcon: actionDisbled,
     });
   }
+  
 
   return (
     <LevelCard
@@ -69,6 +70,7 @@ export const Level2 = (props) => {
         title: "Get 1 top live song",
         edition: "",
         instructions,
+        useEmtpyActionsStyle: false
       }}
     />
   );
