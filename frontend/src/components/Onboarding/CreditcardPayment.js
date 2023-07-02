@@ -1,10 +1,12 @@
 import { ReactComponent as NftTiles } from "../../images/OneNftTile.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 import { fetchSession, getPublicKey } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { messageTypes } from "../../services/Websocket/MessageHandler";
 import eventBus from "../../services/Websocket/EventBus";
+import StaticDataService from "../../services/StaticDataService";
+import { DataContext } from "../../DataContext";
 
 export const CreditcardPayment = (props) => {
   const {
@@ -14,7 +16,16 @@ export const CreditcardPayment = (props) => {
     crossmintData,
     setContent,
   } = props;
+  const { getMoreLevel } = useContext(DataContext);
+
   const [nftAmount, setNftAmount] = useState(1);
+
+  const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
+  const getWhichTokenIdForLevel = async () => {
+    const artist = await StaticDataService.findArtistById(selectedId.id);
+    let firstChar = artist.number_id.toString()[0];
+    return firstChar + 0 + getMoreLevel;
+  };
 
   const navigate = useNavigate();
 
@@ -41,6 +52,8 @@ export const CreditcardPayment = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       eventBus.on(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
+      const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel();
+      setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
     };
     fetchData();
     return () => {
@@ -62,6 +75,7 @@ export const CreditcardPayment = (props) => {
         {/* Big image container e*/}
 
         <div
+          className="relative"
           style={{
             display: "flex",
             justifyContent: "center",
@@ -72,7 +86,22 @@ export const CreditcardPayment = (props) => {
           }}
         >
           {" "}
-          <NftTiles style={{ width: "406px", height: "515px" }} />
+          {tokenIdForCurrentLevel ? (
+            <div className="absolute flexDirectionRow nft-game-incentives">
+              <img
+                src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
+                className=" absolute mr-1 nftPreviewTrade "
+                alt="NFT Preview"
+              />
+            </div>
+          ) : (
+            <NftTiles
+              style={{
+                width: "406px",
+                height: "515px",
+              }}
+            />
+          )}
         </div>
       </div>
       <div className="w-1/2 flex flex-col justify-center">

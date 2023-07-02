@@ -19,6 +19,7 @@ interface GameCardsProps {
   currentLevel: number;
 
   nftCount: any;
+  userIsFullSetHolder: boolean;
 
   /**
    * Click handler for each level
@@ -40,12 +41,11 @@ export const GameCards = (props: GameCardsProps) => {
     onGetMoreClick,
     onLevelSelected,
     nftCount,
+    userIsFullSetHolder,
   } = props;
   const [burnStatus, setBurnStatus] = useState({});
-  
-  const {
-    levelSettings,
-  } = useContext(DataContext);
+
+  const { levelSettings } = useContext(DataContext);
 
   async function onSetLevel(levelId?: number) {
     onLevelSelected(levelId || currentLevel || 1);
@@ -53,13 +53,13 @@ export const GameCards = (props: GameCardsProps) => {
 
   useEffect(() => {
     async function getBurnStatus() {
-      const _burnStatus = await [1,2,3,4,5,6].reduce(
+      const _burnStatus = await [1, 2, 3, 4, 5, 6].reduce(
         async (prev, level) => {
           const accum = await prev;
           const status = await UserService.getLevelBurnStatus(
             currentGame.game_symbol_id,
             level,
-            getPublicKey(),
+            getPublicKey()
           );
           accum[level] = status;
           return accum;
@@ -70,7 +70,6 @@ export const GameCards = (props: GameCardsProps) => {
       setBurnStatus(_burnStatus);
     }
 
-   
     getBurnStatus();
   }, [currentGame]);
 
@@ -138,6 +137,7 @@ export const GameCards = (props: GameCardsProps) => {
         currentLevel={currentLevel}
         levelSettings={levelSettings?.[6]}
         currentGame={currentGame}
+        userIsFullSetHolder={userIsFullSetHolder}
       />
     </div>
   );

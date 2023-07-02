@@ -23,7 +23,7 @@ export const Level5 = (props) => {
   let actionLocked = false;
   let title = "Get 1 custom-made song";
   let earlyBirdLimit = levelSettings?.claim_amount || 0;
-
+  let useEmtpyActionsStyle = false;
 
   const {earlyBirdCount, isEarlyBird} = useEarlyBirdInfo(currentGame.game_symbol_id, 5);
 
@@ -58,6 +58,7 @@ export const Level5 = (props) => {
   }
 
   if (!applyCountDown()) {
+    useEmtpyActionsStyle = true;
     if (level5Count < 2) {
       if (level5Count === 0) {
         instructions = "You need 2 physical items to trade for this.";
@@ -109,6 +110,7 @@ export const Level5 = (props) => {
         title,
         edition,
         instructions,
+        useEmtpyActionsStyle
       }}
     />
   );

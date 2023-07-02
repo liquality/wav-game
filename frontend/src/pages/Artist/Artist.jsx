@@ -36,6 +36,7 @@ export const Artist = (props) => {
   const [currentGame, setCurrentGame] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(1);
   const [tradeLevel, setTradeLevel] = useState(1);
+
   const {
     nfts,
     nftCount,
@@ -45,6 +46,7 @@ export const Artist = (props) => {
     collectibleCount,
     setCollectibleCount,
     setCurrentLevel,
+    setGetMoreLevel,
     setUserIsFullSetHolder,
     userIsFullSetHolder,
   } = useContext(DataContext);
@@ -93,6 +95,7 @@ export const Artist = (props) => {
   const onGetMoreClick = (level) => {
     console.log("onGetMoreClick", level, artist);
     setSelectedArtist(artist);
+    setGetMoreLevel(level);
     setChooseArtistView("gameIncentives");
     setShowPickArtistModal(true);
   };
@@ -168,6 +171,7 @@ export const Artist = (props) => {
                   currentLevel={currentLevel}
                 />
                 <GameCards
+                  userIsFullSetHolder={userIsFullSetHolder}
                   onTradeClick={onTradeClick}
                   onGetMoreClick={onGetMoreClick}
                   onLevelSelected={onLevelSelected}

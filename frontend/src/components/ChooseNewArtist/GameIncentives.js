@@ -1,7 +1,15 @@
 import CustomButton from "../Button";
 import { ReactComponent as NftTiles } from "../../images/nft_tiles.svg";
 
-export const GameIncentives = ({ selectedArtist, setContent }) => {
+export const GameIncentives = ({
+  selectedArtist,
+  setContent,
+  setHeaderText,
+}) => {
+  const handleSetContent = () => {
+    setHeaderText("Get NFTS to play");
+    setContent("creditCardPayment");
+  };
   return (
     <div className=" contentView flex">
       <div className="p-4 w-1/2 flex justify-center items-center margin-auto">
@@ -47,7 +55,7 @@ export const GameIncentives = ({ selectedArtist, setContent }) => {
           mt={"50px"}
           type="big"
           pink
-          onClick={() => setContent("creditCardPayment")}
+          onClick={() => handleSetContent()}
         >
           CONTINUE
         </CustomButton>

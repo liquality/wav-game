@@ -33,6 +33,7 @@ function App() {
   const [currentLevel, setCurrentLevel] = useState(0);
   const [userIsFullSetHolder, setUserIsFullSetHolder] = useState(null);
   const [levelSettings, setLevelSettings] = useState({});
+  const [getMoreLevel, setGetMoreLevel] = useState(1);
 
   async function getLevelSettings() {
     try {
@@ -130,7 +131,9 @@ function App() {
           currentLevel: currentLevel,
           setUserIsFullSetHolder,
           userIsFullSetHolder,
-          levelSettings
+          levelSettings,
+          getMoreLevel, 
+          setGetMoreLevel
         }}
       >
         {" "}
