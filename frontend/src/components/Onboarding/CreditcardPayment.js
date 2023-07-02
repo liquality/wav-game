@@ -16,9 +16,7 @@ export const CreditcardPayment = (props) => {
     crossmintData,
     setContent,
   } = props;
-  const {
-    getMoreLevel
-  } = useContext(DataContext);
+  const { getMoreLevel } = useContext(DataContext);
 
   const [nftAmount, setNftAmount] = useState(1);
 
@@ -77,6 +75,7 @@ export const CreditcardPayment = (props) => {
         {/* Big image container e*/}
 
         <div
+          className="relative"
           style={{
             display: "flex",
             justifyContent: "center",
@@ -88,15 +87,21 @@ export const CreditcardPayment = (props) => {
         >
           {" "}
           {tokenIdForCurrentLevel ? (
-            <div className="flexDirectionRow nft-game-incentives">
+            <div className="absolute flexDirectionRow nft-game-incentives">
               <img
                 src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
-                className="mr-1 nftPreviewTrade "
+                className=" absolute mr-1 nftPreviewTrade "
                 alt="NFT Preview"
               />
             </div>
-          ) :
-            <NftTiles style={{ width: "406px", height: "515px" }} />}
+          ) : (
+            <NftTiles
+              style={{
+                width: "406px",
+                height: "515px",
+              }}
+            />
+          )}
         </div>
       </div>
       <div className="w-1/2 flex flex-col justify-center">

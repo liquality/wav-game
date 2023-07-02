@@ -51,6 +51,7 @@ export const ChooseNewArtistModal = (props) => {
         <GameIncentives
           selectedArtist={selectedArtist}
           setContent={setChooseArtistView}
+          setHeaderText={setHeaderText}
         />
       );
     } else if (chooseArtistView === "creditCardPayment") {
