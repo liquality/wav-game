@@ -10,7 +10,7 @@ const EARLY_BIRD_COLLECTORS_MAX = {
 
 const provider = new ethers.JsonRpcProvider(process.env.REACT_APP_RPC_URL);
 
-if (fetchSession().token) {
+if (fetchSession()?.token) {
   var wavGame = new ethers.Contract(
     WAV_PROXY_ADDRESS,
     WAV_PROXY_ABI,
@@ -18,7 +18,7 @@ if (fetchSession().token) {
   );
 }
 
-if (fetchSession().token) {
+if (fetchSession()?.token) {
   var ContractService = {
     canBecomeEarlyBirdCollector: async (gameId, level) => {
       try {
