@@ -21,14 +21,14 @@ export const Level2 = (props) => {
   actionDisbled = false;
   instructions = `You have ${level2Count === -1 ? 0 : level2Count} cards.`;
   if (level2Count === 0) {
-    instructions = "Trade 2 cards from the previous level to get one of these.";
+    instructions = "Trade 2 cards from the previous level.";
     tradeActionText = "Level locked";
     actionLocked = true;
     actionDisbled = true;
   } else if (level2Count === 1) {
     instructions = `You have ${
       level2Count === -1 ? 0 : level2Count
-    } cards. Get 1 more from the previous level to get one of these.`;
+    } cards. Get 1 more from the previous level.`;
     tradeActionText = "Start Trading";
     actionDisbled = true;
   }

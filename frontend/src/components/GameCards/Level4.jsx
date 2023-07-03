@@ -75,12 +75,12 @@ export const Level4 = (props) => {
       if (level4Count === 0) {
         // UC 1 - user has 0 NFT in that level, then show copytext 'You need 2 Artist cards to trade for this.' - no button. card color depending if it is [completed], or [next] level.
         instructions =
-          "You have 0 cards. Trade 2 cards from the previous level to get one of these.";
+          "You have 0 cards. Trade 2 cards from the previous level.";
         noActions = true;
       } else {
         instructions = `You have ${
           level4Count === -1 ? 0 : level4Count
-        } cards. Get 1 more from the previous level to get one of these.`;
+        } cards. Get 1 more from the previous level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }

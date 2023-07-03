@@ -142,7 +142,7 @@ export default function Home(props) {
           <HowToPlay />
           <br></br>
         </div>
-        <div className="mt-3" style={{ width: "40%", margin: "auto" }}>
+        <div className="mt-3" style={{ width: "45%", margin: "auto" }}>
           <p className="text-s	text-center softPink">
           At each level, trade 2 cards for 1 card from the next level. Earn prizes on every level and get a reward for a full set. Be the first to Level 6 to win a trip and a 1-on-1 concert with your favorite artist.
           </p>

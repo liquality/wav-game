@@ -61,13 +61,13 @@ export const Level5 = (props) => {
     useEmtpyActionsStyle = true;
     if (level5Count < 2) {
       if (level5Count === 0) {
-        instructions = "Trade 2 cards from the previous level to get one of these.";
+        instructions = "Trade 2 cards from the previous level.";
         tradeActionText = "Level locked";
         actionLocked = true;
         actionDisabled = true;
       } else {
         instructions = `You have ${level5Count === -1 ? 0 : level5Count
-          } cards. Get 1 more from the previous level to get one of these.`;
+          } cards. Get 1 more from the previous level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }

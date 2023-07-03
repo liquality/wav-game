@@ -181,7 +181,7 @@ export const Artist = (props) => {
                   nftCount={nftCount}
                 />
               </div>
-              <div className="flex flex-col   pt-24 mt-12">
+              <div className="flex flex-col pt-12 mt-12">
                 <div className="flex flex-col justify-center items-center  mb-24 relative">
                   {userIsFullSetHolder ? (
                     <FullSetBannerWinner />
