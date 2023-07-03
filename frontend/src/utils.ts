@@ -1,8 +1,7 @@
 import { NftService, setup } from "@liquality/wallet-sdk";
 import StaticDataService from "./services/StaticDataService";
 import { ethers } from "ethers";
-import { CHAIN_ID, WAV_NFT_ABI, WAV_NFT_ADDRESS, WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "./data/contract_data";
-import { nft } from "@liquality/wallet-sdk/dist/typechain-types/contracts";
+import { CHAIN_ID, WAV_NFT_ADDRESS } from "./data/contract_data";
 
 export function setupSDK() {
     setup({
