@@ -21,7 +21,7 @@ export const Level5 = (props) => {
   let actionDisabled = false;
   let noActions = false;
   let actionLocked = false;
-  let title = "Get 1 custom-made song";
+  let title = "1 custom-made song";
   let earlyBirdLimit = levelSettings?.claim_amount || 0;
   let useEmtpyActionsStyle = false;
 
@@ -61,13 +61,13 @@ export const Level5 = (props) => {
     useEmtpyActionsStyle = true;
     if (level5Count < 2) {
       if (level5Count === 0) {
-        instructions = "You need 2 physical items to trade for this.";
+        instructions = "Trade 2 cards from the previous level to get one of these.";
         tradeActionText = "Level locked";
         actionLocked = true;
         actionDisabled = true;
       } else {
         instructions = `You have ${level5Count === -1 ? 0 : level5Count
-          } collectibles. Get 1 more to trade for next level.`;
+          } cards. Get 1 more from the previous level to get one of these.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }

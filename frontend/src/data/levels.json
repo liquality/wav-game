@@ -4,21 +4,21 @@
         "status": "completed",
         "title": "Game NFT name goes here",
         "edition": null,
-        "instructions": "You have 20 collectibles."
+        "instructions": "You have 20 cards."
     },
     {
         "id": 2,
         "status": "completed",
         "title": "Your chance to win a full set.",
         "edition": null,
-        "instructions": "You have 20 collectibles."
+        "instructions": "You have 20 cards."
     },
     {
         "id": 3,
         "status": "active",
         "title": "Get 1 Unreleased Song",
         "edition": null,
-        "instructions": "You have 1 collectible. Get 1 more from past levels to continue."
+        "instructions": "You have 1 cards. Get 1 more from past levels to continue."
     },
     {
         "id": 4,
@@ -39,6 +39,6 @@
         "status": "upcomming",
         "title": "A chance to win a 1:1 concert experience",
         "edition": null,
-        "instructions": "You need to start with 32 game collectibles."
+        "instructions": "You need to start with 32 game cards."
     }
 ]

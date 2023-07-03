@@ -20,17 +20,17 @@ export const Level4 = (props) => {
   let actionDisabled = false;
   let noActions = false;
   let edition = ""; //100/100 CLAIMED
-  let title = "Get 1 limited physical item";
+  let title = "1 limited physical item";
   actionDisabled = false;
   let actionLocked = false;
   instructions = `You have ${
     level4Count === -1 ? 0 : level4Count
-  } collectibles.`;
+  } cards.`;
 
   let earlyBirdLimit = levelSettings?.claim_amount || 0;
   instructions = `You have ${
     level4Count === -1 ? 0 : level4Count
-  } collectibles.`;
+  } cards.`;
   let useEmtpyActionsStyle = false;
 
   const { earlyBirdCount, isEarlyBird } = useEarlyBirdInfo(
@@ -73,14 +73,14 @@ export const Level4 = (props) => {
 
     if (level4Count < 2) {
       if (level4Count === 0) {
-        // UC 1 - user has 0 NFT in that level, then show copytext 'You need 2 Artist collectibles to trade for this.' - no button. card color depending if it is [completed], or [next] level.
+        // UC 1 - user has 0 NFT in that level, then show copytext 'You need 2 Artist cards to trade for this.' - no button. card color depending if it is [completed], or [next] level.
         instructions =
-          "You have 0 collectibles. You need 2 Artist collectibles to trade for this.";
+          "You have 0 cards. Trade 2 cards from the previous level to get one of these.";
         noActions = true;
       } else {
         instructions = `You have ${
           level4Count === -1 ? 0 : level4Count
-        } collectibles. Get 1 more to trade for next level.`;
+        } cards. Get 1 more from the previous level to get one of these.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }

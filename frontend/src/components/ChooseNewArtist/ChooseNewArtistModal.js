@@ -32,6 +32,7 @@ export const ChooseNewArtistModal = (props) => {
     };
 
     init();
+    
   }, []);
 
   const whichContentToRender = () => {

@@ -111,7 +111,7 @@ const Leaderboard = ({
                 scope="row"
                 className="px-6 py-4 font-medium text-white-900 whitespace-nowrap dark:text-white"
               >
-                Collectibles
+                Cards
               </th>
               <td className="px-6 py-4">
                 {nftCount?.[1] ? nftCount?.[1] : "--"}
@@ -234,7 +234,7 @@ const Leaderboard = ({
         style={showNfts ? activeToggleStyle : null}
         className="mt-3 mb-5 absolute nftsToggle"
       >
-        <button onClick={() => setShowNfts(true)}>COLLECTIBLES</button>
+        <button onClick={() => setShowNfts(true)}>CARDS</button>
       </div>
 
       <div className="mt-3 mb-5">

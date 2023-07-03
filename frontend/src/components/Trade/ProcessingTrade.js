@@ -13,7 +13,7 @@ export const ProcessingTrade = (props) => {
       if (txStatus.submited && txStatus.approval) {
         setTimeout(function () {
           setContent("tradeSuccess");
-          setHeaderText("Your Collectible");
+          setHeaderText("Your Card");
         }, 4000);
       }
     };

@@ -37,7 +37,7 @@ export const SendStart = ({
 
   const handleNewContent = () => {
     setContent("prepareSend");
-    setHeaderText("Selected Collectible");
+    setHeaderText("Selected Card");
   };
 
   return (
