@@ -1,9 +1,10 @@
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 import Tk from "../../images/artists/tk.jpg";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CustomButton from "../Button";
 import { getGameIdBasedOnHref, shortenAddress } from "../../utils";
+import { DataContext } from "../../DataContext";
 
 export const TradeSuccess = ({
   setContent,
@@ -16,6 +17,7 @@ export const TradeSuccess = ({
   const [artist, setArtist] = useState("");
   const [tokenIdForNewLevel, setTokenIdForNewLevel] = useState(null);
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
+  const { setNfts, setNftCount } = useContext(DataContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +49,15 @@ export const TradeSuccess = ({
     setContent("tradeStart");
   };
 
+  const handleCancelClick = async () => {
+    handleClose();
+    //To rerender nfts and count, set to null so useeffect hook can fetch again in parent components
+    setNfts(null);
+    setNftCount(null);
+  };
+
+  console.log(level, "level in tradesuccess BÅ");
+  console.log(txStatus, "txStatus in BÅÅ");
   let selectedNft = {};
   return (
     <div className="contentView flex justify-center">
@@ -121,7 +132,7 @@ export const TradeSuccess = ({
           <CustomButton pink type="big" onClick={tradeMore}>
             TRADE MORE
           </CustomButton>
-          <button className="ml-5 mr-5" onClick={handleClose}>
+          <button className="ml-5 mr-5" onClick={() => handleCancelClick()}>
             CANCEL
           </button>
         </div>
