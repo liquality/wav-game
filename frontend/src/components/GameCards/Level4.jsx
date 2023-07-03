@@ -23,16 +23,20 @@ export const Level4 = (props) => {
   let title = "Get 1 limited physical item";
   actionDisabled = false;
   let actionLocked = false;
-  instructions = `You have ${level4Count === -1 ? 0 : level4Count
-    } collectibles.`;
+  instructions = `You have ${
+    level4Count === -1 ? 0 : level4Count
+  } collectibles.`;
 
-  let earlyBirdLimit = levelSettings?.claim_amount || 0;;
+  let earlyBirdLimit = levelSettings?.claim_amount || 0;
   instructions = `You have ${
     level4Count === -1 ? 0 : level4Count
   } collectibles.`;
   let useEmtpyActionsStyle = false;
 
-  const {earlyBirdCount, isEarlyBird} = useEarlyBirdInfo(currentGame.game_symbol_id, 4);
+  const { earlyBirdCount, isEarlyBird } = useEarlyBirdInfo(
+    currentGame.game_symbol_id,
+    4
+  );
 
   // count down
   function applyCountDown() {
@@ -66,15 +70,17 @@ export const Level4 = (props) => {
 
   if (!applyCountDown()) {
     useEmtpyActionsStyle = true;
-    
+
     if (level4Count < 2) {
       if (level4Count === 0) {
         // UC 1 - user has 0 NFT in that level, then show copytext 'You need 2 Artist collectibles to trade for this.' - no button. card color depending if it is [completed], or [next] level.
-        instructions = "You need 2 Artist collectibles to trade for this.";
+        instructions =
+          "You have 0 collectibles. You need 2 Artist collectibles to trade for this.";
         noActions = true;
       } else {
-        instructions = `You have ${level4Count === -1 ? 0 : level4Count
-          } collectibles. Get 1 more to trade for next level.`;
+        instructions = `You have ${
+          level4Count === -1 ? 0 : level4Count
+        } collectibles. Get 1 more to trade for next level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }
@@ -88,10 +94,9 @@ export const Level4 = (props) => {
       }
     }
 
-    
-    console.log('Early bird limit of level 4 => ', earlyBirdLimit);
+    console.log("Early bird limit of level 4 => ", earlyBirdLimit);
     if (earlyBirdLimit > 0) {
-      // #DWAV-190 
+      // #DWAV-190
       /**
       - add counter:: [n]/20 claimed
       - when max number is reached, switch title to:: All physical items claimed
@@ -100,8 +105,8 @@ export const Level4 = (props) => {
       if (earlyBirdCount < earlyBirdLimit) {
         edition = `${earlyBirdCount || 0}/${earlyBirdLimit} CLAIMED`;
       } else {
-        title = 'All physical items claimed';
-        edition = 'Keep playing for other rewards';
+        title = "All physical items claimed";
+        edition = "Keep playing for other rewards";
       }
     }
   }
@@ -109,14 +114,14 @@ export const Level4 = (props) => {
   const actions = noActions
     ? []
     : [
-      {
-        onActionClick: (level) => onTradeClick(level),
-        label: tradeActionText,
-        mode: actionLocked ? "pinkStroke" : "default",
-        disabled: actionDisabled,
-        useIcon: actionDisabled,
-      },
-    ];
+        {
+          onActionClick: (level) => onTradeClick(level),
+          label: tradeActionText,
+          mode: actionLocked ? "pinkStroke" : "default",
+          disabled: actionDisabled,
+          useIcon: actionDisabled,
+        },
+      ];
 
   return (
     <LevelCard
@@ -129,7 +134,7 @@ export const Level4 = (props) => {
         title,
         edition,
         instructions,
-        useEmtpyActionsStyle
+        useEmtpyActionsStyle,
       }}
     />
   );
