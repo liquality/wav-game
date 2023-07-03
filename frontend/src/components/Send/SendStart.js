@@ -18,7 +18,7 @@ export const SendStart = ({
 
   const fetchNfts = async (address, chainId) => {
     //TODO: fetch your own public address from localstorage instead
-    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
+    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID, [process.env.REACT_APP_WAV_NFT_ADDRESS]);
     return nfts;
   };
 
