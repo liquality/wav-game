@@ -19,7 +19,13 @@ const ContractService = {
         provider
       );
 
-      const levelInfo = await wavGame.getIsland(gameId, level);
+      const levelInfo = await wavGame.getLevel(gameId, level);
+
+      const wavNft = new ethers.Contract(
+        config.wav_nft_address,
+        config.wav_nft_abi,
+        provider
+      );
 
       const eventFilter = wavNft.filters.TransferSingle(
         config.wav_proxy_address,
@@ -38,6 +44,7 @@ const ContractService = {
       var lastBlock = await provider.getBlockNumber();
       return { status: false, lastBlock };
     } catch (error) {
+      console.log('The error => ', error);
       return { status: false, lastBlock: 0 };
     }
   },
