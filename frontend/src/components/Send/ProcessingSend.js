@@ -28,6 +28,7 @@ export const ProcessingSend = (props) => {
             pk,
             true
           );
+
           if (txHash) {
             setTxStatus({ hash: txHash });
           } else {
@@ -40,7 +41,7 @@ export const ProcessingSend = (props) => {
       }
     };
     sendNft();
-  });
+  }, [content]);
 
   return (
     <div className="contentView flex">
