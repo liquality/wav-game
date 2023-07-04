@@ -1,10 +1,9 @@
-import { NftService } from "@liquality/wallet-sdk";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import CustomButton from "../Button";
 import { NftImages } from "./NftImages";
 import { SpinningLoader } from "../SpinningLoader";
-import { getPublicKey } from "../../utils";
-import { CHAIN_ID } from "../../data/contract_data";
+import { DataContext } from "../../DataContext";
+import ContractService from "../../services/ContractService";
 
 export const SendStart = ({
   selectedNft,
@@ -15,10 +14,11 @@ export const SendStart = ({
 }) => {
   const [nfts, setNfts] = useState(null);
   const [loadingNfts, setLoadingNfts] = useState(false);
+  const {selectedArtist} = useContext(DataContext);
 
   const fetchNfts = async (address, chainId) => {
     //TODO: fetch your own public address from localstorage instead
-    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID, [process.env.REACT_APP_WAV_NFT_ADDRESS]);
+    const nfts = await ContractService.getNfts(selectedArtist?.number_id);
     return nfts;
   };
 
