@@ -6,6 +6,7 @@ import {
   WAV_PROXY_ADDRESS,
 } from "../data/contract_data";
 import { fetchSession, getPrivateKey, getPublicKey } from "../utils";
+import { nft } from "@liquality/wallet-sdk/dist/typechain-types/contracts";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const EARLY_BIRD_COLLECTORS_MAX = {
@@ -14,6 +15,11 @@ const EARLY_BIRD_COLLECTORS_MAX = {
 };
 
 const provider = new ethers.JsonRpcProvider(process.env.REACT_APP_RPC_URL);
+
+const tokenIDByArtistAndLevel = (artist, level) => {
+  let firstChar = artist.toString()[0];
+  return firstChar + 0 + level;
+};
 
 if (fetchSession()?.token) {
   var wavGame = new ethers.Contract(
@@ -76,9 +82,23 @@ if (fetchSession()?.token) {
     },
 
     tokenBalance: async (tokenID) => {
-      return await wavNft.balanceOf(getPublicKey(), +tokenID);
+        return await wavNft.balanceOf(getPublicKey(), +tokenID);
     },
+
+
+    getNfts: async (artistID) => {
+      const nfts = [];
+      for(let i = 1; i < 6; i++){
+        const id = tokenIDByArtistAndLevel(artistID, i);
+        console.log('The id in getNFTS is => ',   id);
+        const balance = await wavNft.balanceOf(getPublicKey(), +id);
+        nfts.push({id,  balance: Number(balance), contract: {address: WAV_NFT_ADDRESS}});
+      }
+      return  nfts;
+    }
   };
+
+
 }
 
 export default ContractService;
