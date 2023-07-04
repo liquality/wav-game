@@ -7,11 +7,11 @@ export const GameIncentives = ({
   setHeaderText,
 }) => {
   const handleSetContent = () => {
-    setHeaderText("Get NFTS to play");
+    setHeaderText("BUY CARDS TO PLAY");
     setContent("creditCardPayment");
   };
   return (
-    <div className=" contentView flex">
+    <div className="container contentView flex">
       <div className="p-4 w-1/2 flex justify-center items-center margin-auto">
         {/* Big image container */}
 
@@ -44,11 +44,16 @@ export const GameIncentives = ({
         <p className="lineNoCenter mt-5 mb-4" style={{ width: "50%" }}></p>
 
         <p className="mb-4" style={{ width: "50%" }}>
-          To move through each level, you will need:
+          Buy cards:
         </p>
         <p className="mb-4">
-          • 4 items to get to level 3 <br></br>• 8 to level 4 <br></br>• 16 to
-          level 5 <br></br>• 32 to level 6
+          • 1 to get a live song 
+          <br></br>• 2 to trade to level 2
+          <br></br>• 32 to get to level 6 
+          <br></br>• 63 to get to an artist's full set
+        </p>
+        <p className="mb-4">
+        Level 4-6 have limited prizes, and you can always play for the full set. Once the transaction completes, close the Crossmint window to continue.
         </p>
         <p className="lineNoCenter mb-1" style={{ width: "50%" }}></p>
         <CustomButton

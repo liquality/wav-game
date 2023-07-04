@@ -46,15 +46,15 @@ export const Level6 = (props) => {
     // UC 2: User is the winner
 
     if (level6Count === 0) {
-      instructions = "You need to start with 32 Game collectibles.";
+      instructions = "You need to start with 32 Game cards.";
     } else if (level6Count === 1) {
       instructions = `You have ${
         level6Count === -1 ? 0 : level6Count
-      } collectibles. Get 1 more to trade for next level.`;
+      } cards. Get 1 more to trade for next level.`;
     } else {
       instructions = `You have ${
         level6Count === -1 ? 0 : level6Count
-      } collectibles.`;
+      } cards.`;
     }
 
     if (currentLevel === 5) {
@@ -88,7 +88,7 @@ export const Level6 = (props) => {
       // -inactive => current level === 5
       instructions = `You have ${
         level6Count === -1 ? 0 : level6Count
-      } collectibles. Hold 1 or more collectible at each level`;
+      } cards. Hold 1 or more cards at each level to become a full set holder`;
       title = "The main prize was already claimed. Go for full set holder!";
     }
   }

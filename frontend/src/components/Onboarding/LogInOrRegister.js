@@ -41,7 +41,7 @@ export const LoginOrRegister = (props) => {
                   <b>WELCOME</b>
                 </p>
                 <p className="rightSubHeadingTextSmall mt-3">
-                  Your registration creates a wallet to securely hold your collectibles.
+                  Your registration creates a wallet to securely hold your cards.
                 </p>
                 <div className="rightSubHeadingTextSmall mt-5">
                   <ul className="list">

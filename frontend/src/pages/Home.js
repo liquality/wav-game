@@ -94,15 +94,14 @@ export default function Home(props) {
       <div className="flex justify-center items-center relative">
         <HeroShape />
         <span className="absolute left-34 top-32 welcomeToWavGame">
-          Welcome to Wavgame
+          Welcome to the Wavgame
         </span>
         <div
           style={{ left: "46%", top: "65%", width: '35%' }}
           className="flex flex-wrap absolute p-3"
         >
           <p className="flex">
-            Win your favorite artists' collectibles. A fun burn-to-win on-chain
-            experience made up of 6 levels.
+            Win your favorite artists' cards. Play to connect with your favorite artists. A fun digital trading card experience made up of 6 levels.
           </p>
         </div>
         <br></br>
@@ -143,10 +142,9 @@ export default function Home(props) {
           <HowToPlay />
           <br></br>
         </div>
-        <div className="mt-3" style={{ width: "40%", margin: "auto" }}>
+        <div className="mt-3" style={{ width: "45%", margin: "auto" }}>
           <p className="text-s	text-center softPink">
-            At each level, trade 2 collectables for one. At the final level, one
-            lucky winner takes the ultimate prize from their favorite artist.
+          At each level, trade 2 cards for 1 card from the next level. Earn prizes on every level and get a reward for a full set. Be the first to Level 6 to win a trip and a 1-on-1 concert with your favorite artist.
           </p>
         </div>
 
@@ -156,7 +154,7 @@ export default function Home(props) {
             <div id="blockOne"></div>
             <div id="text">Level 1</div>
             <p className="levelCardText">
-              Buy 32 artist collectibles toward winning the main prize{" "}
+              Live song. Buy cards here any time, 32 to get to Level 6.{" "}
             </p>
             <Union className="levelCardUnion" />
             <Arrow
@@ -173,7 +171,7 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockTwo"></div>
             <div id="text">Level 2</div>
-            <p className="levelCardText">Get a top live Song</p>
+            <p className="levelCardText">Get a rare live Song.</p>
             <Notes className="levelCardSvg" />
             <Arrow
               className="levelCardSvg"
@@ -189,7 +187,7 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockThree"></div>
             <div id="text">Level 3</div>
-            <p className="levelCardText">Get an unreleased song</p>
+            <p className="levelCardText">Get an unreleased song and listening room.</p>
             <Cd className="levelCardSvg" />{" "}
             <Arrow
               className="levelCardSvg"
@@ -205,7 +203,7 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockFour"></div>
             <div id="text">Level 4</div>
-            <p className="levelCardText">Play to reveal </p>
+            <p className="levelCardText">Play to reveal prize. Only 20 available.</p>
             <Microphone className="levelCardSvg" />
             <Union className="levelCardUnion" style={{ left: "90%" }} />{" "}
             <Arrow
@@ -222,7 +220,7 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockFive"></div>
             <div id="text">Level 5</div>
-            <p className="levelCardText">Play to reveal</p>
+            <p className="levelCardText">Play to reveal prize. Only 10 available.</p>
             <Arrow
               className="levelCardSvg"
               style={{ left: "10%", bottom: "0%", top: "110%" }}
@@ -240,7 +238,7 @@ export default function Home(props) {
             <div id="blockSix"></div>
             <div id="text">Level 6</div>
             <p className="levelCardText">
-              1 WINNER gets A 1-ON- 1 TRIP & CONCERT
+              1 winner gets a trip and a 1-on-1 concert.
             </p>
             <GlitterOne
               className="levelCardSvg"
@@ -271,12 +269,12 @@ export default function Home(props) {
 
           <div style={{ left: "37%", top: "39%" }} className="absolute">
             <div className="lightCoral flex">
-            EPIC PRIZES FOR FULL SET HOLDERS
+            EPIC PRIZE FOR FULL SET HOLDERS
             </div>
           </div>
           <div style={{ left: "37%", top: "58%", width: '23rem' }} className="absolute flex w-full">
             <p className="text-xs">
-            In order to win as a full set holder, keep at least one NFT at each level. You'll need a total of 63 to start with.
+            To earn this prize, keep at least one card at each level for an artist. You'll need 63 Level 1 cards to start with.
             </p>
           </div>
         </div>
@@ -298,9 +296,7 @@ export default function Home(props) {
         </p>
         <div className="m-auto" style={{ width: "50%" }}>
           <p>
-            We believe in connecting artists with their true fans. We are a
-            community of artists, fans, founders, and devs, building and sharing
-            our experiments with the WRLD.
+          wavWRLD connects artists with their true fans. We are a community of artists, fans, founders, and devs, building and sharing our experiments with the WRLD.
           </p>
         </div>
 
@@ -339,7 +335,7 @@ export default function Home(props) {
               lineHeight: 0.6,
             }}
           >
-            Built with the <br></br> Liquality SDK
+            BUILT WITH THE <br></br> LIQUALITY WEB3 SDK
           </p>
 
           <div
@@ -356,9 +352,10 @@ export default function Home(props) {
                 lineHeight: 1.4,
               }}
             >
-              Liquality provides open-source infrastructure <br></br> legos that
-              make web3 easy for users <br></br>and developers while maintaining
-              the values of Web3.
+              Liquality offers open-source tools for developers <br></br>
+              to streamline user experience and ease the entry <br></br>
+              to the decentralized web.
+
             </p>
             <div
               style={{

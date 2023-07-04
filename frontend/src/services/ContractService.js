@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "../data/contract_data";
+import { WAV_NFT_ABI, WAV_NFT_ADDRESS, WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "../data/contract_data";
 import { fetchSession, getPrivateKey, getPublicKey } from "../utils";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -14,6 +14,12 @@ if (fetchSession()?.token) {
   var wavGame = new ethers.Contract(
     WAV_PROXY_ADDRESS,
     WAV_PROXY_ABI,
+    new ethers.Wallet(getPrivateKey(), provider)
+  );
+
+  var wavNft = new ethers.Contract(
+    WAV_NFT_ADDRESS,
+    WAV_NFT_ABI,
     new ethers.Wallet(getPrivateKey(), provider)
   );
 }
@@ -63,6 +69,11 @@ if (fetchSession()?.token) {
         console.log("error >> ", error);
       }
     },
+
+    tokenBalance: async (tokenID) => {
+      console.log('The token id   => ', tokenID);
+        return await wavNft.balanceOf(getPublicKey(), +tokenID);
+    }
   };
 }
 

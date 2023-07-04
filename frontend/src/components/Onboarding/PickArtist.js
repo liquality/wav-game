@@ -123,7 +123,7 @@ export const PickArtist = (props) => {
     } else {
       await createGame();
       setContent("creditCardPayment");
-      setHeaderText("Get Collectibles to Play");
+      setHeaderText("Get Cards to Play");
     }
   };
 

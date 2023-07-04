@@ -157,10 +157,10 @@ export const Artist = (props) => {
                   LEVEL: {currentLevel || "0"}{" "}
                 </div>
                 <div className="game-header-title">
-                  {artist?.name?.toUpperCase()}'s GAME_
+                  {artist?.name?.toUpperCase()}'s GAME
                 </div>
                 <div className="game-header-counter">
-                  COLLECTIBLES: {collectibleCount}
+                  CARDS: {collectibleCount}
                 </div>
               </div>
               <div className="flex flex-col justify-center mt-5">
@@ -181,7 +181,7 @@ export const Artist = (props) => {
                   nftCount={nftCount}
                 />
               </div>
-              <div className="flex flex-col   pt-24 mt-12">
+              <div className="flex flex-col pt-12 mt-12">
                 <div className="flex flex-col justify-center items-center  mb-24 relative">
                   {userIsFullSetHolder ? (
                     <FullSetBannerWinner />
@@ -190,6 +190,7 @@ export const Artist = (props) => {
                   )}
                 </div>
               </div>
+              
               <div className="flexDirectionCol">
                 <Leaderboard
                   setShowSendModal={setShowSend}
