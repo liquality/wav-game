@@ -48,13 +48,18 @@ export const Level6 = (props) => {
     if (level6Count === 0) {
       instructions = "You need to start with 32 Game cards.";
     } else if (level6Count === 1) {
-      instructions = `You have ${
-        level6Count === -1 ? 0 : level6Count
-      } cards. Get 1 more to trade for next level.`;
+      if (earlyBirdCount && !isEarlyBird) {
+        title = "The main prize was already claimed. Go for full set holder!";
+        instructions = `You have ${
+          level6Count === -1 ? 0 : level6Count
+        } cards.`;
+      } else if (isEarlyBird) {
+        instructions = "";
+        status = "won";
+        title = "CONGRATS, YOU WON A 1:1 TRIP + CONCERT EXPERIENCE";
+      }
     } else {
-      instructions = `You have ${
-        level6Count === -1 ? 0 : level6Count
-      } cards.`;
+      instructions = `You have ${level6Count === -1 ? 0 : level6Count} cards.`;
     }
 
     if (currentLevel === 5) {
@@ -73,6 +78,7 @@ export const Level6 = (props) => {
       instructions
     );
     if (isEarlyBird) {
+      //UC 2
       instructions = "";
       status = "won";
       title = "CONGRATS, YOU WON A 1:1 TRIP + CONCERT EXPERIENCE";
