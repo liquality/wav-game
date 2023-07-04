@@ -25,7 +25,10 @@ export const Level5 = (props) => {
   let earlyBirdLimit = levelSettings?.claim_amount || 0;
   let useEmtpyActionsStyle = false;
 
-  const {earlyBirdCount, isEarlyBird} = useEarlyBirdInfo(currentGame.game_symbol_id, 5);
+  const { earlyBirdCount, isEarlyBird } = useEarlyBirdInfo(
+    currentGame.game_symbol_id,
+    5
+  );
 
   // count down
   function applyCountDown() {
@@ -50,7 +53,8 @@ export const Level5 = (props) => {
         if (burnStatus) {
           tradeActionText = "Trade More";
         } else {
-          tradeActionText = "Start Trading";
+          tradeActionText = "Trade More";
+          instructions = `You have ${level5Count} cards.`;
         }
       }
     }
@@ -61,43 +65,45 @@ export const Level5 = (props) => {
     useEmtpyActionsStyle = true;
     if (level5Count < 2) {
       if (level5Count === 0) {
-        instructions = "Trade 2 cards from the previous level.";
+        instructions =
+          "You have 0 cards. Trade 2 cards from the previous level.";
         tradeActionText = "Level locked";
         actionLocked = true;
         actionDisabled = true;
       } else {
-        instructions = `You have ${level5Count === -1 ? 0 : level5Count
-          } cards. Get 1 more from the previous level.`;
+        instructions = `You have ${
+          level5Count === -1 ? 0 : level5Count
+        } cards. Get 1 more from the previous level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }
     }
 
-    // #DWAV-190 
-      /**
+    // #DWAV-190
+    /**
       - add counter:: [n]/20 claimed
       - when max number is reached, switch title to:: All custom made songs claimed
       - when max number is reached, switch counter to:: Keep playing for other rewards.
       */
-      if (earlyBirdCount < earlyBirdLimit) {
-        edition = `${earlyBirdCount || 0}/${earlyBirdLimit} CLAIMED`;
-      } else {
-        title = 'All custom made songs claimed';
-        edition = 'Keep playing for other rewards';
-      }
+    if (earlyBirdCount < earlyBirdLimit) {
+      edition = `${earlyBirdCount || 0}/${earlyBirdLimit} CLAIMED`;
+    } else {
+      title = "All custom made songs claimed";
+      edition = "Keep playing for other rewards";
+    }
   }
 
   const actions = noActions
     ? []
     : [
-      {
-        onActionClick: (level) => onTradeClick(level),
-        label: tradeActionText,
-        mode: actionLocked ? "pinkStroke" : "default",
-        disabled: actionDisabled,
-        useIcon: actionDisabled,
-      },
-    ];
+        {
+          onActionClick: (level) => onTradeClick(level),
+          label: tradeActionText,
+          mode: actionLocked ? "pinkStroke" : "default",
+          disabled: actionDisabled,
+          useIcon: actionDisabled,
+        },
+      ];
 
   return (
     <LevelCard
@@ -110,7 +116,7 @@ export const Level5 = (props) => {
         title,
         edition,
         instructions,
-        useEmtpyActionsStyle
+        useEmtpyActionsStyle,
       }}
     />
   );
