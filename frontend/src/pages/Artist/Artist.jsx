@@ -25,6 +25,7 @@ import { SpinningLoader } from "../../components/SpinningLoader";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "../../data/contract_data";
 import websocketService from "../../services/Websocket/WebsocketService";
+import ContractService from "../../services/ContractService";
 
 export const Artist = (props) => {
   const { artistId } = useParams();
@@ -81,11 +82,6 @@ export const Artist = (props) => {
     }
   };
 
-  const fetchNfts = async (address, chainId) => {
-    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
-    return nfts;
-  };
-
   const onTradeClick = (level) => {
     setTradeLevel(level);
     setShowTrade(true);
@@ -117,7 +113,7 @@ export const Artist = (props) => {
 
       if (!nfts && !nftCount && _artist) {
         console.log("FETCHING NFTS AGAIN! BÄ");
-        const nftData = await fetchNfts();
+        const nftData = await ContractService.getNfts(_artist.number_id);
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
         const isFullSetHolder = await checkIfFullSetHolder(_artist?.number_id);
 

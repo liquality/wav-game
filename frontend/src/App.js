@@ -20,6 +20,7 @@ import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "./data/contract_data";
 import { getGameIdBasedOnHref } from "./utils";
 import { Privacy } from "./pages/Privacy";
+import ContractService from "./services/ContractService";
 
 function App() {
   setupSDK();
@@ -45,11 +46,6 @@ function App() {
       return {};
     }
   }
-
-  const fetchNfts = async (address, chainId) => {
-    const nfts = await NftService.getNfts(getPublicKey(), CHAIN_ID);
-    return nfts;
-  };
 
   const fetchArtist = async () => {
     try {
@@ -88,7 +84,7 @@ function App() {
 
       if (!nfts && _artist?.number_id) {
         console.log("FETCHING NFTS AGAIN!");
-        const nftData = await fetchNfts();
+        const nftData = await ContractService.getNfts(_artist?.number_id);
         setNfts(nftData);
 
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
