@@ -27,7 +27,7 @@ export const CompletedPayment = ({
   }, [artist, crossmintData]);
 
   const buyMore = async () => {
-    setContent("creditcardPayment");
+    setContent("creditCardPayment");
   };
 
   let selectedNft = {};
@@ -95,16 +95,15 @@ export const CompletedPayment = ({
         <p className="lineNoCenter mt-2 " style={{ width: "50%" }}></p>
 
         <p className=" mt-24 greySmallText" style={{ width: "50%" }}>
-          Congratulations! Your collectible purchase was successfull. You can
-          now start playing the game.
+        Congratulations! Your card purchase was successful. You can now play the game.
         </p>
 
         <div className="flexDirectionRow mb-3 mt-3">
-          <CustomButton pink type="big" onClick={buyMore}>
-            BUY MORE
+          <CustomButton pink type="big" onClick={handleClose}>
+            CONTINUE 
           </CustomButton>
-          <button className="ml-5 mr-5" onClick={handleClose}>
-            CANCEL
+          <button className="ml-5 mr-5" onClick={buyMore}>
+            BUY MORE
           </button>
         </div>
       </div>

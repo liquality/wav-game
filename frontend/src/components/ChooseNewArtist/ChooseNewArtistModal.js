@@ -4,7 +4,6 @@ import { PickArtist } from "../Onboarding/PickArtist";
 import { CustomModal } from "../Modal";
 
 import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
-import { GameIncentives } from "./GameIncentives";
 import { CompletedPayment } from "../Onboarding/CompletedPayment";
 
 export const ChooseNewArtistModal = (props) => {
@@ -26,12 +25,13 @@ export const ChooseNewArtistModal = (props) => {
 
   useEffect(() => {
     const init = async () => {
-      if (chooseArtistView === "gameIncentives") {
-        setHeaderText("Game Incentives");
+      if (chooseArtistView === "creditCardPayment") {
+        setHeaderText("Get Collectibles to Play");
       }
     };
 
     init();
+    
   }, []);
 
   const whichContentToRender = () => {
@@ -45,8 +45,8 @@ export const ChooseNewArtistModal = (props) => {
           handleClose={handleClose}
         />
       );
-      //TODO
-    } else if (chooseArtistView === "gameIncentives") {
+      //Remove this screen as per Veras request 4 July 2023
+    } /* else if (chooseArtistView === "gameIncentives") {
       return (
         <GameIncentives
           selectedArtist={selectedArtist}
@@ -54,7 +54,7 @@ export const ChooseNewArtistModal = (props) => {
           setHeaderText={setHeaderText}
         />
       );
-    } else if (chooseArtistView === "creditCardPayment") {
+    } */ else if (chooseArtistView === "creditCardPayment") {
       return (
         <CreditcardPayment
           selectedId={selectedArtist}

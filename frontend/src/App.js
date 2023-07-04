@@ -19,6 +19,7 @@ import { SpinningLoader } from "./components/SpinningLoader";
 import { NftService } from "@liquality/wallet-sdk";
 import { CHAIN_ID } from "./data/contract_data";
 import { getGameIdBasedOnHref } from "./utils";
+import { Privacy } from "./pages/Privacy";
 
 function App() {
   setupSDK();
@@ -81,7 +82,7 @@ function App() {
       setUser(user);
 
       const settings = await getLevelSettings();
-      console.log('settings', settings)
+      console.log("settings", settings);
       setLevelSettings(settings);
 
       const _artist = await fetchArtist();
@@ -99,14 +100,13 @@ function App() {
 
         const isFullSetHolder = await checkIfFullSetHolder(_artist?.number_id);
         setUserIsFullSetHolder(isFullSetHolder);
-
       }
 
       setLoading(false);
     };
 
     fetchData();
-    return () => { };
+    return () => {};
   }, [nfts, nftCount]);
 
   return (
@@ -132,8 +132,8 @@ function App() {
           setUserIsFullSetHolder,
           userIsFullSetHolder,
           levelSettings,
-          getMoreLevel, 
-          setGetMoreLevel
+          getMoreLevel,
+          setGetMoreLevel,
         }}
       >
         {" "}
@@ -166,6 +166,8 @@ function App() {
               }
             />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+
             <Route
               path="/artist/:artistId"
               element={

@@ -1,8 +1,7 @@
 import { NftService, setup } from "@liquality/wallet-sdk";
 import StaticDataService from "./services/StaticDataService";
 import { ethers } from "ethers";
-import { CHAIN_ID, WAV_NFT_ABI, WAV_NFT_ADDRESS, WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "./data/contract_data";
-import { nft } from "@liquality/wallet-sdk/dist/typechain-types/contracts";
+import { CHAIN_ID, WAV_NFT_ADDRESS } from "./data/contract_data";
 
 export function setupSDK() {
     setup({
@@ -198,9 +197,13 @@ export const getHowManyPlayersAreInEachLevel = async (artistNumberId) => {
 
 //TODO: mumbai chainid in hex: 0x13881
 async function fetchNFTOwners() {
+
+    const hexValue = CHAIN_ID.toString(16);
+    const hexValueWithPrefix = "0x" + hexValue;
+
     if (process.env.REACT_APP_MORALIS_API_KEY) {
         const url =
-            `https://deep-index.moralis.io/api/v2/nft/${WAV_NFT_ADDRESS}/owners?chain=0x13881&disable_total=false`;
+            `https://deep-index.moralis.io/api/v2/nft/${WAV_NFT_ADDRESS}/owners?chain=${hexValueWithPrefix}&disable_total=false`;
 
         const headers = {
             "x-api-key": process.env.REACT_APP_MORALIS_API_KEY,

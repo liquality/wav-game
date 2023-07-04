@@ -3,7 +3,7 @@ import handleMessage from "./MessageHandler";
 const websocketService = {};
 const wsUri = process.env.REACT_APP_WS_URI
   ? process.env.REACT_APP_WS_URI
-  : "localhost:3000";
+  : "ws://localhost:3000";
 
 websocketService._ws = null;
 
@@ -14,7 +14,7 @@ websocketService.getWS = (userid) => {
     if (!ws || ws.readyState === 3) {
       //TODO add ws uri to env variables
       websocketService._ws = new WebSocket(
-        `wss://${wsUri}/websockets?userid=${userid}`
+        `${wsUri}/websockets?userid=${userid}`
       );
     }
 

@@ -19,16 +19,16 @@ export const Level2 = (props) => {
   let actionLocked = false;
 
   actionDisbled = false;
-  instructions = `You have ${level2Count === -1 ? 0 : level2Count} collectibles.`;
+  instructions = `You have ${level2Count === -1 ? 0 : level2Count} cards.`;
   if (level2Count === 0) {
-    instructions = "You need 2 Artist collectibles to trade for this.";
+    instructions = "Trade 2 cards from the previous level.";
     tradeActionText = "Level locked";
     actionLocked = true;
     actionDisbled = true;
   } else if (level2Count === 1) {
     instructions = `You have ${
       level2Count === -1 ? 0 : level2Count
-    } NFTs. Get 1 more to trade for next level.`;
+    } cards. Get 1 more from the previous level.`;
     tradeActionText = "Start Trading";
     actionDisbled = true;
   }
@@ -67,7 +67,7 @@ export const Level2 = (props) => {
       actions={actions}
       level={{
         id: 2,
-        title: "Get 1 top live song",
+        title: "1 rare live song",
         edition: "",
         instructions,
         useEmtpyActionsStyle: false

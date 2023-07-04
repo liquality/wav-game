@@ -121,7 +121,7 @@ export const LevelCard = ({
         >
           {instructions}
         </div>
-        <div className="flex justify-between gap-2">
+        <div className="flex justify-between gap-2 mt-2">
           {actions.map((action) => {
             return (
               <Button
