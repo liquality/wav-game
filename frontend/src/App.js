@@ -82,7 +82,6 @@ function App() {
       setUser(user);
 
       const settings = await getLevelSettings();
-      console.log("settings", settings);
       setLevelSettings(settings);
 
       const _artist = await fetchArtist();
@@ -92,7 +91,6 @@ function App() {
         const nftData = await fetchNfts();
         setNfts(nftData);
 
-        console.log("FETCHING COUNT AGAIN!");
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
         setNftCount(_currentLevel.levels);
         setCollectibleCount(_currentLevel.totalCollectibles);

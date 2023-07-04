@@ -1,5 +1,10 @@
 import { ethers } from "ethers";
-import { WAV_NFT_ABI, WAV_NFT_ADDRESS, WAV_PROXY_ABI, WAV_PROXY_ADDRESS } from "../data/contract_data";
+import {
+  WAV_NFT_ABI,
+  WAV_NFT_ADDRESS,
+  WAV_PROXY_ABI,
+  WAV_PROXY_ADDRESS,
+} from "../data/contract_data";
 import { fetchSession, getPrivateKey, getPublicKey } from "../utils";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -71,9 +76,8 @@ if (fetchSession()?.token) {
     },
 
     tokenBalance: async (tokenID) => {
-      console.log('The token id   => ', tokenID);
-        return await wavNft.balanceOf(getPublicKey(), +tokenID);
-    }
+      return await wavNft.balanceOf(getPublicKey(), +tokenID);
+    },
   };
 }
 

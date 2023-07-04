@@ -88,12 +88,10 @@ export const Artist = (props) => {
 
   const onTradeClick = (level) => {
     setTradeLevel(level);
-    console.log("onTradeClick level ", level);
     setShowTrade(true);
   };
 
   const onGetMoreClick = (level) => {
-    console.log("onGetMoreClick", level, artist);
     setSelectedArtist(artist);
     setGetMoreLevel(level);
     setChooseArtistView("creditCardPayment");
@@ -101,7 +99,6 @@ export const Artist = (props) => {
   };
 
   const onLevelSelected = (level) => {
-    console.log("onLevelSelected", level);
     setSelectedLevel(level);
   };
 
@@ -190,7 +187,7 @@ export const Artist = (props) => {
                   )}
                 </div>
               </div>
-              
+
               <div className="flexDirectionCol">
                 <Leaderboard
                   setShowSendModal={setShowSend}

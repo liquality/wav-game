@@ -25,15 +25,22 @@ export const TradeSuccess = ({
       setArtist(_artist);
 
       if (userNfts) {
-        const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(level, _artist);
-        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(level + 1, _artist);
+        const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel(
+          level,
+          _artist
+        );
+        const _tokenIdForNewLevel = await getWhichTokenIdForLevel(
+          level + 1,
+          _artist
+        );
         setTokenIdForNewLevel(_tokenIdForNewLevel);
 
-        const levelNftCount =  await ContractService.tokenBalance(_tokenIdForCurrentLevel);
-        setCanStillTrade(levelNftCount >=  2);  
+        const levelNftCount = await ContractService.tokenBalance(
+          _tokenIdForCurrentLevel
+        );
+        setCanStillTrade(levelNftCount >= 2);
       }
     };
-
 
     fetchData();
     return () => {
@@ -43,8 +50,8 @@ export const TradeSuccess = ({
   }, [userNfts]);
 
   const getWhichTokenIdForLevel = async (levelUp, artist) => {
-      let firstChar = artist.number_id.toString()[0];
-      return firstChar + 0 + levelUp;
+    let firstChar = artist.number_id.toString()[0];
+    return firstChar + 0 + levelUp;
   };
 
   const tradeMore = async () => {
@@ -58,8 +65,6 @@ export const TradeSuccess = ({
     setNftCount(null);
   };
 
-  console.log(level, "level in tradesuccess BÅ");
-  console.log(txStatus, "txStatus in BÅÅ");
   return (
     <div className="contentView flex justify-center">
       {" "}
@@ -71,9 +76,7 @@ export const TradeSuccess = ({
         />
 
         <div style={{ marginLeft: -260 }} className="">
-          <p className="greyUpperCaseText mb-1">
-            ERC-1155
-          </p>
+          <p className="greyUpperCaseText mb-1">ERC-1155</p>
 
           <a
             className="hover:no-underline hover:text-decoration-none"
@@ -130,11 +133,11 @@ export const TradeSuccess = ({
 
         {/* TODO: if user doesnt have more nfts to trade, we should disable this */}
         <div className="flexDirectionRow mb-3 mt-3">
-          {canStillTrade && 
+          {canStillTrade && (
             <CustomButton pink type="big" onClick={tradeMore}>
               TRADE MORE
             </CustomButton>
-          }
+          )}
           <button className="ml-5 mr-5" onClick={() => handleCancelClick()}>
             See Leaderboard
           </button>

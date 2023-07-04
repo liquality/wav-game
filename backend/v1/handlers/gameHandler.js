@@ -100,7 +100,6 @@ gameHandler.update = function (req, res) {
   if (userid) {
     game.update().then(
       (game) => {
-        console.log(game, "successfully updated game");
         res.status(200).send(game);
       },
       (reject) => {
@@ -141,7 +140,6 @@ gameHandler.webhook = async function (req, res) {
   console.log(req.body, "req body???");
 
   const { status, tokenIds, passThroughArgs, walletAddress, txId } = req.body;
-  console.log(passThroughArgs, "PASS THRY ARYGS");
   const argsDeserialized = JSON.parse(passThroughArgs);
   const argsDeseralisedSecond = JSON.parse(argsDeserialized);
   const argsDeseralisedThird = JSON.parse(argsDeseralisedSecond);

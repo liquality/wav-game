@@ -53,7 +53,7 @@ export const TradeStart = (props) => {
     level,
     txStatus,
   } = props;
-  
+
   const toLevel = level + 1;
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
@@ -70,7 +70,6 @@ export const TradeStart = (props) => {
   };
 
   useEffect(() => {
-
     const fetchGameByUserIdAndArtistId = async () => {
       const artist = await getArtist();
       try {
@@ -148,7 +147,6 @@ export const TradeStart = (props) => {
         WAV_PROXY_ADDRESS,
         CHAIN_ID
       );
-      console.log(approved, "approved bä");
 
       if (!approved) {
         const approvalTx =
@@ -163,7 +161,6 @@ export const TradeStart = (props) => {
           privateKey,
           CHAIN_ID
         );
-        console.log(approvalTx, "approval tx bä");
       }
       setTxStatus({
         txHash: null,
@@ -175,7 +172,6 @@ export const TradeStart = (props) => {
         artist?.number_id,
         level + 1
       );
-      console.log(levelUpTx, "levelupTx bä");
 
       let txHashLevelUp = await TransactionService.sendGaslessly(
         WAV_PROXY_ADDRESS,
@@ -183,7 +179,6 @@ export const TradeStart = (props) => {
         privateKey,
         CHAIN_ID
       );
-      console.log(txHashLevelUp, "levelupTx HASH bä");
 
       setTxStatus({
         txHash: txHashLevelUp,

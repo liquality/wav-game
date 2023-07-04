@@ -13,15 +13,12 @@ export const Level1 = (props) => {
   } = props;
   const status = getLevelsStatuses(currentLevel || 1)[1];
   const level1Count = nftCount["1"] || 0;
-  let instructions = `You have ${
-    level1Count === -1 ? 0 : level1Count
-  } cards.`;
+  let instructions = `You have ${level1Count === -1 ? 0 : level1Count} cards.`;
   let tradeActionText = "";
   let actionLocked = false;
   let lessThan2NftsAndBurnt = level1Count < 2 && burnStatus;
   let lessThan2NftsAndNeverBurnt = level1Count < 2 && !burnStatus;
 
-  console.log(tradeActionText, "tradeaction text");
   if (level1Count >= 2) {
     if (burnStatus) {
       tradeActionText = "Trade More";
@@ -30,8 +27,8 @@ export const Level1 = (props) => {
     }
   }
 
-  if(level1Count === 1) {
-    instructions = 'You have 1 card. Buy 1 more to continue';
+  if (level1Count === 1) {
+    instructions = "You have 1 card. Buy 1 more to continue";
   }
 
   if (
@@ -82,7 +79,7 @@ export const Level1 = (props) => {
         title: "Live song",
         edition: "",
         instructions,
-        useEmtpyActionsStyle: false
+        useEmtpyActionsStyle: false,
       }}
     />
   );

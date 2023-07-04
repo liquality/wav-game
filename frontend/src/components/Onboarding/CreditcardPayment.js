@@ -33,7 +33,6 @@ export const CreditcardPayment = (props) => {
     navigate(`/artist/${selectedId.id}`);
   };
 
-  console.log(crossmintData, "crossmint data?");
   const handleAmountChange = (event) => {
     const { name, value } = event.target;
     //prevent negative nrs
@@ -46,7 +45,7 @@ export const CreditcardPayment = (props) => {
     setContent("completedPayment");
     setHeaderText("COMPLETED PURCHASE, CONGRATS!");
     setCrossmintData(data);
-    console.log("Websocket event sent BÄÄ", data);
+    console.log("Websocket event sent", data);
   };
 
   useEffect(() => {
@@ -67,7 +66,22 @@ export const CreditcardPayment = (props) => {
     id: fetchSession().id,
   };
   const whArgsSerialized = JSON.stringify(whArgs);
-  console.log(whArgsSerialized, "wh args serialized");
+
+  const mintConfigProd = {
+    type: "erc-1155",
+    _amount: nftAmount,
+    totalPrice: totalNFTsPrice,
+    _recipient: getPublicKey(),
+    _artistID: selectedId.number_id,
+  };
+
+  const mintConfigDev = {
+    type: "erc-1155",
+    _amount: nftAmount,
+    totalPrice: totalNFTsPrice,
+    _recipient: getPublicKey(),
+    _gameID: selectedId.number_id,
+  };
 
   return (
     <div className=" contentView flex mb-4">
@@ -156,15 +170,11 @@ export const CreditcardPayment = (props) => {
           className="xmint-btn"
           mintTo={getPublicKey()}
           whPassThroughArgs={whArgsSerialized}
-          mintConfig={{
-            type: "erc-1155",
-            _amount: nftAmount,
-            totalPrice: totalNFTsPrice,
-            _recipient: getPublicKey(),
-            _gameID: selectedId.number_id,
-
-            // your custom minting arguments...
-          }}
+          mintConfig={
+            process.env.REACT_APP_CROSSMINT_ENVIRONMENT === "staging"
+              ? mintConfigDev
+              : mintConfigProd
+          }
         />
       </div>
     </div>

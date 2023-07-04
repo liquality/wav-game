@@ -71,12 +71,6 @@ export const Level6 = (props) => {
       status = "locked";
     }
 
-    console.log(
-      earlyBirdCount,
-      "earlybirdcount BÄ",
-      canBecomeEarlyBirdCollector,
-      instructions
-    );
     if (isEarlyBird) {
       //UC 2
       instructions = "";
