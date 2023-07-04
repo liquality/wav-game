@@ -59,7 +59,7 @@ const Navbar = (props) => {
                   <button
                     type="button"
                     style={{ fontSize: 13 }}
-                    className="navBarText"
+                    className="navBarText mt-4"
                   >
                     LOGIN
                   </button>

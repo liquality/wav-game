@@ -70,8 +70,8 @@ export const CreditcardPayment = (props) => {
   console.log(whArgsSerialized, "wh args serialized");
 
   return (
-    <div className=" contentView flex">
-      <div className="p-4 w-1/2 flex justify-center items-center margin-auto">
+    <div className=" contentView flex mb-4">
+      <div className="p-4 w-1/2 flex justify-center items-center margin-auto pb-5">
         {/* Big image container e*/}
 
         <div

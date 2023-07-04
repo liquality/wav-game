@@ -27,7 +27,7 @@ export const CompletedPayment = ({
   }, [artist, crossmintData]);
 
   const buyMore = async () => {
-    setContent("creditcardPayment");
+    setContent("creditCardPayment");
   };
 
   let selectedNft = {};

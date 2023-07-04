@@ -110,19 +110,19 @@ export const PickArtist = (props) => {
       });
       //if game already exists dont create it again
       if (gameAlreadyStarted && !shouldNavigate) {
-        setHeaderText("Game Incentives");
-        setContent("gameIncentives");
+        setHeaderText("Get Collectibles to Play");
+        setContent("creditCardPayment");
       } else if (shouldNavigate) {
         navigate(`/artist/${selectedId?.id}`);
         handleClose();
       } else {
         await createGame();
-        setContent("gameIncentives");
-        setHeaderText("Game Incentives");
+        setContent("creditCardPayment");
+        setHeaderText("Get Collectibles to Play");
       }
     } else {
       await createGame();
-      setContent("creditcardPayment");
+      setContent("creditCardPayment");
       setHeaderText("Get Collectibles to Play");
     }
   };

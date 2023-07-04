@@ -96,7 +96,7 @@ export const Artist = (props) => {
     console.log("onGetMoreClick", level, artist);
     setSelectedArtist(artist);
     setGetMoreLevel(level);
-    setChooseArtistView("gameIncentives");
+    setChooseArtistView("creditCardPayment");
     setShowPickArtistModal(true);
   };
 

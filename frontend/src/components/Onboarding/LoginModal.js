@@ -157,7 +157,7 @@ export const LoginModal = (props) => {
           handleClose={handleClose}
         />
       );
-    } else if (content === "creditcardPayment") {
+    } else if (content === "creditCardPayment") {
       return (
         <CreditcardPayment
           selectedId={selectedId}
@@ -181,7 +181,7 @@ export const LoginModal = (props) => {
   };
 
   let typeOfLogo;
-  if (content === "creditcardPayment") {
+  if (content === "creditCardPayment") {
     typeOfLogo = "creditCard";
   } else if (content === "loginOrRegister") {
     typeOfLogo = "none";
