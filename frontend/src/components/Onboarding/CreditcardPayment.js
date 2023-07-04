@@ -33,7 +33,6 @@ export const CreditcardPayment = (props) => {
     navigate(`/artist/${selectedId.id}`);
   };
 
-  console.log(crossmintData, "crossmint data?");
   const handleAmountChange = (event) => {
     const { name, value } = event.target;
     //prevent negative nrs
@@ -46,7 +45,7 @@ export const CreditcardPayment = (props) => {
     setContent("completedPayment");
     setHeaderText("COMPLETED PURCHASE, CONGRATS!");
     setCrossmintData(data);
-    console.log("Websocket event sent BÄÄ", data);
+    console.log("Websocket event sent", data);
   };
 
   useEffect(() => {
@@ -67,7 +66,6 @@ export const CreditcardPayment = (props) => {
     id: fetchSession().id,
   };
   const whArgsSerialized = JSON.stringify(whArgs);
-  console.log(whArgsSerialized, "wh args serialized");
 
   return (
     <div className=" contentView flex mb-4">

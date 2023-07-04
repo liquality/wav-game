@@ -23,14 +23,10 @@ export const Level4 = (props) => {
   let title = "1 limited physical item";
   actionDisabled = false;
   let actionLocked = false;
-  instructions = `You have ${
-    level4Count === -1 ? 0 : level4Count
-  } cards.`;
+  instructions = `You have ${level4Count === -1 ? 0 : level4Count} cards.`;
 
   let earlyBirdLimit = levelSettings?.claim_amount || 0;
-  instructions = `You have ${
-    level4Count === -1 ? 0 : level4Count
-  } cards.`;
+  instructions = `You have ${level4Count === -1 ? 0 : level4Count} cards.`;
   let useEmtpyActionsStyle = false;
 
   const { earlyBirdCount, isEarlyBird } = useEarlyBirdInfo(
@@ -94,7 +90,6 @@ export const Level4 = (props) => {
       }
     }
 
-    console.log("Early bird limit of level 4 => ", earlyBirdLimit);
     if (earlyBirdLimit > 0) {
       // #DWAV-190
       /**

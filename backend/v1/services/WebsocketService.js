@@ -69,7 +69,6 @@ websocketService.send = (recipientId, messageType, messageContent) => {
     if (client?.sockets) {
       const data = { type: messageType, content: messageContent };
       client.sockets.forEach((socket) => {
-        console.log(data, "sending WS data in backend");
         socket.send(JSON.stringify(data));
       });
     }
