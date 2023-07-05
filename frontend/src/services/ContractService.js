@@ -89,7 +89,7 @@ if (fetchSession()?.token) {
 
 
     getNfts: async (artistID) => {
-      // return  await  NftService.getNfts(getPublicKey(), CHAIN_ID);
+      // return  await  NftService.getNfts(getPublicKey(), CHAIN_ID, [WAV_NFT_ADDRESS]);
       const nfts = [];
       for(let i = 1; i < 6; i++){
         const id = tokenIDByArtistAndLevel(artistID, i);
