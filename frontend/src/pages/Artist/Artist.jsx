@@ -13,17 +13,13 @@ import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
 import {
-  checkIfFullSetHolder,
   fetchSession,
   getCurrentLevel,
-  getPublicKey,
 } from "../../utils";
 import UserService from "../../services/UserService";
 import Faq from "../../components/Faq";
 import { DataContext } from "../../DataContext";
 import { SpinningLoader } from "../../components/SpinningLoader";
-import { NftService } from "@liquality/wallet-sdk";
-import { CHAIN_ID } from "../../data/contract_data";
 import websocketService from "../../services/Websocket/WebsocketService";
 import ContractService from "../../services/ContractService";
 
@@ -115,7 +111,7 @@ export const Artist = (props) => {
         console.log("FETCHING NFTS AGAIN! BÄ");
         const nftData = await ContractService.getNfts(_artist.number_id);
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
-        const isFullSetHolder = await checkIfFullSetHolder(_artist?.number_id);
+        const isFullSetHolder = await ContractService.checkIfFullSetHolder(_artist?.number_id);
 
         setNftCount(_currentLevel.levels);
         setCollectibleCount(_currentLevel.totalCollectibles);

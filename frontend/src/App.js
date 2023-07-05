@@ -5,9 +5,7 @@ import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import { Terms } from "./pages/Terms";
 import {
-  checkIfFullSetHolder,
   getCurrentLevel,
-  getPublicKey,
   setupSDK,
 } from "./utils";
 import Footer from "./components/Footer";
@@ -16,8 +14,6 @@ import { useState, useEffect } from "react";
 import UserService from "./services/UserService";
 import { fetchSession } from "./utils";
 import { SpinningLoader } from "./components/SpinningLoader";
-import { NftService } from "@liquality/wallet-sdk";
-import { CHAIN_ID } from "./data/contract_data";
 import { getGameIdBasedOnHref } from "./utils";
 import { Privacy } from "./pages/Privacy";
 import ContractService from "./services/ContractService";
@@ -92,7 +88,7 @@ function App() {
         setCollectibleCount(_currentLevel.totalCollectibles);
         setCurrentLevel(_currentLevel.currentLevel);
 
-        const isFullSetHolder = await checkIfFullSetHolder(_artist?.number_id);
+        const isFullSetHolder = await ContractService.checkIfFullSetHolder(_artist?.number_id);
         setUserIsFullSetHolder(isFullSetHolder);
       }
 
@@ -114,6 +110,7 @@ function App() {
           chooseArtistView,
           setChooseArtistView,
           user,
+          selectedArtist,
 
           nfts: nfts,
           setNftCount: setNftCount,
