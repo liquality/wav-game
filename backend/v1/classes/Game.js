@@ -1,5 +1,4 @@
 const MySQL = require("../../MySQL");
-const websocketService = require("../services/WebsocketService");
 const ApiError = require("./ApiError");
 
 class Game {
@@ -107,7 +106,7 @@ class Game {
       if (id) {
         MySQL.pool.getConnection((err, db) => {
           db.execute(
-            "select * from `game` where id = ?",
+            "select * from `game` where user_id = ?",
             [id],
             (err, results, fields) => {
               if (err) {
@@ -192,6 +191,7 @@ class Game {
 
   readGameByUserId = async (userId, gameNumberId, helper) => {
     const game = this;
+    console.log(userId, typeof userId, "USERIIID in readgamebyuserid");
     const promise = new Promise((resolve, reject) => {
       if (userId) {
         MySQL.pool.getConnection((err, db) => {
@@ -226,6 +226,7 @@ class Game {
                   reject(new ApiError(404, "Game not found"));
                 } else {
                   game.set(results[0]);
+                  console.log(results, "RESULTS");
                   resolve(results);
                 }
                 db.release();

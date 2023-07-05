@@ -61,6 +61,7 @@ export const CreditcardPayment = (props) => {
     };
   }, []);
 
+  console.log("inside creditcard?");
   let totalNFTsPrice =
     process.env.REACT_APP_CROSSMINT_ENVIRONMENT === "staging"
       ? (0.0005 * nftAmount).toString()
