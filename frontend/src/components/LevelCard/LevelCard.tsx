@@ -38,7 +38,6 @@ interface Level {
   instructions: string;
 
   useEmtpyActionsStyle?: boolean;
-
 }
 
 interface CardProps {
@@ -83,7 +82,7 @@ export const LevelCard = ({
   const {
     setLevel,
     current,
-    level: { edition, title, instructions, id, useEmtpyActionsStyle }
+    level: { edition, title, instructions, id, useEmtpyActionsStyle },
   } = props;
   const active = current === id;
   const handleActionClick = (action: LevelActionProps) => {
@@ -91,10 +90,19 @@ export const LevelCard = ({
       action.onActionClick(id);
     }
   };
+
+  let lockStyle;
+  if (!active) {
+    lockStyle = { color: "#f316b0", marginRight: "0.5rem" };
+  } else {
+    lockStyle = { marginRight: "0.5rem" };
+  }
+  console.log(active, "avtivee?", id);
+
   return (
     <div
-      onMouseOver={() => (setLevel ? setLevel(id) : () => { })}
-      onMouseLeave={() => (setLevel ? setLevel(null) : () => { })}
+      onMouseOver={() => (setLevel ? setLevel(id) : () => {})}
+      onMouseLeave={() => (setLevel ? setLevel(null) : () => {})}
       className={classNames({
         "level-card flex flex-col justify-between": true,
         [`level-card--display--${current}--${id}`]: true,
@@ -105,16 +113,21 @@ export const LevelCard = ({
     >
       <div className="flex flex-col justify-between">
         <div className="level-card-level">LEVEL {id}</div>
-        <div className={classNames({
-          "level-card-title": true,
-          'level-card-title-small': id === 6
-        })}>{title}</div>
+        <div
+          className={classNames({
+            "level-card-title": true,
+            "level-card-title-small": id === 6,
+          })}
+        >
+          {title}
+        </div>
         <div className="level-card-edition">{edition}</div>
       </div>
       <div className="flex flex-col justify-between">
         <div
           className={classNames({
-            "level-card-instructions-empty-actions": !useEmtpyActionsStyle && (!actions || actions.length <= 0),
+            "level-card-instructions-empty-actions":
+              !useEmtpyActionsStyle && (!actions || actions.length <= 0),
             "level-card-instructions": !useEmtpyActionsStyle,
             active,
           })}
@@ -132,9 +145,7 @@ export const LevelCard = ({
                 onClick={() => handleActionClick(action)}
               >
                 <>
-                  {action.useIcon ? (
-                    <LockIcon style={{ marginRight: "0.5rem" }} />
-                  ) : null}
+                  {action.useIcon ? <LockIcon style={lockStyle} /> : null}
                   {action.label}
                 </>
               </Button>
