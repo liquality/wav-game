@@ -5,7 +5,7 @@ export const Privacy = (props) => {
 
   return (
     <div className="p-12 terms ">
-      <p className="text-xl font-extrabold mt-12">Privacy Policy</p>
+      <p className="text-xl font-extrabold ">Privacy Policy</p>
       <p>
         Last updated: June 27, 2023<br></br>
         This Privacy Policy (“Policy”) informs you of wavWRLD’s (“wavWRLD”,

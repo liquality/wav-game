@@ -133,11 +133,9 @@ export const TradeSuccess = ({
 
         {/* TODO: if user doesnt have more nfts to trade, we should disable this */}
         <div className="flexDirectionRow mb-3 mt-3">
-          {canStillTrade && (
-            <CustomButton pink type="big" onClick={tradeMore}>
-              TRADE MORE
-            </CustomButton>
-          )}
+          <CustomButton pink type="big" onClick={tradeMore} disabled={!canStillTrade}>
+            TRADE MORE
+          </CustomButton>
           <button className="ml-5 mr-5" onClick={() => handleCancelClick()}>
             See Leaderboard
           </button>

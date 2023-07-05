@@ -18,8 +18,10 @@ export const Level6 = (props) => {
   let edition = "";
   let title = "";
   let useEmtpyActionsStyle = true;
-  const { canBecomeEarlyBirdCollector, earlyBirdCount, isEarlyBird } =
-    useEarlyBirdInfo(currentGame.game_symbol_id, 6);
+  const { earlyBirdCount, isEarlyBird } = useEarlyBirdInfo(
+    currentGame.game_symbol_id,
+    6
+  );
 
   function applyCountDown() {
     if (levelSettings && levelSettings.countdown_ends > 0) {
@@ -76,11 +78,11 @@ export const Level6 = (props) => {
       instructions = "";
       status = "won";
       title = "CONGRATS, YOU WON A 1:1 TRIP + CONCERT EXPERIENCE";
-    } else if (canBecomeEarlyBirdCollector) {
+    } else if (earlyBirdCount === 0) {
       // UC 1: Main Prize NOT yet claimed
       // -inactive => current level !=6
       // -inactive => current level === 5
-      title = "A change to win a 1:1 + concert experience.";
+      title = "A chance to win a 1:1 + concert experience.";
     } else if (earlyBirdCount) {
       // UC 3: When main price was already claimed
       // -active => current level is 6

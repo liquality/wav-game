@@ -15,49 +15,39 @@ export const Level2 = (props) => {
   const status = getLevelsStatuses(currentLevel || 1)[2];
   let instructions = "";
   let tradeActionText = "";
-  let actionDisbled = false;
+  let actionDisabled = false;
   let actionLocked = false;
+  let noActions = false;
 
-  actionDisbled = false;
+  actionDisabled = false;
   instructions = `You have ${level2Count === -1 ? 0 : level2Count} cards.`;
   if (level2Count === 0) {
     instructions = "Trade 2 cards from the previous level.";
-    tradeActionText = "Level locked";
-    actionLocked = true;
-    actionDisbled = true;
+    noActions = true;
   } else if (level2Count === 1) {
     instructions = `You have ${
       level2Count === -1 ? 0 : level2Count
     } cards. Get 1 more from the previous level.`;
     tradeActionText = "Start Trading";
-    actionDisbled = true;
+    actionDisabled = true;
   }
   if (level2Count >= 2 && burnStatus) {
     tradeActionText = "Trade More";
   } else {
-    tradeActionText = "Start Trading";
+    tradeActionText = "Trade Now";
   }
 
-  const actions = [
-    {
-      onActionClick: (level) => onTradeClick(level),
-      label: tradeActionText,
-      mode: actionLocked ? "pinkStroke" : "default",
-      disabled: actionDisbled,
-      useIcon: actionDisbled,
-    }
-  ];
-
-  if(level2Count >= 2 && !burnStatus) {
-    actions.push({
-      onActionClick: (level) => onGetMoreClick(level),
-      label: 'Get More',
-      mode: actionLocked ? "pinkStroke" : "default",
-      disabled: actionDisbled,
-      useIcon: actionDisbled,
-    });
-  }
-  
+  const actions = noActions
+    ? []
+    : [
+        {
+          onActionClick: (level) => onTradeClick(level),
+          label: tradeActionText,
+          mode: actionLocked ? "pinkStroke" : "default",
+          disabled: actionDisabled,
+          useIcon: actionDisabled,
+        },
+      ];
 
   return (
     <LevelCard
@@ -70,7 +60,7 @@ export const Level2 = (props) => {
         title: "1 rare live song",
         edition: "",
         instructions,
-        useEmtpyActionsStyle: false
+        useEmtpyActionsStyle: false,
       }}
     />
   );
