@@ -12,10 +12,7 @@ import { ReactComponent as FullSetBannerNotEligable } from "../../images/full_se
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
-import {
-  fetchSession,
-  getCurrentLevel,
-} from "../../utils";
+import { fetchSession, getCurrentLevel } from "../../utils";
 import UserService from "../../services/UserService";
 import Faq from "../../components/Faq";
 import { DataContext } from "../../DataContext";
@@ -94,6 +91,7 @@ export const Artist = (props) => {
     setSelectedLevel(level);
   };
 
+  console.log(nfts, "NFTTS");
   useEffect(() => {
     const fetchData = async () => {
       const _artist = await fetchArtist(artistId);
@@ -111,7 +109,9 @@ export const Artist = (props) => {
         console.log("FETCHING NFTS AGAIN! BÄ");
         const nftData = await ContractService.getNfts(_artist.number_id);
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
-        const isFullSetHolder = await ContractService.checkIfFullSetHolder(_artist?.number_id);
+        const isFullSetHolder = await ContractService.checkIfFullSetHolder(
+          _artist?.number_id
+        );
 
         setNftCount(_currentLevel.levels);
         setCollectibleCount(_currentLevel.totalCollectibles);
@@ -145,9 +145,7 @@ export const Artist = (props) => {
                 <div className="game-header-level">
                   LEVEL: {currentLevel || "0"}{" "}
                 </div>
-                <div className="game-header-title">
-                  {artist?.name?.toUpperCase()}'s GAME
-                </div>
+                <div className="game-header-title">{artist?.name}'s Game</div>
                 <div className="game-header-counter">
                   CARDS: {collectibleCount}
                 </div>
