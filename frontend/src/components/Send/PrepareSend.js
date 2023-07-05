@@ -130,8 +130,7 @@ export const PrepareSend = ({
         <p className="lineNoCenter mt-2 " style={{ width: "50%" }}></p>
 
         <p className="mt-4 greySmallText" style={{ width: "50%" }}>
-          Transferring the NFT(s) won't impact your reward. You'll still receive
-          it [as one of the initial [n] in level [n]].
+          Keep one card for each level to get the full set.
         </p>
         <p className="mt-5 mb-2 greyUpperCaseText">
           SEND FROM YOUR POLYGON ACCOUNT
