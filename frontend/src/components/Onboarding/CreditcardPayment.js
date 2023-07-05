@@ -61,7 +61,8 @@ export const CreditcardPayment = (props) => {
     };
   }, []);
 
-  let totalNFTsPrice = (0.0005 * nftAmount).toString();
+  let totalNFTsPrice = (0.005 * nftAmount).toString();
+
   const whArgs = {
     id: fetchSession().id,
   };
