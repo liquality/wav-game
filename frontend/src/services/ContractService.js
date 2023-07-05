@@ -89,15 +89,15 @@ if (fetchSession()?.token) {
 
 
     getNfts: async (artistID) => {
-      // return  await  NftService.getNfts(getPublicKey(), CHAIN_ID, [WAV_NFT_ADDRESS]);
-      const nfts = [];
-      for(let i = 1; i < 6; i++){
-        const id = tokenIDByArtistAndLevel(artistID, i);
-        console.log('The id in getNFTS is => ',   id);
-        const balance = await wavNft.balanceOf(getPublicKey(), +id);
-        nfts.push({id,  balance: Number(balance), contract: {address: WAV_NFT_ADDRESS}});
-      }
-      return  nfts;
+      return  await  NftService.getNfts(getPublicKey(), CHAIN_ID, [WAV_NFT_ADDRESS]);
+      // const nfts = [];
+      // for(let i = 1; i < 6; i++){
+      //   const id = tokenIDByArtistAndLevel(artistID, i);
+      //   console.log('The id in getNFTS is => ',   id);
+      //   const balance = await wavNft.balanceOf(getPublicKey(), +id);
+      //   nfts.push({id,  balance: Number(balance), contract: {address: WAV_NFT_ADDRESS}});
+      // }
+      // return  nfts;
     },
 
     checkIfFullSetHolder: async (artistNumberId) => {
