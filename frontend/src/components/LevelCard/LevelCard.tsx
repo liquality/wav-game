@@ -2,6 +2,8 @@ import "./level-card.css";
 import classNames from "classnames";
 import { Button } from "../Button/Button";
 import { ReactComponent as LockIcon } from "../../images/lock_icon.svg";
+import { ReactComponent as LockIconPink } from "../../images/lock_icon_pink.svg";
+
 import { ButtonMode } from "../../types/ButtonMode";
 import { LevelStatus } from "../../types/LevelStatus";
 
@@ -91,14 +93,6 @@ export const LevelCard = ({
     }
   };
 
-  let lockStyle;
-  if (!active) {
-    lockStyle = { color: "#f316b0", marginRight: "0.5rem" };
-  } else {
-    lockStyle = { marginRight: "0.5rem" };
-  }
-  console.log(active, "avtivee?", id);
-
   return (
     <div
       onMouseOver={() => (setLevel ? setLevel(id) : () => {})}
@@ -136,6 +130,16 @@ export const LevelCard = ({
         </div>
         <div className="flex justify-between gap-2 mt-2">
           {actions.map((action) => {
+            let lock;
+            if (!active) {
+              lock = action.useIcon ? (
+                <LockIconPink style={{ marginRight: "0.5rem" }} />
+              ) : null;
+            } else {
+              lock = action.useIcon ? (
+                <LockIcon style={{ marginRight: "0.5rem" }} />
+              ) : null;
+            }
             return (
               <Button
                 disabled={!active || action.disabled}
@@ -145,7 +149,7 @@ export const LevelCard = ({
                 onClick={() => handleActionClick(action)}
               >
                 <>
-                  {action.useIcon ? <LockIcon style={lockStyle} /> : null}
+                  {lock}
                   {action.label}
                 </>
               </Button>
