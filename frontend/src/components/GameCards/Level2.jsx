@@ -60,7 +60,7 @@ export const Level2 = (props) => {
         title: "1 rare live song",
         edition: "",
         instructions,
-        useEmtpyActionsStyle: false,
+        useEmtpyActionsStyle: true,
       }}
     />
   );
