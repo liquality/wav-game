@@ -67,9 +67,7 @@ export const Level5 = (props) => {
       if (level5Count === 0) {
         instructions =
           "You have 0 cards. Trade 2 cards from the previous level.";
-        tradeActionText = "Level locked";
-        actionLocked = true;
-        actionDisabled = true;
+        noActions = true;
       } else {
         instructions = `You have ${
           level5Count === -1 ? 0 : level5Count
@@ -77,6 +75,11 @@ export const Level5 = (props) => {
         tradeActionText = "Start Trading";
         actionDisabled = true;
       }
+    } else if (level5Count >= 2) {
+      instructions = `You have ${
+        level5Count === -1 ? 0 : level5Count
+      } cards. Get 1 more from the previous level.`;
+      actionDisabled = false;
     }
 
     // #DWAV-190
