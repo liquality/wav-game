@@ -210,7 +210,9 @@ const AccordionItem = (props) => {
         }
       >
         <div className="rc-accordion-body">
-          <p className="mb-5">{text}</p>
+          <p className="mb-5" style={{ fontWeight: "300" }}>
+            {text}
+          </p>
         </div>
       </div>
     </div>

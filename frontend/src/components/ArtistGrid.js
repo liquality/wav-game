@@ -47,13 +47,14 @@ export const ArtistGrid = (props) => {
                 }}
                 className="flexDirectionCol"
               >
+                {}
                 <span
                   style={
                     selectedId?.number_id === item.number_id
                       ? { color: "white" }
-                      : {}
+                      : { color: "#FF9FA9" }
                   }
-                  className="webfont coral"
+                  className="webfont -mb-1"
                 >
                   {renderLevel}
                 </span>

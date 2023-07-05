@@ -26,9 +26,11 @@ import StaticDataService from "../services/StaticDataService";
 import { fetchSession } from "../utils";
 import UserService from "../services/UserService";
 import { Button } from "../components/Button/Button";
+import { ReactComponent as FullSetBannerNotEligable } from "../images/full_set_banner_not_eligable.svg";
 
 export default function Home(props) {
-  const { setChooseArtistView, setShowPickArtistModal, setSelectedArtist } = props;
+  const { setChooseArtistView, setShowPickArtistModal, setSelectedArtist } =
+    props;
   const [show, setShow] = React.useState(false);
   const [artistData, setArtistData] = useState([]);
   const [games, setGames] = useState([]);
@@ -74,7 +76,7 @@ export default function Home(props) {
     if (fetchSession()?.token) {
       // check game status if it not started yet we redirect to the modal, if not just redirecto to the page
       const game = games?.find((g) => {
-        return g.artist_name === selectedArtistItem?.id
+        return g.artist_name === selectedArtistItem?.id;
       });
 
       if (game) {
@@ -87,28 +89,30 @@ export default function Home(props) {
     } else {
       setShow(true);
     }
-  }
+  };
   return (
     <div className="mt-5">
       {/* Welcome to wavgame hero */}
       <div className="flex justify-center items-center relative">
+        {/* TODO: add hero shape text with svg instead  */}
         <HeroShape />
-        <span className="absolute left-34 top-32 welcomeToWavGame">
+        {/*   <span className="absolute left-34 top-32 welcomeToWavGame">
           Welcome to the Wavgame
         </span>
         <div
-          style={{ left: "46%", top: "65%", width: '35%' }}
+          style={{ left: "46%", top: "65%", width: "35%" }}
           className="flex flex-wrap absolute p-3"
         >
           <p className="flex">
-            Win your favorite artists' cards. Play to connect with your favorite artists. A fun digital trading card experience made up of 6 levels.
+            Win your favorite artists' cards. Play to connect with your favorite
+            artists. A fun digital trading card experience made up of 6 levels.
           </p>
         </div>
-        <br></br>
+        <br></br> */}
       </div>
       {/* Artists text */}
-      <div className="lineCoral mb-5 mt-5"></div>
-      <div className="flex justify-center items-center choose-artist-title mb-5">
+
+      <div className="flex justify-center items-center choose-artist-title mt-24 mb-5">
         Choose Artist
       </div>
 
@@ -124,14 +128,13 @@ export default function Home(props) {
       <br></br>
       <div className="mt-2 mb-24 flex justify-center items-center">
         <Button
-          size={'large'}
+          size={"large"}
           disabled={!selectedArtistItem}
-          mode={'pink'}
+          mode={"pink"}
           onClick={handleChooseArtist}
         >
           Start Game
         </Button>
-
       </div>
 
       {/* How to play */}
@@ -139,12 +142,15 @@ export default function Home(props) {
         <br></br>
         <br></br>
         <div className="flex justify-center items-center mt-5">
-          <HowToPlay />
+          <p className="choose-artist-title">How To Play</p>
           <br></br>
         </div>
         <div className="mt-3" style={{ width: "45%", margin: "auto" }}>
           <p className="text-s	text-center softPink">
-          At each level, trade 2 cards for 1 card from the next level. Earn prizes on every level and get a reward for a full set. Be the first to Level 6 to win a trip and a 1-on-1 concert with your favorite artist.
+            At each level, trade 2 cards for 1 card from the next level. Earn
+            prizes on every level and get a reward for a full set. Be the first
+            to Level 6 to win a trip and a 1-on-1 concert with your favorite
+            artist.
           </p>
         </div>
 
@@ -187,7 +193,9 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockThree"></div>
             <div id="text">Level 3</div>
-            <p className="levelCardText">Get an unreleased song and listening room.</p>
+            <p className="levelCardText">
+              Get an unreleased song and listening room.
+            </p>
             <Cd className="levelCardSvg" />{" "}
             <Arrow
               className="levelCardSvg"
@@ -203,7 +211,9 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockFour"></div>
             <div id="text">Level 4</div>
-            <p className="levelCardText">Play to reveal prize. Only 20 available.</p>
+            <p className="levelCardText">
+              Play to reveal prize. Only 20 available.
+            </p>
             <Microphone className="levelCardSvg" />
             <Union className="levelCardUnion" style={{ left: "90%" }} />{" "}
             <Arrow
@@ -220,7 +230,9 @@ export default function Home(props) {
           <div className="ml-3" id="container">
             <div id="blockFive"></div>
             <div id="text">Level 5</div>
-            <p className="levelCardText">Play to reveal prize. Only 10 available.</p>
+            <p className="levelCardText">
+              Play to reveal prize. Only 10 available.
+            </p>
             <Arrow
               className="levelCardSvg"
               style={{ left: "10%", bottom: "0%", top: "110%" }}
@@ -265,18 +277,22 @@ export default function Home(props) {
         {/* end of 6 cards with levels */}
         {/* Rewards tout */}
         <div className="flex justify-center items-center relative mt-5">
-          <RewardsTout className="mt-5" />
+          <FullSetBannerNotEligable className="mt-5" />
 
-          <div style={{ left: "37%", top: "39%" }} className="absolute">
+          {/*   <div style={{ left: "37%", top: "39%" }} className="absolute">
             <div className="lightCoral flex">
-            EPIC PRIZE FOR FULL SET HOLDERS
+              EPIC PRIZE FOR FULL SET HOLDERS
             </div>
           </div>
-          <div style={{ left: "37%", top: "58%", width: '23rem' }} className="absolute flex w-full">
+          <div
+            style={{ left: "37%", top: "58%", width: "23rem" }}
+            className="absolute flex w-full"
+          >
             <p className="text-xs">
-            To earn this prize, keep at least one card at each level for an artist. You'll need 63 Level 1 cards to start with.
+              To earn this prize, keep at least one card at each level for an
+              artist. You'll need 63 Level 1 cards to start with.
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="mt-24 mb-24 flex justify-center items-center">
           <button className="pinkBtn " onClick={() => setShow(true)}>
@@ -295,8 +311,10 @@ export default function Home(props) {
           OUR VISION
         </p>
         <div className="m-auto" style={{ width: "50%" }}>
-          <p>
-          wavWRLD connects artists with their true fans. We are a community of artists, fans, founders, and devs, building and sharing our experiments with the WRLD.
+          <p style={{ fontSize: "23px", lineHeight: "34px" }}>
+            wavWRLD connects artists with their true fans. We are a community of
+            artists, fans, founders, and devs, building and sharing our
+            experiments with the WRLD.
           </p>
         </div>
 
@@ -333,6 +351,7 @@ export default function Home(props) {
               top: "10%",
               fontSize: 64,
               lineHeight: 0.6,
+              marginTop: 20,
             }}
           >
             BUILT WITH THE <br></br> LIQUALITY WEB3 SDK
@@ -344,6 +363,7 @@ export default function Home(props) {
               right: "20%",
               top: "10%",
               width: "30%",
+              marginTop: 20,
             }}
           >
             <p
@@ -355,11 +375,10 @@ export default function Home(props) {
               Liquality offers open-source tools for developers <br></br>
               to streamline user experience and ease the entry <br></br>
               to the decentralized web.
-
             </p>
             <div
               style={{
-                marginBottom: "25%",
+                marginBottom: "18%",
               }}
             ></div>
 
