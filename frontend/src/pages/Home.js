@@ -83,7 +83,7 @@ export default function Home(props) {
         navigate(`/artist/${game.artist_name}`);
       } else {
         setSelectedArtist(selectedArtistItem);
-        setChooseArtistView("gameIncentives");
+        setChooseArtistView("creditCardPayment");
         setShowPickArtistModal(true);
       }
     } else {
