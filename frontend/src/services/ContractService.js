@@ -131,7 +131,20 @@ var ContractService = {
         // user is missing some NFTs from the tokenIdArray
         return false
     }
-  }
+  },
+
+  setApprovalForAllTxData: async () => {
+    return (await getWavNft().setApprovalForAll.populateTransaction(
+      WAV_PROXY_ADDRESS, true
+    )).data;
+  },
+
+  levelUpTxData: async (artistNumberId, level) => {
+    return (await getWavGame().levelUp.populateTransaction(
+      artistNumberId,
+      level
+    )).data;
+  },
 };
 
 export default ContractService;

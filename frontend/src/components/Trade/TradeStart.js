@@ -1,7 +1,6 @@
 import { ReactComponent as DoubleArrow } from "../../images/double_arrow.svg";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import CustomButton from "../Button";
-import { DataContext } from "../../DataContext";
 import {
   CHAIN_ID,
   WAV_NFT_ADDRESS,
@@ -46,8 +45,6 @@ const subtitleText = {
 export const TradeStart = (props) => {
   const {
     setContent,
-    gameContract,
-    nftContract,
     setTxStatus,
     userNfts,
     level,
@@ -149,15 +146,12 @@ export const TradeStart = (props) => {
       );
 
       if (!approved) {
-        const approvalTx =
-          await nftContract.setApprovalForAll.populateTransaction(
-            WAV_PROXY_ADDRESS,
-            true
-          );
+        const approvalTxData =
+          await ContractService.setApprovalForAllTxData();
 
         await TransactionService.sendGaslessly(
           WAV_NFT_ADDRESS,
-          approvalTx.data,
+          approvalTxData,
           privateKey,
           CHAIN_ID
         );
@@ -168,14 +162,14 @@ export const TradeStart = (props) => {
         approval: true,
       });
 
-      let levelUpTx = await gameContract.levelUp.populateTransaction(
+      let levelUpTxData = await ContractService.levelUpTxData(
         artist?.number_id,
         level + 1
       );
 
       let txHashLevelUp = await TransactionService.sendGaslessly(
         WAV_PROXY_ADDRESS,
-        levelUpTx.data,
+        levelUpTxData,
         privateKey,
         CHAIN_ID
       );
