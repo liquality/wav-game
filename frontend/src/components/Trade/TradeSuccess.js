@@ -70,7 +70,7 @@ export const TradeSuccess = ({
       {" "}
       <div className="p-4 w-1/2 flex-col justify-center items-center ">
         <img
-          src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.svg`}
+          src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
           alt=""
           className="nftImagePrepared w-full h-full object-cover m-auto"
         />
@@ -133,7 +133,12 @@ export const TradeSuccess = ({
 
         {/* TODO: if user doesnt have more nfts to trade, we should disable this */}
         <div className="flexDirectionRow mb-3 mt-3">
-          <CustomButton pink type="big" onClick={tradeMore} disabled={!canStillTrade}>
+          <CustomButton
+            pink
+            type="big"
+            onClick={tradeMore}
+            disabled={!canStillTrade}
+          >
             TRADE MORE
           </CustomButton>
           <button className="ml-5 mr-5" onClick={() => handleCancelClick()}>

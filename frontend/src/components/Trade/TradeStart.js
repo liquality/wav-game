@@ -43,13 +43,7 @@ const subtitleText = {
 };
 
 export const TradeStart = (props) => {
-  const {
-    setContent,
-    setTxStatus,
-    userNfts,
-    level,
-    txStatus,
-  } = props;
+  const { setContent, setTxStatus, userNfts, level, txStatus } = props;
 
   const toLevel = level + 1;
   const [game, setGame] = useState(null);
@@ -146,8 +140,7 @@ export const TradeStart = (props) => {
       );
 
       if (!approved) {
-        const approvalTxData =
-          await ContractService.setApprovalForAllTxData();
+        const approvalTxData = await ContractService.setApprovalForAllTxData();
 
         await TransactionService.sendGaslessly(
           WAV_NFT_ADDRESS,
@@ -204,12 +197,12 @@ export const TradeStart = (props) => {
               {tokenIdForCurrentLevel ? (
                 <div className="flexDirectionRow">
                   <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
                     className="mr-1 nftPreviewTrade "
                     alt="NFT Preview"
                   />
                   <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
                     className="mr-1 nftPreviewTrade "
                     alt="NFT Preview"
                   />
@@ -239,7 +232,7 @@ export const TradeStart = (props) => {
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
               {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (
                 <img
-                  src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.svg`}
+                  src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
                   className="nftBigPreviewTrade"
                   alt="NFT Preview"
                 />
