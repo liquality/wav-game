@@ -120,6 +120,7 @@ export const Artist = (props) => {
         setUserIsFullSetHolder(isFullSetHolder);
         websocketService.connect(fetchSession().id);
       }
+      setSelectedLevel(currentLevel);
     };
     fetchData();
     return () => {
