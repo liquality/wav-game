@@ -110,7 +110,7 @@ export const LevelCard = ({
         <div
           className={classNames({
             "level-card-title": true,
-            "level-card-title-small": id === 6,
+            "level-card-title-small": id === 6 && status !== 'won',
           })}
         >
           {title}

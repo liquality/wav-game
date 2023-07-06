@@ -110,7 +110,7 @@
 .wave-link--small,
 .wave-button--small {
   font-size: 0.55rem;
-  padding: 0;
+  padding: 0 0.313rem;
   min-width: 4.375;
   min-height: 1.625rem;
 }
@@ -118,7 +118,7 @@
 .wave-link--medium,
 .wave-button--medium {
   font-size: 0.75rem;
-  padding: 0 0.313rem;
+  padding: 0 1.1rem;
   min-width: 7.5rem;
   min-height: 2.875rem;
 }

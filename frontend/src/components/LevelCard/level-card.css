@@ -38,7 +38,8 @@ div:has(> .level-card) {
 
 .level-card-title-small {
   margin-bottom: 0.8rem;
-  font-size: 1.77rem !important;
+  font-size: 2.3rem !important;
+  line-height: 2.2rem !important;
 }
 
 .level-card-edition {
@@ -208,7 +209,7 @@ div:has(> .level-card) {
 }
 
 .level-card--won {
-  background: linear-gradient(90deg, #bf3948 1.15%, #962bc7 100%);
+  background: linear-gradient(180deg, #bf3948 1.15%, #962bc7 100%);
   border: 1px solid #ff9fa9;
 }
 
@@ -231,11 +232,11 @@ div:has(> .level-card) {
   z-index: 15;
   background: url("../../images/won-card-bg.svg");
   background-repeat: no-repeat;
-  top: 0;
-  left: 5rem;
-  bottom: 0;
-  right: -2.5rem;
-  background-size: contain;
+  top: -1.5rem;
+  left: 3rem;
+  bottom: -2.5rem;
+  right: -1.5rem;
+  background-size: cover;
 }
 
 /* Active level 1 */
