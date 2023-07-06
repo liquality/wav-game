@@ -12,7 +12,7 @@ import { ReactComponent as FullSetBannerNotEligable } from "../../images/full_se
 import { SendModal } from "../../components/Send/SendModal";
 import StaticDataService from "../../services/StaticDataService";
 import { useParams } from "react-router-dom";
-import { fetchSession, getCurrentLevel } from "../../utils";
+import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import Faq from "../../components/Faq";
 import { DataContext } from "../../DataContext";
@@ -34,12 +34,9 @@ export const Artist = (props) => {
   const {
     nfts,
     nftCount,
-    setNftCount,
     setNfts,
     currentLevel,
     collectibleCount,
-    setCollectibleCount,
-    setCurrentLevel,
     setGetMoreLevel,
     setUserIsFullSetHolder,
     userIsFullSetHolder,
@@ -108,18 +105,14 @@ export const Artist = (props) => {
       if (!nfts && !nftCount && _artist) {
         console.log("FETCHING NFTS AGAIN! BÄ");
         const nftData = await ContractService.getNfts(_artist.number_id);
-        const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
         const isFullSetHolder = await ContractService.checkIfFullSetHolder(
           _artist?.number_id
         );
-
-        setNftCount(_currentLevel.levels);
-        setCollectibleCount(_currentLevel.totalCollectibles);
-        setCurrentLevel(_currentLevel.currentLevel);
         setNfts(nftData);
         setUserIsFullSetHolder(isFullSetHolder);
         websocketService.connect(fetchSession().id);
       }
+      setSelectedLevel(currentLevel);
     };
     fetchData();
     return () => {
@@ -153,9 +146,9 @@ export const Artist = (props) => {
               <div className="flex flex-col justify-center mt-5">
                 <GameTabs
                   selectedLevel={selectedLevel}
+                  currentLevel={currentLevel}
                   currentGame={currentGame}
                   onLevelSelected={onLevelSelected}
-                  currentLevel={currentLevel}
                 />
                 <GameCards
                   userIsFullSetHolder={userIsFullSetHolder}
