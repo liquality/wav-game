@@ -130,7 +130,6 @@ export const TradeStart = (props) => {
 
       const artist = await getArtist();
       const privateKey = getPrivateKey();
-
       // Check approval
       const approved = await NftService.isApprovedForAll(
         WAV_NFT_ADDRESS,
@@ -138,7 +137,7 @@ export const TradeStart = (props) => {
         WAV_PROXY_ADDRESS,
         CHAIN_ID
       );
-
+      
       if (!approved) {
         const approvalTxData = await ContractService.setApprovalForAllTxData();
 
@@ -154,7 +153,6 @@ export const TradeStart = (props) => {
         submited: false,
         approval: true,
       });
-
       let levelUpTxData = await ContractService.levelUpTxData(
         artist?.number_id,
         level + 1
@@ -179,6 +177,7 @@ export const TradeStart = (props) => {
       }
     } catch (err) {
       setError("Transaction failed, please check the logs");
+      console.log("Error trade >> ", err)
     }
   };
 
