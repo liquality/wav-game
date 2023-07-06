@@ -174,10 +174,7 @@ div:has(> .level-card) {
   background-size: contain;
 }
 
-.level-card--6.active::before,
-.level-card--next:hover::before,
-.level-card--next:active::before,
-.level-card--next.active::before {
+.level-card--6.active::before {
   content: "";
   position: absolute;
   display: block;
