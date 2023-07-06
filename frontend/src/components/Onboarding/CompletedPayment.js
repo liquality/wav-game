@@ -36,7 +36,7 @@ export const CompletedPayment = ({
       {" "}
       <div className="p-4 w-1/2 flex-col justify-center items-center ">
         <img
-          src={`https://wavgame-data.netlify.app/images/${crossmintData?.tokenId[0]}.svg`}
+          src={`https://wavgame-data.netlify.app/images/${crossmintData?.tokenId[0]}.png`}
           alt={selectedNft?.metadata?.name}
           className="nftImagePrepared w-full h-full object-cover m-auto"
         />
@@ -95,12 +95,13 @@ export const CompletedPayment = ({
         <p className="lineNoCenter mt-2 " style={{ width: "50%" }}></p>
 
         <p className=" mt-24 greySmallText" style={{ width: "50%" }}>
-        Congratulations! Your card purchase was successful. You can now play the game.
+          Congratulations! Your card purchase was successful. You can now play
+          the game.
         </p>
 
         <div className="flexDirectionRow mb-3 mt-3">
           <CustomButton pink type="big" onClick={handleClose}>
-            CONTINUE 
+            CONTINUE
           </CustomButton>
           <button className="ml-5 mr-5" onClick={buyMore}>
             BUY MORE

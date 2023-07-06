@@ -108,7 +108,7 @@ export const CreditcardPayment = (props) => {
           {tokenIdForCurrentLevel ? (
             <div className="absolute flexDirectionRow nft-game-incentives">
               <img
-                src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.svg`}
+                src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
                 className=" absolute mr-1 nftPreviewTrade "
                 alt="NFT Preview"
               />
