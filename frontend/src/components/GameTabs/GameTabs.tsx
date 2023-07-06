@@ -4,9 +4,14 @@ import { LevelStatus } from "../../types/LevelStatus";
 import { getLevelsStatuses } from "../../utils";
 interface GameTabsProps {
   /**
-      The current level 
+      The selected level 
      */
   selectedLevel: number;
+
+  /**
+   * the current level of the game
+   */
+  currentLevel: number;
 
   currentGame: any;
 
@@ -20,8 +25,8 @@ interface GameTabsProps {
  * The collection or Tab Levels with animation
  */
 export const GameTabs = (props: GameTabsProps) => {
-  const { selectedLevel, onLevelSelected,  } = props;
-  const levelStatuses = getLevelsStatuses(selectedLevel);
+  const { selectedLevel, onLevelSelected, currentLevel  } = props;
+  const levelStatuses = getLevelsStatuses(currentLevel);
 
   return (
     <div className="grid gap-x-2 grid-cols-6">

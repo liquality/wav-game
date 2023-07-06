@@ -9,12 +9,12 @@
   "rpc_urls": {
     "mainnet_eth": "https://mainnet.infura.io/v3/a2ad6f8c0e57453ca4918331f16de87d",
     "mainnet_bsc": "https://bsc-dataseed2.binance.org/",
-    "mainnet_matic": "",
+    "mainnet_matic": "https://polygon-mainnet.g.alchemy.com/v2/8885yi0Bt68OgsssJ6IZNvuC8PRaTOev",
     "mumbia_matic": "https://polygon-mumbai.g.alchemy.com/v2/cgkNW5QlsKZ8D_64-ggyUUj2aYGJqejc"
   },
-  "isProd": false,
-  "wav_proxy_address": "0xf841133409aE6B44780F9F5bfdA694cCE72c252e",
-  "wav_nft_address": "0x3611bB3DA6Fb531917ad3683FFDEa427dA5bA791",
+  "isProd": true,
+  "wav_proxy_address": "0x6F2F43221D7A3863ea0770e65F1E650b20735dDF",
+  "wav_nft_address": "0xE542ac1D50ffaBA062e2C84e125668727952f6d3",
   "wav_nft_abi": [
     {
       "inputs": [

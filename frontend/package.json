@@ -6,7 +6,7 @@
     "@crossmint/client-sdk-react-ui": "^0.2.7-alpha.27",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@liquality/wallet-sdk": "^2.5.0",
+    "@liquality/wallet-sdk": "^2.5.2",
     "@marker.io/browser": "^0.16.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

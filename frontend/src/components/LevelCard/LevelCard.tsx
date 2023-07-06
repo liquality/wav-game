@@ -1,9 +1,6 @@
 import "./level-card.css";
 import classNames from "classnames";
 import { Button } from "../Button/Button";
-import { ReactComponent as LockIcon } from "../../images/lock_icon.svg";
-import { ReactComponent as LockIconPink } from "../../images/lock_icon_pink.svg";
-
 import { ButtonMode } from "../../types/ButtonMode";
 import { LevelStatus } from "../../types/LevelStatus";
 
@@ -105,19 +102,19 @@ export const LevelCard = ({
         active,
       })}
     >
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col">
         <div className="level-card-level">LEVEL {id}</div>
         <div
           className={classNames({
             "level-card-title": true,
-            "level-card-title-small": id === 6,
+            "level-card-title-small": id === 6 && status !== 'won',
           })}
         >
           {title}
         </div>
         <div className="level-card-edition">{edition}</div>
       </div>
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-end">
         <div
           className={classNames({
             "level-card-instructions-empty-actions":
@@ -128,28 +125,19 @@ export const LevelCard = ({
         >
           {instructions}
         </div>
-        <div className="flex justify-between gap-2 mt-2">
+        <div className="flex justify-between gap-2 mt-4">
           {actions.map((action) => {
-            let lock;
-            if (!active) {
-              lock = action.useIcon ? (
-                <LockIconPink style={{ marginRight: "0.5rem" }} />
-              ) : null;
-            } else {
-              lock = action.useIcon ? (
-                <LockIcon style={{ marginRight: "0.5rem" }} />
-              ) : null;
-            }
+
             return (
               <Button
                 disabled={!active || action.disabled}
                 key={action.label}
                 mode={action.mode}
                 link={action.link}
+                useIcon={action.useIcon}
                 onClick={() => handleActionClick(action)}
               >
                 <>
-                  {lock}
                   {action.label}
                 </>
               </Button>
