@@ -79,6 +79,7 @@ export const Level5 = (props) => {
       instructions = `You have ${
         level5Count === -1 ? 0 : level5Count
       } cards. Get 1 more from the previous level.`;
+      tradeActionText = "Trade More";
       actionDisabled = false;
     }
 

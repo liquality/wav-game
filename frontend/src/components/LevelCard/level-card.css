@@ -7,7 +7,7 @@ div:has(> .level-card) {
   position: absolute;
   display: flex;
   border-radius: 3.13rem;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
   height: 32.5rem;
   width: 20.313rem;
@@ -26,7 +26,7 @@ div:has(> .level-card) {
 }
 
 .level-card-title {
-  font-family: 'Alba';
+  font-family: "Alba";
   font-style: normal;
   font-weight: 400;
   font-size: 2.75rem;
@@ -42,7 +42,7 @@ div:has(> .level-card) {
 }
 
 .level-card-edition {
-  font-family: 'Sora';
+  font-family: "Sora";
   font-style: normal;
   font-weight: 500;
   font-size: 0.813rem;
@@ -54,7 +54,7 @@ div:has(> .level-card) {
 }
 
 .level-card-instructions {
-  font-family: 'Sora';
+  font-family: "Sora";
   font-weight: 300;
   font-size: 0.75rem;
   line-height: 1.188rem;
@@ -65,44 +65,40 @@ div:has(> .level-card) {
 .level-card-instructions-empty-actions {
   margin-bottom: 0;
   margin-top: 2.5rem;
-  font-family: '000 webfont';
+  font-family: "000 webfont";
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
   line-height: 31px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: #F2F2F2;
+  color: #f2f2f2;
 }
-
 
 /* ACTIVE */
 .level-card--active {
-  color: #FF5DC8;
-  border: 1px solid #F251BC;
-  background-color: #BC2B8B;
+  color: #ff5dc8;
+  border: 1px solid #f251bc;
+  background-color: #bc2b8b;
 }
 
 .level-card--active.active,
-
 .level-card--active:hover .level-card-title,
 .level-card--active:hover .level-card-instructions,
 .level-card--active:hover .level-card-edition,
 .level-card--active:hover .level-card-level,
-
 .level-card--active.active .level-card-title,
 .level-card--active.active .level-card-instructions,
 .level-card--active.active .level-card-edition,
 .level-card--active.active .level-card-level {
-  color: #FFFFFF;
+  color: #ffffff;
 }
-
 
 /* COMPLETED */
 .level-card--completed {
-  color: #F5F5F5;
-  border: 1px solid #BF3948;
-  background-color: #4B1F3E;
+  color: #f5f5f5;
+  border: 1px solid #bf3948;
+  background-color: #4b1f3e;
 }
 
 .level-card--completed .level-card-level,
@@ -124,15 +120,14 @@ div:has(> .level-card) {
 .level-card--completed.active .level-card-level,
 .level-card--completed.active .level-card-title,
 .level-card--completed.active .level-card-edition {
-  color: #FF9FA9;
+  color: #ff9fa9;
 }
 
 .level-card--completed:hover .level-card-instructions,
 .level-card--completed:active .level-card-instructions,
 .level-card--completed.active .level-card-instructions {
-  color: #FFFFFF;
+  color: #ffffff;
 }
-
 
 /* LOCKED */
 .level-card--locked {
@@ -144,7 +139,7 @@ div:has(> .level-card) {
 .level-card--locked.active,
 .level-card--locked:active,
 .level-card--locked:hover {
-  color: #F2F2F2;
+  color: #f2f2f2;
 }
 
 .level-card--locked .level-card-instructions {
@@ -156,24 +151,21 @@ div:has(> .level-card) {
   text-transform: uppercase;
 }
 
-
 /* NEXT */
 .level-card--next {
   color: #828282;
-  border: 2px solid #F251BC;
+  border: 2px solid #f251bc;
   background-color: #333333;
-  outline: 2px solid #C154F3;
+  outline: 2px solid #c154f3;
   outline-offset: 0.313rem;
 }
 
-
-.level-card--next::before,
 .level-card--6::before {
   content: "";
   position: absolute;
   display: block;
   z-index: 15;
-  background: url('../../images/card-bg-off.svg');
+  background: url("../../images/card-bg-off.svg");
   background-repeat: no-repeat;
   top: -2rem;
   left: 4rem;
@@ -190,7 +182,7 @@ div:has(> .level-card) {
   position: absolute;
   display: block;
   z-index: 15;
-  background: url('../../images/card-bg-active.svg');
+  background: url("../../images/card-bg-active.svg");
   background-repeat: no-repeat;
   top: -2rem;
   left: 4rem;
@@ -202,7 +194,7 @@ div:has(> .level-card) {
 .level-card--next:hover,
 .level-card--next:active,
 .level-card--next.active {
-  color: #F2F2F2;
+  color: #f2f2f2;
 }
 
 /* UPCOMMING */
@@ -215,22 +207,21 @@ div:has(> .level-card) {
 .level-card--upcomming:hover,
 .level-card--upcomming:active,
 .level-card--upcomming.active {
-  color: #F2F2F2;
+  color: #f2f2f2;
 }
 
-
 .level-card--won {
-  background: linear-gradient(90deg, #BF3948 1.15%, #962BC7 100%);
-  border: 1px solid #FF9FA9;
+  background: linear-gradient(90deg, #bf3948 1.15%, #962bc7 100%);
+  border: 1px solid #ff9fa9;
 }
 
 .level-card--won .level-card-title {
-  font-family: 'Akka';
+  font-family: "Akka";
   opacity: 0.8;
   font-weight: normal;
   font-size: 2.175rem;
   line-height: 2.625rem;
-  color: #FFFFFF;
+  color: #ffffff;
   z-index: 20;
   min-height: 10rem;
 }
@@ -241,7 +232,7 @@ div:has(> .level-card) {
   position: absolute;
   display: block;
   z-index: 15;
-  background: url('../../images/won-card-bg.svg');
+  background: url("../../images/won-card-bg.svg");
   background-repeat: no-repeat;
   top: 0;
   left: 5rem;
@@ -285,7 +276,6 @@ div:has(> .level-card) {
   transform: scale(0.5);
   left: 35rem;
 }
-
 
 /* Active level 2 */
 .level-card--display--2--1 {
@@ -394,7 +384,6 @@ div:has(> .level-card) {
   transform: scale(0.8);
   left: 35rem;
 }
-
 
 /* Active level 5 */
 .level-card--display--5--1 {

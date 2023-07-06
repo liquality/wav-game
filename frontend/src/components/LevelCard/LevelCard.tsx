@@ -2,6 +2,8 @@ import "./level-card.css";
 import classNames from "classnames";
 import { Button } from "../Button/Button";
 import { ReactComponent as LockIcon } from "../../images/lock_icon.svg";
+import { ReactComponent as LockIconPink } from "../../images/lock_icon_pink.svg";
+
 import { ButtonMode } from "../../types/ButtonMode";
 import { LevelStatus } from "../../types/LevelStatus";
 
@@ -38,7 +40,6 @@ interface Level {
   instructions: string;
 
   useEmtpyActionsStyle?: boolean;
-
 }
 
 interface CardProps {
@@ -83,7 +84,7 @@ export const LevelCard = ({
   const {
     setLevel,
     current,
-    level: { edition, title, instructions, id, useEmtpyActionsStyle }
+    level: { edition, title, instructions, id, useEmtpyActionsStyle },
   } = props;
   const active = current === id;
   const handleActionClick = (action: LevelActionProps) => {
@@ -91,10 +92,11 @@ export const LevelCard = ({
       action.onActionClick(id);
     }
   };
+
   return (
     <div
-      onMouseOver={() => (setLevel ? setLevel(id) : () => { })}
-      onMouseLeave={() => (setLevel ? setLevel(null) : () => { })}
+      onMouseOver={() => (setLevel ? setLevel(id) : () => {})}
+      onMouseLeave={() => (setLevel ? setLevel(null) : () => {})}
       className={classNames({
         "level-card flex flex-col justify-between": true,
         [`level-card--display--${current}--${id}`]: true,
@@ -105,16 +107,21 @@ export const LevelCard = ({
     >
       <div className="flex flex-col justify-between">
         <div className="level-card-level">LEVEL {id}</div>
-        <div className={classNames({
-          "level-card-title": true,
-          'level-card-title-small': id === 6
-        })}>{title}</div>
+        <div
+          className={classNames({
+            "level-card-title": true,
+            "level-card-title-small": id === 6,
+          })}
+        >
+          {title}
+        </div>
         <div className="level-card-edition">{edition}</div>
       </div>
       <div className="flex flex-col justify-between">
         <div
           className={classNames({
-            "level-card-instructions-empty-actions": !useEmtpyActionsStyle && (!actions || actions.length <= 0),
+            "level-card-instructions-empty-actions":
+              !useEmtpyActionsStyle && (!actions || actions.length <= 0),
             "level-card-instructions": !useEmtpyActionsStyle,
             active,
           })}
@@ -123,6 +130,16 @@ export const LevelCard = ({
         </div>
         <div className="flex justify-between gap-2 mt-2">
           {actions.map((action) => {
+            let lock;
+            if (!active) {
+              lock = action.useIcon ? (
+                <LockIconPink style={{ marginRight: "0.5rem" }} />
+              ) : null;
+            } else {
+              lock = action.useIcon ? (
+                <LockIcon style={{ marginRight: "0.5rem" }} />
+              ) : null;
+            }
             return (
               <Button
                 disabled={!active || action.disabled}
@@ -132,9 +149,7 @@ export const LevelCard = ({
                 onClick={() => handleActionClick(action)}
               >
                 <>
-                  {action.useIcon ? (
-                    <LockIcon style={{ marginRight: "0.5rem" }} />
-                  ) : null}
+                  {lock}
                   {action.label}
                 </>
               </Button>

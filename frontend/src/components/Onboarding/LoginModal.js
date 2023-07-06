@@ -157,7 +157,7 @@ export const LoginModal = (props) => {
           handleClose={handleClose}
         />
       );
-    } else if (content === "creditcardPayment") {
+    } else if (content === "creditCardPayment") {
       return (
         <CreditcardPayment
           selectedId={selectedId}
