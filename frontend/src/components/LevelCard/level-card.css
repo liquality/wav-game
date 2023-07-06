@@ -60,7 +60,6 @@ div:has(> .level-card) {
   font-size: 0.75rem;
   line-height: 1.188rem;
   letter-spacing: 0.031rem;
-  margin-bottom: 2.5rem;
 }
 
 .level-card-instructions-empty-actions {

@@ -105,7 +105,7 @@ export const LevelCard = ({
         active,
       })}
     >
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col">
         <div className="level-card-level">LEVEL {id}</div>
         <div
           className={classNames({
@@ -117,7 +117,7 @@ export const LevelCard = ({
         </div>
         <div className="level-card-edition">{edition}</div>
       </div>
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-end">
         <div
           className={classNames({
             "level-card-instructions-empty-actions":
@@ -128,7 +128,7 @@ export const LevelCard = ({
         >
           {instructions}
         </div>
-        <div className="flex justify-between gap-2 mt-2">
+        <div className="flex justify-between gap-2 mt-4">
           {actions.map((action) => {
             let lock;
             if (!active) {
