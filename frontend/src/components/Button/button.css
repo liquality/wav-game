@@ -130,3 +130,22 @@
   min-width: 8rem;
   min-height: 3.5rem;
 }
+
+.wave-button-icon .icon-btn{
+  width: 15px;
+  height: 16px;
+  margin-right: 0.5rem;
+  background-image: url("../../images/lock_icon_pink.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.wave-button-icon:hover .icon-btn,
+.wave-button-icon:active .icon-btn {  
+  background-image: url("../../images/lock_icon.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+
+
