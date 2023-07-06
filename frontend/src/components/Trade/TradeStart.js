@@ -35,7 +35,7 @@ const subtitleText = {
       "All of this level's prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.",
   },
   5: {
-    from: "Trade 2 Unreleased Track Performances",
+    from: "Trade 2 custom-made songs",
     to: "Your Chance to Win",
     claimed:
       "A winner for the 1-on-1 trip + concert has been claimed already! Keep trading for your chance to win the full set holder reward.",
