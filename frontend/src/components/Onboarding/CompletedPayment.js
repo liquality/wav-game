@@ -50,7 +50,7 @@ export const CompletedPayment = ({
 
           <a
             className="hover:no-underline hover:text-decoration-none"
-            href={`https://mumbai.polygonscan.com/address/${crossmintData?.walletAddress}`}
+            href={`${process.env.REACT_APP_EXPLORER_URL}/address/${crossmintData?.walletAddress}`}
             target="blank"
             rel="noreferrer"
           >
