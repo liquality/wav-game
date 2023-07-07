@@ -192,7 +192,7 @@ export const PrepareSend = ({
         </p>
 
         <p className=" greySmallText mt-4" style={{ width: "50%" }}>
-          All fees paid by wavWRLD / Average network speed
+          Transfer fees paid by wavWRLD
         </p>
 
         <div className="flexDirectionRow mb-3 mt-3">
