@@ -52,17 +52,17 @@ const getWavNft = () => {
 var ContractService = {
   canBecomeEarlyBirdCollector: async (gameId, level) => {
     try {
-      if (level === 6) {
-        const collector = await getWavGame().highestLevelCollector();
-        return collector === ZERO_ADDRESS;
-      } else {
+      // if (level === 6) {
+       // const collector = await getWavGame().highestLevelCollector();
+       // return collector === ZERO_ADDRESS;
+      //} else {
         const collectors = await getWavGame().fetchEarlyBirdCollectors(
           gameId,
           level
         );
 
         return collectors.length < EARLY_BIRD_COLLECTORS_MAX[level];
-      }
+      //}
     } catch (error) {
       console.log("error >> ", error);
     }
@@ -70,12 +70,13 @@ var ContractService = {
 
   earlyBirdCount: async (gameId, level) => {
     try {
-      if (level === 6) {
-        const collector = await getWavGame().highestLevelCollector();
-        return collector === ZERO_ADDRESS ? 0 : 1;
-      } else {
-        return (await getWavGame().fetchEarlyBirdCollectors(gameId, level)).length;
-      }
+      // if (level === 6) {
+      //   const collector = await getWavGame().highestLevelCollector();
+      //   return collector === ZERO_ADDRESS ? 0 : 1;
+      // } else {
+      //   return (await getWavGame().fetchEarlyBirdCollectors(gameId, level)).length;
+      // }
+      return (await getWavGame().fetchEarlyBirdCollectors(gameId, level)).length;
     } catch (error) {
       console.log("error >> ", error);
     }
@@ -83,12 +84,14 @@ var ContractService = {
 
   isEarlyBird: async (gameId, level) => {
     try {
-      if (level === 6) {
-        const collector = await getWavGame().highestLevelCollector();
-        return collector === getPublicKey();
-      } else {
-        return await getWavGame().isEarlyBirdCollector(gameId, level);
-      }
+      // if (level === 6) {
+      //   const collector = await getWavGame().highestLevelCollector();
+      //   return collector === getPublicKey();
+      // } else {
+      //   return await getWavGame().isEarlyBirdCollector(gameId, level);
+      // }
+
+      return await getWavGame().isEarlyBirdCollector(gameId, level);
     } catch (error) {
       console.log("error >> ", error);
     }
