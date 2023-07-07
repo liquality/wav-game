@@ -80,7 +80,7 @@ export const TradeSuccess = ({
 
           <a
             className="hover:no-underline hover:text-decoration-none"
-            href={`https://mumbai.polygonscan.com/address/${txStatus?.txHash}`}
+            href={`${process.env.REACT_APP_EXPLORER_URL}/address/${txStatus?.txHash}`}
             target="blank"
             rel="noreferrer"
           >
