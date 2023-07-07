@@ -104,7 +104,7 @@ export const Sidebar = ({
           <div className="artist-desc">{artist.description}</div>
           <button
             className="artist-link flex items-center"
-            onClick={() => setShowPickArtistModal(true)}
+            onClick={() => handleChangeArtistClick()}
           >
             CHANGE ARTIST
             <ArrowRight className="ml-3" />
