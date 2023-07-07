@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthService, tryRegisterSW } from "@liquality/wallet-sdk";
 import { LoginOrRegister } from "./LogInOrRegister";
@@ -10,6 +10,7 @@ import { CustomModal } from "../Modal";
 import { fetchSession } from "../../utils";
 import UserService from "../../services/UserService";
 import websocketService from "../../services/Websocket/WebsocketService";
+import { DataContext } from "../../DataContext";
 
 const verifierMap = {
   google: {
@@ -41,9 +42,15 @@ export const LoginModal = (props) => {
   const [loginResponse, setLoginResponse] = useState({});
   const [selectedId, setSelectedId] = useState(null);
   const [crossmintData, setCrossmintData] = useState(null);
+  const { setNfts, setNftCount } = useContext(DataContext);
 
   const navigate = useNavigate();
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    //To rerender nfts and count, set to null so useeffect hook can fetch again in parent components
+    setNfts(null);
+    setNftCount(null);
+  };
 
   useEffect(() => {
     const init = async () => {

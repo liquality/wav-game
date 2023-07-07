@@ -102,7 +102,7 @@ export const CompletedPayment = ({
         </p>
 
         <div className="flexDirectionRow mb-3 mt-3">
-          <CustomButton pink type="big" onClick={handleClose}>
+          <CustomButton pink type="big" onClick={() => handleClose()}>
             CONTINUE
           </CustomButton>
           <button className="ml-5 mr-5" onClick={buyMore}>

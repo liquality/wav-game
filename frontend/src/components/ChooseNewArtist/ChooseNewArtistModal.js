@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { PickArtist } from "../Onboarding/PickArtist";
 
 import { CustomModal } from "../Modal";
 
 import { CreditcardPayment } from "../Onboarding/CreditcardPayment";
 import { CompletedPayment } from "../Onboarding/CompletedPayment";
+import { DataContext } from "../../DataContext";
 
 export const ChooseNewArtistModal = (props) => {
   const {
@@ -18,9 +19,14 @@ export const ChooseNewArtistModal = (props) => {
 
   const [headerText, setHeaderText] = useState("Change artist");
   const [crossmintData, setCrossmintData] = useState(null);
+  const { setNfts, setNftCount } = useContext(DataContext);
   const handleClose = () => {
+    //refresh nfts here
     setShow(false);
     setChooseArtistView("chooseArtistStart");
+    //To rerender nfts and count, set to null so useeffect hook can fetch again in parent components
+    setNfts(null);
+    setNftCount(null);
   };
 
   useEffect(() => {
