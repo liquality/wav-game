@@ -30,15 +30,14 @@ const subtitleText = {
   },
   4: {
     from: "Trade 2 Physical Items",
-    to: "Get 1 Unreleased Track Performance or Listening Party",
+    to: "Get 1 custom-made song",
     claimed:
       "All of this level's prizes have been claimed already! Keep trading for your chance to win other rewards and claim the full set holder rewards.",
   },
   5: {
     from: "Trade 2 custom-made songs",
-    to: "Your Chance to Win",
-    claimed:
-      "A winner for the 1-on-1 trip + concert has been claimed already! Keep trading for your chance to win the full set holder reward.",
+    to: "An entry into the raffle for a trip + 1:1 concert",
+    claimed: "Each Level 6 card qualifies for a raffle entry.",
   },
 };
 

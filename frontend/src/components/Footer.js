@@ -49,7 +49,7 @@ const Footer = () => {
           style={{ fontSize: "12px", color: "#BDBDBD" }}
         >
           {" "}
-          Copyright WAVwrld_ 2023. All Rights Reserved.{" "}
+          Copyright wavWRLD 2023. All Rights Reserved.{" "}
           <a
             style={{ fontSize: "12px", color: "#BDBDBD" }}
             className="hover:no-underline hover:text-decoration-none no-underline "
