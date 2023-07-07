@@ -41,14 +41,18 @@ export const LoginOrRegister = (props) => {
                   <b>WELCOME</b>
                 </p>
                 <p className="rightSubHeadingTextSmall mt-3">
-                  Your registration creates a wallet to securely hold your cards.
+                  Your registration creates a wallet to securely hold your
+                  cards.
                 </p>
                 <div className="rightSubHeadingTextSmall mt-5">
                   <ul className="list">
                     <li>optimized for Chrome</li>
-                    <li>log-in with the same account to play games in progress</li>
+                    <li>
+                      log-in with the same account to play games in progress
+                    </li>
                     <li>use one Google account per browser only</li>
                     <li>all payments in USD</li>
+                    <li> At any point refresh the page to update the game</li>
                   </ul>
                 </div>
               </div>
@@ -59,7 +63,10 @@ export const LoginOrRegister = (props) => {
                 href="/terms"
                 target="blank"
                 rel="noreferrer"
-              > Terms & Conditions</a>
+              >
+                {" "}
+                Terms & Conditions
+              </a>
             </div>
           </div>
         </div>
