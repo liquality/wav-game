@@ -98,7 +98,7 @@ export const PrepareSend = ({
             {artist?.sound_link} <SmallPinkArrow className="ml-2 mt-1" />
           </a>
           <a
-            href={`https://testnets.opensea.io/${selectedNft.contract.address}`}
+            href={`${process.env.REACT_APP_OPENSEA_URL}${selectedNft.contract.address}`}
             target="blank"
             className=" flexDirectionRow  lightPink hover:no-underline hover:decoration-none no-underline"
           >
@@ -111,7 +111,7 @@ export const PrepareSend = ({
 
           <a
             className="hover:no-underline hover:text-decoration-none"
-            href={`https://mumbai.polygonscan.com/address/${selectedNft.contract?.address}`}
+            href={`${process.env.REACT_APP_EXPLORER_URL}/address/${selectedNft.contract?.address}`}
             target="blank"
             rel="noreferrer"
           >

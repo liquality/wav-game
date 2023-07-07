@@ -341,33 +341,27 @@ export default function Home(props) {
         <br />
       </div>
       {/* Built with the LIQ SDK */}
-      <div className="flex justify-center items-center relative mt-5 mb-5">
-        <div className="builtWithLiqSDKContainer">
-          <p
-            className="absolute webfont lightCoral "
+      <div className="flex flex-row justify-center items-center mt-5 mb-5">
+        <div className="grid grid-cols-2 gap-4">
+          <div
+            className="webfont lightCoral "
             style={{
-              left: "15%",
-              bottom: "0%",
-              top: "10%",
               fontSize: 64,
               lineHeight: 0.6,
               marginTop: 20,
             }}
           >
             BUILT WITH THE <br></br> LIQUALITY WEB3 SDK
-          </p>
+          </div>
 
           <div
-            className="absolute "
+            
             style={{
-              right: "20%",
-              top: "10%",
-              width: "30%",
               marginTop: 20,
             }}
           >
             <p
-              className="absolute text-s"
+              className="text-s"
               style={{
                 lineHeight: 1.4,
               }}
@@ -378,7 +372,7 @@ export default function Home(props) {
             </p>
             <div
               style={{
-                marginBottom: "18%",
+                marginTop: "1rem",
               }}
             ></div>
 
@@ -389,7 +383,7 @@ export default function Home(props) {
             >
               {" "}
               <p
-                className="absolute text-xs lightPink flexDirectionRow"
+                className="text-xs lightPink flexDirectionRow"
                 style={{
                   lineHeight: 1.4,
                 }}
@@ -404,7 +398,7 @@ export default function Home(props) {
               }}
             ></div>
             <p
-              className="absolute  lightPink flexDirectionRow"
+              className="lightPink flexDirectionRow"
               style={{
                 lineHeight: 1.4,
               }}
