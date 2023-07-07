@@ -8,9 +8,7 @@ export const Level6 = (props) => {
     levelSettings,
     currentLevel,
     onSetLevel,
-    nftCount,
-    currentGame,
-    userIsFullSetHolder,
+    nftCount
   } = props;
   const level6Count = nftCount["6"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[6];
@@ -18,10 +16,6 @@ export const Level6 = (props) => {
   let edition = "";
   let title = "";
   let useEmtpyActionsStyle = true;
-  const { earlyBirdCount, isEarlyBird } = useEarlyBirdInfo(
-    currentGame.game_symbol_id,
-    6
-  );
 
   function applyCountDown() {
     if (levelSettings && levelSettings.countdown_ends > 0) {
@@ -45,53 +39,28 @@ export const Level6 = (props) => {
 
   if (!applyCountDown()) {
     useEmtpyActionsStyle = true;
-    // UC 2: User is the winner
-
-    if (level6Count === 0) {
-      instructions = "You need to start with 32 Game cards.";
-    } else if (level6Count === 1) {
-      if (earlyBirdCount && !isEarlyBird) {
-        title = "The main prize was already claimed. Go for full set holder!";
-        instructions = `You have ${
-          level6Count === -1 ? 0 : level6Count
-        } cards.`;
-      } else if (isEarlyBird) {
-        instructions = "";
-        status = "won";
-        title = "CONGRATS, YOU WON A 1:1 TRIP + CONCERT EXPERIENCE";
-      }
-    } else {
-      instructions = `You have ${level6Count === -1 ? 0 : level6Count} cards.`;
-    }
-
-    if (currentLevel === 5) {
-      status = "next";
-    }
-    if (currentLevel === 6) {
-      status = "active";
-    } else {
-      status = "locked";
-    }
-
-    if (isEarlyBird) {
-      //UC 2
-      instructions = "";
+    
+    if (level6Count >=1 ) { 
       status = "won";
-      title = "CONGRATS, YOU WON A 1:1 TRIP + CONCERT EXPERIENCE";
-    } else if (earlyBirdCount === 0) {
-      // UC 1: Main Prize NOT yet claimed
-      // -inactive => current level !=6
-      // -inactive => current level === 5
-      title = "A chance to win a 1:1 + concert experience.";
-    } else if (earlyBirdCount) {
-      // UC 3: When main price was already claimed
-      // -active => current level is 6
-      // -inactive => current level !=6
-      // -inactive => current level === 5
       instructions = `You have ${
         level6Count === -1 ? 0 : level6Count
-      } cards. Hold 1 or more cards at each level to become a full set holder`;
-      title = "The main prize was already claimed. Go for full set holder!";
+      } cards. Each card qualifies for an entry.`;
+      
+      title = 'You are in the raffle to WIN A TRIP + 1:1 CONCERT';
+
+    } else {
+      if (currentLevel === 5) {
+        status = "next";
+      }
+      
+      if (currentLevel === 6) {
+        status = "active";
+      } else {
+        status = "locked";
+      }
+
+      title = "A chance to win a 1:1 + concert experience";
+      instructions = "Each Level 6 card qualifies for a raffle entry.";
     }
   }
 
