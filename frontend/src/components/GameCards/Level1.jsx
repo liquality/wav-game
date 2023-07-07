@@ -37,6 +37,7 @@ export const Level1 = (props) => {
     level1Count === 0
   ) {
     tradeActionText = "Get Cards";
+    actionLocked = true;
   }
 
   let actions = [];

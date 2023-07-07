@@ -61,7 +61,6 @@ export const Level5 = (props) => {
     }
     return false;
   }
-  console.log("");
 
   if (!applyCountDown()) {
     useEmtpyActionsStyle = true;
@@ -76,6 +75,7 @@ export const Level5 = (props) => {
         } cards. Get 1 more from the previous level.`;
         tradeActionText = "Level Locked";
         actionDisabled = true;
+        actionLocked = true;
       }
     } else if (level5Count >= 2) {
       instructions = `You have ${

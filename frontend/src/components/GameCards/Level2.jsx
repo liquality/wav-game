@@ -7,7 +7,6 @@ export const Level2 = (props) => {
     currentLevel,
     onSetLevel,
     onTradeClick,
-    onGetMoreClick,
     nftCount,
     burnStatus,
   } = props;
@@ -30,6 +29,7 @@ export const Level2 = (props) => {
     } cards. Get 1 more from the previous level.`;
     tradeActionText = "Start Trading";
     actionDisabled = true;
+    actionLocked = true;
   }
   if (level2Count >= 2 && burnStatus) {
     tradeActionText = "Trade More";
