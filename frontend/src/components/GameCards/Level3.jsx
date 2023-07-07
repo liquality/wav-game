@@ -18,7 +18,6 @@ export const Level3 = (props) => {
   let actionLocked = false;
   let noActions = false;
 
-  actionDisabled = false;
   instructions = `You have ${level3Count === -1 ? 0 : level3Count} cards.`;
   if (level3Count < 2) {
     if (level3Count === 0) {

@@ -79,6 +79,7 @@ export const Level4 = (props) => {
         } cards. Get 1 more from the previous level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
+        actionLocked = true;
       }
     } else {
       // UC 4 - user has >/= 2 NFTs and burnt before show button 'Trade more'. card color depending if it is [completed], [active], or [next] level.
