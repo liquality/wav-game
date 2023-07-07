@@ -59,7 +59,7 @@ export const Level6 = (props) => {
         status = "locked";
       }
 
-      title = "A chance to win a 1:1 + concert experience";
+      title = "A chance to win a trip + 1:1 concert";
       instructions = "Each Level 6 card qualifies for a raffle entry.";
     }
   }
