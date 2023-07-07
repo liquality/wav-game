@@ -137,7 +137,7 @@ export const TradeStart = (props) => {
         WAV_PROXY_ADDRESS,
         CHAIN_ID
       );
-      
+
       if (!approved) {
         const approvalTxData = await ContractService.setApprovalForAllTxData();
 
@@ -177,7 +177,7 @@ export const TradeStart = (props) => {
       }
     } catch (err) {
       setError("Transaction failed, please check the logs");
-      console.log("Error trade >> ", err)
+      console.log("Error trade >> ", err);
     }
   };
 
@@ -210,18 +210,19 @@ export const TradeStart = (props) => {
             </div>
 
             <div className="pr-5 pt-5 mt-4 flexDirectionColumn m-start">
-              <DoubleArrow className="m-auto" />
-              <CustomButton
-                onClick={() => startTrade()}
-                pink
-                type="big"
-                mt="50px"
-                mb="50px"
-                ml="50px"
-                mr="40px"
-              >
-                TRADE
-              </CustomButton>
+              <DoubleArrow className="m-auto " />
+              <div className="m-auto ">
+                <CustomButton
+                  onClick={() => startTrade()}
+                  pink
+                  type="big"
+                  mt="50px"
+                  mb="50px"
+                  ml="30%"
+                >
+                  TRADE
+                </CustomButton>
+              </div>
 
               <DoubleArrow className="m-auto" />
             </div>

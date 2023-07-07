@@ -108,11 +108,11 @@ export const TradeSuccess = ({
           {" "}
           <p className="mt-3 greyUpperCaseText ">ERC-1155</p>
           <a
-            href={`https://www.sound.xyz/${artist.id}`}
+            href={artist?.sound_link}
             target="blank"
             className="flexDirectionRow  lightPink hover:no-underline hover:decoration-none no-underline"
           >
-            sound.xyz/tk <SmallPinkArrow className="ml-2 mt-1" />
+            {artist?.sound_link} <SmallPinkArrow className="ml-2 mt-1" />
           </a>
           <a
             href={`${process.env.REACT_APP_EXPLORER_URL}/tx/${txStatus?.txHash}`}
