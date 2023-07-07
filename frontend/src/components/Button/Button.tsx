@@ -50,7 +50,6 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const type = link ? 'link' : 'button'
-  let icon = null;
   
   return (
     <button
