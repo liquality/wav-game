@@ -10,6 +10,7 @@ export const CompletedPayment = ({
   handleClose,
   setCrossmintData,
   crossmintData,
+  setHeaderText,
 }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [artist, setArtist] = useState("");
@@ -28,6 +29,7 @@ export const CompletedPayment = ({
 
   const buyMore = async () => {
     setContent("creditCardPayment");
+    setHeaderText("Get cards to play");
   };
 
   let selectedNft = {};

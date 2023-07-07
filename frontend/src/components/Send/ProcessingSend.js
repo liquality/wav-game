@@ -70,7 +70,7 @@ export const ProcessingSend = (props) => {
                   style={{}}
                   className="button button-js"
                   type="button"
-                  href={`${process.env.REACT_APP_EXPLORER_URL}/tx/${txStatus.hash}`}
+                  href={`${process.env.REACT_APP_EXPLORER_URL}tx/${txStatus.hash}`}
                   target="_blank"
                   rel="noreferrer"
                 >

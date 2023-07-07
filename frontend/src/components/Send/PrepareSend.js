@@ -2,9 +2,10 @@ import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.
 
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { ReactComponent as Polygon } from "../../images/polygon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButton from "../Button";
 import { getPublicKey, shortenAddress } from "../../utils";
+import StaticDataService from "../../services/StaticDataService";
 
 const imagePlaceholder =
   "https://flowbite.com/docs/images/examples/image-4@2x.jpg";
@@ -18,6 +19,7 @@ export const PrepareSend = ({
   const [addressInput, setAddressInput] = useState("");
   const [nftAmount, setNftAmount] = useState(1);
   const [errorMsg, setErrorMsg] = useState("");
+  const [artist, setArtist] = useState(null);
 
   const sendNft = async () => {
     setSendRequest({
@@ -40,6 +42,23 @@ export const PrepareSend = ({
       setErrorMsg("NFT amount must be lower or equal to your balance");
     }
   };
+
+  //findArtistByNumberId
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log();
+      if (selectedNft && !artist) {
+        let firstChar = selectedNft.id.toString()[0];
+        const _artist = await StaticDataService.findArtistByNumberId(
+          firstChar * 1000
+        );
+        console.log(firstChar * 1000, "first char ", _artist);
+        setArtist(_artist);
+      }
+    };
+    fetchData();
+  }, [artist, selectedNft]);
 
   const handleCopyClick = (text) => {
     navigator.clipboard
@@ -72,11 +91,11 @@ export const PrepareSend = ({
             {selectedNft.contract?.type}
           </p>
           <a
-            href="https://www.sound.xyz/tk/faster"
+            href={artist?.sound_link}
             target="blank"
             className="flexDirectionRow  lightPink hover:no-underline hover:decoration-none no-underline"
           >
-            sound.xyz/tk/faster <SmallPinkArrow className="ml-2 mt-1" />
+            {artist?.sound_link} <SmallPinkArrow className="ml-2 mt-1" />
           </a>
           <a
             href={`https://testnets.opensea.io/${selectedNft.contract.address}`}
@@ -109,12 +128,14 @@ export const PrepareSend = ({
 
         <div className="flexDirectionRow">
           {" "}
-          {/*   <img
-            className="avatarImage ml-2"
-            src={require(`../../images/artists/${.image}`)}
-            alt="Artist Avatar"
-          />{" "} */}
-          <p className="mt-2">{selectedNft.metadata?.name.split(" - ")[0]}</p>
+          {artist ? (
+            <img
+              className="avatarImage ml-2"
+              src={require(`../../images/artists/${artist?.image}`)}
+              alt="Artist Avatar"
+            />
+          ) : null}
+          <p className="mt-2">{artist?.name}</p>
         </div>
 
         <div className="mt-3">
