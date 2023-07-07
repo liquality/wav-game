@@ -110,7 +110,7 @@ export const PickArtist = (props) => {
       });
       //if game already exists dont create it again
       if (gameAlreadyStarted && !shouldNavigate) {
-        setHeaderText("Get Collectibles to Play");
+        setHeaderText("Get Cards To Play");
         setContent("creditCardPayment");
       } else if (shouldNavigate) {
         navigate(`/artist/${selectedId?.id}`);
@@ -118,7 +118,7 @@ export const PickArtist = (props) => {
       } else {
         await createGame();
         setContent("creditCardPayment");
-        setHeaderText("Get Collectibles to Play");
+        setHeaderText("Get Cards To Play");
       }
     } else {
       await createGame();

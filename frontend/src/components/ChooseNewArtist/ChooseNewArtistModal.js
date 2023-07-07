@@ -26,7 +26,7 @@ export const ChooseNewArtistModal = (props) => {
   useEffect(() => {
     const init = async () => {
       if (chooseArtistView === "creditCardPayment") {
-        setHeaderText("Get Collectibles to Play");
+        setHeaderText("Get Cards To Play");
       }
     };
 
