@@ -10,7 +10,7 @@ export const ArtistBioModal = (props) => {
             <div className="flex flex-col px-5 gap-4">
               <div
                 className="artist-image-bio"
-                style={{ backgroundImage: `url(${image})` }}
+                style={{ backgroundImage: `url(${image})`, ...artist.profileStyles }}
               />
               <div className="bio-artist-name">{artist.name}</div>
               <div className="bio-artist-desc">{artist.description}</div>
