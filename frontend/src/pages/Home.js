@@ -342,7 +342,7 @@ export default function Home(props) {
       </div>
       {/* Built with the LIQ SDK */}
       <div className="flex flex-row justify-center items-center mt-5 mb-5">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 builtWithLiqSDKContainer">
           <div
             className="webfont lightCoral "
             style={{
@@ -391,14 +391,8 @@ export default function Home(props) {
                 SEE SDK DOCUMENTATION <SmallPinkArrow className="ml-2 mt-1" />
               </p>
             </a>
-
             <div
-              style={{
-                marginBottom: "35%",
-              }}
-            ></div>
-            <p
-              className="lightPink flexDirectionRow"
+              className="lightPink flexDirectionRow mt-5"
               style={{
                 lineHeight: 1.4,
               }}
@@ -428,7 +422,7 @@ export default function Home(props) {
                 {" "}
                 <Discord className="mr-3" />
               </a>
-            </p>
+            </div>
           </div>
         </div>
       </div>

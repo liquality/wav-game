@@ -703,11 +703,10 @@ div.background {
 .builtWithLiqSDKContainer {
   background: #262020;
   /* WaveWrld/dark orange */
-
   border: 1px solid #973540;
-
-  width: 80%;
   height: 270px;
+  padding: 2rem 5rem;
+  width: 80%;
   border-radius: 53px;
 }
 
