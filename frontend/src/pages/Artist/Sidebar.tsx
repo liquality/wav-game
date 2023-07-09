@@ -133,19 +133,19 @@ export const Sidebar = ({
             <div className="flex flex-row items-center">
               {artist && artist.socials
                 ? Object.keys(artist.socials).map((network) => {
-                    return (
-                      <SocialLink
-                        key={network}
-                        network={network}
-                        url={artist.socials[network]}
-                      />
-                    );
-                  })
+                  return (
+                    <SocialLink
+                      key={network}
+                      network={network}
+                      url={artist.socials[network]}
+                    />
+                  );
+                })
                 : null}
             </div>
             <div
               className="artist-image mt-3 mb-5"
-              style={{ backgroundImage: `url(${image})` }}
+              style={{ backgroundImage: `url(${image})`, ...artist.profileStyles }}
             />
           </div>
           <div className="flex flex-col p-5 gap-1 artist-info">

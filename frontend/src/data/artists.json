@@ -15,7 +15,10 @@
     },
     "image": "tk.jpg",
     "image_url": "https://imgur.com/C8dodbz",
-    "sound_link": "https://www.sound.xyz/tk"
+    "sound_link": "https://www.sound.xyz/tk",
+    "profileStyles": {
+      "backgroundPosition": "center top"
+    }
   },
   {
     "number_id": 2000,
@@ -33,7 +36,10 @@
     },
     "image": "tarot.jpg",
     "image_url": "https://imgur.com/7dnt7Zx",
-    "sound_link": "https://www.sound.xyz/tarotsings"
+    "sound_link": "https://www.sound.xyz/tarotsings",
+    "profileStyles": {
+      "backgroundPosition": "center center"
+    }
   },
   {
     "number_id": 5000,
@@ -51,7 +57,10 @@
     },
     "image": "black-dave.jpg",
     "image_url": "https://imgur.com/9ZMcxCo",
-    "sound_link": "https://www.sound.xyz/blackdave"
+    "sound_link": "https://www.sound.xyz/blackdave",
+    "profileStyles": {
+      "backgroundPosition": "center bottom"
+    }
   },
   {
     "number_id": 6000,
@@ -69,7 +78,10 @@
     },
     "image": "abjo.jpg",
     "image_url": "https://imgur.com/MBwSKvV",
-    "sound_link": "https://www.sound.xyz/abjo"
+    "sound_link": "https://www.sound.xyz/abjo",
+    "profileStyles": {
+      "backgroundPosition": "center center"
+    }
   },
   {
     "number_id": 4000,
@@ -87,7 +99,10 @@
     },
     "image": "cam-murdoch.jpg",
     "image_url": "https://imgur.com/zK5rp2W",
-    "sound_link": "https://www.sound.xyz/cammurdoch"
+    "sound_link": "https://www.sound.xyz/cammurdoch",
+    "profileStyles": {
+      "backgroundPosition": "center center"
+    }
   },
   {
     "number_id": 8000,
@@ -105,7 +120,10 @@
     },
     "image": "karma-violetta.jpg",
     "image_url": "https://imgur.com/HolICxf",
-    "sound_link": "https://www.sound.xyz/karmavioletta"
+    "sound_link": "https://www.sound.xyz/karmavioletta",
+    "profileStyles": {
+      "backgroundPosition": "center center"
+    }
   },
   {
     "number_id": 7000,
@@ -123,7 +141,10 @@
     },
     "image": "fred-riko.jpg",
     "image_url": "https://imgur.com/2g3Jq24",
-    "sound_link": "https://hq.decent.xyz/1/Editions/0x3989bA06f666c08ab86240343175554813242641"
+    "sound_link": "https://hq.decent.xyz/1/Editions/0x3989bA06f666c08ab86240343175554813242641",
+    "profileStyles": {
+      "backgroundPosition": "center center"
+    }
   },
   {
     "number_id": 1000,
@@ -141,6 +162,9 @@
     },
     "image": "jadyn-violet.jpg",
     "image_url": "https://imgur.com/ap6ze8R",
-    "sound_link": "https://www.sound.xyz/jadynviolet"
+    "sound_link": "https://www.sound.xyz/jadynviolet",
+    "profileStyles": {
+      "backgroundPosition": "left center"
+    }
   }
 ]
