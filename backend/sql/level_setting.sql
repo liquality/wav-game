@@ -11,15 +11,15 @@ CREATE TABLE `level_setting` (
 
 -- level 4 
 INSERT INTO `level_setting` (`level`, `countdown_start_at`, `countdown_ends`)
-VALUES(4, '2023-07-10 14:00:00', 259200000); -- 3 days
+VALUES(4, '2023-07-10 15:00:00', 259200000); -- 3 days
 
 -- level 5
 INSERT INTO `level_setting` (`level`, `countdown_start_at`, `countdown_ends`)
-VALUES(5, '2023-07-10 14:00:00', 432000000); -- 5 days
+VALUES(5, '2023-07-10 15:00:00', 432000000); -- 5 days
 
 -- level 6
 INSERT INTO `level_setting` (`level`, `countdown_start_at`, `countdown_ends`)
-VALUES(6, '2023-07-10 14:00:00', 604800000); -- 7 days
+VALUES(6, '2023-07-10 15:00:00', 604800000); -- 7 days
 
 -- claim amount
 ALTER TABLE `level_setting`

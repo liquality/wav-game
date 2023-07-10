@@ -30,7 +30,7 @@ export const Level6 = (props) => {
         const difference = getDifferenceBetweenDates(today, unlockDate);
         title = "Countdown to unlock";
         instructions = `${difference.days}DAYS:${difference.hours}HRS:${difference.minutes}MIN`;
-        useEmtpyActionsStyle = true;
+        useEmtpyActionsStyle = false;
         return true;
       }
     }
