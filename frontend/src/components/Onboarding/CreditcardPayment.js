@@ -156,7 +156,7 @@ export const CreditcardPayment = (props) => {
         </p>
         <p className="lineNoCenter mb-4" style={{ width: "50%" }}></p>
 
-        <div className="flexDirectionRow mb-3">
+        <div className="flexDirectionRow mb-1">
           <input
             style={{ width: "20%" }}
             className="passwordInputBox"
@@ -172,6 +172,10 @@ export const CreditcardPayment = (props) => {
             <b>TOTAL:</b> ${maticPriceInUsd * nftAmount}{" "}
           </p>
         </div>
+        <p className="text-xs mb-2 mt-1 ml-1">
+          You can confirm the final price next, which includes a payment
+          provider fee
+        </p>
         <CrossmintPayButton
           onClick={handleDoneWithCheckout}
           clientId={process.env.REACT_APP_CROSSMINT_CLIENT_ID}
