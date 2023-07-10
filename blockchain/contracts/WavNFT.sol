@@ -43,7 +43,7 @@ contract WavNFT is ERC2771Recipient, ERC1155, Pausable, Ownable, ERC1155Burnable
         _unpause();
     }
 
-    function mint(address account, uint256 id, uint256 amount, bytes memory data) public {
+    function mint(address account, uint256 id, uint256 amount, bytes memory data) public onlyOwner {
         _mint(account, id, amount, data);
     }
 
