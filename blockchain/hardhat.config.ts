@@ -1,5 +1,7 @@
 import 'ethers';
 import { HardhatUserConfig } from 'hardhat/config';
+
+import '@nomiclabs/hardhat-etherscan';
 import '@nomicfoundation/hardhat-toolbox';
 import '@openzeppelin/hardhat-upgrades';
 import 'hardhat-deploy';
@@ -36,9 +38,7 @@ const config: HardhatUserConfig = {
     },
   },
   etherscan: {
-    apiKey: {
-      polygonMumbai: process.env.ETHERSCAN_API_KEY as string,
-    },
+    apiKey: process.env.ETHERSCAN_API_KEY as string,
   },
 };
 
