@@ -67,7 +67,7 @@ const UserMenu = ({
 
       return user;
     } catch (err) {
-      console.log(err, "Error fetching user");
+      console.log(err, "Error fetching games by user");
     }
   };
 
