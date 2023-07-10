@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { ReactComponent as GameWorks } from "../images/game_works.svg";
 
 const faqs = [
   {
@@ -6,6 +7,7 @@ const faqs = [
     header: "How does the game work?",
     text: (
       <p>
+        <GameWorks className="mb-5" />
         wavGAME is a fun digital trading card experience made up of 6 levels to
         connect you closer with your favorite music artists. Here's a simple way
         to think about it:
