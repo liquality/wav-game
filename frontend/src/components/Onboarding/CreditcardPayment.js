@@ -1,7 +1,7 @@
 import { ReactComponent as NftTiles } from "../../images/OneNftTile.svg";
 import { useEffect, useState, useContext } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
-import { fetchSession, getPublicKey } from "../../utils";
+import { fetchMaticPriceInUSD, fetchSession, getPublicKey } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { messageTypes } from "../../services/Websocket/MessageHandler";
 import eventBus from "../../services/Websocket/EventBus";
@@ -19,6 +19,7 @@ export const CreditcardPayment = (props) => {
   const { getMoreLevel } = useContext(DataContext);
 
   const [nftAmount, setNftAmount] = useState(1);
+  const [maticPriceInUsd, setMaticPriceInUsd] = useState(null);
 
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
   const getWhichTokenIdForLevel = async () => {
@@ -53,6 +54,8 @@ export const CreditcardPayment = (props) => {
       eventBus.on(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
       const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel();
       setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
+      const _maticPriceInUsd = await fetchMaticPriceInUSD();
+      setMaticPriceInUsd(_maticPriceInUsd.toFixed(2));
     };
     fetchData();
     return () => {
@@ -60,6 +63,8 @@ export const CreditcardPayment = (props) => {
       eventBus.remove(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
     };
   }, []);
+
+  console.log(maticPriceInUsd, "matic price in sud");
 
   let totalNFTsPrice =
     process.env.REACT_APP_CROSSMINT_ENVIRONMENT === "staging"
@@ -164,7 +169,7 @@ export const CreditcardPayment = (props) => {
             required
           />
           <p className="mr-3 mt-2 ml-5">
-            <b>TOTAL:</b> ${10 * nftAmount}{" "}
+            <b>TOTAL:</b> ${maticPriceInUsd * nftAmount}{" "}
           </p>
         </div>
         <CrossmintPayButton

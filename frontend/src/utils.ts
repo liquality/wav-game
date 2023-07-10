@@ -234,3 +234,21 @@ export const generateTokenIdArray = async (artistNumberId) => {
 
     return result;
 }
+
+export const fetchMaticPriceInUSD = async () => {
+    try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd');
+        const data = await response.json();
+        const maticPrice = data['matic-network'].usd;
+
+        const maticAmount = 15;
+        const usdValue = maticAmount * maticPrice;
+
+        return usdValue;
+    } catch (error) {
+        console.error('Error fetching Matic price:', error);
+        // Handle error gracefully
+        return null;
+    }
+}
+
