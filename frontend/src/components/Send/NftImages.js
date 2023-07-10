@@ -6,7 +6,9 @@ export const NftImages = (props) => {
 
   const replaceToRightImage = (nftImg) => {
     if (nftImg.endsWith(".svg")) {
-      return (nftImg = nftImg.replace(".svg", ".png"));
+      return (nftImg = nftImg
+        .replace("-playable.png", ".png")
+        .replace(".svg", ".png"));
     } else return nftImg;
   };
 
