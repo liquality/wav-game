@@ -110,7 +110,11 @@ export const Level4 = (props) => {
 
     // if the next level has a count down
     if(applyCountDown(levelSettings?.[5])) {
-      actionDisabled = true;
+      noActions = true;
+      if(currentLevel === 4) {
+        instructions += ' Level 5 unlocks after the countdown.'
+      }
+      
     }
 
   const actions = noActions
