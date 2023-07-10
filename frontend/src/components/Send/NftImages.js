@@ -4,6 +4,12 @@ import { Nft } from "@liquality/wallet-sdk";
 export const NftImages = (props) => {
   const { nfts, selectedNft, setSelectedNft } = props;
 
+  const replaceToRightImage = (nftImg) => {
+    if (nftImg.endsWith(".svg")) {
+      return (nftImg = nftImg.replace(".svg", ".png"));
+    } else return nftImg;
+  };
+
   const imagePlaceholder =
     "https://flowbite.com/docs/images/examples/image-4@2x.jpg";
 
@@ -16,18 +22,15 @@ export const NftImages = (props) => {
     let rows = [];
     if (nfts) {
       rows = nfts.slice(0, 50).map((nft, index) => {
+        let nftImg = replaceToRightImage(nft.metadata?.image);
+
         return (
           <div className="pr-5 mt-3 ">
             <div>
               <button onClick={() => setSelectedNft(nft)}>
                 <img
                   style={selectedNft?.id === nft.id ? readyToSendStyle : {}}
-                  src={
-                    nft.metadata?.image?.replace(
-                      "ipfs://",
-                      "https://ipfs.io/ipfs/"
-                    ) || imagePlaceholder
-                  }
+                  src={nftImg || imagePlaceholder}
                   alt={nft.metadata?.name}
                   className="nftImageSendMany w-full h-full object-cover"
                 />
@@ -52,17 +55,14 @@ export const NftImages = (props) => {
     let rows = [];
     if (nfts) {
       rows = nfts.map((nft, index) => {
+        let nftImg = replaceToRightImage(nft.metadata?.image);
+
         return (
           <div className="pr-5 mt-3">
             <button onClick={() => setSelectedNft(nft)}>
               <img
                 style={selectedNft?.id === nft.id ? readyToSendStyle : {}}
-                src={
-                  nft.metadata?.image?.replace(
-                    "ipfs://",
-                    "https://ipfs.io/ipfs/"
-                  ) || imagePlaceholder
-                }
+                src={nftImg || imagePlaceholder}
                 alt={nft.metadata?.name}
                 className="nftImageSendTwo w-full h-full object-cover"
               />
@@ -83,17 +83,14 @@ export const NftImages = (props) => {
   };
 
   const renderOneImage = () => {
+    let nftImg = replaceToRightImage(nfts[0].metadata?.image);
+
     return (
       <div className=" mt-1">
         <button onClick={() => setSelectedNft(nfts[0])}>
           <img
             style={selectedNft?.id === nfts[0].id ? readyToSendStyle : {}}
-            src={
-              nfts[0].metadata?.image?.replace(
-                "ipfs://",
-                "https://ipfs.io/ipfs/"
-              ) || imagePlaceholder
-            }
+            src={nftImg || imagePlaceholder}
             alt={nfts[0].metadata?.name}
             className="nftImageSendOne w-full h-full object-cover"
           />

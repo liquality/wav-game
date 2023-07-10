@@ -197,7 +197,7 @@ const AccordionItem = (props) => {
           onClick={() => handleToggle(id)}
         >
           <h5 className="rc-accordion-title">{header}</h5>
-          <i className="fa fa-chevron-down rc-accordion-icon"></i>
+          <i className="fa fa-chevron-down rc-accordion-icon lightPink"></i>
         </div>
       </div>
       <div
