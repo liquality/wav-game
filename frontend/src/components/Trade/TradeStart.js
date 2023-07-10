@@ -180,6 +180,7 @@ export const TradeStart = (props) => {
     }
   };
 
+  console.log(level, "LEVEL curr?");
   return (
     <div className="contentView flex justify-around container">
       <div className="p-4 flexDirectionRow">
@@ -192,20 +193,41 @@ export const TradeStart = (props) => {
 
               {/* Should be replaced with fetched nft contract image (2 nfts of live song) */}
 
-              {tokenIdForCurrentLevel ? (
-                <div className="flexDirectionRow">
-                  <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
-                    className="mr-1 nftPreviewTrade "
-                    alt="NFT Preview"
-                  />
-                  <img
-                    src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
-                    className="mr-1 nftPreviewTrade "
-                    alt="NFT Preview"
-                  />
-                </div>
-              ) : null}
+              <div className="relative">
+                {tokenIdForCurrentLevel ? (
+                  <div className="flexDirectionRow">
+                    <img
+                      src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
+                      className="mr-1 nftPreviewTrade "
+                      alt="NFT Preview"
+                    />
+                    <img
+                      src={`https://wavgame-data.netlify.app/images/${tokenIdForCurrentLevel}.png`}
+                      className="mr-1 nftPreviewTrade "
+                      alt="NFT Preview"
+                    />
+                  </div>
+                ) : null}
+                {level === 1 ? (
+                  <audio
+                    controls
+                    controlsList="nodownload"
+                    data-testid="AssetMedia--audio"
+                    loop
+                    preload="auto"
+                    src={`https://wavgame-data.netlify.app/songs/${tokenIdForCurrentLevel}.wav`}
+                    style={{
+                      zIndex: 9999999,
+                      position: "absolute",
+                      bottom: "-25%",
+                      left: "2%",
+                      height: 40,
+                    }}
+                  >
+                    Your browser does not support the audio element.
+                  </audio>
+                ) : null}
+              </div>
             </div>
 
             <div className="pr-5 pt-5 mt-4 flexDirectionColumn m-start">
@@ -229,13 +251,36 @@ export const TradeStart = (props) => {
               <p className="webfont coral text-2xl">Level {toLevel}</p>
               <p className="mb-3">{toSubtitle}</p>
               {/* Should be replaced with fetched nft contract image (nft of unreleased song) */}
-              {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (
-                <img
-                  src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
-                  className="nftBigPreviewTrade"
-                  alt="NFT Preview"
-                />
-              ) : null}
+              <div className="relative">
+                {tokenIdForNewLevel && !isNaN(tokenIdForNewLevel) ? (
+                  <img
+                    src={`https://wavgame-data.netlify.app/images/${tokenIdForNewLevel}.png`}
+                    className="nftBigPreviewTrade"
+                    alt="NFT Preview"
+                  />
+                ) : null}
+
+                {level === 1 ? (
+                  <audio
+                    controls
+                    controlsList="nodownload"
+                    data-testid="AssetMedia--audio"
+                    loop
+                    preload="auto"
+                    src={`https://wavgame-data.netlify.app/songs/${tokenIdForNewLevel}.wav`}
+                    style={{
+                      zIndex: 9999999,
+                      position: "absolute",
+                      bottom: "3%",
+                      right: "31%",
+                      width: 180,
+                      height: 30,
+                    }}
+                  >
+                    Your browser does not support the audio element.
+                  </audio>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>{" "}
