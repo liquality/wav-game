@@ -1,5 +1,5 @@
 import { LevelCard } from "../LevelCard/LevelCard";
-import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
+import { applyCountDown, getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
 import { useEarlyBirdInfo } from "../../hooks/useEarlyBirdCount";
 
 export const Level5 = (props) => {
@@ -22,7 +22,8 @@ export const Level5 = (props) => {
   let noActions = false;
   let actionLocked = false;
   let title = "1 custom-made song";
-  let earlyBirdLimit = levelSettings?.claim_amount || 0;
+  const _levelSettings = levelSettings?.[5];
+  let earlyBirdLimit = _levelSettings?.claim_amount || 0;
   let useEmtpyActionsStyle = false;
 
   const { earlyBirdCount, isEarlyBird } = useEarlyBirdInfo(
@@ -31,11 +32,11 @@ export const Level5 = (props) => {
   );
 
   // count down
-  function applyCountDown() {
-    if (levelSettings && levelSettings.countdown_ends > 0) {
-      const unlockDate = new Date(levelSettings.countdown_start_at);
+  function _applyCountDown() {
+    if (_levelSettings && _levelSettings.countdown_ends > 0) {
+      const unlockDate = new Date(_levelSettings.countdown_start_at);
       unlockDate.setMilliseconds(
-        unlockDate.getMilliseconds() + levelSettings.countdown_ends
+        unlockDate.getMilliseconds() + _levelSettings.countdown_ends
       );
       const today = new Date();
       if (unlockDate > today) {
@@ -61,7 +62,7 @@ export const Level5 = (props) => {
     return false;
   }
 
-  if (!applyCountDown()) {
+  if (!_applyCountDown()) {
     useEmtpyActionsStyle = true;
     if (level5Count < 2) {
       if (level5Count === 0) {
@@ -100,6 +101,11 @@ export const Level5 = (props) => {
       title = "All custom made songs claimed";
       edition = "Keep playing for other rewards";
     }
+  }
+
+  // if the next level has a count down
+  if(applyCountDown(levelSettings?.[6])) {
+    actionDisabled = true;
   }
 
   const actions = noActions
