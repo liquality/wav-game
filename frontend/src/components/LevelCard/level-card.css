@@ -142,6 +142,23 @@ div:has(> .level-card) {
   color: #f2f2f2;
 }
 
+
+.level-card--next-locked {
+  color: #828282;
+  background-color: #333333;
+  border: 2px solid rgba(242, 81, 188, 0.6);
+  outline: 2px solid rgba(193, 84, 243, 0.6);
+  outline-offset: 0.313rem;
+}
+
+.level-card--next-locked.active,
+.level-card--next-locked:active,
+.level-card--next-locked:hover {
+  border: 2px solid rgba(242, 81, 188, 1);
+  outline: 2px solid rgba(193, 84, 243, 1);
+}
+
+
 .level-card--locked .level-card-instructions {
   font-family: "000 webfont";
   font-style: normal;
