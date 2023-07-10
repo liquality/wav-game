@@ -83,7 +83,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[1]}
         currentLevel={currentLevel}
-        levelSettings={levelSettings?.[1]}
+        levelSettings={levelSettings}
       />
       <Level2
         selectedLevel={selectedLevel}
@@ -93,7 +93,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[2]}
         currentLevel={currentLevel}
-        levelSettings={levelSettings?.[2]}
+        levelSettings={levelSettings}
       />
       <Level3
         selectedLevel={selectedLevel}
@@ -103,7 +103,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[3]}
         currentLevel={currentLevel}
-        levelSettings={levelSettings?.[3]}
+        levelSettings={levelSettings}
       />
       <Level4
         selectedLevel={selectedLevel}
@@ -113,7 +113,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[4]}
         currentLevel={currentLevel}
-        levelSettings={levelSettings?.[4]}
+        levelSettings={levelSettings}
         currentGame={currentGame}
       />
       <Level5
@@ -124,7 +124,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[5]}
         currentLevel={currentLevel}
-        levelSettings={levelSettings?.[5]}
+        levelSettings={levelSettings}
         currentGame={currentGame}
       />
       <Level6
@@ -135,7 +135,7 @@ export const GameCards = (props: GameCardsProps) => {
         nftCount={nftCount}
         burnStatus={burnStatus[6]}
         currentLevel={currentLevel}
-        levelSettings={levelSettings?.[6]}
+        levelSettings={levelSettings}
         currentGame={currentGame}
         userIsFullSetHolder={userIsFullSetHolder}
       />
