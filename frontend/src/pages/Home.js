@@ -379,7 +379,7 @@ export default function Home(props) {
               href="https://docs.liquality.io/"
               target="blank"
               rel="noreferrer"
-              className="hover:no-underline "
+              className="hover:no-underline"
             >
               {" "}
               <p
