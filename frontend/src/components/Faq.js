@@ -30,11 +30,7 @@ const faqs = [
         4 and the first 10 per artist to level 5 will be rewarded. You’ve got to
         be speedy!
         <br></br>
-        <br></br>● Special Prize at Level 6: <br></br>The first and only player
-        to reach Level 6 - across all artists - will get a trip and 1-on-1
-        concert with their favorite artist. This prize is only available for one
-        winner across all artists in the entire game. Keep playing though, there
-        is more to win!
+        <br></br>● Special Prize at Level 6: <br></br>Everyone that reaches Level 6 and keeps their card, will win a meet-and-greet with their chosen artist. All Level 6 holders will also enter a raffle to win the main prize of a trip and a 1-on-1 concert with their chosen artist. One lucky Level 6 card holder will win the main prize.
         <br></br>
         <br></br>● Go for the Full Set: <br></br>
         Good news for all who come after: The game is not over! We will have an
@@ -66,14 +62,7 @@ const faqs = [
       "Some limited prizes and the main one are gone. How much longer will the game be open?",
     text: (
       <p>
-        This game will end one (1) week after the main prize (level 6 1-on-1
-        trip) is claimed. You can collect Levels 4-6 even if rewards for those
-        levels have been claimed, so that you can get a full set (holding 1 of
-        each level 1-6 for one artist at the game’s end) and claim the full set
-        reward. The full set holder reward pass will be airdropped to your
-        wallet and wavWRLD will reach out once the wavGAME ends to coordinate
-        reward redemption. Stay tuned for new seasons with more artists and
-        prizes.
+        This game will end one (1) week after the first player reaches Level 6. All players reaching Level 6 will win a meet & greet with their chosen artist, and an entry in the raffle for the main price of a trip and 1-on-1 concert. You can collect Levels 4-5 even if rewards for those levels have been claimed, so that you can get a full set (holding 1 of each level 1-6 for one artist at the game’s end) and claim the full set reward. The full set holder reward pass will be airdropped to your wallet and wavWRLD will reach out once the wavGAME ends to coordinate reward redemption.
       </p>
     ),
   },
