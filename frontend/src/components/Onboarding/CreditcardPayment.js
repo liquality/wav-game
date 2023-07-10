@@ -116,6 +116,23 @@ export const CreditcardPayment = (props) => {
                 className=" absolute mr-1 nftPreviewTrade "
                 alt="NFT Preview"
               />
+              <audio
+                controls
+                controlsList="nodownload"
+                data-testid="AssetMedia--audio"
+                loop
+                preload="auto"
+                src="https://openseauserdata.com/files/bf75c1d5a9c5476e3743d8ab14be1bbb.wav"
+                style={{
+                  zIndex: 9999999,
+                  position: "absolute",
+                  bottom: "15px",
+                  left: "15%",
+                  height: 40,
+                }}
+              >
+                Your browser does not support the audio element.
+              </audio>
             </div>
           ) : (
             <NftTiles
@@ -144,6 +161,7 @@ export const CreditcardPayment = (props) => {
         <p className="mb-4" style={{ width: "50%" }}>
           Buy cards:
         </p>
+
         <p className="mb-4">
           • 1 to get a live song
           <br></br>• 2 to trade to level 2<br></br>• 32 to get to level 6
