@@ -47,13 +47,11 @@ export const PrepareSend = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log();
       if (selectedNft && !artist) {
         let firstChar = selectedNft.id.toString()[0];
         const _artist = await StaticDataService.findArtistByNumberId(
           firstChar * 1000
         );
-        console.log(firstChar * 1000, "first char ", _artist);
         setArtist(_artist);
       }
     };

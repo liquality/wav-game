@@ -91,7 +91,6 @@ export const Artist = (props) => {
     setSelectedLevel(level);
   };
 
-  console.log(nfts, "NFTTS");
   useEffect(() => {
     const fetchData = async () => {
       const _artist = await fetchArtist(artistId);
@@ -106,7 +105,7 @@ export const Artist = (props) => {
       }
 
       if (!nfts && !nftCount && _artist) {
-        console.log("FETCHING NFTS AGAIN! BÄ");
+        console.log("FETCHING NFTS AGAIN x! ");
         const nftData = await ContractService.getNfts(_artist.number_id);
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);
         const isFullSetHolder = await ContractService.checkIfFullSetHolder(

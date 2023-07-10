@@ -38,15 +38,6 @@ gameHandler.readGamesByUserId = function (req, res) {
   const gameNumberId = Number(req.params.artistNumberId);
   const userIdFromSession = Number(req.user.id);
   userid === userIdFromSession;
-  console.log(
-    userid === userIdFromSession,
-    "USERID from sesh",
-    userid,
-    userIdFromSession,
-    "TYPES:",
-    typeof userid,
-    typeof userIdFromSession
-  );
 
   if (userid) {
     if (userid === userIdFromSession) {

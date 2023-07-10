@@ -20,7 +20,7 @@ websocketService.getWS = (userid) => {
 
     return websocketService._ws;
   } catch (err) {
-    console.log(err, "ERROR connecting to BÄÄ");
+    console.log(err, "ERROR connecting to WS");
   }
 };
 

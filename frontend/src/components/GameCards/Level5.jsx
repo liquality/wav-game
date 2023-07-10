@@ -22,7 +22,6 @@ export const Level5 = (props) => {
   let noActions = false;
   let actionLocked = false;
   let title = "1 custom-made song";
-  console.log(levelSettings, "levelsettings?");
   let earlyBirdLimit = levelSettings?.claim_amount || 0;
   let useEmtpyActionsStyle = false;
 
@@ -94,12 +93,7 @@ export const Level5 = (props) => {
       - when max number is reached, switch title to:: All custom made songs claimed
       - when max number is reached, switch counter to:: Keep playing for other rewards.
       */
-    console.log(
-      earlyBirdCount < earlyBirdLimit,
-      earlyBirdCount,
-      earlyBirdLimit,
-      "EARLYBIRDS"
-    );
+
     if (earlyBirdCount < earlyBirdLimit) {
       edition = `${earlyBirdCount || 0}/${earlyBirdLimit} CLAIMED`;
     } else {

@@ -191,7 +191,6 @@ class Game {
 
   readGameByUserId = async (userId, gameNumberId, helper) => {
     const game = this;
-    console.log(userId, typeof userId, "USERIIID in readgamebyuserid");
     const promise = new Promise((resolve, reject) => {
       if (userId) {
         MySQL.pool.getConnection((err, db) => {
@@ -226,7 +225,6 @@ class Game {
                   reject(new ApiError(404, "Game not found"));
                 } else {
                   game.set(results[0]);
-                  console.log(results, "RESULTS");
                   resolve(results);
                 }
                 db.release();
