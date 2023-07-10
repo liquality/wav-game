@@ -122,7 +122,7 @@ export const CreditcardPayment = (props) => {
                 data-testid="AssetMedia--audio"
                 loop
                 preload="auto"
-                src="https://openseauserdata.com/files/bf75c1d5a9c5476e3743d8ab14be1bbb.wav"
+                src={`https://wavgame-data.netlify.app/songs/${tokenIdForCurrentLevel}.wav`}
                 style={{
                   zIndex: 9999999,
                   position: "absolute",
