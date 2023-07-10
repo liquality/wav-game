@@ -55,7 +55,7 @@ export const CreditcardPayment = (props) => {
       const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel();
       setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
       const _maticPriceInUsd = await fetchMaticPriceInUSD();
-      setMaticPriceInUsd(_maticPriceInUsd.toFixed(2));
+      setMaticPriceInUsd(_maticPriceInUsd);
     };
     fetchData();
     return () => {
@@ -92,6 +92,7 @@ export const CreditcardPayment = (props) => {
     _gameID: selectedId.number_id,
   };
 
+  let totalPriceInUSD = (maticPriceInUsd * nftAmount).toFixed(2);
   return (
     <div className=" contentView flex mb-4">
       <div className="p-4 w-1/2 flex justify-center items-center margin-auto pb-5">
@@ -187,7 +188,7 @@ export const CreditcardPayment = (props) => {
             required
           />
           <p className="mr-3 mt-2 ml-5">
-            <b>TOTAL:</b> ${maticPriceInUsd * nftAmount}{" "}
+            <b>TOTAL:</b> ${totalPriceInUSD}{" "}
           </p>
         </div>
         <p className="text-xs mb-2 mt-1 ml-1">

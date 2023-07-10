@@ -244,7 +244,7 @@ export const fetchMaticPriceInUSD = async () => {
         const maticAmount = 15;
         const usdValue = maticAmount * maticPrice;
 
-        return usdValue;
+        return usdValue.toFixed(2);
     } catch (error) {
         console.error('Error fetching Matic price:', error);
         // Handle error gracefully
