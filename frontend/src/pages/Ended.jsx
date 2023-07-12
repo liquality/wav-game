@@ -6,9 +6,42 @@ import { ReactComponent as Discord } from "../images/discord.svg";
 import { ReactComponent as Telegram } from "../images/telegram.svg";
 import { ReactComponent as Github } from "../images/github.svg";
 import { ReactComponent as SmallPinkArrow } from "../images/small_pink_arrow.svg";
+import { ReactComponent as DecoratedLine } from "../images/decorated_line.svg";
+import { useState } from "react";
 
 export const Ended = (props) => {
   //const { onSubmit } = props;
+  const [rating, setRating] = useState(0);
+
+  const starRating = [1, 2, 3, 4, 5];
+
+  const handleStarClick = (item) => {
+    setRating(item);
+  };
+  console.log(rating, "rating");
+  const renderStars = () => {
+    if (starRating.length > 0) {
+      return starRating.map((item, index) => {
+        let buttonStyle;
+        if (item === rating) {
+          buttonStyle = { width: 20, height: 10, backgroundColor: "purple" };
+        } else {
+          buttonStyle = { width: 20, height: 10, backgroundColor: "white" };
+        }
+        return (
+          <div className="flexDirectionRow mb-3" key={index}>
+            <button
+              onClick={() => handleStarClick(item)}
+              className="defaultArtistBtn flexDirectionRow"
+              style={buttonStyle}
+            ></button>
+          </div>
+        );
+      });
+    } else {
+      return null;
+    }
+  };
 
   return (
     <div className="flex col justify-center items-center relative flex-col">
@@ -22,27 +55,79 @@ export const Ended = (props) => {
         </p>
       </div>
 
+      {/* Rate the GAME with stars */}
       <div
-        className="grid grid-cols-2 gap-4 builtWithLiqSDKContainer relative"
+        className="builtWithLiqSDKContainer relative"
         style={{
           width: "701px",
           height: "258px",
         }}
       >
         <div
-          className="grid grid-cols-2 gap-4 builtWithLiqSDKContainer absolute"
+          className="builtWithLiqSDKContainer absolute"
           style={{
             width: "701px",
             height: "258px",
             bottom: "3%",
             right: "1%",
             zIndex: 100,
+            border: "1px solid #7a2ed6",
           }}
         >
-          <p>bu be</p>
+          <p className="game-header-title lightCoral">Enjoyed the game?</p>
+          <p className="text-s	mb-3 text-center softPink">
+            We'd love to know how much. Rate us and take a{" "}
+            <a
+              className="no-underline hover:no-underline lightPink"
+              href="https://app.spinamp.xyz/platform/wavgame"
+              target="blank"
+            >
+              <u>survey.</u>
+            </a>
+          </p>
+          <div className="flexDirectionRow mt-5 justify-center items-center">
+            {renderStars()}
+          </div>
         </div>
       </div>
 
+      {/* Our vision */}
+      <div className="m-auto text-center justify-center items-center">
+        <div className="mt-48"></div>
+        <p className="webfont lightCoral" style={{ fontSize: "64px" }}>
+          OUR VISION
+        </p>
+        <div className="m-auto" style={{ width: "50%" }}>
+          <p style={{ fontSize: "23px", lineHeight: "34px" }}>
+            wavWRLD connects artists with their true fans. We are a community of
+            artists, fans, founders, and devs, building and sharing our
+            experiments with the WRLD.
+          </p>
+        </div>
+
+        <a
+          className="hover:no-underline hover:text-decoration-none"
+          href="https://t.me/+QtvBTQK24iw5Mzcx"
+          target="blank"
+          rel="noreferrer"
+        >
+          <p
+            className="text-xs no-underline lightPink flexDirectionRow mt-5 text-center justify-center items-center"
+            style={{
+              lineHeight: 1.4,
+            }}
+          >
+            CONNECT ON TELEGRAM <SmallPinkArrow className="ml-2" />
+          </p>
+        </a>
+
+        <br />
+        <div className="flex justify-center items-center relative mt-5 mb-5">
+          <DecoratedLine />
+        </div>
+        <br />
+      </div>
+      {/* Built with the LIQ SDK */}
       <div className="flex flex-row justify-center items-center mt-5 mb-5">
         <div className="grid grid-cols-2 gap-4 builtWithLiqSDKContainer">
           <div
