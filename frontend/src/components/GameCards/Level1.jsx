@@ -80,7 +80,7 @@ export const Level1 = (props) => {
         title: "Live song",
         edition: "",
         instructions,
-        useEmtpyActionsStyle: false,
+        useEmtpyActionsStyle: true,
       }}
     />
   );

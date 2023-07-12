@@ -6,6 +6,7 @@ import { ReactComponent as ArrowRight } from "../../images/arrow_right.svg";
 import { ReactComponent as TwitterIcon } from "../../images/twitter.svg";
 import { ReactComponent as InstagramIcon } from "../../images/instagram.svg";
 import { ReactComponent as TikTokIcon } from "../../images/tiktok.svg";
+import { ReactComponent as PlaylistIcon } from "../../images/icon_playlist.svg";
 import LensIcon from "../../images/lenster.png";
 import { Button } from "../../components/Button/Button";
 import { ArtistBioModal } from "./ArtistBioModal";
@@ -142,6 +143,15 @@ export const Sidebar = ({
                   );
                 })
                 : null}
+                
+                <a
+                  className="hover:text-white-700 mr-2"
+                  href={artist.playlistUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <PlaylistIcon />
+                </a>
             </div>
             <div
               className="artist-image mt-3 mb-5"

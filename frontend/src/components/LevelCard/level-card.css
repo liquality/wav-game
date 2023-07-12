@@ -72,7 +72,6 @@ div:has(> .level-card) {
   line-height: 31px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: #f2f2f2;
 }
 
 /* ACTIVE */
@@ -107,8 +106,9 @@ div:has(> .level-card) {
   color: #973540;
 }
 
-.level-card--completed .level-card-instructions {
-  opacity: 0.8;
+.level-card--completed .level-card-instructions,
+.level-card--completed .level-card-instructions-empty-actions {
+  opacity: 0.5;
 }
 
 .level-card--completed:hover .level-card-level,
@@ -125,8 +125,11 @@ div:has(> .level-card) {
 
 .level-card--completed:hover .level-card-instructions,
 .level-card--completed:active .level-card-instructions,
-.level-card--completed.active .level-card-instructions {
-  color: #ffffff;
+.level-card--completed.active .level-card-instructions,
+.level-card--completed:hover .level-card-instructions-empty-actions,
+.level-card--completed:active .level-card-instructions-empty-actions,
+.level-card--completed.active .level-card-instructions-empty-actions {
+  opacity: 1;
 }
 
 /* LOCKED */
@@ -154,6 +157,7 @@ div:has(> .level-card) {
 .level-card--next-locked.active,
 .level-card--next-locked:active,
 .level-card--next-locked:hover {
+  color: #ffffff;
   border: 2px solid rgba(242, 81, 188, 1);
   outline: 2px solid rgba(193, 84, 243, 1);
 }

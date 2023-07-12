@@ -16,6 +16,7 @@
     "image": "tk.jpg",
     "image_url": "https://imgur.com/C8dodbz",
     "sound_link": "https://www.sound.xyz/tk",
+    "playlistUrl": "https://app.spinamp.xyz/platform/wavgame",
     "profileStyles": {
       "backgroundPosition": "center top"
     }
@@ -37,6 +38,7 @@
     "image": "tarot.jpg",
     "image_url": "https://imgur.com/7dnt7Zx",
     "sound_link": "https://www.sound.xyz/tarotsings",
+    "playlistUrl": "https://app.spinamp.xyz/platform/wavgame",
     "profileStyles": {
       "backgroundPosition": "center center"
     }
@@ -58,6 +60,7 @@
     "image": "black-dave.jpg",
     "image_url": "https://imgur.com/9ZMcxCo",
     "sound_link": "https://www.sound.xyz/blackdave",
+    "playlistUrl": "https://app.spinamp.xyz/platform/wavgame",
     "profileStyles": {
       "backgroundPosition": "center bottom"
     }
@@ -79,6 +82,7 @@
     "image": "abjo.jpg",
     "image_url": "https://imgur.com/MBwSKvV",
     "sound_link": "https://www.sound.xyz/abjo",
+    "playlistUrl": "https://app.spinamp.xyz/platform/wavgame",
     "profileStyles": {
       "backgroundPosition": "center center"
     }
@@ -100,6 +104,7 @@
     "image": "cam-murdoch.jpg",
     "image_url": "https://imgur.com/zK5rp2W",
     "sound_link": "https://www.sound.xyz/cammurdoch",
+    "playlistUrl": "https://app.spinamp.xyz/platform/wavgame",
     "profileStyles": {
       "backgroundPosition": "center center"
     }
@@ -121,6 +126,7 @@
     "image": "karma-violetta.jpg",
     "image_url": "https://imgur.com/HolICxf",
     "sound_link": "https://www.sound.xyz/karmavioletta",
+    "playlistUrl": "https://app.spinamp.xyz/platform/wavgame",
     "profileStyles": {
       "backgroundPosition": "center center"
     }
@@ -142,6 +148,7 @@
     "image": "fred-riko.jpg",
     "image_url": "https://imgur.com/2g3Jq24",
     "sound_link": "https://hq.decent.xyz/1/Editions/0x3989bA06f666c08ab86240343175554813242641",
+    "playlistUrl": "https://app.spinamp.xyz/platform/wavgame",
     "profileStyles": {
       "backgroundPosition": "center center"
     }
@@ -163,6 +170,7 @@
     "image": "jadyn-violet.jpg",
     "image_url": "https://imgur.com/ap6ze8R",
     "sound_link": "https://www.sound.xyz/jadynviolet",
+    "playlistUrl": "https://app.spinamp.xyz/platform/wavgame",
     "profileStyles": {
       "backgroundPosition": "left center"
     }
