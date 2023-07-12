@@ -120,7 +120,7 @@ const faqs = [
         created a playlist with all the artists’ wavROOM tracks.{" "}
         <a
           className="hover:no-underline hover:text-decoration-none no-underline lightPink"
-          href="https://sound.xyz/"
+          href="https://app.spinamp.xyz/platform/wavgame"
           target="blank"
         >
           Link to Playlist
