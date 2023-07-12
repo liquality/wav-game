@@ -16,12 +16,13 @@ export const Level6 = (props) => {
   let edition = "";
   let title = "";
   let useEmtpyActionsStyle = true;
+  const _levelSettings = levelSettings?.[6];
 
   function applyCountDown() {
-    if (levelSettings && levelSettings.countdown_ends > 0) {
-      const unlockDate = new Date(levelSettings.countdown_start_at);
+    if (_levelSettings && _levelSettings.countdown_ends > 0) {
+      const unlockDate = new Date(_levelSettings.countdown_start_at);
       unlockDate.setMilliseconds(
-        unlockDate.getMilliseconds() + levelSettings.countdown_ends
+        unlockDate.getMilliseconds() + _levelSettings.countdown_ends
       );
       const today = new Date();
       if (unlockDate > today) {

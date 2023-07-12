@@ -1,5 +1,5 @@
 import { LevelCard } from "../LevelCard/LevelCard";
-import { getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
+import { applyCountDown, getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
 import { useEarlyBirdInfo } from "../../hooks/useEarlyBirdCount";
 
 export const Level4 = (props) => {
@@ -25,7 +25,8 @@ export const Level4 = (props) => {
   let actionLocked = false;
   instructions = `You have ${level4Count === -1 ? 0 : level4Count} cards.`;
 
-  let earlyBirdLimit = levelSettings?.claim_amount || 0;
+  const _levelSettings = levelSettings?.[4];
+  let earlyBirdLimit = _levelSettings?.claim_amount || 0;
   instructions = `You have ${level4Count === -1 ? 0 : level4Count} cards.`;
   let useEmtpyActionsStyle = false;
 
@@ -35,17 +36,22 @@ export const Level4 = (props) => {
   );
 
   // count down
-  function applyCountDown() {
-    if (levelSettings && levelSettings.countdown_ends > 0) {
-      const unlockDate = new Date(levelSettings.countdown_start_at);
+  function _applyCountDown() {
+    if (_levelSettings && _levelSettings.countdown_ends > 0) {
+      const unlockDate = new Date(_levelSettings.countdown_start_at);
       unlockDate.setMilliseconds(
-        unlockDate.getMilliseconds() + levelSettings.countdown_ends
+        unlockDate.getMilliseconds() + _levelSettings.countdown_ends
       );
       const today = new Date();
       if (unlockDate > today) {
         // show the timer
         noActions = true;
-        status = "locked";
+        if (status === 'next') {
+          status = "next-locked";
+        } else {
+
+          status = "locked";
+        }
         const difference = getDifferenceBetweenDates(today, unlockDate);
         actionDisabled = true;
         tradeActionText = "Level locked";
@@ -64,7 +70,7 @@ export const Level4 = (props) => {
     return false;
   }
 
-  if (!applyCountDown()) {
+  if (!_applyCountDown()) {
     useEmtpyActionsStyle = true;
 
     if (level4Count < 2) {
@@ -74,9 +80,8 @@ export const Level4 = (props) => {
           "You have 0 cards. Trade 2 cards from the previous level.";
         noActions = true;
       } else {
-        instructions = `You have ${
-          level4Count === -1 ? 0 : level4Count
-        } cards. Get 1 more from the previous level.`;
+        instructions = `You have ${level4Count === -1 ? 0 : level4Count
+          } cards. Get 1 more from the previous level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
         actionLocked = true;
@@ -107,17 +112,26 @@ export const Level4 = (props) => {
     }
   }
 
+  // if the next level has a count down
+  if (applyCountDown(levelSettings?.[5])) {
+    noActions = true;
+    if (currentLevel === 4) {
+      instructions += ' Level 5 unlocks after the countdown.'
+    }
+
+  }
+
   const actions = noActions
     ? []
     : [
-        {
-          onActionClick: (level) => onTradeClick(level),
-          label: tradeActionText,
-          mode: actionLocked ? "pinkStroke" : "default",
-          disabled: actionDisabled,
-          useIcon: actionDisabled,
-        },
-      ];
+      {
+        onActionClick: (level) => onTradeClick(level),
+        label: tradeActionText,
+        mode: actionLocked ? "pinkStroke" : "default",
+        disabled: actionDisabled,
+        useIcon: actionDisabled,
+      },
+    ];
 
   return (
     <LevelCard

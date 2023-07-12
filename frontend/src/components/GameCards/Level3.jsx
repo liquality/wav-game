@@ -1,5 +1,5 @@
 import { LevelCard } from "../LevelCard/LevelCard";
-import { getLevelsStatuses } from "../../utils";
+import { applyCountDown, getLevelsStatuses } from "../../utils";
 
 export const Level3 = (props) => {
   const {
@@ -9,6 +9,7 @@ export const Level3 = (props) => {
     onTradeClick,
     nftCount,
     burnStatus,
+    levelSettings
   } = props;
   const level3Count = nftCount["3"] || 0;
   const status = getLevelsStatuses(currentLevel || 1)[3];
@@ -34,6 +35,13 @@ export const Level3 = (props) => {
       tradeActionText = "Trade More";
     } else {
       tradeActionText = "Start Trading";
+    }
+    // if the next level has a count down
+    if(applyCountDown(levelSettings?.[4])) {
+      noActions = true;
+      if(currentLevel ===3) {
+        instructions += ' Level 4 unlocks after the countdown.'
+      }
     }
   }
 

@@ -252,3 +252,15 @@ export const fetchMaticPriceInUSD = async () => {
     }
 }
 
+
+export function applyCountDown(levelSettings: any): Boolean {
+    if (levelSettings && levelSettings.countdown_ends > 0) {
+        const unlockDate = new Date(levelSettings.countdown_start_at);
+        unlockDate.setMilliseconds(
+            unlockDate.getMilliseconds() + levelSettings.countdown_ends
+        );
+        const today = new Date();
+        return unlockDate > today;
+    }
+    return false;
+}
