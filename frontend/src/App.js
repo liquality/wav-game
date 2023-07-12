@@ -4,10 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import { Terms } from "./pages/Terms";
-import {
-  getCurrentLevel,
-  setupSDK,
-} from "./utils";
+import { getCurrentLevel, setupSDK } from "./utils";
 import Footer from "./components/Footer";
 import { Artist } from "./pages/Artist/Artist";
 import { useState, useEffect } from "react";
@@ -17,6 +14,7 @@ import { SpinningLoader } from "./components/SpinningLoader";
 import { getGameIdBasedOnHref } from "./utils";
 import { Privacy } from "./pages/Privacy";
 import ContractService from "./services/ContractService";
+import { Ended } from "./pages/Ended";
 
 function App() {
   setupSDK();
@@ -88,7 +86,9 @@ function App() {
         setCollectibleCount(_currentLevel.totalCollectibles);
         setCurrentLevel(_currentLevel.currentLevel);
 
-        const isFullSetHolder = await ContractService.checkIfFullSetHolder(_artist?.number_id);
+        const isFullSetHolder = await ContractService.checkIfFullSetHolder(
+          _artist?.number_id
+        );
         setUserIsFullSetHolder(isFullSetHolder);
       }
 
@@ -158,6 +158,7 @@ function App() {
             />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/ended" element={<Ended />} />
 
             <Route
               path="/artist/:artistId"
