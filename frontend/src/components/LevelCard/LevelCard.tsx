@@ -117,9 +117,9 @@ export const LevelCard = ({
       <div className="flex flex-col justify-end">
         <div
           className={classNames({
+            "level-card-instructions": true,
             "level-card-instructions-empty-actions":
               !useEmtpyActionsStyle && (!actions || actions.length <= 0),
-            "level-card-instructions": !useEmtpyActionsStyle,
             active,
           })}
         >
