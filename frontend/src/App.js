@@ -15,6 +15,7 @@ import { getGameIdBasedOnHref } from "./utils";
 import { Privacy } from "./pages/Privacy";
 import ContractService from "./services/ContractService";
 import { Ended } from "./pages/Ended";
+import { ArtistEnded } from "./pages/Artist/ArtistEnded";
 
 function App() {
   setupSDK();
@@ -164,6 +165,20 @@ function App() {
               path="/artist/:artistId"
               element={
                 <Artist
+                  user={user}
+                  showPickArtistModal={showPickArtistModal}
+                  setShowPickArtistModal={setShowPickArtistModal}
+                  setChooseArtistView={setChooseArtistView}
+                  selectedArtist={selectedArtist}
+                  setSelectedArtist={setSelectedArtist}
+                />
+              }
+            />
+
+            <Route
+              path="/artistEnded/:artistId"
+              element={
+                <ArtistEnded
                   user={user}
                   showPickArtistModal={showPickArtistModal}
                   setShowPickArtistModal={setShowPickArtistModal}
