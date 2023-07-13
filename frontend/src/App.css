@@ -486,6 +486,23 @@ button.xmint-btn:after {
   color: white;
 }
 
+.skip-btn {
+  margin-left: 10px;
+  background-color: #e61ea3;
+  width: 30%;
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-radius: 100px;
+  margin-top: 10px;
+}
+
+.skip-btn:after {
+  color: white;
+}
+
 .containerHomePage {
   border-radius: 31px;
   border: 1px solid #973540;

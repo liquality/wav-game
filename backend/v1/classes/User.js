@@ -16,6 +16,7 @@ class User {
         ? Buffer.from(user.avatar).toString("utf8")
         : null;
       this.public_address = user.public_address;
+      this.feedback_rating = user.feedback_rating;
     }
   }
 
@@ -139,18 +140,19 @@ class User {
     return promise;
   };
 
-  update = async () => {
+  update = async (userid) => {
     const user = this;
     const promise = new Promise((resolve, reject) => {
       MySQL.pool.getConnection((err, db) => {
         db.query(
-          "update `user` set serviceprovider_name=?, username=?, avatar=?, public_address=? where id=?;",
+          "UPDATE `user` SET serviceprovider_name = COALESCE(?, serviceprovider_name), username = COALESCE(?, username), avatar = COALESCE(?, avatar), public_address = COALESCE(?, public_address), feedback_rating = COALESCE(?, feedback_rating) WHERE id = ?;",
           [
             user.serviceprovider_name,
             user.username,
             user.avatar,
             user.public_address,
-            user.id,
+            user.feedback_rating,
+            userid,
           ],
           (err, results, fields) => {
             if (err) {
