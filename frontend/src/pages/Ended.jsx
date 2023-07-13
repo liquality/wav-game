@@ -8,6 +8,8 @@ import { ReactComponent as Github } from "../images/github.svg";
 import { ReactComponent as SmallPinkArrow } from "../images/small_pink_arrow.svg";
 import { ReactComponent as DecoratedLine } from "../images/decorated_line.svg";
 import { useState } from "react";
+import UserService from "../services/UserService";
+import { fetchSession } from "../utils";
 
 export const Ended = (props) => {
   //const { onSubmit } = props;
@@ -15,15 +17,22 @@ export const Ended = (props) => {
 
   const starRating = [1, 2, 3, 4, 5];
 
-  const handleStarClick = (item) => {
+  const handleStarClick = async (item) => {
     setRating(item);
+    await UserService.updateUser(
+      fetchSession().id,
+      {
+        feedback_rating: item,
+      },
+      fetchSession().token
+    );
   };
   console.log(rating, "rating");
   const renderStars = () => {
     if (starRating.length > 0) {
       return starRating.map((item, index) => {
         let buttonStyle;
-        if (item === rating) {
+        if (item <= rating) {
           buttonStyle = { width: 20, height: 10, backgroundColor: "purple" };
         } else {
           buttonStyle = { width: 20, height: 10, backgroundColor: "white" };

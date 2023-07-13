@@ -48,14 +48,11 @@ userHandler.create = function (req, res) {
 };
 
 userHandler.update = function (req, res) {
-  var id = req.params.id;
   var user = new User();
   user.set(req.body);
-  //TODO: do we need apiSession and userid?
-  user.id = req.apiSession.userid;
-
-  if (id == user.id) {
-    user.update().then(
+  var userid = Number(req.user.id);
+  if (userid == Number(req.params.id)) {
+    user.update(userid).then(
       (user) => {
         res.status(200).send(user);
       },

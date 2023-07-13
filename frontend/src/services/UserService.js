@@ -5,6 +5,14 @@ const UserService = {
     return NetworkService.postResourceWithAuth("/v1/user/", userObject, jwt);
   },
 
+  updateUser: async function (userid, userObject, jwt) {
+    return NetworkService.putResourceWithAuth(
+      "/v1/user/" + userid,
+      userObject,
+      jwt
+    );
+  },
+
   getUserByUserId: async function (userId, jwt) {
     return NetworkService.getResourceWithAuth("/v1/user/" + userId, jwt);
   },
