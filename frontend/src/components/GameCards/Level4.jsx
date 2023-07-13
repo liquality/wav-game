@@ -46,7 +46,12 @@ export const Level4 = (props) => {
       if (unlockDate > today) {
         // show the timer
         noActions = true;
-        status = "locked";
+        if (status === 'next') {
+          status = "next-locked";
+        } else {
+
+          status = "locked";
+        }
         const difference = getDifferenceBetweenDates(today, unlockDate);
         actionDisabled = true;
         tradeActionText = "Level locked";
@@ -75,9 +80,8 @@ export const Level4 = (props) => {
           "You have 0 cards. Trade 2 cards from the previous level.";
         noActions = true;
       } else {
-        instructions = `You have ${
-          level4Count === -1 ? 0 : level4Count
-        } cards. Get 1 more from the previous level.`;
+        instructions = `You have ${level4Count === -1 ? 0 : level4Count
+          } cards. Get 1 more from the previous level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
         actionLocked = true;
@@ -108,26 +112,26 @@ export const Level4 = (props) => {
     }
   }
 
-    // if the next level has a count down
-    if(applyCountDown(levelSettings?.[5])) {
-      noActions = true;
-      if(currentLevel === 4) {
-        instructions += ' Level 5 unlocks after the countdown.'
-      }
-      
+  // if the next level has a count down
+  if (applyCountDown(levelSettings?.[5])) {
+    noActions = true;
+    if (currentLevel === 4) {
+      instructions += ' Level 5 unlocks after the countdown.'
     }
+
+  }
 
   const actions = noActions
     ? []
     : [
-        {
-          onActionClick: (level) => onTradeClick(level),
-          label: tradeActionText,
-          mode: actionLocked ? "pinkStroke" : "default",
-          disabled: actionDisabled,
-          useIcon: actionDisabled,
-        },
-      ];
+      {
+        onActionClick: (level) => onTradeClick(level),
+        label: tradeActionText,
+        mode: actionLocked ? "pinkStroke" : "default",
+        disabled: actionDisabled,
+        useIcon: actionDisabled,
+      },
+    ];
 
   return (
     <LevelCard
