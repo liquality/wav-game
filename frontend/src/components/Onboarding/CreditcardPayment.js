@@ -7,6 +7,7 @@ import { messageTypes } from "../../services/Websocket/MessageHandler";
 import eventBus from "../../services/Websocket/EventBus";
 import StaticDataService from "../../services/StaticDataService";
 import { DataContext } from "../../DataContext";
+import CustomButton from "../Button";
 
 export const CreditcardPayment = (props) => {
   const {
@@ -15,11 +16,14 @@ export const CreditcardPayment = (props) => {
     setCrossmintData,
     crossmintData,
     setContent,
+    handleClose,
   } = props;
   const { getMoreLevel } = useContext(DataContext);
 
   const [nftAmount, setNftAmount] = useState(1);
   const [maticPriceInUsd, setMaticPriceInUsd] = useState(null);
+
+  const { setNfts, setNftCount } = useContext(DataContext);
 
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
   const getWhichTokenIdForLevel = async () => {
@@ -32,6 +36,14 @@ export const CreditcardPayment = (props) => {
 
   const handleDoneWithCheckout = () => {
     navigate(`/artist/${selectedId.id}`);
+  };
+
+  const handleSkipPayment = () => {
+    navigate(`/artist/${selectedId.id}`);
+    //To rerender nfts and count, set to null so useeffect hook can fetch again in parent components
+    setNfts(null);
+    setNftCount(null);
+    handleClose();
   };
 
   const handleAmountChange = (event) => {
@@ -195,19 +207,33 @@ export const CreditcardPayment = (props) => {
           You can confirm the final price next, which includes a payment
           provider fee
         </p>
-        <CrossmintPayButton
-          onClick={handleDoneWithCheckout}
-          clientId={process.env.REACT_APP_CROSSMINT_CLIENT_ID}
-          environment={process.env.REACT_APP_CROSSMINT_ENVIRONMENT}
-          className="xmint-btn"
-          mintTo={getPublicKey()}
-          whPassThroughArgs={whArgsSerialized}
-          mintConfig={
-            process.env.REACT_APP_CROSSMINT_ENVIRONMENT === "staging"
-              ? mintConfigDev
-              : mintConfigProd
-          }
-        />
+        <div className="flexDirectionRow">
+          <CrossmintPayButton
+            onClick={handleDoneWithCheckout}
+            clientId={process.env.REACT_APP_CROSSMINT_CLIENT_ID}
+            environment={process.env.REACT_APP_CROSSMINT_ENVIRONMENT}
+            className="xmint-btn"
+            mintTo={getPublicKey()}
+            whPassThroughArgs={whArgsSerialized}
+            mintConfig={
+              process.env.REACT_APP_CROSSMINT_ENVIRONMENT === "staging"
+                ? mintConfigDev
+                : mintConfigProd
+            }
+          />
+          <button className="ml-4 mt-2" onClick={() => handleSkipPayment()}>
+            SKIP, GO TO ARTIST GAME{" "}
+          </button>
+          {/*    <CustomButton
+            ml={"50px"}
+            mt="15px"
+            type="small"
+            pink
+            onClick={() => handleDoneWithCheckout}
+          >
+            Skip
+          </CustomButton> */}
+        </div>
       </div>
     </div>
   );

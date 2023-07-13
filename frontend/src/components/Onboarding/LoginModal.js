@@ -167,6 +167,7 @@ export const LoginModal = (props) => {
     } else if (content === "creditCardPayment") {
       return (
         <CreditcardPayment
+          handleClose={handleClose}
           selectedId={selectedId}
           setHeaderText={setHeaderText}
           setContent={setContent}

@@ -62,6 +62,7 @@ export const ChooseNewArtistModal = (props) => {
     } */ else if (chooseArtistView === "creditCardPayment") {
       return (
         <CreditcardPayment
+          handleClose={handleClose}
           selectedId={selectedArtist}
           setHeaderText={setHeaderText}
           setContent={setChooseArtistView}
