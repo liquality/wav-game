@@ -5,8 +5,16 @@ import { ReactComponent as Twitter } from "../images/twitter.svg";
 import { ReactComponent as Discord } from "../images/discord.svg";
 import { ReactComponent as Telegram } from "../images/telegram.svg";
 import { ReactComponent as Github } from "../images/github.svg";
+import { ReactComponent as StarFilled } from "../images/star_filled.svg";
+import { ReactComponent as StarUnfilled } from "../images/star_unfilled.svg";
+
 import { ReactComponent as SmallPinkArrow } from "../images/small_pink_arrow.svg";
 import { ReactComponent as DecoratedLine } from "../images/decorated_line.svg";
+
+import { ReactComponent as TwitterIcon } from "../images/twitter.svg";
+import { ReactComponent as InstagramIcon } from "../images/instagram.svg";
+import { ReactComponent as TikTokIcon } from "../images/tiktok.svg";
+import LensIcon from "../images/lenster.png";
 import { useState } from "react";
 import UserService from "../services/UserService";
 import { fetchSession } from "../utils";
@@ -19,13 +27,15 @@ export const Ended = (props) => {
 
   const handleStarClick = async (item) => {
     setRating(item);
-    await UserService.updateUser(
-      fetchSession().id,
-      {
-        feedback_rating: item,
-      },
-      fetchSession().token
-    );
+    if (fetchSession().id) {
+      await UserService.updateUser(
+        fetchSession().id,
+        {
+          feedback_rating: item,
+        },
+        fetchSession().token
+      );
+    }
   };
   console.log(rating, "rating");
   const renderStars = () => {
@@ -33,17 +43,18 @@ export const Ended = (props) => {
       return starRating.map((item, index) => {
         let buttonStyle;
         if (item <= rating) {
-          buttonStyle = { width: 20, height: 10, backgroundColor: "purple" };
+          buttonStyle = <StarFilled />;
         } else {
-          buttonStyle = { width: 20, height: 10, backgroundColor: "white" };
+          buttonStyle = <StarUnfilled />;
         }
         return (
           <div className="flexDirectionRow mb-3" key={index}>
             <button
               onClick={() => handleStarClick(item)}
-              className="defaultArtistBtn flexDirectionRow"
-              style={buttonStyle}
-            ></button>
+              className="flexDirectionRow"
+            >
+              {buttonStyle}
+            </button>
           </div>
         );
       });
@@ -58,10 +69,46 @@ export const Ended = (props) => {
       <EndedGraphic />
 
       <div className="mt-3 mb-5" style={{ width: "45%", margin: "auto" }}>
-        <p className="text-s	mb-3 text-center softPink">
+        <p className="text-s	mb-5 text-center softPink">
           If you won an item that was not digital in nature (like a physical
           item, or the main prize), we will be in touch with you shortly.
         </p>
+
+        <p className="text-s mb-3 text-center softPink mt-4">FOLLOW WAVGAME</p>
+        <div className="flex text-center justify-center items-center ">
+          <a
+            className="md:hover:text-white-700 "
+            href="https://twitter.com/wavWRLD_"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <TwitterIcon />
+          </a>{" "}
+          <a
+            className="md:hover:text-white-700 ml-3"
+            href="https://www.instagram.com/wavwrld.eth"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <InstagramIcon />
+          </a>{" "}
+          <a
+            className="md:hover:text-white-700 ml-3"
+            href="https://www.tiktok.com/@wavwrld"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <TikTokIcon />
+          </a>{" "}
+          <a
+            className="md:hover:text-white-700 ml-3"
+            href="https://lenster.xyz/u/wavwrld"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={LensIcon} alt="" />
+          </a>{" "}
+        </div>
       </div>
 
       {/* Rate the GAME with stars */}
