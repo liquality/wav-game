@@ -55,3 +55,7 @@ CREATE TABLE `level_burn_status` (
   `last_block` INT(11) NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+/*13 July 2023, for game ended feedback rating*/
+ALTER TABLE `user`
+ADD COLUMN `feedback_rating` INT(11)  DEFAULT 0 AFTER `created_at`;
