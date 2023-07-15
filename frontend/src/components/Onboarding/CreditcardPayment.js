@@ -40,6 +40,7 @@ export const CreditcardPayment = (props) => {
 
   const handleSkipPayment = () => {
     window.location.href = `/artist/${selectedId.id}`;
+    handleClose();
   };
 
   const handleAmountChange = (event) => {
