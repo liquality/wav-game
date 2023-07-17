@@ -11,7 +11,7 @@ export const SendModal = (props) => {
   const [selectedNft, setSelectedNft] = useState(null);
   const [sendRequest, setSendRequest] = useState({ address: "", tokenID: 0 });
   const [txStatus, setTxStatus] = useState({ hash: "" });
-  const [headerText, setHeaderText] = useState("Send");
+  const [headerText, setHeaderText] = useState("View/Send");
 
   const handleClose = () => setShow(false);
 
