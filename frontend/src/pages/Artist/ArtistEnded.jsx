@@ -8,7 +8,6 @@ import { GameTabs } from "../../components/GameTabs/GameTabs";
 import Leaderboard from "./Leaderboard";
 import { ReactComponent as FullSetBannerWinner } from "../../images/winner_full_set_holder.svg";
 import { ReactComponent as FullSetBannerNotEligable } from "../../images/full_set_banner_not_eligable.svg";
-import { ReactComponent as GameEndedYouWonConcert } from "../../images/game_ended_won_concert.svg";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 
 import { SendModal } from "../../components/Send/SendModal";
@@ -181,33 +180,35 @@ export const ArtistEnded = (props) => {
                 </p>
               </a>
               <div className="flex flex-col justify-center mt-5">
-                {/*      <GameTabs
+                {/*    <GameTabs
                   selectedLevel={selectedLevel}
                   currentGame={currentGame}
                   onLevelSelected={onLevelSelected}
                   currentLevel={currentLevel}
                 /> */}
-                <GameCards
-                  userIsFullSetHolder={userIsFullSetHolder}
-                  onTradeClick={onTradeClick}
-                  onGetMoreClick={onGetMoreClick}
-                  onLevelSelected={onLevelSelected}
-                  selectedLevel={selectedLevel}
-                  currentLevel={currentLevel}
-                  currentGame={currentGame}
-                  nftCount={nftCount}
-                  ended={ended}
-                />
 
-                <GameEndedYouWonConcert />
-              </div>
-              <div className="flex flex-col pt-12 mt-12">
-                <div className="flex flex-col justify-center items-center  mb-24 relative">
-                  {userIsFullSetHolder ? (
-                    <FullSetBannerWinner />
-                  ) : (
-                    <FullSetBannerNotEligable />
-                  )}
+                <div className="-ml-24">
+                  <GameCards
+                    userIsFullSetHolder={userIsFullSetHolder}
+                    onTradeClick={onTradeClick}
+                    onGetMoreClick={onGetMoreClick}
+                    onLevelSelected={onLevelSelected}
+                    selectedLevel={selectedLevel}
+                    currentLevel={currentLevel}
+                    currentGame={currentGame}
+                    nftCount={nftCount}
+                    ended={ended}
+                  />
+                </div>
+
+                <div className="flex flex-col pt-12 mt-12">
+                  <div className="flex flex-col justify-center items-center  mb-24 relative">
+                    {userIsFullSetHolder ? (
+                      <FullSetBannerWinner />
+                    ) : (
+                      <FullSetBannerNotEligable />
+                    )}
+                  </div>
                 </div>
               </div>
 
