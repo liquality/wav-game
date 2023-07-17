@@ -39,10 +39,7 @@ export const CreditcardPayment = (props) => {
   };
 
   const handleSkipPayment = () => {
-    navigate(`/artist/${selectedId.id}`);
-    //To rerender nfts and count, set to null so useeffect hook can fetch again in parent components
-    setNfts(null);
-    setNftCount(null);
+    window.location.href = `/artist/${selectedId.id}`;
     handleClose();
   };
 

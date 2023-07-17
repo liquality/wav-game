@@ -14,7 +14,7 @@ export const SendStart = ({
 }) => {
   const [nfts, setNfts] = useState(null);
   const [loadingNfts, setLoadingNfts] = useState(false);
-  const {selectedArtist} = useContext(DataContext);
+  const { selectedArtist } = useContext(DataContext);
 
   const fetchNfts = async (address, chainId) => {
     //TODO: fetch your own public address from localstorage instead
@@ -68,7 +68,7 @@ export const SendStart = ({
           </div>
           <div className="flexDirectionCol">
             <div
-              style={{ left: "40%", bottom: "20%" }}
+              style={{ left: "40%", bottom: "13%" }}
               className="flexDirectionRow m-auto absolute "
             >
               <CustomButton

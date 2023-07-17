@@ -9,6 +9,7 @@ import UserService from "../../services/UserService";
 import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../DataContext";
+import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
 
 const AvatarComponent = ({ avatar }) => {
   return (
@@ -164,8 +165,16 @@ const UserMenu = ({
           >
             {shortenAddress(getPublicKey())} <CopyIcon className="ml-2 mt-1" />
           </button>
-          <div style={{ width: "100%" }} className="line"></div>
+          <a
+            href={`${process.env.REACT_APP_OPENSEA_URL}${getPublicKey()}`}
+            target="_blank"
+            rel="noreferrer"
+            className=" pl-3 mb-3  text-xs userMenuText lightPink flexDirectionRow hover:no-underline hover:text-decoration-none"
+          >
+            View My Cards <SmallPinkArrow className="ml-2 mt-1" />
+          </a>
 
+          <div style={{ width: "100%" }} className="line"></div>
           {renderNumberOfActiveGames()}
           <div style={{ width: "100%" }} className="line mt-2"></div>
           <button
@@ -174,7 +183,6 @@ const UserMenu = ({
           >
             Choose New Artist
           </button>
-
           <p
             onClick={() => logOutAndNavigate()}
             className="cursor-pointer pl-3 pt-4 pb-3 userMenuText lightPink"
