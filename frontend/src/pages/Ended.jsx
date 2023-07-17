@@ -7,10 +7,8 @@ import { ReactComponent as Telegram } from "../images/telegram.svg";
 import { ReactComponent as Github } from "../images/github.svg";
 import { ReactComponent as StarFilled } from "../images/star_filled.svg";
 import { ReactComponent as StarUnfilled } from "../images/star_unfilled.svg";
-
 import { ReactComponent as SmallPinkArrow } from "../images/small_pink_arrow.svg";
 import { ReactComponent as DecoratedLine } from "../images/decorated_line.svg";
-
 import { ReactComponent as TwitterIcon } from "../images/twitter.svg";
 import { ReactComponent as InstagramIcon } from "../images/instagram.svg";
 import { ReactComponent as TikTokIcon } from "../images/tiktok.svg";

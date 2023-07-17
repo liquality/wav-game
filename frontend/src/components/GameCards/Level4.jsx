@@ -1,5 +1,9 @@
 import { LevelCard } from "../LevelCard/LevelCard";
-import { applyCountDown, getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
+import {
+  applyCountDown,
+  getLevelsStatuses,
+  getDifferenceBetweenDates,
+} from "../../utils";
 import { useEarlyBirdInfo } from "../../hooks/useEarlyBirdCount";
 
 export const Level4 = (props) => {
@@ -12,6 +16,7 @@ export const Level4 = (props) => {
     nftCount,
     burnStatus,
     currentGame,
+    ended,
   } = props;
   const level4Count = nftCount["4"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[4];
@@ -46,10 +51,9 @@ export const Level4 = (props) => {
       if (unlockDate > today) {
         // show the timer
         noActions = true;
-        if (status === 'next') {
+        if (status === "next") {
           status = "next-locked";
         } else {
-
           status = "locked";
         }
         const difference = getDifferenceBetweenDates(today, unlockDate);
@@ -80,8 +84,9 @@ export const Level4 = (props) => {
           "You have 0 cards. Trade 2 cards from the previous level.";
         noActions = true;
       } else {
-        instructions = `You have ${level4Count === -1 ? 0 : level4Count
-          } cards. Get 1 more from the previous level.`;
+        instructions = `You have ${
+          level4Count === -1 ? 0 : level4Count
+        } cards. Get 1 more from the previous level.`;
         tradeActionText = "Start Trading";
         actionDisabled = true;
         actionLocked = true;
@@ -116,22 +121,22 @@ export const Level4 = (props) => {
   if (applyCountDown(levelSettings?.[5])) {
     noActions = true;
     if (currentLevel === 4) {
-      instructions += ' Level 5 unlocks after the countdown.'
+      instructions += " Level 5 unlocks after the countdown.";
     }
-
   }
 
   const actions = noActions
     ? []
     : [
-      {
-        onActionClick: (level) => onTradeClick(level),
-        label: tradeActionText,
-        mode: actionLocked ? "pinkStroke" : "default",
-        disabled: actionDisabled,
-        useIcon: actionDisabled,
-      },
-    ];
+        {
+          onActionClick: (level) => onTradeClick(level),
+          label: tradeActionText,
+          mode: actionLocked ? "pinkStroke" : "default",
+          disabled: ended ? ended : actionDisabled,
+
+          useIcon: actionDisabled,
+        },
+      ];
 
   return (
     <LevelCard
