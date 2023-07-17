@@ -9,13 +9,14 @@ export const Level1 = (props) => {
     onGetMoreClick,
     nftCount,
     burnStatus,
-    currentLevel
+    currentLevel,
+    ended,
   } = props;
   const status = getLevelsStatuses(currentLevel || 1)[1];
   const level1Count = nftCount["1"] || 0;
   let instructions = `You have ${level1Count === -1 ? 0 : level1Count} cards.`;
   let tradeActionText = "";
-  let actionLocked = false;
+  let actionLocked = ended;
   let lessThan2NftsAndBurnt = level1Count < 2 && burnStatus;
   let lessThan2NftsAndNeverBurnt = level1Count < 2 && !burnStatus;
 
@@ -46,6 +47,7 @@ export const Level1 = (props) => {
       onActionClick: (level) => onTradeClick(level),
       label: tradeActionText,
       mode: actionLocked ? "pinkStroke" : "default",
+      disabled: actionLocked,
     });
     if (!burnStatus || burnStatus) {
       actions.push({
@@ -53,6 +55,7 @@ export const Level1 = (props) => {
         label: "Get more",
         mode: "default",
         link: true,
+        disabled: actionLocked,
       });
     }
   } else if (level1Count === 0) {
@@ -60,12 +63,14 @@ export const Level1 = (props) => {
       onActionClick: (level) => onGetMoreClick(level),
       label: tradeActionText,
       mode: "default",
+      disabled: actionLocked,
     });
   } else if (lessThan2NftsAndBurnt || lessThan2NftsAndNeverBurnt) {
     actions.push({
       onActionClick: (level) => onGetMoreClick(level),
       label: tradeActionText,
       mode: "default",
+      disabled: actionLocked,
     });
   }
 

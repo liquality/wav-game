@@ -9,7 +9,8 @@ export const Level3 = (props) => {
     onTradeClick,
     nftCount,
     burnStatus,
-    levelSettings
+    levelSettings,
+    ended,
   } = props;
   const level3Count = nftCount["3"] || 0;
   const status = getLevelsStatuses(currentLevel || 1)[3];
@@ -37,10 +38,10 @@ export const Level3 = (props) => {
       tradeActionText = "Start Trading";
     }
     // if the next level has a count down
-    if(applyCountDown(levelSettings?.[4])) {
+    if (applyCountDown(levelSettings?.[4])) {
       noActions = true;
-      if(currentLevel ===3) {
-        instructions += ' Level 4 unlocks after the countdown.'
+      if (currentLevel === 3) {
+        instructions += " Level 4 unlocks after the countdown.";
       }
     }
   }
@@ -52,7 +53,7 @@ export const Level3 = (props) => {
           onActionClick: (level) => onTradeClick(level),
           label: tradeActionText,
           mode: actionLocked ? "pinkStroke" : "default",
-          disabled: actionDisabled,
+          disabled: ended ? ended : actionDisabled,
           useIcon: actionDisabled,
         },
       ];

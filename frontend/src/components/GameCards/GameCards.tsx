@@ -14,12 +14,11 @@ interface GameCardsProps {
     The current game 
    */
   currentGame?: any;
-
   selectedLevel: number;
   currentLevel: number;
-
   nftCount: any;
   userIsFullSetHolder: boolean;
+  ended: boolean;
 
   /**
    * Click handler for each level
@@ -42,7 +41,10 @@ export const GameCards = (props: GameCardsProps) => {
     onLevelSelected,
     nftCount,
     userIsFullSetHolder,
+    ended,
   } = props;
+  console.log(ended, "ended props gamecards");
+
   const [burnStatus, setBurnStatus] = useState({});
 
   const { levelSettings } = useContext(DataContext);
@@ -84,6 +86,7 @@ export const GameCards = (props: GameCardsProps) => {
         burnStatus={burnStatus[1]}
         currentLevel={currentLevel}
         levelSettings={levelSettings}
+        ended={ended}
       />
       <Level2
         selectedLevel={selectedLevel}
@@ -94,6 +97,7 @@ export const GameCards = (props: GameCardsProps) => {
         burnStatus={burnStatus[2]}
         currentLevel={currentLevel}
         levelSettings={levelSettings}
+        ended={ended}
       />
       <Level3
         selectedLevel={selectedLevel}
@@ -104,6 +108,7 @@ export const GameCards = (props: GameCardsProps) => {
         burnStatus={burnStatus[3]}
         currentLevel={currentLevel}
         levelSettings={levelSettings}
+        ended={ended}
       />
       <Level4
         selectedLevel={selectedLevel}
@@ -115,6 +120,7 @@ export const GameCards = (props: GameCardsProps) => {
         currentLevel={currentLevel}
         levelSettings={levelSettings}
         currentGame={currentGame}
+        ended={ended}
       />
       <Level5
         selectedLevel={selectedLevel}
@@ -126,6 +132,7 @@ export const GameCards = (props: GameCardsProps) => {
         currentLevel={currentLevel}
         levelSettings={levelSettings}
         currentGame={currentGame}
+        ended={ended}
       />
       <Level6
         selectedLevel={selectedLevel}
@@ -138,6 +145,7 @@ export const GameCards = (props: GameCardsProps) => {
         levelSettings={levelSettings}
         currentGame={currentGame}
         userIsFullSetHolder={userIsFullSetHolder}
+        ended={ended}
       />
     </div>
   );

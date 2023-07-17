@@ -32,6 +32,7 @@ export const ArtistEnded = (props) => {
   const [currentGame, setCurrentGame] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(1);
   const [tradeLevel, setTradeLevel] = useState(1);
+  const [ended, setEnded] = useState(true);
 
   const {
     nfts,
@@ -128,6 +129,7 @@ export const ArtistEnded = (props) => {
       //any cleanup
     };
   }, [artistId, userGames, nfts, setNfts, nftCount, userIsFullSetHolder]);
+  console.log(ended, "ended in artistended");
 
   return (
     <div className="container mx-auto">
@@ -185,7 +187,7 @@ export const ArtistEnded = (props) => {
                   onLevelSelected={onLevelSelected}
                   currentLevel={currentLevel}
                 /> */}
-                {/*       <GameCards
+                <GameCards
                   userIsFullSetHolder={userIsFullSetHolder}
                   onTradeClick={onTradeClick}
                   onGetMoreClick={onGetMoreClick}
@@ -194,7 +196,8 @@ export const ArtistEnded = (props) => {
                   currentLevel={currentLevel}
                   currentGame={currentGame}
                   nftCount={nftCount}
-                /> */}
+                  ended={ended}
+                />
 
                 <GameEndedYouWonConcert />
               </div>

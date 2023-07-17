@@ -9,6 +9,7 @@ export const Level2 = (props) => {
     onTradeClick,
     nftCount,
     burnStatus,
+    ended,
   } = props;
   const level2Count = nftCount["2"] || 0;
   const status = getLevelsStatuses(currentLevel || 1)[2];
@@ -44,7 +45,7 @@ export const Level2 = (props) => {
           onActionClick: (level) => onTradeClick(level),
           label: tradeActionText,
           mode: actionLocked ? "pinkStroke" : "default",
-          disabled: actionDisabled,
+          disabled: ended ? ended : actionDisabled,
           useIcon: actionDisabled,
         },
       ];

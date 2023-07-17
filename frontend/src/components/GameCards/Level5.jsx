@@ -1,5 +1,9 @@
 import { LevelCard } from "../LevelCard/LevelCard";
-import { applyCountDown, getLevelsStatuses, getDifferenceBetweenDates } from "../../utils";
+import {
+  applyCountDown,
+  getLevelsStatuses,
+  getDifferenceBetweenDates,
+} from "../../utils";
 import { useEarlyBirdInfo } from "../../hooks/useEarlyBirdCount";
 
 export const Level5 = (props) => {
@@ -12,6 +16,7 @@ export const Level5 = (props) => {
     nftCount,
     burnStatus,
     currentGame,
+    ended,
   } = props;
   const level5Count = nftCount["5"] || 0;
   let status = getLevelsStatuses(currentLevel || 1)[5];
@@ -104,10 +109,10 @@ export const Level5 = (props) => {
   }
 
   // if the next level has a count down
-  if(applyCountDown(levelSettings?.[6])) {
+  if (applyCountDown(levelSettings?.[6])) {
     noActions = true;
-    if(currentLevel === 5) {
-      instructions += ' Level 6 unlocks after the countdown.'
+    if (currentLevel === 5) {
+      instructions += " Level 6 unlocks after the countdown.";
     }
   }
 
@@ -118,7 +123,7 @@ export const Level5 = (props) => {
           onActionClick: (level) => onTradeClick(level),
           label: tradeActionText,
           mode: actionLocked ? "pinkStroke" : "default",
-          disabled: actionDisabled,
+          disabled: ended ? ended : actionDisabled,
           useIcon: actionDisabled,
         },
       ];
