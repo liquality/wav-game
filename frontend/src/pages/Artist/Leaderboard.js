@@ -214,7 +214,7 @@ const Leaderboard = ({
       {!showNfts ? null : (
         <div className="flex absolute sendNfts   lightPink right-0">
           <button onClick={openSendModal} className="sendNfts">
-            Send
+            View/Send
           </button>
           <p style={{ color: "#bdbdbd" }} className="mr-3 ml-3">
             |
