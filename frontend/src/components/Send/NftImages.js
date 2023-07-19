@@ -40,14 +40,14 @@ export const NftImages = (props) => {
               </button>
 
               <div className="pt-1 ">
-                {nft.animation_url ? (
+                {nft.id.endsWith(1) || nft.id.endsWith(2) ? (
                   <audio
                     controls
                     controlsList="nodownload"
                     data-testid="AssetMedia--audio"
                     loop
                     preload="auto"
-                    src={nft.animation_url}
+                    src={`https://wavgame-data.netlify.app/songs/${nft.id}.wav`}
                     style={{
                       marginBottom: 5,
                       width: 100,
@@ -90,14 +90,14 @@ export const NftImages = (props) => {
             </button>
 
             <div className="pt-1">
-              {nft.animation_url ? (
+              {nft.id.endsWith(1) || nft.id.endsWith(2) ? (
                 <audio
                   controls
                   controlsList="nodownload"
                   data-testid="AssetMedia--audio"
                   loop
                   preload="auto"
-                  src={nft.animation_url}
+                  src={`https://wavgame-data.netlify.app/songs/${nft.id}.wav`}
                   style={{
                     marginBottom: 5,
                     width: 237,
@@ -135,14 +135,14 @@ export const NftImages = (props) => {
         </button>
 
         <div className="pt-1">
-          {nfts[0].animation_url ? (
+          {nfts[0].id.endsWith(1) || nfts[0].id.endsWith(2) ? (
             <audio
               controls
               controlsList="nodownload"
               data-testid="AssetMedia--audio"
               loop
               preload="auto"
-              src={nfts[0].animation_url}
+              src={`https://wavgame-data.netlify.app/songs/${nfts[0].id}.wav`}
               style={{
                 marginBottom: 5,
                 width: 257,
