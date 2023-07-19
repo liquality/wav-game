@@ -77,7 +77,7 @@ export const SendStart = ({
                 type="big"
                 onClick={() => handleNewContent()}
               >
-                CONTINUE
+                SEND
               </CustomButton>
               <button className=" ml-5 mr-5" onClick={handleClose}>
                 CANCEL
