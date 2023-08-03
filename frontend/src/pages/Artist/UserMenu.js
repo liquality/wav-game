@@ -10,6 +10,7 @@ import { ReactComponent as CopyIcon } from "../../images/copy_icon.svg";
 import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../DataContext";
 import { ReactComponent as SmallPinkArrow } from "../../images/small_pink_arrow.svg";
+import { SendModal } from "../../components/Send/SendModal";
 
 const AvatarComponent = ({ avatar }) => {
   return (
@@ -30,6 +31,8 @@ const UserMenu = ({
 
   const [user, setUser] = useState({});
   const [games, setGames] = useState([]);
+  const [showSend, setShowSend] = useState(false);
+
   const { setNfts, setNftCount } = useContext(DataContext);
 
   const navigate = useNavigate();
@@ -75,6 +78,11 @@ const UserMenu = ({
   const logOutAndNavigate = () => {
     navigate("/");
     logOut();
+  };
+
+  const handleOpenViewSend = () => {
+    setShowSend(true);
+    onClose();
   };
 
   useEffect(() => {
@@ -148,6 +156,7 @@ const UserMenu = ({
       ref={wrapperRef}
       className="relative flex flex-col p-4 mt-2 bg-docsGrey-50 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0  dark:bg-docsGrey-800 md:dark:bg-docsGrey-900 dark:border-docsGrey-700"
     >
+      <SendModal setShow={setShowSend} show={showSend} />{" "}
       <button onClick={() => setUserMenuOpen(!isOpen)}>
         {user?.avatar ? <AvatarComponent avatar={user.avatar} /> : null}
       </button>
@@ -165,14 +174,12 @@ const UserMenu = ({
           >
             {shortenAddress(getPublicKey())} <CopyIcon className="ml-2 mt-1" />
           </button>
-          <a
-            href={`${process.env.REACT_APP_OPENSEA_URL}${getPublicKey()}`}
-            target="_blank"
-            rel="noreferrer"
+          <button
+            onClick={handleOpenViewSend}
             className=" pl-3 mb-3  text-xs userMenuText lightPink flexDirectionRow hover:no-underline hover:text-decoration-none"
           >
             View My Cards <SmallPinkArrow className="ml-2 mt-1" />
-          </a>
+          </button>
 
           <div style={{ width: "100%" }} className="line"></div>
           {renderNumberOfActiveGames()}

@@ -26,10 +26,11 @@ export const NftImages = (props) => {
       rows = nfts.slice(0, 50).map((nft, index) => {
         let nftImg = replaceToRightImage(nft.metadata?.image);
 
+        console.log(nfts, "NFTSS");
         return (
           <div className="pr-5 mt-3 ">
             <div>
-              <button onClick={() => setSelectedNft(nft)}>
+              <button className="relative" onClick={() => setSelectedNft(nft)}>
                 <img
                   style={selectedNft?.id === nft.id ? readyToSendStyle : {}}
                   src={nftImg || imagePlaceholder}
@@ -38,7 +39,25 @@ export const NftImages = (props) => {
                 />
               </button>
 
-              <div className="pt-1">
+              <div className="pt-1 ">
+                {nft.id.endsWith(1) || nft.id.endsWith(2) ? (
+                  <audio
+                    controls
+                    controlsList="nodownload"
+                    data-testid="AssetMedia--audio"
+                    loop
+                    preload="auto"
+                    src={`https://wavgame-data.netlify.app/songs/${nft.id}.wav`}
+                    style={{
+                      marginBottom: 5,
+                      width: 100,
+                      height: 20,
+                    }}
+                  >
+                    Your browser does not support the audio element.
+                  </audio>
+                ) : null}
+
                 <p style={{ fontSize: 11 }}>{nft.metadata?.name}</p>
                 <p style={{ fontSize: 11 }}>Amount: {nft.balance}</p>
               </div>
@@ -71,6 +90,23 @@ export const NftImages = (props) => {
             </button>
 
             <div className="pt-1">
+              {nft.id.endsWith(1) || nft.id.endsWith(2) ? (
+                <audio
+                  controls
+                  controlsList="nodownload"
+                  data-testid="AssetMedia--audio"
+                  loop
+                  preload="auto"
+                  src={`https://wavgame-data.netlify.app/songs/${nft.id}.wav`}
+                  style={{
+                    marginBottom: 5,
+                    width: 237,
+                    height: 20,
+                  }}
+                >
+                  Your browser does not support the audio element.
+                </audio>
+              ) : null}
               <p style={{ fontSize: 11 }}> {nft.metadata?.name}</p>
               <p style={{ fontSize: 11 }}>Amount: {nft.balance}</p>
             </div>
@@ -99,6 +135,23 @@ export const NftImages = (props) => {
         </button>
 
         <div className="pt-1">
+          {nfts[0].id.endsWith(1) || nfts[0].id.endsWith(2) ? (
+            <audio
+              controls
+              controlsList="nodownload"
+              data-testid="AssetMedia--audio"
+              loop
+              preload="auto"
+              src={`https://wavgame-data.netlify.app/songs/${nfts[0].id}.wav`}
+              style={{
+                marginBottom: 5,
+                width: 257,
+                height: 30,
+              }}
+            >
+              Your browser does not support the audio element.
+            </audio>
+          ) : null}
           <p style={{ fontSize: 11 }}> {nfts[0].metadata?.name}</p>
           <p style={{ fontSize: 11 }}>Amount: {nfts[0].balance}</p>
         </div>
