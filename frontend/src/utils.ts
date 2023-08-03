@@ -1,5 +1,6 @@
 import { NftService, setup } from "@liquality/wallet-sdk";
 import StaticDataService from "./services/StaticDataService";
+import ContractService from "./services/ContractService";
 import { ethers } from "ethers";
 import { CHAIN_ID, WAV_NFT_ADDRESS } from "./data/contract_data";
 
@@ -235,15 +236,12 @@ export const generateTokenIdArray = async (artistNumberId) => {
     return result;
 }
 
-export const fetchMaticPriceInUSD = async () => {
+export const fetchMaticPriceInUSD = async (feePerMint) => {
     try {
         const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd');
         const data = await response.json();
         const maticPrice = data['matic-network'].usd;
-
-        const maticAmount = 15;
-        const usdValue = maticAmount * maticPrice;
-
+        const usdValue = feePerMint * maticPrice;
         return usdValue.toFixed(2);
     } catch (error) {
         console.error('Error fetching Matic price:', error);

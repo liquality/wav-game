@@ -75,10 +75,10 @@ function App() {
       setLevelSettings(settings);
 
       const _artist = await fetchArtist();
-
       if (!nfts && _artist?.number_id) {
         console.log("FETCHING NFTS AGAIN!");
         const nftData = await ContractService.getNfts(_artist?.number_id);
+        
         setNfts(nftData);
 
         const _currentLevel = await getCurrentLevel(nftData, _artist.number_id);

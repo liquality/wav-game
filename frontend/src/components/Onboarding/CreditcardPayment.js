@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { messageTypes } from "../../services/Websocket/MessageHandler";
 import eventBus from "../../services/Websocket/EventBus";
 import StaticDataService from "../../services/StaticDataService";
+import ContractService from "../../services/ContractService";
 import { DataContext } from "../../DataContext";
 import CustomButton from "../Button";
 
@@ -21,9 +22,8 @@ export const CreditcardPayment = (props) => {
   const { getMoreLevel } = useContext(DataContext);
 
   const [nftAmount, setNftAmount] = useState(1);
+  const [feePerMint, setFeePerMint] = useState(null);
   const [maticPriceInUsd, setMaticPriceInUsd] = useState(null);
-
-  const { setNfts, setNftCount } = useContext(DataContext);
 
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
   const getWhichTokenIdForLevel = async () => {
@@ -61,9 +61,12 @@ export const CreditcardPayment = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       eventBus.on(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
+      const fee = await ContractService.getFeePerMint();
+      const _feePerMint = parseFloat(fee);
+      setFeePerMint(_feePerMint);
       const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel();
       setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
-      const _maticPriceInUsd = await fetchMaticPriceInUSD();
+      const _maticPriceInUsd = await fetchMaticPriceInUSD(_feePerMint);
       setMaticPriceInUsd(_maticPriceInUsd);
     };
     fetchData();
@@ -72,14 +75,11 @@ export const CreditcardPayment = (props) => {
       eventBus.remove(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
     };
   }, []);
+  console.log('maticPriceInUsd', maticPriceInUsd);
 
-  console.log(maticPriceInUsd, "matic price in sud");
-
-  let totalNFTsPrice =
-    process.env.REACT_APP_CROSSMINT_ENVIRONMENT === "staging"
-      ? (0.0005 * nftAmount).toString()
-      : (15 * nftAmount).toString();
-
+  let totalNFTsPrice = (parseFloat(maticPriceInUsd) * nftAmount).toString()
+  
+  console.log('totalNFTsPrice', totalNFTsPrice);
   const whArgs = {
     id: fetchSession().id,
   };

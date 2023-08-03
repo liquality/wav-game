@@ -148,6 +148,14 @@ var ContractService = {
       level
     )).data;
   },
+
+  getFeePerMint: async() => {
+    const game = await getWavGame();
+    const weiValue = await game.getFeePerMint();
+    const ethValue = ethers.formatEther(weiValue);
+    console.log('FeePerMint', weiValue, ethValue);
+    return ethValue;
+  }
 };
 
 export default ContractService;
