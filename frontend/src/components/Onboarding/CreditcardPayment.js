@@ -75,11 +75,16 @@ export const CreditcardPayment = (props) => {
       eventBus.remove(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
     };
   }, []);
-  console.log('maticPriceInUsd', maticPriceInUsd);
+  console.log("maticPriceInUsd", maticPriceInUsd);
 
-  let totalNFTsPrice = (parseFloat(maticPriceInUsd) * nftAmount).toString()
-  
-  console.log('totalNFTsPrice', totalNFTsPrice);
+  //let totalNFTsPrice = (parseFloat(maticPriceInUsd) * nftAmount).toString()
+
+  let totalNFTsPrice =
+    process.env.REACT_APP_CROSSMINT_ENVIRONMENT === "staging"
+      ? (0.0005 * nftAmount).toString()
+      : (13.4 * nftAmount).toString();
+
+  console.log("totalNFTsPrice", totalNFTsPrice);
   const whArgs = {
     id: fetchSession().id,
   };
