@@ -1,7 +1,12 @@
 import { ReactComponent as NftTiles } from "../../images/OneNftTile.svg";
 import { useEffect, useState, useContext } from "react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
-import { fetchMaticPriceInUSD, fetchSession, getPublicKey } from "../../utils";
+import {
+  convertWeiToMatic,
+  fetchMaticPriceInUSD,
+  fetchSession,
+  getPublicKey,
+} from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { messageTypes } from "../../services/Websocket/MessageHandler";
 import eventBus from "../../services/Websocket/EventBus";
@@ -24,6 +29,7 @@ export const CreditcardPayment = (props) => {
   const [nftAmount, setNftAmount] = useState(1);
   const [feePerMint, setFeePerMint] = useState(null);
   const [maticPriceInUsd, setMaticPriceInUsd] = useState(null);
+  const [maticPriceInNative, setMaticPriceInNative] = useState(null);
 
   const [tokenIdForCurrentLevel, setTokenIdForCurrentLevel] = useState(null);
   const getWhichTokenIdForLevel = async () => {
@@ -63,9 +69,12 @@ export const CreditcardPayment = (props) => {
       eventBus.on(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
       const fee = await ContractService.getFeePerMint();
       const _feePerMint = parseFloat(fee);
+      console.log(_feePerMint, "FEE PER MINT");
       setFeePerMint(_feePerMint);
       const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel();
       setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
+      const _maticPriceInNative = await convertWeiToMatic(_feePerMint);
+      setMaticPriceInNative(_maticPriceInNative);
       const _maticPriceInUsd = await fetchMaticPriceInUSD(_feePerMint);
       setMaticPriceInUsd(_maticPriceInUsd);
     };
@@ -75,7 +84,11 @@ export const CreditcardPayment = (props) => {
       eventBus.remove(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
     };
   }, []);
-  console.log("maticPriceInUsd", maticPriceInUsd);
+  console.log(
+    "maticPriceInUsd AND NATIVE",
+    maticPriceInUsd,
+    maticPriceInNative
+  );
 
   //let totalNFTsPrice = (parseFloat(maticPriceInUsd) * nftAmount).toString()
 
@@ -84,7 +97,6 @@ export const CreditcardPayment = (props) => {
       ? (0.0005 * nftAmount).toString()
       : (13.4 * nftAmount).toString();
 
-  console.log("totalNFTsPrice", totalNFTsPrice);
   const whArgs = {
     id: fetchSession().id,
   };
