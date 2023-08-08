@@ -73,8 +73,8 @@ export const CreditcardPayment = (props) => {
       setFeePerMint(_feePerMint);
       const _tokenIdForCurrentLevel = await getWhichTokenIdForLevel();
       setTokenIdForCurrentLevel(_tokenIdForCurrentLevel);
-      const _maticPriceInNative = await convertWeiToMatic(_feePerMint);
-      setMaticPriceInNative(_maticPriceInNative);
+      //const _maticPriceInNative = await convertWeiToMatic(_feePerMint);
+      //setMaticPriceInNative(_maticPriceInNative);
       const _maticPriceInUsd = await fetchMaticPriceInUSD(_feePerMint);
       setMaticPriceInUsd(_maticPriceInUsd);
     };
@@ -84,18 +84,13 @@ export const CreditcardPayment = (props) => {
       eventBus.remove(messageTypes.CROSSMINT_SUCCESS, listenToCrossmintSuccess);
     };
   }, []);
-  console.log(
-    "maticPriceInUsd AND NATIVE",
-    maticPriceInUsd,
-    maticPriceInNative
-  );
 
-  //let totalNFTsPrice = (parseFloat(maticPriceInUsd) * nftAmount).toString()
+  let totalNFTsPrice = (feePerMint * nftAmount).toString();
 
-  let totalNFTsPrice =
+  /*   let totalNFTsPrice =
     process.env.REACT_APP_CROSSMINT_ENVIRONMENT === "staging"
       ? (0.0005 * nftAmount).toString()
-      : (13.4 * nftAmount).toString();
+      : (13.4 * nftAmount).toString(); */
 
   const whArgs = {
     id: fetchSession().id,

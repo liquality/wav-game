@@ -251,7 +251,6 @@ export const fetchMaticPriceInUSD = async (feePerMint) => {
 }
 
 export const convertWeiToMatic = async (weiAmount) => {
-    console.log(weiAmount, 'weiamount? also fee per mint')
     const conversionRateWei = await fetchMaticPriceInUSD(1); // Fetch conversion rate for 1 WEI
 
     if (conversionRateWei) {
