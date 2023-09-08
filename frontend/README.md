@@ -6,7 +6,7 @@
 
 A fun burn-to-win NFT experience in 6 levels.
 
-Created using Liquality SDK + React
+Created using Liquality SDK + Crossmint + React
 
 # Run the app
 
